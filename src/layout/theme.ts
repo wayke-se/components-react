@@ -4,10 +4,13 @@ const _colors = {
   gray: '#ddd',
   grayLight: '#f8f8f8',
   grayLightDarker: '#ebebeb',
-  grayDark: '#7d7d7d',
+  grayDark: '#717171',
   blue: '#1d61ca',
-  brand: {
-    blue: '#161e2e',
+  ui: {
+    greenLight: '#cdf5c8',
+    redLight: '#ffd0d0',
+    yellowLight: '#fff4c7',
+    blueLight: '#daf7fc',
   },
 };
 
@@ -20,11 +23,15 @@ const theme = {
     border: _colors.gray,
     textDark: _colors.black,
     textDarkLighten: _colors.grayDark,
+    hoverOverlay: 'rgba(0, 0, 0, 0.04)',
     disabledBg: _colors.gray,
     disabledText: _colors.grayDark,
     placeholder: _colors.grayDark,
-    brand: {
-      primary: _colors.brand.blue,
+    ui: {
+      positiveLight: _colors.ui.greenLight,
+      neutralLight: _colors.ui.yellowLight,
+      negativeLight: _colors.ui.redLight,
+      infoLight: _colors.ui.blueLight,
     },
   },
   breakpoint: {

@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface VehicleQuery_vehicle {
-  __typename: "Vehicle";
+  __typename: 'Vehicle';
   description: string | null;
 }
 

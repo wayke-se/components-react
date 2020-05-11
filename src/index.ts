@@ -1,6 +1,6 @@
-import WaykeCombinedPage from './components/WaykeCombined/index';
-import WaykeSearchPage from './components/WaykeSearchPage/index';
-import WaykeProductPage from './components/WaykeProductPage/index';
+import WaykeCombinedPage from './pages/WaykeCombined/index';
+import WaykeSearchPage from './pages/WaykeSearchPage/index';
+import WaykeProductPage from './pages/WaykeProductPage/index';
 import WaykeProvider from './providers/WaykeProvider';
 
 export { WaykeCombinedPage, WaykeSearchPage, WaykeProductPage, WaykeProvider };
