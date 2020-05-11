@@ -22,7 +22,7 @@ const ColorSelectItem = ({ label, hex, onClick, active, disabled, boxShadow }: I
         <Color
           style={{
             backgroundColor: hex.length === 1 ? hex[0] : '',
-            backgroundImage: hex.length > 1 ? `linear-gradient(${hex.toString()})` : '',
+            backgroundImage: hex.length > 1 ? `linear-gradient(${hex.join()})` : '',
           }}
           active={active}
           boxShadow={boxShadow}
