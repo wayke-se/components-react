@@ -1,0 +1,8 @@
+node_modules/
+build/
+dist/
+pkg/
+.env
+.DS_Store
+examples/build
+examples/node_modules/
