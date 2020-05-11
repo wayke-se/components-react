@@ -8,9 +8,9 @@ export default createGlobalStyle`
   }
 
   #root {
-    background-color: ${(props) => props.theme.color.bg};
+    background-color: #fff;
     font-size: 16px;
-    color: ${(props) => props.theme.color.textDark};
+    color: #000;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
