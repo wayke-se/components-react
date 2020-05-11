@@ -1,0 +1,61 @@
+/*
+  Theme Setting
+  This file contains theme settings.
+  Change the properties of each class to customize the design.
+
+  The following styling could be applied:
+  - Brand color
+  - Font Regular (and other font-related settings)
+  - Font Bold (and other font-related settings)
+*/
+
+/*** Brand color ***/
+
+/*
+  - Primary (background-color)
+  Used to add primary background-color to elements. Should also include
+  a color for text placed on top of the primary color. Be sure to pick
+  a text color with good contrast.
+*/
+.wayke__theme.wayke__color--primary-bg {
+  background-color: #ff5a1c;
+  color: #fff;
+}
+
+/*
+  - Primary (color)
+  Used to add primary color to text. Make sure to add the same color as
+  in the background-color selector above.
+*/
+.wayke__theme.wayke__color--primary-text {
+  color: #ff5a1c;
+}
+
+/*** Font ***/
+
+/*
+  - Regular
+  This is the regular font used on most text elements. It is recommended
+  to use a light (font-weight: 300) or regular (font-weight: 400) font
+  for this type.
+*/
+.wayke__theme.wayke__font--regular {
+  font-family: sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
+}
+
+/*
+  - Bold
+  This font will be applied to headings and some other elements using
+  the same styling.
+*/
+.wayke__theme.wayke__font--bold {
+  font-family: sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
+}
