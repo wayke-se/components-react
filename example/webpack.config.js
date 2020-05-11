@@ -15,6 +15,9 @@ module.exports = {
   target: 'web',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      react: path.resolve('./node_modules/react'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({

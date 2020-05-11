@@ -10,12 +10,13 @@
     "clean": "rimraf ./dist ./pkg ./coverage",
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
-    "prepare": "npm run prettify && npm run type-check && npm run lint && npm run test"
+    "prepare": "npm run prettify && npm run type-check && npm run lint && npm run test",
+    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/graphql/queries/**/*  --localSchemaFile=schema.graphql  --target typescript --tagName gql --outputFlat src/@types/gql --passthroughCustomScalars"
   },
   "author": "Peter Johansson",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.8.0",
+    "react": "^16.13.1",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
@@ -38,7 +39,19 @@
     "styled-components": "^5.1.0",
     "typescript": "^3.8.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@apollo/react-testing": "^3.1.4",
+    "apollo-boost": "^0.4.8",
+    "graphql": "^15.0.0",
+    "graphql-tools": "^5.0.0"
+  },
+  "workspaces": {
+    "nohoist": [
+      "react",
+      "react-dom"
+    ]
+  },
   "@pika/pack": {
     "pipeline": [
       [

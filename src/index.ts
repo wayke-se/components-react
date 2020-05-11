@@ -1,7 +1,8 @@
-import Combined from './components/Combined/index';
-import Search from './components/Search/index';
-import ProductPage from './components/ProductPage/index';
+import WaykeCombinedPage from './components/WaykeCombined/index';
+import WaykeSearchPage from './components/WaykeSearchPage/index';
+import WaykeProductPage from './components/WaykeProductPage/index';
+import WaykeProvider from './providers/WaykeProvider';
 
-export { Search, ProductPage };
+export { WaykeCombinedPage, WaykeSearchPage, WaykeProductPage, WaykeProvider };
 
-export default Combined;
+export default WaykeCombinedPage;
