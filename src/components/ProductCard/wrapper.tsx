@@ -117,7 +117,6 @@ export const Price = styled.div`
 export const CurrentPrice = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text wayke__font--bold',
 }))`
-  color: red;
   font-size: 1rem;
   margin-right: ${size(1)};
 `;
