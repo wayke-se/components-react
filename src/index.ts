@@ -1,8 +1,8 @@
-import WaykeCombinedPage from './pages/WaykeCombined/index';
-import WaykeSearchPage from './pages/WaykeSearchPage/index';
-import WaykeProductPage from './pages/WaykeProductPage/index';
-import WaykeProvider from './providers/WaykeProvider';
+import BaseLayout from './layouts/base';
+import DefaultSearchLayout from './layouts/search/default';
+import DefaultSearchItemLayout from './layouts/searchItem/default';
+import WaykeSearchProvider from './providers/WaykeSearchProvider';
 
-export { WaykeCombinedPage, WaykeSearchPage, WaykeProductPage, WaykeProvider };
+export { DefaultSearchLayout, DefaultSearchItemLayout, WaykeSearchProvider };
 
-export default WaykeCombinedPage;
+export default BaseLayout;
