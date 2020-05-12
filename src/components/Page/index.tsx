@@ -2,7 +2,9 @@ import styled, { css } from 'styled-components';
 
 import { size } from '../../layout/helpers';
 
-export const Page = styled.div``;
+export const Page = styled.div`
+  padding-top: ${size(4)};
+`;
 
 type PageSectionProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
