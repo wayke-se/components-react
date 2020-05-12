@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "npm run prettify && npm run type-check && npm run lint && npm run test",
-    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/graphql/queries/**/*  --localSchemaFile=schema.graphql  --target typescript --tagName gql --outputFlat src/@types/gql --passthroughCustomScalars"
+    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/queries/**/* --localSchemaFile=schema.graphql --target typescript --tagName gql --outputFlat src/@types/gql"
   },
   "author": "Peter Johansson",
   "license": "MIT",

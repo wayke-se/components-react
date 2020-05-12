@@ -1,8 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import VEHICLE_QUERY from '../../queries/VEHICLE_QUERY';
-import { VehicleQuery } from '../../@types/gql/VehicleQuery';
+import SEARCH_ITEM_QUERY from '../../queries/SEARCH_ITEM_QUERY';
+import { SearchItem } from '../../@types/gql/SearchItem';
 
 import Container from '../../components/Container';
 import UspList from '../../components/UspList';
@@ -14,7 +14,7 @@ import { ButtonPrimary, ButtonClear, ButtonContent } from '../../components/Butt
 import { UtilityTextRight } from '../../components/Utility';
 
 const DefaultSerchItemLayout = () => {
-  const { loading } = useQuery<VehicleQuery>(VEHICLE_QUERY, { variables: { id: 'test' } });
+  const { loading } = useQuery<SearchItem>(SEARCH_ITEM_QUERY, { variables: { id: 'test' } });
 
   return (
     <Page>
