@@ -22,7 +22,7 @@ import RangeSlider from '../../components/RangeSlider';
 import ColorSelect from '../../components/ColorSelect';
 import { UtilityTextRight } from '../../components/Utility';
 
-const WaykeSearchPage = () => (
+const DefaultSearchLayout = () => (
   <>
     <Page>
       <PageSection large>
@@ -263,4 +263,4 @@ const WaykeSearchPage = () => (
   </>
 );
 
-export default WaykeSearchPage;
+export default DefaultSearchLayout;
