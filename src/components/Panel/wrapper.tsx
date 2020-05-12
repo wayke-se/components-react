@@ -19,7 +19,7 @@ export const UiBlock = styled.div.attrs(() => ({
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(25, 25, 25, 0.4);
+  background-color: rgba(0, 0, 0, 0.35);
   animation: ${fadeIn} 200ms ease;
 `;
 
@@ -33,7 +33,7 @@ export const PanelWrapper = styled.article.attrs(() => ({
   bottom: 0;
   right: 0;
   width: 100%;
-  background-color: ${(props) => props.theme.color.bg};
+  background-color: ${(props) => props.theme.color.accent};
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1;
   animation: ${noTransform} 200ms ease forwards;
@@ -66,7 +66,10 @@ export const Header = styled.header`
     left: 0;
     right: 0;
     height: ${size(3)};
-    background-image: linear-gradient(${(props) => props.theme.color.bg}, rgba(255, 255, 255, 0));
+    background-image: linear-gradient(
+      ${(props) => props.theme.color.accent},
+      ${(props) => props.theme.color.accentTransparent}
+    );
     z-index: 1;
   }
 `;
