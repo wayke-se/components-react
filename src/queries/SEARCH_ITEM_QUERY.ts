@@ -1,18 +1,31 @@
 import { gql } from 'apollo-boost';
 import { MockedResponse } from '@apollo/react-testing';
 
-const VEHICLE_QUERY = gql`
-  query VehicleQuery($id: String) {
+const SEARCH_ITEM_QUERY = gql`
+  query SearchItem($id: String) {
     vehicle(id: $id) {
+      branch {
+        id
+        description
+      }
       description
+      id
+      gearbox
+      fuelType
+      manufactureYear
+      manufacturer
+      options
+      properties {
+        ...AllVehicleProperties
+      }
     }
   }
 `;
 
-export const VEHICLE_QUERY_MOCKS: MockedResponse[] = [
+export const SEARCH_ITEM_QUERY_MOCKS: MockedResponse[] = [
   {
     request: {
-      query: VEHICLE_QUERY,
+      query: SEARCH_ITEM_QUERY,
       variables: {
         id: 'test',
       },
@@ -73,17 +86,22 @@ export const VEHICLE_QUERY_MOCKS: MockedResponse[] = [
             abs: true,
             acceleration: 7.6,
             airbagDriver: true,
+            airbagFrontSide: null,
             airbagPassenger: true,
             annualTax: 360,
+            annualBonus: null,
+            annualMalus: null,
             brakeAssistance: true,
             chassis: 'Kombi',
             co2: 39,
-            co2Agg: 39,
             colorName: 'Vit',
             drivingWheel: 'Framhjulsdrift',
             engineCylinders: 4,
             engineVolume: 1395,
             environmentClass: 'Euro 6',
+            espSystem: null,
+            fuelConsumptionCityDriving: null,
+            fuelConsumptionCountryRoadDriving: null,
             fuelConsumptionMixedDriving: 1.6,
             gearboxName: 'Automatisk',
             groundClearence: 14,
@@ -91,21 +109,27 @@ export const VEHICLE_QUERY_MOCKS: MockedResponse[] = [
             height: 146,
             isofixRearSeat: true,
             length: 476,
+            listPrice: null,
             maxLoadWeight: 555,
             maxRoofWeight: 100,
             maxSpeed: 225,
+            ncapMonth: null,
             ncapStar: 5,
             ncapYear: '2014',
             numberOfGears: 6,
             seats: 5,
+            secondaryFuelType: null,
             segment: 'Stor Familjebil',
             serviceWeight: 1811,
             tankVolume: 50,
+            tco3Years2500: null,
             tiresFront: '205-225/40-55',
             tiresRear: '205-225/40-55',
             torque: 400,
             trailerTotalWeightB: 1250,
             trailerTotalWeightBPlus: 1600,
+            trailerWeight: 0,
+            trcSystem: null,
             trunkSpace: 650,
             wheelBase: 278,
             width: 183,
@@ -117,4 +141,4 @@ export const VEHICLE_QUERY_MOCKS: MockedResponse[] = [
   },
 ];
 
-export default VEHICLE_QUERY;
+export default SEARCH_ITEM_QUERY;
