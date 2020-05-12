@@ -7,9 +7,10 @@ import { VehicleQuery } from '../../@types/gql/VehicleQuery';
 import Container from '../../components/Container';
 import UspList from '../../components/UspList';
 import Repeat from '../../components/Repeat';
+import DataGrid from '../../components/DataGrid';
 import { Page, PageColumns, PageAside, PageMain, PageSection } from '../../components/Page';
 import { H1, H2 } from '../../components/Heading';
-import { ButtonClear } from '../../components/Button';
+import { ButtonPrimary, ButtonClear, ButtonContent } from '../../components/Button';
 import { UtilityTextRight } from '../../components/Utility';
 
 const DefaultSerchItemLayout = () => {
@@ -21,30 +22,40 @@ const DefaultSerchItemLayout = () => {
         <Container>
           <PageColumns>
             <PageAside>
-              <Repeat small>
-                <H1 noMargin>Mercedes-Benz C 200 Coupé</H1>
+              <Repeat>
+                <Repeat small>
+                  <H1 noMargin>Mercedes-Benz C 200 Coupé</H1>
+                </Repeat>
+                <Repeat small>
+                  <div>Mercedes 7G-Tronic Plus AMG Sport Euro 6 184hk</div>
+                </Repeat>
+                <Repeat small>
+                  <UspList
+                    small
+                    items={[
+                      {
+                        title: '2018',
+                      },
+                      {
+                        title: '2150 mil',
+                      },
+                      {
+                        title: 'Automat',
+                      },
+                      {
+                        title: 'Bensin',
+                      },
+                    ]}
+                  />
+                </Repeat>
               </Repeat>
-              <Repeat small>
-                <div>Mercedes 7G-Tronic Plus AMG Sport Euro 6 184hk</div>
+              <Repeat>
+                <div>Pris</div>
               </Repeat>
-              <Repeat small>
-                <UspList
-                  small
-                  items={[
-                    {
-                      title: '2018',
-                    },
-                    {
-                      title: '2150 mil',
-                    },
-                    {
-                      title: 'Automat',
-                    },
-                    {
-                      title: 'Bensin',
-                    },
-                  ]}
-                />
+              <Repeat>
+                <ButtonPrimary fullWidth>
+                  <ButtonContent>Köp bilen online</ButtonContent>
+                </ButtonPrimary>
               </Repeat>
             </PageAside>
             <PageMain>
@@ -57,7 +68,83 @@ const DefaultSerchItemLayout = () => {
                   <H2 noMargin>Biluppgifter</H2>
                 </Repeat>
                 <Repeat>
-                  <div>Uppgifter grid</div>
+                  <DataGrid
+                    items={[
+                      {
+                        label: 'Varumärke',
+                        value: 'Mercedes-Benz',
+                      },
+                      {
+                        label: 'Mätarställning',
+                        value: '2150 mil',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Tillverkningsår',
+                        value: '2018',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Version',
+                        value: 'C 200 Coupé',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Modell',
+                        value: 'C-Klass',
+                      },
+                      {
+                        label: 'Varumärke',
+                        value: 'Mercedes-Benz',
+                      },
+                      {
+                        label: 'Mätarställning',
+                        value: '2150 mil',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Tillverkningsår',
+                        value: '2018',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Version',
+                        value: 'C 200 Coupé',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Modell',
+                        value: 'C-Klass',
+                      },
+                      {
+                        label: 'Varumärke',
+                        value: 'Mercedes-Benz',
+                      },
+                      {
+                        label: 'Mätarställning',
+                        value: '2150 mil',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Tillverkningsår',
+                        value: '2018',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Version',
+                        value: 'C 200 Coupé',
+                        onClick: () => {},
+                      },
+                      {
+                        label: 'Modell',
+                        value: 'C-Klass',
+                      },
+                      {
+                        label: 'Varumärke',
+                        value: 'Mercedes-Benz',
+                      },
+                    ]}
+                  />
                 </Repeat>
                 <Repeat>
                   <UtilityTextRight>

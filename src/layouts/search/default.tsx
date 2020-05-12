@@ -13,7 +13,12 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import { PortalNamespace } from '../../components/Portal';
 import PortalElement from '../../components/Portal/portal-element';
 import { FooterAction, FooterActionItem } from '../../components/Panel/wrapper';
-import { ButtonPrimary, ButtonSecondary, ButtonClear } from '../../components/Button';
+import {
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonClear,
+  ButtonContent,
+} from '../../components/Button';
 import Accordion, { AccordionItem } from '../../components/Accordion';
 import Checklist from '../../components/Checklist';
 import Repeat from '../../components/Repeat';
@@ -100,10 +105,14 @@ const DefaultSearchLayout = () => (
             <>
               <FooterAction>
                 <FooterActionItem>
-                  <ButtonSecondary fullWidth>Rensa alla</ButtonSecondary>
+                  <ButtonSecondary fullWidth>
+                    <ButtonContent>Rensa alla</ButtonContent>
+                  </ButtonSecondary>
                 </FooterActionItem>
                 <FooterActionItem>
-                  <ButtonPrimary fullWidth>Visa 22 bilar</ButtonPrimary>
+                  <ButtonPrimary fullWidth>
+                    <ButtonContent>Visa 22 bilar</ButtonContent>
+                  </ButtonPrimary>
                 </FooterActionItem>
               </FooterAction>
             </>

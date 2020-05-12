@@ -59,7 +59,7 @@ export const PageColumns = styled.div`
 export const PageAside = styled.div`
   flex-shrink: 0;
   padding: 0 ${size(2)};
-  width: 332px;
+  width: 364px;
 `;
 
 export const PageMain = styled.div`
