@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { size } from '../../layout/helpers';
 
-export const Page = styled.div`
+export const Page = styled.main`
   padding-top: ${size(4)};
 `;
 
@@ -48,4 +48,21 @@ export const PageSection = styled.section<PageSectionProps>`
         margin-top: ${size(8)};
       }
     `}
+`;
+
+export const PageColumns = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin: 0 ${size(-2)};
+`;
+
+export const PageAside = styled.div`
+  flex-shrink: 0;
+  padding: 0 ${size(2)};
+  width: 332px;
+`;
+
+export const PageMain = styled.div`
+  flex: 1 1 auto;
+  padding: 0 ${size(2)};
 `;

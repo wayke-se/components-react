@@ -4,7 +4,7 @@ import { size } from '../../layout/helpers';
 import { ButtonReset } from '../Button';
 
 export const Item = styled.li`
-  padding: ${size(0.25)};
+  padding: ${size(0.5)};
 `;
 
 export const Box = styled.div`
@@ -36,11 +36,17 @@ export const List = styled.ul`
   flex-wrap: wrap;
   list-style: none;
   padding: 0;
-  margin: ${size(-0.25)};
+  margin: ${size(-0.5)};
 
   ${({ isSmall }: { isSmall?: boolean }) =>
     isSmall &&
     css`
+      margin: ${size(-0.25)};
+
+      ${Item} {
+        padding: ${size(0.25)};
+      }
+
       ${Box} {
         padding: ${size(0.5)} ${size(1)};
         font-size: 0.75rem;
