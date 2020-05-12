@@ -61,6 +61,8 @@ export const Info = styled(ButtonReset).attrs(() => ({
   margin-left: ${size(1)};
   font: inherti;
   font-size: 1em;
+  transform-origin: 50% 50%;
+  transition: transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
   :before {
     content: '';
@@ -72,8 +74,7 @@ export const Info = styled(ButtonReset).attrs(() => ({
     background-color: ${(props) => props.theme.color.accentDark};
     border-radius: 50%;
     opacity: 0;
-    transform-origin: 50% 50%;
-    transition: opacity 200ms ease, transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+    transition: opacity 200ms ease;
   }
 
   > * {

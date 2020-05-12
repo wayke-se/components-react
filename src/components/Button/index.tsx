@@ -104,6 +104,7 @@ export const ButtonSecondary = styled(ButtonBase).attrs(() => ({
 `;
 
 export const ButtonContent = styled.div`
+  position: relative;
   z-index: 1;
 
   & + & {
@@ -114,12 +115,38 @@ export const ButtonContent = styled.div`
 export const ButtonClear = styled(ButtonReset).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text wayke__font--bold',
 }))`
+  position: relative;
   font-size: 0.875rem;
   padding: ${size(1.5)};
   margin: ${size(-1.5)};
   text-align: left;
+  transform-origin: 50% 50%;
+  transition: transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
   ${UtilityTextRight} & {
     text-align: right;
+  }
+
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: ${(props) => props.theme.color.accent};
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  :hover {
+    :before {
+      opacity: 1;
+    }
+  }
+
+  :active {
+    transform: scale(0.95);
   }
 `;

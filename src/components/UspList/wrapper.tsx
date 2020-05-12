@@ -20,14 +20,45 @@ export const Box = styled.div`
 
 export const ItemSection = styled.div`
   & + & {
-    margin-left: ${size(0.75)};
+    margin-left: ${size(1)};
   }
 `;
 
 export const Action = styled(ButtonReset).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
 }))`
+  position: relative;
   display: block;
+  transform-origin: 50% 50%;
+  transition: transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+  :before {
+    content: '';
+    position: absolute;
+    top: ${size(-0.5)};
+    bottom: ${size(-0.5)};
+    left: ${size(-0.5)};
+    right: ${size(-0.5)};
+    background-color: ${(props) => props.theme.color.accent};
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  :hover {
+    :before {
+      opacity: 1;
+    }
+  }
+
+  :active {
+    transform: scale(0.95);
+  }
 `;
 
 export const List = styled.ul`

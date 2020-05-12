@@ -256,7 +256,9 @@ const DefaultSearchLayout = () => (
               </Repeat>
               <Repeat>
                 <UtilityTextRight>
-                  <ButtonClear>Rensa märke och modell</ButtonClear>
+                  <ButtonClear>
+                    <ButtonContent>Rensa märke och modell</ButtonContent>
+                  </ButtonClear>
                 </UtilityTextRight>
               </Repeat>
             </AccordionItem>

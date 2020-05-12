@@ -148,7 +148,9 @@ const DefaultSerchItemLayout = () => {
                 </Repeat>
                 <Repeat>
                   <UtilityTextRight>
-                    <ButtonClear>Visa mer</ButtonClear>
+                    <ButtonClear>
+                      <ButtonContent>Visa mer</ButtonContent>
+                    </ButtonClear>
                   </UtilityTextRight>
                 </Repeat>
               </PageSection>
@@ -205,7 +207,9 @@ const DefaultSerchItemLayout = () => {
                 </Repeat>
                 <Repeat>
                   <UtilityTextRight>
-                    <ButtonClear>Visa mer</ButtonClear>
+                    <ButtonClear>
+                      <ButtonContent>Visa mer</ButtonContent>
+                    </ButtonClear>
                   </UtilityTextRight>
                 </Repeat>
               </PageSection>
@@ -221,7 +225,9 @@ const DefaultSerchItemLayout = () => {
                 </Repeat>
                 <Repeat>
                   <UtilityTextRight>
-                    <ButtonClear>Visa mer</ButtonClear>
+                    <ButtonClear>
+                      <ButtonContent>Visa mer</ButtonContent>
+                    </ButtonClear>
                   </UtilityTextRight>
                 </Repeat>
               </PageSection>
