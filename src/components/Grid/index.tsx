@@ -3,13 +3,19 @@ import React from 'react';
 import { Wrapper, List, Item } from './wrapper';
 import ProductCard from '../ProductCard';
 
-const Grid = () => (
+interface GridProps {
+  onClickItem?: (id: string) => void;
+}
+
+const Grid = ({ onClickItem }: GridProps) => (
   <Wrapper>
     <List>
       <Item>
         <ProductCard
+          id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
+          onClick={onClickItem}
           title="Mazda CX-5"
-          href="/product-page"
+          href="#684f2548-1250-4ae2-bcb8-e8aec11cb739"
           image="http://placehold.it/600x400"
           description="Optimum 2.2 DE 175hk Aut AWD – Dragkrok"
           uspList={[
@@ -32,8 +38,9 @@ const Grid = () => (
       </Item>
       <Item>
         <ProductCard
+          id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
           title="Skoda Kodiaq"
-          href="/product-page"
+          href="#684f2548-1250-4ae2-bcb8-e8aec11cb7399"
           image="http://placehold.it/600x400"
           description="Style 2,0 TDI 190 DSG 4x4"
           uspList={[
@@ -56,6 +63,7 @@ const Grid = () => (
       </Item>
       <Item>
         <ProductCard
+          id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
           title="Mercedes-Benz C 200 Coupé"
           href="/product-page"
           image="http://placehold.it/600x400"
@@ -80,6 +88,7 @@ const Grid = () => (
       </Item>
       <Item>
         <ProductCard
+          id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
           title="Skoda Kodiaq"
           href="/product-page"
           image="http://placehold.it/600x400"
@@ -104,6 +113,7 @@ const Grid = () => (
       </Item>
       <Item>
         <ProductCard
+          id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
           title="Mazda CX-5"
           href="/product-page"
           image="http://placehold.it/600x400"

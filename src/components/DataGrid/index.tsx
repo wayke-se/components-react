@@ -5,7 +5,7 @@ import { IconInfo } from '../Icon';
 
 export interface ItemProps {
   label: string;
-  value: string;
+  value: string | number | null;
   onClick?: () => void;
 }
 

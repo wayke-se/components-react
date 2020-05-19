@@ -1,5 +1,6 @@
 import { gql } from 'apollo-boost';
 import { MockedResponse } from '@apollo/react-testing';
+import PROPERTIES_FRAGMENT from './fragments/PROPERTIES_FRAGMENT';
 
 const SEARCH_ITEM_QUERY = gql`
   query SearchItem($id: String) {
@@ -18,8 +19,11 @@ const SEARCH_ITEM_QUERY = gql`
       properties {
         ...AllVehicleProperties
       }
+      modelName
+      milage
     }
   }
+  ${PROPERTIES_FRAGMENT}
 `;
 
 export const SEARCH_ITEM_QUERY_MOCKS: MockedResponse[] = [
@@ -27,7 +31,7 @@ export const SEARCH_ITEM_QUERY_MOCKS: MockedResponse[] = [
     request: {
       query: SEARCH_ITEM_QUERY,
       variables: {
-        id: 'test',
+        id: '684f2548-1250-4ae2-bcb8-e8aec11cb739',
       },
     },
     result: {
@@ -135,6 +139,7 @@ export const SEARCH_ITEM_QUERY_MOCKS: MockedResponse[] = [
             width: 183,
           },
           modelName: 'Passat GTE SportsCombi',
+          milage: 7000,
         },
       },
     },

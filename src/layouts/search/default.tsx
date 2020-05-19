@@ -28,7 +28,11 @@ import RangeSlider from '../../components/RangeSlider';
 import ColorSelect from '../../components/ColorSelect';
 import { UtilityTextRight } from '../../components/Utility';
 
-const DefaultSearchLayout = () => (
+interface DefaultSearchLayoutProps {
+  onClickSearchItem?: (id: string) => void;
+}
+
+const DefaultSearchLayout = ({ onClickSearchItem }: DefaultSearchLayoutProps) => (
   <>
     <Page>
       <PageSection large>
@@ -92,7 +96,7 @@ const DefaultSearchLayout = () => (
       <PageSection accent>
         <Container>
           <Result>
-            <Grid />
+            <Grid onClickItem={onClickSearchItem} />
           </Result>
         </Container>
       </PageSection>

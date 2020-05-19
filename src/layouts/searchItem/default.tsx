@@ -1,8 +1,4 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-
-import SEARCH_ITEM_QUERY from '../../queries/SEARCH_ITEM_QUERY';
-import { SearchItem } from '../../@types/gql/SearchItem';
+import React, { useMemo } from 'react';
 
 import Container from '../../components/Container';
 import UspList from '../../components/UspList';
@@ -12,9 +8,29 @@ import { Page, PageColumns, PageAside, PageMain, PageSection } from '../../compo
 import { H1, H2 } from '../../components/Heading';
 import { ButtonPrimary, ButtonClear, ButtonContent } from '../../components/Button';
 import { UtilityTextRight } from '../../components/Utility';
+import useSearchItem from '../../hooks/useSearchItem';
+import { notEmpty } from '../../utils/formats';
 
-const DefaultSerchItemLayout = () => {
-  const { loading } = useQuery<SearchItem>(SEARCH_ITEM_QUERY, { variables: { id: 'test' } });
+interface DefaultSerchItemLayoutProps {
+  id?: string;
+}
+
+const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
+  const { loading, data } = useSearchItem(id);
+  const options = useMemo(
+    () => data?.vehicle?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
+    [data?.vehicle?.options]
+  );
+
+  if (loading) {
+    return <p>loading...</p>;
+  }
+
+  if (!data?.vehicle) {
+    return <p>404</p>;
+  }
+
+  const { fuelType, gearbox, manufactureYear, manufacturer } = data.vehicle;
 
   return (
     <Page>
@@ -34,16 +50,16 @@ const DefaultSerchItemLayout = () => {
                     small
                     items={[
                       {
-                        title: '2018',
+                        title: manufactureYear,
                       },
                       {
-                        title: '2150 mil',
+                        title: '--- mil',
                       },
                       {
-                        title: 'Automat',
+                        title: gearbox,
                       },
                       {
-                        title: 'Bensin',
+                        title: fuelType,
                       },
                     ]}
                   />
@@ -59,7 +75,6 @@ const DefaultSerchItemLayout = () => {
               </Repeat>
             </PageAside>
             <PageMain>
-              {loading && <PageSection>Loading...</PageSection>}
               <PageSection>
                 <H2 noMargin>Galleri</H2>
               </PageSection>
@@ -72,7 +87,7 @@ const DefaultSerchItemLayout = () => {
                     items={[
                       {
                         label: 'Varumärke',
-                        value: 'Mercedes-Benz',
+                        value: manufacturer,
                       },
                       {
                         label: 'Mätarställning',
@@ -81,7 +96,7 @@ const DefaultSerchItemLayout = () => {
                       },
                       {
                         label: 'Tillverkningsår',
-                        value: '2018',
+                        value: manufactureYear,
                         onClick: () => {},
                       },
                       {
@@ -94,53 +109,53 @@ const DefaultSerchItemLayout = () => {
                         value: 'C-Klass',
                       },
                       {
-                        label: 'Varumärke',
+                        label: 'Varumärke1',
                         value: 'Mercedes-Benz',
                       },
                       {
-                        label: 'Mätarställning',
+                        label: 'Mätarställning1',
                         value: '2150 mil',
                         onClick: () => {},
                       },
                       {
-                        label: 'Tillverkningsår',
+                        label: 'Tillverkningsår1',
                         value: '2018',
                         onClick: () => {},
                       },
                       {
-                        label: 'Version',
+                        label: 'Version1',
                         value: 'C 200 Coupé',
                         onClick: () => {},
                       },
                       {
-                        label: 'Modell',
+                        label: 'Modell1',
                         value: 'C-Klass',
                       },
                       {
-                        label: 'Varumärke',
+                        label: 'Varumärke2',
                         value: 'Mercedes-Benz',
                       },
                       {
-                        label: 'Mätarställning',
+                        label: 'Mätarställning2',
                         value: '2150 mil',
                         onClick: () => {},
                       },
                       {
-                        label: 'Tillverkningsår',
+                        label: 'Tillverkningsår2',
                         value: '2018',
                         onClick: () => {},
                       },
                       {
-                        label: 'Version',
+                        label: 'Version2',
                         value: 'C 200 Coupé',
                         onClick: () => {},
                       },
                       {
-                        label: 'Modell',
+                        label: 'Modell2',
                         value: 'C-Klass',
                       },
                       {
-                        label: 'Varumärke',
+                        label: 'Varumärke3',
                         value: 'Mercedes-Benz',
                       },
                     ]}
@@ -162,48 +177,7 @@ const DefaultSerchItemLayout = () => {
                   <H2 noMargin>Utrustning</H2>
                 </Repeat>
                 <Repeat>
-                  <UspList
-                    items={[
-                      {
-                        title: 'Lorem ipsum dolor sit amet',
-                      },
-                      {
-                        title: 'Consectetur adipiscing elit',
-                        onClick: () => {},
-                      },
-                      {
-                        title: 'Sed do eiusmod',
-                      },
-                      {
-                        title: 'Tempor incididunt ut',
-                      },
-                      {
-                        title: 'Labore et dolore',
-                      },
-                      {
-                        title: 'Magna aliqua',
-                      },
-                      {
-                        title: 'Ut enim ad minim veniam',
-                      },
-                      {
-                        title: 'Quis',
-                      },
-                      {
-                        title: 'Nostrud exercitation',
-                        onClick: () => {},
-                      },
-                      {
-                        title: 'Ullamco laboris nisi ut aliquip',
-                      },
-                      {
-                        title: 'Ex ea',
-                      },
-                      {
-                        title: 'Commodo consequat',
-                      },
-                    ]}
-                  />
+                  <UspList items={options} />
                 </Repeat>
                 <Repeat>
                   <UtilityTextRight>

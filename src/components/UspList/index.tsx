@@ -4,7 +4,7 @@ import { List, Item, Box, ItemSection, Action } from './wrapper';
 import { IconInfo } from '../Icon';
 
 export interface ItemProps {
-  title: string;
+  title: string | number | null;
   onClick?: () => void;
 }
 
@@ -37,8 +37,8 @@ const UspList = ({ items, small }: Props) => {
 
   return (
     <List isSmall={small}>
-      {items.map((item) => (
-        <UspItem key={item.title} title={item.title} onClick={item.onClick} />
+      {items.map((item, index) => (
+        <UspItem key={item.title || index} title={item.title} onClick={item.onClick} />
       ))}
     </List>
   );
