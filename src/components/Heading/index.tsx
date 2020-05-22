@@ -60,3 +60,9 @@ export const H6 = styled(HeadingBase).attrs(() => ({
 }))`
   font-size: 0.67rem;
 `;
+
+export const VisualHeading = styled.div.attrs(() => ({
+  className: 'wayke__theme wayke__font--bold',
+}))`
+  font-size: 1em;
+`;

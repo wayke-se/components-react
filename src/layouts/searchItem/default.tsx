@@ -4,6 +4,7 @@ import Container from '../../components/Container';
 import UspList from '../../components/UspList';
 import Repeat from '../../components/Repeat';
 import DataGrid from '../../components/DataGrid';
+import PriceTable from '../../components/PriceTable';
 import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
@@ -12,7 +13,7 @@ import {
   ProductPageMain,
   ProductPageAsideSection,
 } from '../../components/ProductPage';
-import { H1, H2 } from '../../components/Heading';
+import { H1, H2, VisualHeading } from '../../components/Heading';
 import { ButtonPrimary, ButtonClear, ButtonContent, ButtonInline } from '../../components/Button';
 import { UtilityTextRight } from '../../components/Utility';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
@@ -75,7 +76,15 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageAsideSection>
 
               <ProductPageAsideSection mobileOrder={2}>
-                <div>Pris</div>
+                <Repeat small>
+                  <PriceTable />
+                </Repeat>
+                <Repeat small>
+                  <VisualHeading>Andra finansieringsalternativ</VisualHeading>
+                </Repeat>
+                <Repeat small>
+                  <VisualHeading>Välj till försäkring</VisualHeading>
+                </Repeat>
               </ProductPageAsideSection>
 
               <ProductPageAsideSection mobileOrder={4}>
@@ -104,6 +113,9 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <ButtonPrimary fullWidth>
                     <ButtonContent>Köp bilen online</ButtonContent>
                   </ButtonPrimary>
+                </Repeat>
+                <Repeat>
+                  <div>Visa E-post/Telefonnummer</div>
                 </Repeat>
               </ProductPageAsideSection>
             </ProductPageAside>
