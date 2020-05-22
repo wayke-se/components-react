@@ -5,7 +5,9 @@ import UspList from '../../components/UspList';
 import Repeat from '../../components/Repeat';
 import DataGrid from '../../components/DataGrid';
 import PriceTable from '../../components/PriceTable';
+import OptionBox from '../../components/OptionBox';
 import LogoBox from '../../components/LogoBox';
+import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
@@ -16,7 +18,7 @@ import {
 } from '../../components/ProductPage';
 import { H1, H2, VisualHeading } from '../../components/Heading';
 import { ButtonPrimary, ButtonClear, ButtonContent, ButtonInline } from '../../components/Button';
-import { UtilityTextRight } from '../../components/Utility';
+import { UtilityTextRight, UtilityTextPrimary } from '../../components/Utility';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty } from '../../utils/formats';
@@ -49,6 +51,9 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
           <ProductPage>
             <ProductPageAside>
               <ProductPageAsideSection mobileOrder={1}>
+                <Repeat>
+                  <LogoBox logo="https://placehold.it/24x24" alt="Logotyp" />
+                </Repeat>
                 <Repeat small>
                   <H1 noMargin>Mercedes-Benz C 200 Coupé</H1>
                 </Repeat>
@@ -77,16 +82,37 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageAsideSection>
 
               <ProductPageAsideSection mobileOrder={2}>
-                <Repeat small>
-                  <PriceTable />
-                </Repeat>
+                <PriceTable />
+              </ProductPageAsideSection>
+
+              <ProductPageAsideSection mobileOrder={4}>
                 <Repeat small>
                   <Repeat tiny>
                     <VisualHeading>Andra finansieringsalternativ</VisualHeading>
                   </Repeat>
                   <Repeat tiny>
-                    <LogoBox logo="http://placehold.it/24x24" />
-                    <div>Goes here...</div>
+                    <OptionBox>
+                      <OptionBoxHeading>ca 5 800 kr/mån</OptionBoxHeading>
+                      <OptionBoxContent>
+                        <p>
+                          Privatleasing <UtilityTextPrimary>1 500 mil/år</UtilityTextPrimary> i{' '}
+                          <UtilityTextPrimary>36 mån</UtilityTextPrimary>.{' '}
+                          <ButtonInline>Läs mer</ButtonInline>
+                        </p>
+                      </OptionBoxContent>
+                    </OptionBox>
+                    <OptionBox logo="https://placehold.it/67x10" logoAlt="Logotyp">
+                      <OptionBoxHeading>5 879 kr/mån*</OptionBoxHeading>
+                      <OptionBoxContent>
+                        <p>
+                          Delbetala <UtilityTextPrimary>311 920 kr</UtilityTextPrimary> i{' '}
+                          <UtilityTextPrimary>60 mån</UtilityTextPrimary>.
+                        </p>
+                        <p>
+                          *Beräknat på 4,9% ränta. <ButtonInline>Läs mer</ButtonInline>
+                        </p>
+                      </OptionBoxContent>
+                    </OptionBox>
                   </Repeat>
                 </Repeat>
                 <Repeat small>
@@ -94,12 +120,19 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     <VisualHeading>Välj till försäkring</VisualHeading>
                   </Repeat>
                   <Repeat tiny>
-                    <div>Goes here...</div>
+                    <OptionBox logo="https://placehold.it/24x24" logoAlt="Logotyp">
+                      <OptionBoxHeading>496 kr/mån</OptionBoxHeading>
+                      <OptionBoxContent>
+                        <p>
+                          Halvförsäkring med If Rulla-vidare. <ButtonInline>Läs mer</ButtonInline>
+                        </p>
+                      </OptionBoxContent>
+                    </OptionBox>
                   </Repeat>
                 </Repeat>
               </ProductPageAsideSection>
 
-              <ProductPageAsideSection mobileOrder={4}>
+              <ProductPageAsideSection mobileOrder={5}>
                 <Repeat>
                   <CheckMarkList>
                     <CheckMarkListItem>
