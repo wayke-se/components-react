@@ -4,7 +4,14 @@ import Container from '../../components/Container';
 import UspList from '../../components/UspList';
 import Repeat from '../../components/Repeat';
 import DataGrid from '../../components/DataGrid';
-import { Page, PageColumns, PageAside, PageMain, PageSection } from '../../components/Page';
+import { Page, PageSection } from '../../components/Page';
+import {
+  ProductPage,
+  ProductPageMainSection,
+  ProductPageAside,
+  ProductPageMain,
+  ProductPageAsideSection,
+} from '../../components/ProductPage';
 import { H1, H2 } from '../../components/Heading';
 import { ButtonPrimary, ButtonClear, ButtonContent } from '../../components/Button';
 import { UtilityTextRight } from '../../components/Utility';
@@ -36,9 +43,9 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     <Page>
       <PageSection>
         <Container>
-          <PageColumns>
-            <PageAside>
-              <Repeat>
+          <ProductPage>
+            <ProductPageAside>
+              <ProductPageAsideSection mobileOrder={1}>
                 <Repeat small>
                   <H1 noMargin>Mercedes-Benz C 200 Coupé</H1>
                 </Repeat>
@@ -64,21 +71,24 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     ]}
                   />
                 </Repeat>
-              </Repeat>
-              <Repeat>
+              </ProductPageAsideSection>
+
+              <ProductPageAsideSection mobileOrder={2}>
                 <div>Pris</div>
-              </Repeat>
-              <Repeat>
+              </ProductPageAsideSection>
+
+              <ProductPageAsideSection mobileOrder={4}>
                 <ButtonPrimary fullWidth>
                   <ButtonContent>Köp bilen online</ButtonContent>
                 </ButtonPrimary>
-              </Repeat>
-            </PageAside>
-            <PageMain>
-              <PageSection>
+              </ProductPageAsideSection>
+            </ProductPageAside>
+            <ProductPageMain>
+              <ProductPageAsideSection mobileOrder={3}>
                 <H2 noMargin>Galleri</H2>
-              </PageSection>
-              <PageSection>
+              </ProductPageAsideSection>
+
+              <ProductPageMainSection>
                 <Repeat>
                   <H2 noMargin>Biluppgifter</H2>
                 </Repeat>
@@ -168,11 +178,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </ButtonClear>
                   </UtilityTextRight>
                 </Repeat>
-              </PageSection>
-              <PageSection>
+              </ProductPageMainSection>
+
+              <ProductPageMainSection>
                 <H2 noMargin>Testimonial</H2>
-              </PageSection>
-              <PageSection>
+              </ProductPageMainSection>
+
+              <ProductPageMainSection>
                 <Repeat>
                   <H2 noMargin>Utrustning</H2>
                 </Repeat>
@@ -186,11 +198,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </ButtonClear>
                   </UtilityTextRight>
                 </Repeat>
-              </PageSection>
-              <PageSection>
+              </ProductPageMainSection>
+
+              <ProductPageMainSection>
                 <H2 noMargin>Den här bilen finns på vår anläggning i Göteborg</H2>
-              </PageSection>
-              <PageSection>
+              </ProductPageMainSection>
+
+              <ProductPageMainSection>
                 <Repeat>
                   <H2 noMargin>Begagnatgaranti</H2>
                 </Repeat>
@@ -204,14 +218,16 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </ButtonClear>
                   </UtilityTextRight>
                 </Repeat>
-              </PageSection>
-              <PageSection>
+              </ProductPageMainSection>
+
+              <ProductPageMainSection>
                 <H2 noMargin>Historik</H2>
-              </PageSection>
-            </PageMain>
-          </PageColumns>
+              </ProductPageMainSection>
+            </ProductPageMain>
+          </ProductPage>
         </Container>
       </PageSection>
+
       <PageSection accent>
         <Container>
           <H2 noMargin>Senast inkomna</H2>

@@ -49,20 +49,3 @@ export const PageSection = styled.section<PageSectionProps>`
       }
     `}
 `;
-
-export const PageColumns = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin: 0 ${size(-2)};
-`;
-
-export const PageAside = styled.div`
-  flex-shrink: 0;
-  padding: 0 ${size(2)};
-  width: 364px;
-`;
-
-export const PageMain = styled.div`
-  flex: 1 1 auto;
-  padding: 0 ${size(2)};
-`;
