@@ -6,19 +6,12 @@ export const Wrapper = styled.div`
   position: relative;
   display: flex;
   align-items: stretch;
-  background-color: ${(props) => props.theme.color.accentDark};
+  background-color: ${(props) => props.theme.color.accent};
   border-radius: 3px;
 `;
 
-export const Icon = styled.label`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  padding-left: ${size(2)};
-`;
-
 export const Input = styled.input.attrs(() => ({
-  type: 'search',
+  type: 'text',
   className: 'wayke__theme wayke__font--regular',
 }))`
   flex: 1 1 auto;

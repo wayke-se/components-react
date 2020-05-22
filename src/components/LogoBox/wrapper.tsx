@@ -14,7 +14,7 @@ export const Wrapper = styled.div<WrapperProps>`
   width: ${size(9.5)};
   height: ${size(6)};
   box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  border-radius: 3px;
 
   ${({ wide }) =>
     wide &&

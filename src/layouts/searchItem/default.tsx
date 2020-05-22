@@ -9,7 +9,9 @@ import OptionBox from '../../components/OptionBox';
 import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
+import InputText from '../../components/InputText';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
+import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
@@ -346,10 +348,24 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   </Content>
                 </Repeat>
                 <Repeat>
-                  <div>Input + Button</div>
+                  <InputAction>
+                    <InputActionInput>
+                      <InputText placeholder="Fyll i din e-postadress" label="E-postadress" />
+                    </InputActionInput>
+                    <InputActionBtn>
+                      <ButtonPrimary title="Köp bilen online" inputHeight>
+                        Köp bilen online
+                      </ButtonPrimary>
+                    </InputActionBtn>
+                  </InputAction>
                 </Repeat>
                 <Repeat>
-                  <LogoBox logo="https://placehold.it/145x19" alt="Logotyp" wide />
+                  <LogoBox
+                    logo="https://placehold.it/145x19"
+                    logo2x="https://placehold.it/290x38"
+                    alt="Logotyp"
+                    wide
+                  />
                 </Repeat>
                 <Repeat>
                   <Content small>

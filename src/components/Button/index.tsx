@@ -36,6 +36,7 @@ type ButtonResetProps = React.DetailedHTMLProps<
   HTMLButtonElement
 > & {
   fullWidth?: boolean;
+  inputHeight?: boolean;
 };
 
 export const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
@@ -86,6 +87,12 @@ export const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
       display: flex;
       width: 100%;
     `}
+
+    ${({ inputHeight }) =>
+      inputHeight &&
+      css`
+        height: ${(props) => props.theme.distances.inputHeight};
+      `}
 
   ${(props) => props.theme.breakpoint.LtSm} {
     padding: ${size(1.75)} ${size(2.5)};

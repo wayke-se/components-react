@@ -49,6 +49,7 @@ const theme = {
   font: 'sans-serif',
   distances: {
     baseUnit: '8px',
+    inputHeight: '48px',
     containerMaxWidth: '1312px',
   },
 };

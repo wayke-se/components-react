@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   align-items: flex-start;
   padding: ${size(1)};
   border: 1px solid ${(props) => props.theme.color.border};
-  border-radius: 4px;
+  border-radius: 3px;
 
   & + & {
     margin-top: ${size(1)};
