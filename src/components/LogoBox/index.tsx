@@ -5,10 +5,11 @@ import { Logo, Wrapper } from './wrapper';
 interface ILogoBox {
   logo: string;
   alt?: string;
+  wide?: boolean;
 }
 
-const LogoBox = ({ logo, alt }: ILogoBox) => (
-  <Wrapper>
+const LogoBox = ({ logo, alt, wide }: ILogoBox) => (
+  <Wrapper wide={wide}>
     <Logo src={logo} alt={alt} />
   </Wrapper>
 );

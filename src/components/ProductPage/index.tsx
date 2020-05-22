@@ -87,6 +87,8 @@ export const ProductPageMainSection = styled.div`
   ${(props) => props.theme.breakpoint.Md} {
     & + & {
       margin-top: ${size(8)};
+      padding-top: ${size(8)};
+      border-top: 1px solid ${(props) => props.theme.color.border};
     }
   }
 `;

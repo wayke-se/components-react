@@ -8,6 +8,7 @@ import PriceTable from '../../components/PriceTable';
 import OptionBox from '../../components/OptionBox';
 import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
+import Content from '../../components/Content';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { Page, PageSection } from '../../components/Page';
 import {
@@ -291,7 +292,30 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <H2 noMargin>Begagnatgaranti</H2>
                 </Repeat>
                 <Repeat>
-                  <div>Begagnatgaranti info</div>
+                  <Content>
+                    <VisualHeading>Gör ett tryggt bilköp</VisualHeading>
+                    <p>
+                      Das WeltAuto är ett program från Volkswagengruppen. Det passar utmärkt för dig
+                      som vill köpa en begagnad bil med garanti och flera andra förmåner.
+                    </p>
+                    <p>
+                      Alla bilar är högst fem år gamla och har gått max 12 000 mil. För att en
+                      begagnad bil ska bli Das WeltAuto-certifierad krävs godkänt på en omfattande
+                      kvalitetskontroll. Kontrollen är ett kvitto på att bilen är i bästa skick.
+                    </p>
+                  </Content>
+                </Repeat>
+                <Repeat>
+                  <CheckMarkList>
+                    <CheckMarkListItem>12 mån/obegränsad körsträcka</CheckMarkListItem>
+                    <CheckMarkListItem>Bytesrätt 10 dagar</CheckMarkListItem>
+                    <CheckMarkListItem>Kontrollerad på 122 punkter</CheckMarkListItem>
+                    <CheckMarkListItem>Max 5 år gamla bilar</CheckMarkListItem>
+                    <CheckMarkListItem>Max 12 000 mil körsträcka</CheckMarkListItem>
+                  </CheckMarkList>
+                </Repeat>
+                <Repeat>
+                  <LogoBox logo="https://placehold.it/145x19" alt="Logotyp" wide />
                 </Repeat>
                 <Repeat>
                   <UtilityTextRight>
