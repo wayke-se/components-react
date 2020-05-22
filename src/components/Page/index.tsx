@@ -22,23 +22,8 @@ export const PageSection = styled.section<PageSectionProps>`
   ${({ accent }: { accent?: boolean }) =>
     accent &&
     css`
-      position: relative;
       padding: ${size(4)} 0;
-
-      :before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        width: 100vw;
-        transform: translateX(-50%);
-        background-color: ${(props) => props.theme.color.accent};
-      }
-
-      > * {
-        position: relative;
-      }
+      background-color: ${(props) => props.theme.color.accent};
     `}
 
   ${({ large }: { large?: boolean }) =>

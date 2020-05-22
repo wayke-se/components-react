@@ -13,8 +13,9 @@ import {
   ProductPageAsideSection,
 } from '../../components/ProductPage';
 import { H1, H2 } from '../../components/Heading';
-import { ButtonPrimary, ButtonClear, ButtonContent } from '../../components/Button';
+import { ButtonPrimary, ButtonClear, ButtonContent, ButtonInline } from '../../components/Button';
 import { UtilityTextRight } from '../../components/Utility';
+import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty } from '../../utils/formats';
 
@@ -78,14 +79,37 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageAsideSection>
 
               <ProductPageAsideSection mobileOrder={4}>
-                <ButtonPrimary fullWidth>
-                  <ButtonContent>Köp bilen online</ButtonContent>
-                </ButtonPrimary>
+                <Repeat>
+                  <CheckMarkList>
+                    <CheckMarkListItem>
+                      <>
+                        Inkl. <ButtonInline>Das WeltAuto</ButtonInline> begagnatgaranti
+                      </>
+                    </CheckMarkListItem>
+                    <CheckMarkListItem>
+                      <>
+                        Inkl. <ButtonInline>Bilia Total</ButtonInline>
+                      </>
+                    </CheckMarkListItem>
+                    <CheckMarkListItem>
+                      <>
+                        Inkl. <ButtonInline>Bilia MaxiTrygg</ButtonInline>-garanti
+                      </>
+                    </CheckMarkListItem>
+                    <CheckMarkListItem>Gratis hemleverans</CheckMarkListItem>
+                    <CheckMarkListItem>Vinterhjul inkluderade</CheckMarkListItem>
+                  </CheckMarkList>
+                </Repeat>
+                <Repeat>
+                  <ButtonPrimary fullWidth>
+                    <ButtonContent>Köp bilen online</ButtonContent>
+                  </ButtonPrimary>
+                </Repeat>
               </ProductPageAsideSection>
             </ProductPageAside>
             <ProductPageMain>
               <ProductPageAsideSection mobileOrder={3}>
-                <H2 noMargin>Galleri</H2>
+                <div style={{ height: '0', paddingBottom: '56.25%', backgroundColor: '#f0f0f0' }} />
               </ProductPageAsideSection>
 
               <ProductPageMainSection>

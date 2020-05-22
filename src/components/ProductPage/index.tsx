@@ -18,9 +18,8 @@ export const ProductPageAside = styled.div`
   }
 
   ${(props) => props.theme.breakpoint.Md} {
-    flex: 1 0 auto;
-    width: 33.333%;
-    min-widht: 33.333%;
+    flex-shrink: 0;
+    width: calc(375px + ${size(2)});
     padding-right: ${size(2)};
   }
 `;
@@ -31,9 +30,7 @@ export const ProductPageMain = styled.div`
   }
 
   ${(props) => props.theme.breakpoint.Md} {
-    flex: 1 0 auto;
-    width: 66.666%;
-    min-widht: 66.666%;
+    flex: 1 1 auto;
     padding-left: ${size(2)};
   }
 `;
@@ -48,6 +45,18 @@ type ProductPageAsideSectionProps = React.DetailedHTMLProps<
 export const ProductPageAsideSection = styled.div<ProductPageAsideSectionProps>`
   ${(props) => props.theme.breakpoint.LtMd} {
     order: ${(props) => props.mobileOrder};
+
+    & + & {
+      margin-top: ${size(2)};
+    }
+
+    :last-child {
+      margin-bottom: ${size(4)};
+    }
+
+    ${ProductPageMain} & {
+      margin-top: ${size(2)};
+    }
   }
 
   ${(props) => props.theme.breakpoint.Md} {
@@ -64,8 +73,8 @@ export const ProductPageAsideSection = styled.div<ProductPageAsideSectionProps>`
 export const ProductPageMainSection = styled.div`
   ${(props) => props.theme.breakpoint.LtMd} {
     order: 99;
-    padding: ${size(5)} 0;
-    border-top: 10px solid ${(props) => props.theme.color.accent};
+    padding: ${size(4)} 0;
+    border-top: ${size(1)} solid ${(props) => props.theme.color.accent};
 
     ${Container} & {
       margin-left: ${size(-2)};

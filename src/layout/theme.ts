@@ -9,6 +9,7 @@ const _colors = {
   blue: '#1d61ca',
   ui: {
     greenLight: '#cdf5c8',
+    green: '#2b8747',
     redLight: '#ffd0d0',
     yellowLight: '#fff4c7',
     blueLight: '#daf7fc',
@@ -31,6 +32,7 @@ const theme = {
     placeholder: _colors.grayDark,
     ui: {
       positiveLight: _colors.ui.greenLight,
+      positive: _colors.ui.green,
       neutralLight: _colors.ui.yellowLight,
       negativeLight: _colors.ui.redLight,
       infoLight: _colors.ui.blueLight,

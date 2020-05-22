@@ -150,3 +150,15 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
     transform: scale(0.95);
   }
 `;
+
+export const ButtonInline = styled(ButtonReset).attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-text wayke__font--regular',
+}))`
+  display: inline;
+  vertical-align: baseline;
+  text-decoration: underline;
+
+  :not(:hover) {
+    color: ${(props) => props.theme.color.textDark};
+  }
+`;
