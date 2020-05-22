@@ -20,7 +20,11 @@ import {
 } from '../../components/ProductPage';
 import { H1, H2, VisualHeading } from '../../components/Heading';
 import { ButtonPrimary, ButtonClear, ButtonContent, ButtonInline } from '../../components/Button';
-import { UtilityTextRight, UtilityTextPrimary } from '../../components/Utility';
+import {
+  UtilityTextRight,
+  UtilityTextPrimary,
+  UtilityTextPrimaryBold,
+} from '../../components/Utility';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty } from '../../utils/formats';
@@ -327,7 +331,36 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageMainSection>
 
               <ProductPageMainSection>
-                <H2 noMargin>Historik</H2>
+                <Repeat>
+                  <H2 noMargin>Historik</H2>
+                </Repeat>
+                <Repeat>
+                  <Content>
+                    <p>
+                      Bilhandlare X bjuder på rapporten från Carfax som innehåller{' '}
+                      <UtilityTextPrimaryBold>
+                        2 registrerade uppgifter för ABC123
+                      </UtilityTextPrimaryBold>
+                      .
+                    </p>
+                  </Content>
+                </Repeat>
+                <Repeat>
+                  <div>Input + Button</div>
+                </Repeat>
+                <Repeat>
+                  <LogoBox logo="https://placehold.it/145x19" alt="Logotyp" wide />
+                </Repeat>
+                <Repeat>
+                  <Content small>
+                    <p>
+                      Alla personuppgifter som skickas in till Bilhandlare X kommer att behandlas
+                      enligt bestämmelserna i EU:s dataskyddsförordningen (GDPR).{' '}
+                      <ButtonInline>Här</ButtonInline> kan du läsa mer om hur vi behandlar dina
+                      personuppgifter.
+                    </p>
+                  </Content>
+                </Repeat>
               </ProductPageMainSection>
             </ProductPageMain>
           </ProductPage>

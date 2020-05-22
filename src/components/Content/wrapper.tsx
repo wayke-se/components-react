@@ -1,8 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { size } from '../../layout/helpers';
 
-export const Wrapper = styled.div`
+type WrapperProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> & {
+  small?: boolean;
+};
+
+export const Wrapper = styled.div<WrapperProps>`
   font-size: 1rem;
 
   h1,
@@ -39,4 +46,10 @@ export const Wrapper = styled.div`
       margin-bottom: 0;
     }
   }
+
+  ${({ small }) =>
+    small &&
+    css`
+      font-size: 0.875rem;
+    `}
 `;

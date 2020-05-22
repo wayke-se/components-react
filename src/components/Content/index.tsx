@@ -4,8 +4,9 @@ import { Wrapper } from './wrapper';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
+  small?: boolean;
 }
 
-const Content = ({ children }: Props) => <Wrapper>{children}</Wrapper>;
+const Content = ({ children, small }: Props) => <Wrapper small={small}>{children}</Wrapper>;
 
 export default Content;

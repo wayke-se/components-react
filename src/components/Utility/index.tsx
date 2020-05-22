@@ -7,3 +7,7 @@ export const UtilityTextRight = styled.div`
 export const UtilityTextPrimary = styled.span.attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
 }))``;
+
+export const UtilityTextPrimaryBold = styled.span.attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-text wayke__font--bold',
+}))``;
