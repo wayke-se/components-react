@@ -7,6 +7,7 @@ import DataGrid from '../../components/DataGrid';
 import PriceTable from '../../components/PriceTable';
 import OptionBox from '../../components/OptionBox';
 import LogoBox from '../../components/LogoBox';
+import ActionList from '../../components/ActionList';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { Page, PageSection } from '../../components/Page';
 import {
@@ -160,7 +161,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   </ButtonPrimary>
                 </Repeat>
                 <Repeat>
-                  <div>Visa E-post/Telefonnummer</div>
+                  <ActionList />
                 </Repeat>
               </ProductPageAsideSection>
             </ProductPageAside>
