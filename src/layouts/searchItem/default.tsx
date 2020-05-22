@@ -5,6 +5,7 @@ import UspList from '../../components/UspList';
 import Repeat from '../../components/Repeat';
 import DataGrid from '../../components/DataGrid';
 import PriceTable from '../../components/PriceTable';
+import LogoBox from '../../components/LogoBox';
 import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
@@ -80,10 +81,21 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <PriceTable />
                 </Repeat>
                 <Repeat small>
-                  <VisualHeading>Andra finansieringsalternativ</VisualHeading>
+                  <Repeat tiny>
+                    <VisualHeading>Andra finansieringsalternativ</VisualHeading>
+                  </Repeat>
+                  <Repeat tiny>
+                    <LogoBox logo="http://placehold.it/24x24" />
+                    <div>Goes here...</div>
+                  </Repeat>
                 </Repeat>
                 <Repeat small>
-                  <VisualHeading>Välj till försäkring</VisualHeading>
+                  <Repeat tiny>
+                    <VisualHeading>Välj till försäkring</VisualHeading>
+                  </Repeat>
+                  <Repeat tiny>
+                    <div>Goes here...</div>
+                  </Repeat>
                 </Repeat>
               </ProductPageAsideSection>
 
