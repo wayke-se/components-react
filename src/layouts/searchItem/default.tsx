@@ -270,7 +270,10 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageMainSection>
 
               <ProductPageMainSection>
-                <H2 noMargin>Testimonial</H2>
+                <Repeat>
+                  <H2 noMargin>Testimonial</H2>
+                </Repeat>
+                <Repeat>Testimonial...</Repeat>
               </ProductPageMainSection>
 
               <ProductPageMainSection>
@@ -290,7 +293,15 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageMainSection>
 
               <ProductPageMainSection>
-                <H2 noMargin>Den här bilen finns på vår anläggning i Göteborg</H2>
+                <Repeat>
+                  <H2 noMargin>Den här bilen finns på vår anläggning i Göteborg</H2>
+                </Repeat>
+                <Repeat>Karta</Repeat>
+                <Repeat>Adress</Repeat>
+                <Repeat>Öppettider</Repeat>
+                <Repeat>
+                  <ButtonPrimary title="Köp bilen online">Köp bilen online</ButtonPrimary>
+                </Repeat>
               </ProductPageMainSection>
 
               <ProductPageMainSection>
