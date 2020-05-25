@@ -92,3 +92,7 @@ export const ProductPageMainSection = styled.div`
     }
   }
 `;
+
+export const ProductPageContentLimit = styled.div`
+  max-width: 420px;
+`;

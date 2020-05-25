@@ -163,9 +163,22 @@ export const ButtonInline = styled(ButtonReset).attrs(() => ({
 }))`
   display: inline;
   vertical-align: baseline;
+  text-align: left;
   text-decoration: underline;
 
   :not(:hover) {
     color: ${(props) => props.theme.color.textDark};
+  }
+`;
+
+export const ButtonInlineBold = styled(ButtonReset).attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-text wayke__font--bold',
+}))`
+  display: inline;
+  vertical-align: baseline;
+  text-align: left;
+
+  :hover {
+    text-decoration: underline;
   }
 `;

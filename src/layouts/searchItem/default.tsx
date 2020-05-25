@@ -10,6 +10,7 @@ import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
 import InputText from '../../components/InputText';
+import Badge from '../../components/Badge';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -19,14 +20,23 @@ import {
   ProductPageAside,
   ProductPageMain,
   ProductPageAsideSection,
+  ProductPageContentLimit,
 } from '../../components/ProductPage';
 import { H1, H2, VisualHeading } from '../../components/Heading';
-import { ButtonPrimary, ButtonClear, ButtonContent, ButtonInline } from '../../components/Button';
+import {
+  ButtonPrimary,
+  ButtonClear,
+  ButtonContent,
+  ButtonInline,
+  ButtonInlineBold,
+} from '../../components/Button';
 import {
   UtilityTextRight,
   UtilityTextPrimary,
   UtilityTextPrimaryBold,
+  UtilityTextBold,
 } from '../../components/Utility';
+import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty } from '../../utils/formats';
@@ -296,9 +306,69 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                 <Repeat>
                   <H2 noMargin>Den här bilen finns på vår anläggning i Göteborg</H2>
                 </Repeat>
-                <Repeat>Karta</Repeat>
-                <Repeat>Adress</Repeat>
-                <Repeat>Öppettider</Repeat>
+                <Repeat>
+                  <div
+                    style={{
+                      height: '200px',
+                      backgroundColor: '#f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#717171',
+                    }}
+                  >
+                    <div>Karta</div>
+                  </div>
+                </Repeat>
+                <Repeat>
+                  <ProductPageContentLimit>
+                    <Repeat>
+                      <TableColumn>
+                        <TableColumnRow>
+                          <TableColumnCell>Adress</TableColumnCell>
+                          <TableColumnCell>
+                            <ButtonInlineBold>
+                              <ButtonContent>Gatunamn 123, Göteborg</ButtonContent>
+                            </ButtonInlineBold>
+                          </TableColumnCell>
+                        </TableColumnRow>
+                        <TableColumnRow>
+                          <TableColumnCell>Telefonnummer</TableColumnCell>
+                          <TableColumnCell>
+                            <ButtonInlineBold>
+                              <ButtonContent>Visa telefonnummer</ButtonContent>
+                            </ButtonInlineBold>
+                          </TableColumnCell>
+                        </TableColumnRow>
+                      </TableColumn>
+                    </Repeat>
+                    <Repeat>
+                      <Repeat small>
+                        <Badge label="Öppet" severity="positive" />
+                      </Repeat>
+                      <Repeat small>
+                        <TableColumn>
+                          <TableColumnRow>
+                            <TableColumnCell>
+                              <UtilityTextBold>Öppet idag</UtilityTextBold>
+                            </TableColumnCell>
+                            <TableColumnCell>
+                              <UtilityTextBold>9:00-19:00</UtilityTextBold>
+                            </TableColumnCell>
+                          </TableColumnRow>
+                          <TableColumnRow>
+                            <TableColumnCell>Mån-fre</TableColumnCell>
+                            <TableColumnCell>9:00-19:00</TableColumnCell>
+                          </TableColumnRow>
+                          <TableColumnRow>
+                            <TableColumnCell>Lör-sön</TableColumnCell>
+                            <TableColumnCell>10:00-16:00</TableColumnCell>
+                          </TableColumnRow>
+                        </TableColumn>
+                      </Repeat>
+                    </Repeat>
+                  </ProductPageContentLimit>
+                </Repeat>
                 <Repeat>
                   <ButtonPrimary title="Köp bilen online">Köp bilen online</ButtonPrimary>
                 </Repeat>
