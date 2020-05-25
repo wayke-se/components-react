@@ -38,6 +38,7 @@ import {
   UtilityTextBold,
 } from '../../components/Utility';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
+import { OverflowGrid, OverflowGridList, OverflowGridItem } from '../../components/OverflowGrid';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty } from '../../utils/formats';
@@ -473,8 +474,35 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
 
       <PageSection accent>
         <Container>
-          <H2 noMargin>Senast inkomna</H2>
-          <div>Product Grid</div>
+          <Repeat>
+            <H2 noMargin>Senast inkomna</H2>
+          </Repeat>
+          <Repeat>
+            <OverflowGrid>
+              <OverflowGridList>
+                <OverflowGridItem>
+                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
+                    Item
+                  </div>
+                </OverflowGridItem>
+                <OverflowGridItem>
+                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
+                    Item
+                  </div>
+                </OverflowGridItem>
+                <OverflowGridItem>
+                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
+                    Item
+                  </div>
+                </OverflowGridItem>
+                <OverflowGridItem>
+                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
+                    Item
+                  </div>
+                </OverflowGridItem>
+              </OverflowGridList>
+            </OverflowGrid>
+          </Repeat>
         </Container>
       </PageSection>
     </Page>
