@@ -33,4 +33,11 @@ export const PageSection = styled.section<PageSectionProps>`
         margin-top: ${size(8)};
       }
     `}
+
+  ${({ accent, large }) =>
+    accent &&
+    large &&
+    css`
+      padding: ${size(8)} 0;
+    `}
 `;

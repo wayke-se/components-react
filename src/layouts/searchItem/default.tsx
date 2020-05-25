@@ -14,6 +14,7 @@ import Badge from '../../components/Badge';
 import Blockquote from '../../components/Blockquote';
 import ProductCard from '../../components/ProductCard';
 import SectionHeader from '../../components/SectionHeader';
+import ExtendContent from '../../components/ExtendContent';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -28,13 +29,11 @@ import {
 import { H1, H2, VisualHeading } from '../../components/Heading';
 import {
   ButtonPrimary,
-  ButtonClear,
   ButtonContent,
   ButtonInline,
   ButtonInlineBold,
 } from '../../components/Button';
 import {
-  UtilityTextRight,
   UtilityTextPrimary,
   UtilityTextPrimaryBold,
   UtilityTextBold,
@@ -68,7 +67,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
 
   return (
     <Page>
-      <PageSection>
+      <PageSection large>
         <Container>
           <ProductPage>
             <ProductPageAside>
@@ -196,90 +195,85 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <H2 noMargin>Biluppgifter</H2>
                 </Repeat>
                 <Repeat>
-                  <DataGrid
-                    items={[
-                      {
-                        label: 'Varumärke',
-                        value: manufacturer,
-                      },
-                      {
-                        label: 'Mätarställning',
-                        value: '2150 mil',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Tillverkningsår',
-                        value: manufactureYear,
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Version',
-                        value: 'C 200 Coupé',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Modell',
-                        value: 'C-Klass',
-                      },
-                      {
-                        label: 'Varumärke1',
-                        value: 'Mercedes-Benz',
-                      },
-                      {
-                        label: 'Mätarställning1',
-                        value: '2150 mil',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Tillverkningsår1',
-                        value: '2018',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Version1',
-                        value: 'C 200 Coupé',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Modell1',
-                        value: 'C-Klass',
-                      },
-                      {
-                        label: 'Varumärke2',
-                        value: 'Mercedes-Benz',
-                      },
-                      {
-                        label: 'Mätarställning2',
-                        value: '2150 mil',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Tillverkningsår2',
-                        value: '2018',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Version2',
-                        value: 'C 200 Coupé',
-                        onClick: () => {},
-                      },
-                      {
-                        label: 'Modell2',
-                        value: 'C-Klass',
-                      },
-                      {
-                        label: 'Varumärke3',
-                        value: 'Mercedes-Benz',
-                      },
-                    ]}
-                  />
-                </Repeat>
-                <Repeat>
-                  <UtilityTextRight>
-                    <ButtonClear>
-                      <ButtonContent>Visa mer</ButtonContent>
-                    </ButtonClear>
-                  </UtilityTextRight>
+                  <ExtendContent actionTitle="Visa mer">
+                    <DataGrid
+                      items={[
+                        {
+                          label: 'Varumärke',
+                          value: manufacturer,
+                        },
+                        {
+                          label: 'Mätarställning',
+                          value: '2150 mil',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Tillverkningsår',
+                          value: manufactureYear,
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Version',
+                          value: 'C 200 Coupé',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Modell',
+                          value: 'C-Klass',
+                        },
+                        {
+                          label: 'Varumärke1',
+                          value: 'Mercedes-Benz',
+                        },
+                        {
+                          label: 'Mätarställning1',
+                          value: '2150 mil',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Tillverkningsår1',
+                          value: '2018',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Version1',
+                          value: 'C 200 Coupé',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Modell1',
+                          value: 'C-Klass',
+                        },
+                        {
+                          label: 'Varumärke2',
+                          value: 'Mercedes-Benz',
+                        },
+                        {
+                          label: 'Mätarställning2',
+                          value: '2150 mil',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Tillverkningsår2',
+                          value: '2018',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Version2',
+                          value: 'C 200 Coupé',
+                          onClick: () => {},
+                        },
+                        {
+                          label: 'Modell2',
+                          value: 'C-Klass',
+                        },
+                        {
+                          label: 'Varumärke3',
+                          value: 'Mercedes-Benz',
+                        },
+                      ]}
+                    />
+                  </ExtendContent>
                 </Repeat>
               </ProductPageMainSection>
 
@@ -301,14 +295,9 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <H2 noMargin>Utrustning</H2>
                 </Repeat>
                 <Repeat>
-                  <UspList items={options} />
-                </Repeat>
-                <Repeat>
-                  <UtilityTextRight>
-                    <ButtonClear>
-                      <ButtonContent>Visa mer</ButtonContent>
-                    </ButtonClear>
-                  </UtilityTextRight>
+                  <ExtendContent actionTitle="Visa mer">
+                    <UspList items={options} />
+                  </ExtendContent>
                 </Repeat>
               </ProductPageMainSection>
 
@@ -414,13 +403,6 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                 <Repeat>
                   <LogoBox logo="https://placehold.it/145x19" alt="Logotyp" wide />
                 </Repeat>
-                <Repeat>
-                  <UtilityTextRight>
-                    <ButtonClear>
-                      <ButtonContent>Visa mer</ButtonContent>
-                    </ButtonClear>
-                  </UtilityTextRight>
-                </Repeat>
               </ProductPageMainSection>
 
               <ProductPageMainSection>
@@ -474,7 +456,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
         </Container>
       </PageSection>
 
-      <PageSection accent>
+      <PageSection accent large>
         <Container>
           <Repeat>
             <SectionHeader onClick={() => {}} actionTitle="Se alla">

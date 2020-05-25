@@ -9,7 +9,6 @@ export const ProductPage = styled.div`
 
   ${(props) => props.theme.breakpoint.Md} {
     flex-direction: row;
-    margin-bottom: ${size(8)};
   }
 `;
 
