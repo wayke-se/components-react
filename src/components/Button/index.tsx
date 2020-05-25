@@ -141,7 +141,7 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: ${(props) => props.theme.color.accent};
+    background-color: ${(props) => props.theme.color.accentDark};
     border-radius: 3px;
     opacity: 0;
     transition: opacity 200ms ease;

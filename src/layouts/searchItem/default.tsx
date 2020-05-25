@@ -12,6 +12,8 @@ import Content from '../../components/Content';
 import InputText from '../../components/InputText';
 import Badge from '../../components/Badge';
 import Blockquote from '../../components/Blockquote';
+import ProductCard from '../../components/ProductCard';
+import SectionHeader from '../../components/SectionHeader';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -475,30 +477,112 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
       <PageSection accent>
         <Container>
           <Repeat>
-            <H2 noMargin>Senast inkomna</H2>
+            <SectionHeader onClick={() => {}} actionTitle="Se alla">
+              <H2 noMargin>Senast inkomna</H2>
+            </SectionHeader>
           </Repeat>
           <Repeat>
             <OverflowGrid>
               <OverflowGridList>
                 <OverflowGridItem>
-                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
-                    Item
-                  </div>
+                  <ProductCard
+                    id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    title="Mazda CX-5"
+                    href="#684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    image="http://placehold.it/600x400"
+                    description="Optimum 2.2 DE 175hk Aut AWD – Dragkrok"
+                    uspList={[
+                      {
+                        title: '2017',
+                      },
+                      {
+                        title: '6851 mil',
+                      },
+                      {
+                        title: 'Automat',
+                      },
+                      {
+                        title: 'Diesel',
+                      },
+                    ]}
+                    price="268 800 kr"
+                    oldPrice="289 000 kr"
+                  />
                 </OverflowGridItem>
                 <OverflowGridItem>
-                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
-                    Item
-                  </div>
+                  <ProductCard
+                    id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    title="Mazda CX-5"
+                    href="#684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    image="http://placehold.it/600x400"
+                    description="Optimum 2.2 DE 175hk Aut AWD – Dragkrok"
+                    uspList={[
+                      {
+                        title: '2017',
+                      },
+                      {
+                        title: '6851 mil',
+                      },
+                      {
+                        title: 'Automat',
+                      },
+                      {
+                        title: 'Diesel',
+                      },
+                    ]}
+                    price="268 800 kr"
+                    oldPrice="289 000 kr"
+                  />
                 </OverflowGridItem>
                 <OverflowGridItem>
-                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
-                    Item
-                  </div>
+                  <ProductCard
+                    id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    title="Mazda CX-5"
+                    href="#684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    image="http://placehold.it/600x400"
+                    description="Optimum 2.2 DE 175hk Aut AWD – Dragkrok"
+                    uspList={[
+                      {
+                        title: '2017',
+                      },
+                      {
+                        title: '6851 mil',
+                      },
+                      {
+                        title: 'Automat',
+                      },
+                      {
+                        title: 'Diesel',
+                      },
+                    ]}
+                    price="268 800 kr"
+                    oldPrice="289 000 kr"
+                  />
                 </OverflowGridItem>
                 <OverflowGridItem>
-                  <div style={{ backgroundColor: 'red', padding: '16px', color: 'white' }}>
-                    Item
-                  </div>
+                  <ProductCard
+                    id="684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    title="Mazda CX-5"
+                    href="#684f2548-1250-4ae2-bcb8-e8aec11cb739"
+                    image="http://placehold.it/600x400"
+                    description="Optimum 2.2 DE 175hk Aut AWD – Dragkrok"
+                    uspList={[
+                      {
+                        title: '2017',
+                      },
+                      {
+                        title: '6851 mil',
+                      },
+                      {
+                        title: 'Automat',
+                      },
+                      {
+                        title: 'Diesel',
+                      },
+                    ]}
+                    price="268 800 kr"
+                    oldPrice="289 000 kr"
+                  />
                 </OverflowGridItem>
               </OverflowGridList>
             </OverflowGrid>
