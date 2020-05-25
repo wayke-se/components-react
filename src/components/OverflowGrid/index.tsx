@@ -6,13 +6,15 @@ import { Wrapper as Container } from '../Container/wrapper';
 export const OverflowGrid = styled.div`
   ${(props) => props.theme.breakpoint.LtMd} {
     ${Container} & {
-      margin: 0 ${size(-3)};
+      margin-left: ${size(-3)};
+      margin-right: ${size(-2)};
     }
   }
 
   ${(props) => props.theme.breakpoint.LtSm} {
     ${Container} & {
-      margin: 0 ${size(-2)};
+      margin-left: ${size(-2)};
+      margin-right: ${size(-1)};
     }
   }
 `;
