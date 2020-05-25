@@ -11,6 +11,7 @@ import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
 import InputText from '../../components/InputText';
 import Badge from '../../components/Badge';
+import Blockquote from '../../components/Blockquote';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -280,10 +281,16 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageMainSection>
 
               <ProductPageMainSection>
-                <Repeat>
-                  <H2 noMargin>Testimonial</H2>
-                </Repeat>
-                <Repeat>Testimonial...</Repeat>
+                <Blockquote
+                  author="Anders Andersson, säljare"
+                  date="1 mars 2020"
+                  avatar="https://placehold.it/40x40"
+                >
+                  <p>
+                    Passa på att köpa en riktigt fin C 200 Coupé med AMG Sport-paket. Det ingår både
+                    sommar och vinterdäck. En liten repa på passagerardörren.{' '}
+                  </p>
+                </Blockquote>
               </ProductPageMainSection>
 
               <ProductPageMainSection>
