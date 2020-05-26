@@ -15,6 +15,7 @@ import Blockquote from '../../components/Blockquote';
 import ProductCard from '../../components/ProductCard';
 import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
+import Gallery from '../../components/Gallery';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -187,7 +188,22 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
             </ProductPageAside>
             <ProductPageMain>
               <ProductPageAsideSection mobileOrder={3}>
-                <div style={{ height: '0', paddingBottom: '56.25%', backgroundColor: '#f0f0f0' }} />
+                <Gallery
+                  images={[
+                    {
+                      url:
+                        'https://cdn.wayke.se/media/8b77f417-1229-4aff-b331-3e086ac2b033/19c34cad-8696-432f-a06e-a63b06acd18c/1170x',
+                    },
+                    {
+                      url:
+                        'https://cdn.wayke.se/media/c50f7097-52d0-4d06-8deb-f818eccbe625/a14059a5-963b-4ca2-acbe-11710eabac96/1170x',
+                    },
+                    {
+                      url:
+                        'https://cdn.wayke.se/media/e2890b9e-918d-4378-91d5-206bb07a7fec/8e5c768e-f332-42b8-bfa7-176613f1f06d/1170x',
+                    },
+                  ]}
+                />
               </ProductPageAsideSection>
 
               <ProductPageMainSection>

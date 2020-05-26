@@ -44,6 +44,18 @@ export const IconChevronDown = ({ block }: IconInfoProps) => (
   </Icon>
 );
 
+export const IconChevronLeft = ({ block }: IconInfoProps) => (
+  <Icon viewBox="0 0 18 18" block={block}>
+    <path d="M13 17.7L4.3 9 13 .3l.7.7-8 8 8 8-.7.7z" />
+  </Icon>
+);
+
+export const IconChevronRight = ({ block }: IconInfoProps) => (
+  <Icon viewBox="0 0 18 18" block={block}>
+    <path d="M5 .3L13.7 9 5 17.7l-.7-.7 8-8-8-8L5 .3z" />
+  </Icon>
+);
+
 export const IconCheck = ({ block }: IconInfoProps) => (
   <Icon viewBox="0 0 16 16" block={block}>
     <path d="M15.6 4.3l-9.3 9.4c-.5.5-1.4.5-1.9 0l-4-4c-.5-.5-.5-1.4 0-1.9s1.3-.5 1.9 0l3.1 3.1 8.4-8.5c.5-.5 1.4-.5 1.9 0s.4 1.3-.1 1.9z" />
