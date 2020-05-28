@@ -3,7 +3,22 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import { Wrapper, SliderWrapper, Item, Image, ArrowLeft, ArrowRight } from './wrapper';
+import {
+  Wrapper,
+  Proportions,
+  Limiter,
+  SliderWrapper,
+  Item,
+  Image,
+  ArrowLeft,
+  ArrowRight,
+  Main,
+  Alt,
+  QuickNav,
+  QuickNavItem,
+  QuickNavBtn,
+  QuickNavImg,
+} from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 
 interface ImageProps {
@@ -25,6 +40,9 @@ const sliderSettings = {
 
 const Gallery = ({ images }: GalleryProps) => {
   const slider = React.useRef<Slider>(null);
+  const [index, setIndex] = React.useState(0);
+
+  const beforeChange = React.useCallback((oldIndex, newIndex) => setIndex(newIndex), []);
 
   const nextImage = React.useCallback((): void => {
     if (!slider || !slider.current) {
@@ -40,24 +58,50 @@ const Gallery = ({ images }: GalleryProps) => {
     slider.current.slickPrev();
   }, [slider]);
 
+  const goTo = (target: number) => {
+    if (!slider || !slider.current) {
+      return;
+    }
+    if (slider.current) {
+      setIndex(target);
+      slider.current.slickGoTo(target);
+    }
+  };
+
   return (
     <Wrapper>
-      <SliderWrapper>
-        <Slider {...sliderSettings} ref={slider}>
-          {images.map(({ url }: ImageProps, i) => (
-            <Item key={url}>
-              <Image src={`${url}`} alt={`Bild ${i + 1}`} />
-            </Item>
-          ))}
-        </Slider>
-      </SliderWrapper>
-
-      <ArrowLeft onClick={prevImage} title="Föregående bild">
-        <IconChevronLeft block />
-      </ArrowLeft>
-      <ArrowRight onClick={nextImage} title="Nästa bild">
-        <IconChevronRight block />
-      </ArrowRight>
+      <Proportions>
+        <Limiter>
+          <Main>
+            <SliderWrapper>
+              <Slider {...sliderSettings} ref={slider} beforeChange={beforeChange}>
+                {images.map(({ url }: ImageProps, i) => (
+                  <Item key={url}>
+                    <Image src={`${url}`} alt={`Bild ${i + 1}`} />
+                  </Item>
+                ))}
+              </Slider>
+            </SliderWrapper>
+            <ArrowLeft onClick={prevImage} title="Föregående bild">
+              <IconChevronLeft block />
+            </ArrowLeft>
+            <ArrowRight onClick={nextImage} title="Nästa bild">
+              <IconChevronRight block />
+            </ArrowRight>
+          </Main>
+          <Alt>
+            <QuickNav>
+              {images.map(({ url }: ImageProps, i) => (
+                <QuickNavItem key={url} active={index === i}>
+                  <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
+                    <QuickNavImg src={`${url}`} alt={`Bild ${i + 1}`} />
+                  </QuickNavBtn>
+                </QuickNavItem>
+              ))}
+            </QuickNav>
+          </Alt>
+        </Limiter>
+      </Proportions>
     </Wrapper>
   );
 };
