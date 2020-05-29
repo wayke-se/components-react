@@ -16,6 +16,7 @@ import ProductCard from '../../components/ProductCard';
 import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
 import Gallery from '../../components/Gallery';
+import Loader from '../../components/Loader';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -57,11 +58,27 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
   );
 
   if (loading) {
-    return <p>loading...</p>;
+    return (
+      <Page>
+        <PageSection large>
+          <Container>
+            <Loader />
+          </Container>
+        </PageSection>
+      </Page>
+    );
   }
 
   if (!data?.vehicle) {
-    return <p>404</p>;
+    return (
+      <Page>
+        <PageSection large>
+          <Container>
+            <H1 noMargin>404</H1>
+          </Container>
+        </PageSection>
+      </Page>
+    );
   }
 
   const { fuelType, gearbox, manufactureYear, manufacturer } = data.vehicle;
