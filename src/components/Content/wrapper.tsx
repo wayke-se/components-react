@@ -11,6 +11,7 @@ type WrapperProps = React.DetailedHTMLProps<
 
 export const Wrapper = styled.div<WrapperProps>`
   font-size: 1rem;
+  line-height: 1.5;
 
   h1,
   h2,
