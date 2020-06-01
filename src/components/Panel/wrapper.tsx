@@ -34,7 +34,7 @@ export const PanelWrapper = styled.article.attrs(() => ({
   right: 0;
   width: 100%;
   background-color: ${(props) => props.theme.color.accent};
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   z-index: 1;
   animation: ${noTransform} 200ms ease forwards;
 

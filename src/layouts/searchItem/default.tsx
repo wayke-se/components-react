@@ -609,15 +609,17 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
           </Container>
         </PageSection>
       </Page>
-      <Modal title="Modal" onClose={() => {}}>
-        <Content>
-          <p>
-            Priset är ett cirkapris och baserat på ditt avtals antal månader och din beräknade
-            årliga körsträcka. Kostnad för försäkring och serviceavtal tillkommer. Kontakta säljare
-            för komplett kostnadsförslag.{' '}
-          </p>
-        </Content>
-      </Modal>
+      {false && (
+        <Modal title="Modal" onClose={() => {}}>
+          <Content>
+            <p>
+              Priset är ett cirkapris och baserat på ditt avtals antal månader och din beräknade
+              årliga körsträcka. Kostnad för försäkring och serviceavtal tillkommer. Kontakta
+              säljare för komplett kostnadsförslag.{' '}
+            </p>
+          </Content>
+        </Modal>
+      )}
       <PortalElement id={PortalNamespace.DefaultPortal} />
     </>
   );

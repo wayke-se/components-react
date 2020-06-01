@@ -95,12 +95,13 @@ export const Heading = styled.div`
 
 export const Close = styled.div`
   flex-shrink: 0;
-  margin: ${size(-3)};
+  margin: ${size(-2)};
+  padding-left: ${size(3)};
 `;
 
 export const CloseBtn = styled(ButtonReset)`
   display: block;
-  padding: ${size(3)};
+  padding: ${size(2)};
 `;
 
 export const Body = styled.div`
