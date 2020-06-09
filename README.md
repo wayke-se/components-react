@@ -11,5 +11,6 @@ Then
 ```
 npm install
 cd example
+npm install
 npm start
 ```
