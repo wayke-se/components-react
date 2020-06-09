@@ -13,21 +13,30 @@ import ProgressBar from '../ProgressBar';
 import { ButtonSecondary, ButtonContent } from '../Button';
 
 interface Props {
+  loading: boolean;
+  numberOfDocuments: number;
+  numberOfHits: number;
+  onLoadMore: () => void;
   children: JSX.Element | JSX.Element[];
 }
 
-const Result = ({ children }: Props) => (
+const Result = ({ loading, numberOfDocuments, numberOfHits, onLoadMore, children }: Props) => (
   <Wrapper>
     <Header>
-      <ResultCount>21 bilar</ResultCount>
+      <ResultCount>{numberOfHits} bilar</ResultCount>
     </Header>
     <Body>{children}</Body>
     <Footer>
       <FooterProgress>
-        <ProgressBar unit="bilar" valueCurrent={11} valueMax={21} />
+        <ProgressBar unit="bilar" valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
       </FooterProgress>
       <FooterAction>
-        <ButtonSecondary title="Visa fler" aria-label="Visa fler">
+        <ButtonSecondary
+          disabled={loading}
+          onClick={onLoadMore}
+          title="Visa fler"
+          aria-label="Visa fler"
+        >
           <ButtonContent>Visa fler</ButtonContent>
         </ButtonSecondary>
       </FooterAction>

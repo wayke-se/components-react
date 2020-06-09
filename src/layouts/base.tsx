@@ -3,7 +3,12 @@ import DefaultSearchLayout from './search/default';
 import { DefaultSearchItemLayout } from '..';
 import useHashGuid from '../hooks/useHashGuid';
 
-const BaseLayout = () => {
+interface BaseLayoutProps {
+  url: string;
+  apiKey: string;
+}
+
+const BaseLayout = ({ url, apiKey }: BaseLayoutProps) => {
   const id = useHashGuid();
   const onClickSearchItem = useCallback(() => {
     // track id
@@ -14,7 +19,7 @@ const BaseLayout = () => {
       {id ? (
         <DefaultSearchItemLayout id={id} />
       ) : (
-        <DefaultSearchLayout onClickSearchItem={onClickSearchItem} />
+        <DefaultSearchLayout onClickSearchItem={onClickSearchItem} url={url} apiKey={apiKey} />
       )}
     </>
   );

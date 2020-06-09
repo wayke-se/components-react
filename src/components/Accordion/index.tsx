@@ -17,14 +17,15 @@ export interface IAccordionItem {
   heading: string;
   activeCount?: number;
   children: JSX.Element | JSX.Element[];
+  isActive?: boolean;
 }
 
 export interface IAccordion {
   children: JSX.Element | JSX.Element[];
 }
 
-export const AccordionItem = ({ heading, children, activeCount }: IAccordionItem) => {
-  const [extend, setExtend] = React.useState(false);
+export const AccordionItem = ({ heading, children, activeCount, isActive }: IAccordionItem) => {
+  const [extend, setExtend] = React.useState(isActive || false);
   const onToggleExtend = React.useCallback(() => setExtend(!extend), [extend]);
 
   return (

@@ -1,0 +1,12 @@
+export const MANUFACTURER = 'manufacturer';
+export const MODEL_SERIES = 'modelSeries';
+export const FUEL_TYPE = 'fuelType';
+export const GEARBOX_TYPE = 'gearboxType';
+export const BRANCH = 'branch';
+export const COLOR = 'color';
+export const ENVIRONMENT_CLASS = 'environmentClass';
+export const SEGMENT = 'properties.segment';
+export const DRIVING_WHEEL = 'drivingWheel';
+export const PRICE = 'price';
+export const MILEAGE = 'mileage';
+export const MODEL_YEAR = 'modelYear';

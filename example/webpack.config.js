@@ -1,4 +1,6 @@
+require('dotenv').config()
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
@@ -22,6 +24,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        WAYKE_SEARCH_URL: `"${process.env.WAYKE_SEARCH_URL}"`,
+        WAYKE_SEARCH_X_API_KEY: `"${process.env.WAYKE_SEARCH_X_API_KEY}"`,
+      },
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
