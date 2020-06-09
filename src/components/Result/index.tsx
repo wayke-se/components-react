@@ -12,6 +12,7 @@ import {
 import ProgressBar from '../ProgressBar';
 import { ButtonSecondary, ButtonContent } from '../Button';
 import { Spinner } from '../Loader/wrapper';
+import { numberSeparator } from '../../utils/formats';
 
 interface Props {
   loading: boolean;
@@ -36,7 +37,9 @@ const Result = ({
   return (
     <Wrapper>
       <Header>
-        <ResultCount>{numberOfHits} bilar</ResultCount>
+        <ResultCount>{`${numberSeparator(numberOfHits)} ${
+          numberOfHits === 1 ? 'bil' : 'bilar'
+        }`}</ResultCount>
       </Header>
       <Body>{children}</Body>
       <Footer>
@@ -45,7 +48,7 @@ const Result = ({
         </FooterProgress>
         <FooterAction>
           <ButtonSecondary
-            disabled={loading}
+            disabled={loading || numberOfDocuments === numberOfHits}
             onClick={onLoadMore}
             title="Visa fler"
             aria-label="Visa fler"

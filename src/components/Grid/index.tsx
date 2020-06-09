@@ -32,7 +32,7 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
                   title: document.modelSeries,
                 },
                 {
-                  title: `${document.mileage} mil`,
+                  title: `${numberSeparator(document.mileage)} mil`,
                 },
                 {
                   title: document.gearboxType,
