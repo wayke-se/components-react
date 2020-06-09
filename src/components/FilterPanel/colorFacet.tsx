@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Facet } from '../../@types/search';
+import { Facet, FacetFilter } from '../../@types/search';
 import ColorSelect from '../ColorSelect';
 
 interface ColorSelectFacetProps {
@@ -9,14 +9,30 @@ interface ColorSelectFacetProps {
 }
 
 const ColorSelectFacet = ({ facet, onFilterUpdate }: ColorSelectFacetProps) => {
+  const [selected, setSelected] = useState<{ [key: string]: boolean }>({});
+
+  const _onFilterUpdate = (f: FacetFilter) => {
+    setSelected({
+      ...selected,
+      [f.displayName]: !f.selected,
+    });
+    onFilterUpdate(f.query);
+  };
+
+  useEffect(() => {
+    setSelected({});
+  }, [facet]);
+
   return (
     <ColorSelect
-      items={facet.filters.map((f) => ({
-        label: f.displayName,
-        onClick: () => onFilterUpdate(f.query),
-        active: f.selected,
-        hex: ['#fff'],
-      }))}
+      items={facet.filters
+        .sort((a, b) => a.displayName.localeCompare(b.displayName))
+        .map((f) => ({
+          label: f.displayName,
+          onClick: () => _onFilterUpdate(f),
+          active: selected[f.displayName] !== undefined ? selected[f.displayName] : f.selected,
+          hex: ['#fff'],
+        }))}
     />
   );
 };

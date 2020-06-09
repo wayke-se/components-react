@@ -16,6 +16,7 @@ export interface FilterProps {
 }
 
 export interface Props {
+  searchParams: URLSearchParams;
   initialFacets: Facet[];
   facets: Facet[];
   facet?: Facet;
@@ -25,6 +26,7 @@ export interface Props {
 }
 
 const FilterPanel = ({
+  searchParams,
   initialFacets,
   facets,
   facet,
@@ -66,6 +68,7 @@ const FilterPanel = ({
           >
             <Repeat>
               <FacetSelector
+                searchParams={searchParams}
                 initialFacet={initialFacets.find((x) => x.id === f.id)}
                 facet={f}
                 onFilterUpdate={onFilterUpdate}

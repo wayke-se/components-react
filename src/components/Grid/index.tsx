@@ -3,6 +3,7 @@ import React from 'react';
 import { Wrapper, List, Item } from './wrapper';
 import ProductCard from '../ProductCard';
 import { Document } from '../../@types/search';
+import { numberSeparator } from '../../utils/formats';
 
 interface GridProps {
   documents?: Document[];
@@ -40,8 +41,8 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
                   title: 'Diesel(???)',
                 },
               ]}
-              price={`${document.price} kr`}
-              oldPrice={`${document.price} kr`}
+              price={`${numberSeparator(document.price)} kr`}
+              oldPrice={`${numberSeparator(document.price)} kr`}
             />
           </Item>
         ))}

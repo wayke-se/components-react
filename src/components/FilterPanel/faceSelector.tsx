@@ -20,12 +20,18 @@ import {
 } from '../../utils/constants';
 
 interface FacetSelectorProps {
+  searchParams: URLSearchParams;
   initialFacet?: Facet;
   facet: Facet;
   onFilterUpdate: (query: string) => void;
 }
 
-const FacetSelector = ({ initialFacet, facet, onFilterUpdate }: FacetSelectorProps) => {
+const FacetSelector = ({
+  searchParams,
+  initialFacet,
+  facet,
+  onFilterUpdate,
+}: FacetSelectorProps) => {
   if (!initialFacet) {
     return null;
   }
@@ -44,6 +50,7 @@ const FacetSelector = ({ initialFacet, facet, onFilterUpdate }: FacetSelectorPro
     case PRICE:
       return (
         <RangeFacet
+          searchParams={searchParams}
           initialFacet={initialFacet}
           facet={facet}
           unit="kr"
@@ -54,6 +61,7 @@ const FacetSelector = ({ initialFacet, facet, onFilterUpdate }: FacetSelectorPro
     case MILEAGE:
       return (
         <RangeFacet
+          searchParams={searchParams}
           initialFacet={initialFacet}
           facet={facet}
           unit="mil"
@@ -64,6 +72,7 @@ const FacetSelector = ({ initialFacet, facet, onFilterUpdate }: FacetSelectorPro
     case MODEL_YEAR:
       return (
         <RangeFacet
+          searchParams={searchParams}
           initialFacet={initialFacet}
           facet={facet}
           unit="år"

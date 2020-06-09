@@ -53,7 +53,6 @@
     "graphql-tools": "^5.0.0",
     "rc-slider": "^9.3.0",
     "react-compound-slider": "^2.5.0",
-    "react-fetch-hook": "^1.8.3",
     "react-slick": "^0.26.1",
     "slick-carousel": "^1.8.1"
   },

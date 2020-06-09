@@ -6,12 +6,11 @@ import Result from '../../components/Result';
 import Filter from '../../components/Filter';
 import Grid from '../../components/Grid';
 import SearchTerm from '../../components/SearchTerm';
-import InputSearch from '../../components/InputSearch';
-import Breadcrumbs from '../../components/Breadcrumbs';
 import { PortalNamespace } from '../../components/Portal';
 import PortalElement from '../../components/Portal/portal-element';
 import Repeat from '../../components/Repeat';
 import useSearchList, { QueryFilter } from '../../hooks/useSearchList';
+import SearchFilter from '../../components/SearchFilter';
 
 interface DefaultSearchLayoutProps {
   url: string;
@@ -21,7 +20,14 @@ interface DefaultSearchLayoutProps {
 
 const DefaultSearchLayout = ({ onClickSearchItem, url, apiKey }: DefaultSearchLayoutProps) => {
   const [query, setQuery] = useState<QueryFilter>();
-  const { loading, response, documents, initialFacets } = useSearchList(url, apiKey, query);
+  const searchParams = new URLSearchParams(query?.query || '');
+  const searchQuery = searchParams.get('query');
+
+  const { loading, response, documents, initialFacets, queryFilter } = useSearchList(
+    url,
+    apiKey,
+    query
+  );
 
   const onLoadMore = useCallback(() => {
     if (response) {
@@ -37,37 +43,29 @@ const DefaultSearchLayout = ({ onClickSearchItem, url, apiKey }: DefaultSearchLa
     []
   );
 
+  const useSkeletons = !!queryFilter?.concatResult;
+
   return (
     <>
       <Page>
         <PageSection large>
           <Container>
             <Repeat small>
-              <InputSearch placeholder="Sök" label="Sök" id="main-search" />
-            </Repeat>
-            <Repeat small>
-              <Breadcrumbs
-                items={[
-                  {
-                    title: 'Bilar',
-                    href: '#',
-                  },
-                  {
-                    title: 'Sökresultat "elbil"',
-                  },
-                ]}
-              />
+              <SearchFilter searchParams={searchParams} onFilterUpdate={onFilterUpdate} />
             </Repeat>
           </Container>
         </PageSection>
-        <PageSection large>
-          <Container>
-            <SearchTerm>elbil</SearchTerm>
-          </Container>
-        </PageSection>
+        {searchQuery && (
+          <PageSection large>
+            <Container>
+              <SearchTerm>{searchQuery}</SearchTerm>
+            </Container>
+          </PageSection>
+        )}
         <PageSection>
           <Container>
             <Filter
+              searchParams={searchParams}
               initialFacets={initialFacets}
               facets={response?.facets}
               numberOfHits={response?.documentList.numberOfHits || 0}
@@ -79,6 +77,7 @@ const DefaultSearchLayout = ({ onClickSearchItem, url, apiKey }: DefaultSearchLa
           <Container>
             <Result
               loading={loading}
+              useSkeletons={useSkeletons}
               onLoadMore={onLoadMore}
               numberOfDocuments={documents?.length || 0}
               numberOfHits={response?.documentList.numberOfHits || 0}

@@ -29,7 +29,7 @@ const ChecklistItem = ({ label, onClick, active, radio }: IChecklistItem) => (
 );
 
 const Checklist = ({ items, radio }: IChecklist) => {
-  if (!items || !items.length) {
+  if (!items?.length) {
     return null;
   }
 
