@@ -10,3 +10,16 @@ export const DRIVING_WHEEL = 'drivingWheel';
 export const PRICE = 'price';
 export const MILEAGE = 'mileage';
 export const MODEL_YEAR = 'modelYear';
+
+export const COLOR_WHITE = { displayName: 'Vit', hex: '#ffffff' };
+export const COLOR_BLACK = { displayName: 'Svart', hex: '#000000' };
+export const COLOR_GRAY = { displayName: 'Grå', hex: '#808080' };
+export const COLOR_SILVER = { displayName: 'Silver', hex: '#c0c0c0' };
+export const COLOR_BLUE = { displayName: 'Blå', hex: '#0000ff' };
+export const COLOR_RED = { displayName: 'Röd', hex: '#ff0000' };
+export const COLOR_BROWN = { displayName: 'Brun', hex: '#a52a2a' };
+export const COLOR_GREEN = { displayName: 'Grön', hex: '#008000' };
+export const COLOR_ORANGE = { displayName: 'Orange', hex: '#ffa500' };
+export const COLOR_YELLOW = { displayName: 'Gul', hex: '#ffff00' };
+export const COLOR_PURPLE = { displayName: 'Lila', hex: '#800080' };
+export const COLOR_BEIGE = { displayName: 'Beige', hex: '#f5f5dc' };

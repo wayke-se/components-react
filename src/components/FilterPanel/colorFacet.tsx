@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Facet, FacetFilter } from '../../@types/search';
 import ColorSelect from '../ColorSelect';
 import useSearch from '../../hooks/useSearch';
+import { getHexColorFromDisplayName } from '../../utils/converters';
 
 interface ColorSelectFacetProps {
   facet: Facet;
@@ -18,7 +19,7 @@ const ColorSelectFacet = ({ facet }: ColorSelectFacetProps) => {
 
   const onClick = useCallback(
     (f: FacetFilter) => {
-      if (loading) {
+      if (!loading) {
         setSelected({
           ...selected,
           [f.displayName]: !f.selected,
@@ -37,7 +38,7 @@ const ColorSelectFacet = ({ facet }: ColorSelectFacetProps) => {
           label: f.displayName,
           onClick: () => onClick(f),
           active: selected?.[f.displayName] !== undefined ? selected[f.displayName] : f.selected,
-          hex: ['#fff'],
+          hex: [getHexColorFromDisplayName(f.displayName)],
         }))}
     />
   );

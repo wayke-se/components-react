@@ -23,6 +23,8 @@ const App = () => (
 ```
 
 ## Run example from repo
+This repository contains a example app that uses @wayke-se/components-react.
+
 To start the example create a .env file in ./example
 ```
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
