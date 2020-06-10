@@ -2,7 +2,13 @@
 
 ## Usage
 
+Install
 ```
+  npm install @wayke-se/components-react
+```
+
+
+```javascript
 import WaykeSearch { WaykeSearchProvider } from '@wayke-se/components-react'
 
 const App = () => (
