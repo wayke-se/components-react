@@ -6,7 +6,11 @@ import { WaykeSearchProvider } from '../../src';
 
 const App = () => {
   return (
-    <WaykeSearchProvider useMock>
+    <WaykeSearchProvider
+      url={process.env.WAYKE_SEARCH_URL as string}
+      apiKey={process.env.WAYKE_SEARCH_X_API_KEY as string}
+      useMock
+    >
       <BrowserRouter>
         <Routes />
       </BrowserRouter>

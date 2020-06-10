@@ -7,42 +7,37 @@ const setCachedResult = <T>(key: string, value: T) => {
   cache[key] = value;
 };
 
-const requestOrder: string[] = [];
-
-const isLatest = (key: string) => requestOrder[requestOrder.length - 1] === key;
-const addToRequestOrder = (key: string) => requestOrder.push(key);
-
 interface Response<T> {
   loading: boolean;
   data?: T;
+  error: boolean;
 }
 
 const useFetch = <T>(path: RequestInfo, options?: RequestInit): Response<T> => {
   const [data, setData] = useState<T | undefined>();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const doFetch = useCallback(async () => {
     const key = path.toString();
     const cached = getCachedResult<T>(key);
+    setError(false);
     if (cached) {
       setData(cached);
       return;
     }
-    addToRequestOrder(key);
     setLoading(true);
     try {
       const result = await fetch(path, options);
       if (result.ok) {
         const json = await result.json();
         setCachedResult(key, json);
-        if (isLatest(key)) {
-          setData(json);
-        }
+        setData(json);
       }
+    } catch (e) {
+      setError(true);
     } finally {
-      if (isLatest(key)) {
-        setLoading(false);
-      }
+      setLoading(false);
     }
     return;
   }, [path, options]);
@@ -54,6 +49,7 @@ const useFetch = <T>(path: RequestInfo, options?: RequestInit): Response<T> => {
   return {
     loading,
     data,
+    error,
   };
 };
 

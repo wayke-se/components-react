@@ -2,19 +2,19 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 import { Facet, FacetFilter } from '../../@types/search';
 import ColorSelect from '../ColorSelect';
+import useSearch from '../../hooks/useSearch';
 
 interface ColorSelectFacetProps {
-  loading: boolean;
   facet: Facet;
-  onFilterUpdate: (query: string) => void;
 }
 
-const ColorSelectFacet = ({ loading, facet, onFilterUpdate }: ColorSelectFacetProps) => {
+const ColorSelectFacet = ({ facet }: ColorSelectFacetProps) => {
+  const { loading, error, onFilterUpdate } = useSearch();
   const [selected, setSelected] = useState<{ [key: string]: boolean }>();
 
   useEffect(() => {
     setSelected(undefined);
-  }, [facet]);
+  }, [facet, error]);
 
   const onClick = useCallback(
     (f: FacetFilter) => {

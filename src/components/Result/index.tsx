@@ -13,24 +13,19 @@ import ProgressBar from '../ProgressBar';
 import { ButtonSecondary, ButtonContent } from '../Button';
 import { Spinner } from '../Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
+import useSearch from '../../hooks/useSearch';
 
 interface Props {
-  loading: boolean;
-  numberOfDocuments: number;
-  numberOfHits: number;
-  useSkeletons?: boolean;
-  onLoadMore: () => void;
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | false;
 }
 
-const Result = ({
-  loading,
-  numberOfDocuments,
-  numberOfHits,
-  useSkeletons,
-  onLoadMore,
-  children,
-}: Props) => {
+const Result = ({ children }: Props) => {
+  const { loading, response, documents, queryFilter, onLoadMore } = useSearch();
+
+  const numberOfDocuments = documents?.length || 0;
+  const numberOfHits = response?.documentList.numberOfHits || 0;
+  const useSkeletons = !!queryFilter?.concatResult;
+
   if (loading && !useSkeletons) {
     return <Spinner />;
   }

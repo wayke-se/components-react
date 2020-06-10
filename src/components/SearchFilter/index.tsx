@@ -1,12 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import InputSearch from '../InputSearch';
+import useSearch from '../../hooks/useSearch';
 
-interface SearchFilterProps {
-  searchParams: URLSearchParams;
-  onFilterUpdate: (nextQuery: string) => void;
-}
-
-const SearchFilter = ({ searchParams, onFilterUpdate }: SearchFilterProps) => {
+const SearchFilter = () => {
+  const { queryFilter, onFilterUpdate } = useSearch();
   const [value, setValue] = useState('');
 
   const onChange = useCallback(
@@ -17,7 +14,7 @@ const SearchFilter = ({ searchParams, onFilterUpdate }: SearchFilterProps) => {
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.keyCode === 13) {
-        const nextQuery = new URLSearchParams(searchParams);
+        const nextQuery = new URLSearchParams(queryFilter.searchParams);
         if (e.currentTarget.value) {
           nextQuery.set('query', e.currentTarget.value);
         } else {
@@ -27,7 +24,7 @@ const SearchFilter = ({ searchParams, onFilterUpdate }: SearchFilterProps) => {
         onFilterUpdate(nextQuery.toString());
       }
     },
-    [searchParams]
+    [queryFilter]
   );
 
   return (

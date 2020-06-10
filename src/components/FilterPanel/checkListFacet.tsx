@@ -2,18 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Checklist from '../Checklist';
 import OverflowBox from '../OverflowBox';
 import { Facet, FacetFilter } from '../../@types/search';
+import useSearch from '../../hooks/useSearch';
 
 interface ChecklistFacetProps {
-  loading: boolean;
   facet: Facet;
-  onFilterUpdate: (query: string) => void;
 }
 
-const ChecklistFacet = ({ loading, facet, onFilterUpdate }: ChecklistFacetProps) => {
+const ChecklistFacet = ({ facet }: ChecklistFacetProps) => {
+  const { loading, error, onFilterUpdate } = useSearch();
   const [selected, setSelected] = useState<{ [key: string]: boolean }>();
   useEffect(() => {
     setSelected(undefined);
-  }, [facet]);
+  }, [facet, error]);
 
   const onClick = useCallback(
     (f: FacetFilter) => {
@@ -31,7 +31,6 @@ const ChecklistFacet = ({ loading, facet, onFilterUpdate }: ChecklistFacetProps)
   return (
     <OverflowBox>
       <Checklist
-        radio={false}
         items={facet.filters
           .sort((a, b) => a.displayName.localeCompare(b.displayName))
           .map((f) => ({

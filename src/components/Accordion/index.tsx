@@ -21,7 +21,7 @@ export interface IAccordionItem {
 }
 
 export interface IAccordion {
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
 }
 
 export const AccordionItem = ({ heading, children, activeCount, isActive }: IAccordionItem) => {

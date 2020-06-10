@@ -9,6 +9,7 @@ import Accordion, { AccordionItem } from '../Accordion';
 import Repeat from '../Repeat';
 import FacetSelector from './faceSelector';
 import { FacetIdToTitle } from '../../utils/formats';
+import useSearch from '../../hooks/useSearch';
 
 export interface FilterProps {
   label: string;
@@ -16,26 +17,16 @@ export interface FilterProps {
 }
 
 export interface Props {
-  loading: boolean;
-  searchParams: URLSearchParams;
-  initialFacets: Facet[];
-  facets: Facet[];
   facet?: Facet;
-  numberOfHits: number;
   onClose: () => void;
-  onFilterUpdate: (query: string) => void;
 }
 
-const FilterPanel = ({
-  loading,
-  searchParams,
-  initialFacets,
-  facets,
-  facet,
-  numberOfHits,
-  onClose,
-  onFilterUpdate,
-}: Props) => {
+const FilterPanel = ({ facet, onClose }: Props) => {
+  const { loading, response, onFilterUpdate } = useSearch();
+
+  const facets = response?.facets;
+  const numberOfHits = response?.documentList.numberOfHits || 0;
+
   const onClearFilters = useCallback(() => onFilterUpdate(''), []);
 
   return (
@@ -62,20 +53,14 @@ const FilterPanel = ({
       }
     >
       <Accordion>
-        {facets.map((f) => (
+        {facets?.map((f) => (
           <AccordionItem
             key={f.displayName}
             heading={FacetIdToTitle(f.id)}
             isActive={f.id === facet?.id}
           >
             <Repeat>
-              <FacetSelector
-                loading={loading}
-                searchParams={searchParams}
-                initialFacet={initialFacets.find((x) => x.id === f.id)}
-                facet={f}
-                onFilterUpdate={onFilterUpdate}
-              />
+              <FacetSelector facet={f} />
             </Repeat>
           </AccordionItem>
         ))}

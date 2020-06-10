@@ -20,23 +20,10 @@ import {
 } from '../../utils/constants';
 
 interface FacetSelectorProps {
-  loading: boolean;
-  searchParams: URLSearchParams;
-  initialFacet?: Facet;
   facet: Facet;
-  onFilterUpdate: (query: string) => void;
 }
 
-const FacetSelector = ({
-  loading,
-  searchParams,
-  initialFacet,
-  facet,
-  onFilterUpdate,
-}: FacetSelectorProps) => {
-  if (!initialFacet) {
-    return null;
-  }
+const FacetSelector = ({ facet }: FacetSelectorProps) => {
   switch (facet.id) {
     case MANUFACTURER:
     case MODEL_SERIES:
@@ -46,44 +33,15 @@ const FacetSelector = ({
     case ENVIRONMENT_CLASS:
     case SEGMENT:
     case DRIVING_WHEEL:
-      return <CheckListFacet loading={loading} facet={facet} onFilterUpdate={onFilterUpdate} />;
+      return <CheckListFacet facet={facet} />;
     case COLOR:
-      return <ColorSelectFacet loading={loading} facet={facet} onFilterUpdate={onFilterUpdate} />;
+      return <ColorSelectFacet facet={facet} />;
     case PRICE:
-      return (
-        <RangeFacet
-          loading={loading}
-          searchParams={searchParams}
-          initialFacet={initialFacet}
-          facet={facet}
-          unit="kr"
-          onFilterUpdate={onFilterUpdate}
-          formatValues
-        />
-      );
+      return <RangeFacet facet={facet} unit="kr" formatValues />;
     case MILEAGE:
-      return (
-        <RangeFacet
-          loading={loading}
-          searchParams={searchParams}
-          initialFacet={initialFacet}
-          facet={facet}
-          unit="mil"
-          onFilterUpdate={onFilterUpdate}
-          formatValues
-        />
-      );
+      return <RangeFacet facet={facet} unit="mil" formatValues />;
     case MODEL_YEAR:
-      return (
-        <RangeFacet
-          loading={loading}
-          searchParams={searchParams}
-          initialFacet={initialFacet}
-          facet={facet}
-          unit="år"
-          onFilterUpdate={onFilterUpdate}
-        />
-      );
+      return <RangeFacet facet={facet} unit="år" />;
     default:
       return null;
   }

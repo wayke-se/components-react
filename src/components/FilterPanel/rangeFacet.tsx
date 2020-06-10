@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Facet } from '../../@types/search';
 import RangeSlider from '../RangeSlider';
+import useSearch from '../../hooks/useSearch';
 
 interface RangeFacetProps {
-  loading: boolean;
-  searchParams: URLSearchParams;
-  initialFacet: Facet;
   facet: Facet;
   unit?: string;
   formatValues?: boolean;
-  onFilterUpdate: (query: string) => void;
 }
 
 const getInitialValues = (domain: number[], facet: Facet, searchParams: URLSearchParams) => {
@@ -21,23 +18,20 @@ const getInitialValues = (domain: number[], facet: Facet, searchParams: URLSearc
     : domain;
 };
 
-const RangeFacet = ({
-  loading,
-  searchParams,
-  initialFacet,
-  facet,
-  unit,
-  formatValues,
-  onFilterUpdate,
-}: RangeFacetProps) => {
+const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
+  const { loading, queryFilter, initialFacets, onFilterUpdate } = useSearch();
+  const initialFacet = initialFacets?.find((x) => x.id === facet.id);
+
   const allValues = facet.filters.map((f) => parseInt(f.displayName, 10));
-  const initialAllValues = initialFacet.filters.map((f) => parseInt(f.displayName, 10));
+  const initialAllValues = initialFacet?.filters.map((f) => parseInt(f.displayName, 10)) || [1, 2];
   const domain = [initialAllValues[0], initialAllValues[initialAllValues.length - 1]];
 
-  const [values, setValues] = useState(() => getInitialValues(domain, facet, searchParams));
+  const [values, setValues] = useState(() =>
+    getInitialValues(domain, facet, queryFilter.searchParams)
+  );
 
   useEffect(() => {
-    if (allValues.length === initialAllValues.length) {
+    if (initialAllValues && allValues.length === initialAllValues.length) {
       setValues(domain);
     }
   }, [facet]);
@@ -45,26 +39,21 @@ const RangeFacet = ({
   const onChange = useCallback(
     (values: readonly number[]) => {
       setValues(values.slice());
-      const query = new URLSearchParams(searchParams);
+      const query = new URLSearchParams(queryFilter.searchParams);
       query.delete(`${facet.id}.min`);
       query.delete(`${facet.id}.max`);
-      let shouldUpdate = false;
 
       if (values[0] !== domain[0]) {
         query.set(`${facet.id}.min`, `${values[0]}`);
-        shouldUpdate = true;
       }
 
       if (values[1] !== domain[1]) {
         query.set(`${facet.id}.max`, `${values[1]}`);
-        shouldUpdate = true;
       }
 
-      if (shouldUpdate) {
-        onFilterUpdate(query.toString());
-      }
+      onFilterUpdate(query.toString());
     },
-    [domain, searchParams]
+    [domain, queryFilter]
   );
 
   return (
