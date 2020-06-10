@@ -1,27 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Facet, FacetFilter } from '../../@types/search';
 import ColorSelect from '../ColorSelect';
 
 interface ColorSelectFacetProps {
+  loading: boolean;
   facet: Facet;
   onFilterUpdate: (query: string) => void;
 }
 
-const ColorSelectFacet = ({ facet, onFilterUpdate }: ColorSelectFacetProps) => {
-  const [selected, setSelected] = useState<{ [key: string]: boolean }>({});
-
-  const _onFilterUpdate = (f: FacetFilter) => {
-    setSelected({
-      ...selected,
-      [f.displayName]: !f.selected,
-    });
-    onFilterUpdate(f.query);
-  };
+const ColorSelectFacet = ({ loading, facet, onFilterUpdate }: ColorSelectFacetProps) => {
+  const [selected, setSelected] = useState<{ [key: string]: boolean }>();
 
   useEffect(() => {
-    setSelected({});
+    setSelected(undefined);
   }, [facet]);
+
+  const onClick = useCallback(
+    (f: FacetFilter) => {
+      if (loading) {
+        setSelected({
+          ...selected,
+          [f.displayName]: !f.selected,
+        });
+        onFilterUpdate(f.query);
+      }
+    },
+    [loading]
+  );
 
   return (
     <ColorSelect
@@ -29,8 +35,8 @@ const ColorSelectFacet = ({ facet, onFilterUpdate }: ColorSelectFacetProps) => {
         .sort((a, b) => a.displayName.localeCompare(b.displayName))
         .map((f) => ({
           label: f.displayName,
-          onClick: () => _onFilterUpdate(f),
-          active: selected[f.displayName] !== undefined ? selected[f.displayName] : f.selected,
+          onClick: () => onClick(f),
+          active: selected?.[f.displayName] !== undefined ? selected[f.displayName] : f.selected,
           hex: ['#fff'],
         }))}
     />

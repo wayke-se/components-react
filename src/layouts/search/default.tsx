@@ -11,6 +11,7 @@ import PortalElement from '../../components/Portal/portal-element';
 import Repeat from '../../components/Repeat';
 import useSearchList, { QueryFilter } from '../../hooks/useSearchList';
 import SearchFilter from '../../components/SearchFilter';
+import Snackbar from '../../components/Snackbar';
 
 interface DefaultSearchLayoutProps {
   url: string;
@@ -65,6 +66,7 @@ const DefaultSearchLayout = ({ onClickSearchItem, url, apiKey }: DefaultSearchLa
         <PageSection>
           <Container>
             <Filter
+              loading={loading}
               searchParams={searchParams}
               initialFacets={initialFacets}
               facets={response?.facets}
@@ -82,7 +84,11 @@ const DefaultSearchLayout = ({ onClickSearchItem, url, apiKey }: DefaultSearchLa
               numberOfDocuments={documents?.length || 0}
               numberOfHits={response?.documentList.numberOfHits || 0}
             >
-              <Grid onClickItem={onClickSearchItem} documents={documents} />
+              {documents && documents.length > 0 ? (
+                <Grid onClickItem={onClickSearchItem} documents={documents} />
+              ) : (
+                <Snackbar severity="error" heading="Inga resultat" />
+              )}
             </Result>
           </Container>
         </PageSection>

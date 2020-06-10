@@ -7,13 +7,13 @@
 // ====================================================
 
 export interface SearchItem_vehicle_branch {
-  __typename: "Branch";
+  __typename: 'Branch';
   id: string | null;
   description: string | null;
 }
 
 export interface SearchItem_vehicle_properties {
-  __typename: "VehicleProperties";
+  __typename: 'VehicleProperties';
   abs: boolean | null;
   acceleration: number | null;
   airbagDriver: boolean | null;
@@ -67,7 +67,7 @@ export interface SearchItem_vehicle_properties {
 }
 
 export interface SearchItem_vehicle {
-  __typename: "Vehicle";
+  __typename: 'Vehicle';
   branch: SearchItem_vehicle_branch | null;
   description: string | null;
   id: string | null;

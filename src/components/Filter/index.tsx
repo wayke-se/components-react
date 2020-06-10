@@ -12,6 +12,7 @@ export interface FilterProps {
 }
 
 export interface Props {
+  loading: boolean;
   searchParams: URLSearchParams;
   initialFacets: Facet[] | undefined;
   facets: Facet[] | undefined;
@@ -30,9 +31,15 @@ const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   }
 };
 
-const Filter = ({ searchParams, initialFacets, facets, numberOfHits, onFilterUpdate }: Props) => {
+const Filter = ({
+  loading,
+  searchParams,
+  initialFacets,
+  facets,
+  numberOfHits,
+  onFilterUpdate,
+}: Props) => {
   const [facet, setFacet] = useState<Facet>();
-
   const onSelectFacet = useCallback((nextFacet: Facet) => setFacet(nextFacet), []);
   const onClose = useCallback(() => setFacet(undefined), []);
 
@@ -44,6 +51,7 @@ const Filter = ({ searchParams, initialFacets, facets, numberOfHits, onFilterUpd
     <>
       {initialFacets && facet && (
         <FilterPanel
+          loading={loading}
           searchParams={searchParams}
           initialFacets={initialFacets}
           facets={facets}

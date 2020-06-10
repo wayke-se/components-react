@@ -6,7 +6,8 @@ import { Handle } from './handle';
 import { Track } from './track';
 import { numberSeparator } from '../../utils/formats';
 
-interface RangeSlider {
+interface RangeSliderProps {
+  loading: boolean;
   domain: number[];
   values: number[];
   steps: number[];
@@ -15,7 +16,15 @@ interface RangeSlider {
   onChange: (values: readonly number[]) => void;
 }
 
-const RangeSlider = ({ values, domain, steps, unit, formatValues, onChange }: RangeSlider) => {
+const RangeSlider = ({
+  loading,
+  values,
+  domain,
+  steps,
+  unit,
+  formatValues,
+  onChange,
+}: RangeSliderProps) => {
   const [current, setCurrent] = useState<number[]>(values);
   const onUpdate = useCallback((values: readonly number[]) => setCurrent(values.slice()), []);
 
@@ -30,6 +39,7 @@ const RangeSlider = ({ values, domain, steps, unit, formatValues, onChange }: Ra
     <>
       <OwnSlider>
         <Slider
+          disabled={loading}
           mode={1}
           step={step}
           domain={domain}

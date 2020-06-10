@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface AllVehicleProperties {
-  __typename: "VehicleProperties";
+  __typename: 'VehicleProperties';
   abs: boolean | null;
   acceleration: number | null;
   airbagDriver: boolean | null;

@@ -16,6 +16,7 @@ export interface FilterProps {
 }
 
 export interface Props {
+  loading: boolean;
   searchParams: URLSearchParams;
   initialFacets: Facet[];
   facets: Facet[];
@@ -26,6 +27,7 @@ export interface Props {
 }
 
 const FilterPanel = ({
+  loading,
   searchParams,
   initialFacets,
   facets,
@@ -44,12 +46,12 @@ const FilterPanel = ({
         <>
           <FooterAction>
             <FooterActionItem>
-              <ButtonSecondary fullWidth onClick={onClearFilters}>
+              <ButtonSecondary fullWidth disabled={loading} onClick={onClearFilters}>
                 <ButtonContent>Rensa alla</ButtonContent>
               </ButtonSecondary>
             </FooterActionItem>
             <FooterActionItem>
-              <ButtonPrimary fullWidth onClick={onClose}>
+              <ButtonPrimary fullWidth disabled={loading} onClick={onClose}>
                 <ButtonContent>{`Visa ${numberOfHits} ${
                   numberOfHits === 1 ? 'bil' : 'bilar'
                 }`}</ButtonContent>
@@ -68,6 +70,7 @@ const FilterPanel = ({
           >
             <Repeat>
               <FacetSelector
+                loading={loading}
                 searchParams={searchParams}
                 initialFacet={initialFacets.find((x) => x.id === f.id)}
                 facet={f}

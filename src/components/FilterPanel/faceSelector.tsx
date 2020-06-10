@@ -20,6 +20,7 @@ import {
 } from '../../utils/constants';
 
 interface FacetSelectorProps {
+  loading: boolean;
   searchParams: URLSearchParams;
   initialFacet?: Facet;
   facet: Facet;
@@ -27,6 +28,7 @@ interface FacetSelectorProps {
 }
 
 const FacetSelector = ({
+  loading,
   searchParams,
   initialFacet,
   facet,
@@ -44,12 +46,13 @@ const FacetSelector = ({
     case ENVIRONMENT_CLASS:
     case SEGMENT:
     case DRIVING_WHEEL:
-      return <CheckListFacet facet={facet} onFilterUpdate={onFilterUpdate} />;
+      return <CheckListFacet loading={loading} facet={facet} onFilterUpdate={onFilterUpdate} />;
     case COLOR:
-      return <ColorSelectFacet facet={facet} onFilterUpdate={onFilterUpdate} />;
+      return <ColorSelectFacet loading={loading} facet={facet} onFilterUpdate={onFilterUpdate} />;
     case PRICE:
       return (
         <RangeFacet
+          loading={loading}
           searchParams={searchParams}
           initialFacet={initialFacet}
           facet={facet}
@@ -61,6 +64,7 @@ const FacetSelector = ({
     case MILEAGE:
       return (
         <RangeFacet
+          loading={loading}
           searchParams={searchParams}
           initialFacet={initialFacet}
           facet={facet}
@@ -72,6 +76,7 @@ const FacetSelector = ({
     case MODEL_YEAR:
       return (
         <RangeFacet
+          loading={loading}
           searchParams={searchParams}
           initialFacet={initialFacet}
           facet={facet}

@@ -3,6 +3,7 @@ import { Facet } from '../../@types/search';
 import RangeSlider from '../RangeSlider';
 
 interface RangeFacetProps {
+  loading: boolean;
   searchParams: URLSearchParams;
   initialFacet: Facet;
   facet: Facet;
@@ -21,6 +22,7 @@ const getInitialValues = (domain: number[], facet: Facet, searchParams: URLSearc
 };
 
 const RangeFacet = ({
+  loading,
   searchParams,
   initialFacet,
   facet,
@@ -46,16 +48,19 @@ const RangeFacet = ({
       const query = new URLSearchParams(searchParams);
       query.delete(`${facet.id}.min`);
       query.delete(`${facet.id}.max`);
+      let shouldUpdate = false;
 
       if (values[0] !== domain[0]) {
         query.set(`${facet.id}.min`, `${values[0]}`);
+        shouldUpdate = true;
       }
 
       if (values[1] !== domain[1]) {
         query.set(`${facet.id}.max`, `${values[1]}`);
+        shouldUpdate = true;
       }
 
-      if (query.has(`${facet.id}.min`) || query.has(`${facet.id}.max`)) {
+      if (shouldUpdate) {
         onFilterUpdate(query.toString());
       }
     },
@@ -64,6 +69,7 @@ const RangeFacet = ({
 
   return (
     <RangeSlider
+      loading={loading}
       domain={domain}
       values={values}
       steps={initialAllValues}
