@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "npm run prettify && npm run type-check && npm run lint && npm run test",
-    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/queries/**/* --localSchemaFile=schema.graphql --target typescript --tagName gql --outputFlat src/@types/gql"
+    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/queries/**/* --endpoint https://gql.wayketech.se/query --target typescript --tagName gql --outputFlat src/@types/gql"
   },
   "author": "Peter Johansson",
   "license": "MIT",
@@ -51,6 +51,7 @@
     "apollo-boost": "^0.4.9",
     "graphql": "^15.1.0",
     "graphql-tools": "^6.0.9",
+    "moment": "^2.26.0",
     "react-compound-slider": "^2.5.0",
     "react-slick": "^0.26.1",
     "slick-carousel": "^1.8.1"

@@ -24,7 +24,7 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
               id={document._id}
               onClick={onClickItem}
               title={document.title}
-              href="#684f2548-1250-4ae2-bcb8-e8aec11cb739"
+              href={`#${document._id}`}
               image={document.featuredImage?.files?.[0]?.url || 'http://placehold.it/600x400'}
               description={document.shortDescription}
               uspList={[

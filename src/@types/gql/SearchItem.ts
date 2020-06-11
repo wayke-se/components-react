@@ -6,77 +6,245 @@
 // GraphQL query operation: SearchItem
 // ====================================================
 
-export interface SearchItem_vehicle_branch {
-  __typename: 'Branch';
-  id: string | null;
-  description: string | null;
+export interface SearchItem_vehicle_contact {
+  __typename: "ContactOptions";
+  name: string | null;
+  email: string | null;
+  phonenumber: string | null;
 }
 
-export interface SearchItem_vehicle_properties {
-  __typename: 'VehicleProperties';
-  abs: boolean | null;
-  acceleration: number | null;
-  airbagDriver: boolean | null;
-  airbagFrontSide: boolean | null;
-  airbagPassenger: boolean | null;
-  annualTax: number | null;
-  annualBonus: number | null;
-  annualMalus: number | null;
-  brakeAssistance: boolean | null;
-  chassis: string | null;
-  co2: number | null;
-  colorName: string | null;
-  drivingWheel: string | null;
-  engineCylinders: number | null;
-  engineVolume: number | null;
-  environmentClass: string | null;
-  espSystem: boolean | null;
-  fuelConsumptionCityDriving: number | null;
-  fuelConsumptionCountryRoadDriving: number | null;
-  fuelConsumptionMixedDriving: number | null;
-  gearboxName: string | null;
-  groundClearence: number | null;
-  hasAutomaticGearbox: boolean | null;
-  height: number | null;
-  isofixRearSeat: boolean | null;
-  length: number | null;
-  listPrice: number | null;
-  maxLoadWeight: number | null;
-  maxRoofWeight: number | null;
-  maxSpeed: number | null;
-  ncapMonth: string | null;
-  ncapStar: number | null;
-  ncapYear: string | null;
-  numberOfGears: number | null;
-  seats: number | null;
-  secondaryFuelType: string | null;
-  segment: string | null;
-  serviceWeight: number | null;
-  tankVolume: number | null;
-  tco3Years2500: number | null;
-  tiresFront: string | null;
-  tiresRear: string | null;
-  torque: number | null;
-  trailerTotalWeightB: number | null;
-  trailerTotalWeightBPlus: number | null;
-  trailerWeight: number | null;
-  trcSystem: boolean | null;
-  trunkSpace: number | null;
-  wheelBase: number | null;
-  width: number | null;
+export interface SearchItem_vehicle_branch_flags {
+  __typename: "BranchFlags";
+  mrf: boolean | null;
+  centralStorage: boolean | null;
+  ecommerce: boolean | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_monday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_tuesday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_wednesday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_thursday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_friday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_saturday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours_sunday {
+  __typename: "HoursOpen";
+  from: string | null;
+  until: string | null;
+}
+
+export interface SearchItem_vehicle_branch_openingHours {
+  __typename: "OpeningHours";
+  monday: SearchItem_vehicle_branch_openingHours_monday | null;
+  tuesday: SearchItem_vehicle_branch_openingHours_tuesday | null;
+  wednesday: SearchItem_vehicle_branch_openingHours_wednesday | null;
+  thursday: SearchItem_vehicle_branch_openingHours_thursday | null;
+  friday: SearchItem_vehicle_branch_openingHours_friday | null;
+  saturday: SearchItem_vehicle_branch_openingHours_saturday | null;
+  sunday: SearchItem_vehicle_branch_openingHours_sunday | null;
+}
+
+export interface SearchItem_vehicle_branch_organization_branches {
+  __typename: "Branch";
+  id: string;
+}
+
+export interface SearchItem_vehicle_branch_organization_parent {
+  __typename: "Branch";
+  id: string;
+}
+
+export interface SearchItem_vehicle_branch_organization {
+  __typename: "Organization";
+  branches: (SearchItem_vehicle_branch_organization_branches | null)[];
+  parent: SearchItem_vehicle_branch_organization_parent | null;
+}
+
+export interface SearchItem_vehicle_branch_location {
+  __typename: "Location";
+  city: string | null;
+  county: string | null;
+  streetAddress: string | null;
+  postalCode: string | null;
+}
+
+export interface SearchItem_vehicle_branch_promos {
+  __typename: "Promo";
+  description: string | null;
+  image: string | null;
+  title: string | null;
+}
+
+export interface SearchItem_vehicle_branch_services {
+  __typename: "Service";
+  markdown: string | null;
+  title: string | null;
+}
+
+export interface SearchItem_vehicle_branch {
+  __typename: "Branch";
+  id: string;
+  description: string | null;
+  name: string | null;
+  homepage: string | null;
+  flags: SearchItem_vehicle_branch_flags | null;
+  logotype: string | null;
+  openingHours: SearchItem_vehicle_branch_openingHours | null;
+  organization: SearchItem_vehicle_branch_organization | null;
+  location: SearchItem_vehicle_branch_location | null;
+  promos: (SearchItem_vehicle_branch_promos | null)[];
+  services: (SearchItem_vehicle_branch_services | null)[];
+}
+
+export interface SearchItem_vehicle_data {
+  __typename: "VehicleData";
+  enginePower: number | null;
+  equipmentLevel: string | null;
+  fuelType: string | null;
+  gearbox: string | null;
+  gearboxType: string | null;
+  manufactureYear: number;
+  manufacturer: string;
+  mileage: number;
+  modelName: string | null;
+  modelSeries: string | null;
+  modelYear: number;
+  properties: any | null;
+  options: string[];
+  registrationNumber: string | null;
+  salesName: string | null;
+  vin: string | null;
+}
+
+export interface SearchItem_vehicle_ecommerce {
+  __typename: "Ecommerce";
+  enabled: boolean | null;
+  reserved: boolean | null;
+  withTradeIn: boolean | null;
+  withHomeDelivery: boolean | null;
+}
+
+export interface SearchItem_vehicle_financialOptions_downPayment {
+  __typename: "FinancialOptionDetail";
+  current: number;
+  default: number;
+  max: number;
+  min: number;
+  step: number;
+}
+
+export interface SearchItem_vehicle_financialOptions_duration {
+  __typename: "FinancialOptionDetail";
+  current: number;
+  default: number;
+  max: number;
+  min: number;
+  step: number;
+}
+
+export interface SearchItem_vehicle_financialOptions_link {
+  __typename: "Link";
+  title: string | null;
+  href: string | null;
+}
+
+export interface SearchItem_vehicle_financialOptions_residual {
+  __typename: "FinancialOptionDetail";
+  current: number;
+  default: number;
+  max: number;
+  min: number;
+  step: number;
+}
+
+export interface SearchItem_vehicle_financialOptions {
+  __typename: "FinancialOption";
+  administrationFee: number | null;
+  downPayment: SearchItem_vehicle_financialOptions_downPayment | null;
+  duration: SearchItem_vehicle_financialOptions_duration | null;
+  effectiveInterest: number | null;
+  financialInstitution: string | null;
+  image: string | null;
+  interest: number | null;
+  link: SearchItem_vehicle_financialOptions_link | null;
+  loanAmount: number | null;
+  logotype: string | null;
+  monthlyCost: number | null;
+  name: string;
+  price: number;
+  priceUnit: string;
+  residual: SearchItem_vehicle_financialOptions_residual | null;
+  setupFee: number | null;
+  totalCreditCost: number | null;
+  totalVehicleCost: number | null;
+  type: string;
+  vehiclePrice: number | null;
+}
+
+export interface SearchItem_vehicle_media_formats {
+  __typename: "MediaFileFormat";
+  format: string | null;
+  url: string | null;
+}
+
+export interface SearchItem_vehicle_media {
+  __typename: "MediaFile";
+  url: string | null;
+  type: string;
+  formats: (SearchItem_vehicle_media_formats | null)[];
+}
+
+export interface SearchItem_vehicle_location {
+  __typename: "Location";
+  city: string | null;
+  county: string | null;
+  streetAddress: string | null;
+  postalCode: string | null;
 }
 
 export interface SearchItem_vehicle {
-  __typename: 'Vehicle';
+  __typename: "Vehicle";
+  id: string;
+  contact: SearchItem_vehicle_contact | null;
   branch: SearchItem_vehicle_branch | null;
+  data: SearchItem_vehicle_data;
   description: string | null;
-  id: string | null;
-  gearbox: string | null;
-  fuelType: string | null;
-  manufactureYear: number | null;
-  manufacturer: string | null;
-  options: (string | null)[] | null;
-  properties: SearchItem_vehicle_properties | null;
+  ecommerce: SearchItem_vehicle_ecommerce | null;
+  financialOptions: SearchItem_vehicle_financialOptions[];
+  media: (SearchItem_vehicle_media | null)[];
+  location: SearchItem_vehicle_location | null;
+  price: number;
+  shortDescription: string | null;
+  title: string;
 }
 
 export interface SearchItem {
@@ -84,5 +252,5 @@ export interface SearchItem {
 }
 
 export interface SearchItemVariables {
-  id?: string | null;
+  id: string;
 }

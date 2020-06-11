@@ -1,39 +1,50 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { List, Item, Label, Heading, Info, Value } from './wrapper';
 import { IconInfo } from '../Icon';
-
-export interface ItemProps {
-  label: string;
-  value: string | number | null;
-  onClick?: () => void;
-}
+import { ItemPropertyType, ItemPropertModalType } from '../../utils/specification';
+import Modal from '../Modal';
+import { Content } from '../ProductCard/wrapper';
 
 export interface Props {
-  items?: ItemProps[];
+  specificationList: ItemPropertyType[];
 }
 
-const DataGrid = ({ items }: Props) => {
-  if (!items) {
+const DataGrid = ({ specificationList }: Props) => {
+  const [modal, setModal] = useState<ItemPropertModalType>();
+
+  const onOpen = useCallback((nextModal) => setModal(nextModal), []);
+  const onClose = useCallback(() => setModal(undefined), []);
+
+  if (!specificationList?.length) {
     return null;
   }
 
   return (
-    <List>
-      {items.map((item) => (
-        <Item key={item.label}>
-          <Label>
-            <Heading>{item.label}</Heading>
-            {item.onClick && (
-              <Info onClick={item.onClick} title="Mer info">
-                <IconInfo block />
-              </Info>
-            )}
-          </Label>
-          <Value>{item.value}</Value>
-        </Item>
-      ))}
-    </List>
+    <>
+      {modal && (
+        <Modal title={modal.title} onClose={onClose}>
+          <Content>
+            <p>{modal.text}</p>
+          </Content>
+        </Modal>
+      )}
+      <List>
+        {specificationList.map((item) => (
+          <Item key={item.label}>
+            <Label>
+              <Heading>{item.label}</Heading>
+              {item.modal && (
+                <Info onClick={() => onOpen(item.modal)} title="Mer info">
+                  <IconInfo block />
+                </Info>
+              )}
+            </Label>
+            <Value>{item.value}</Value>
+          </Item>
+        ))}
+      </List>
+    </>
   );
 };
 

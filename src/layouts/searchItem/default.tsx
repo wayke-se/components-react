@@ -10,12 +10,11 @@ import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
 import InputText from '../../components/InputText';
-import Badge from '../../components/Badge';
 import Blockquote from '../../components/Blockquote';
 import ProductCard from '../../components/ProductCard';
 import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
-import Gallery from '../../components/Gallery';
+import Gallery, { ImageProps } from '../../components/Gallery';
 import Loader from '../../components/Loader';
 import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
@@ -35,29 +34,28 @@ import {
   ButtonInline,
   ButtonInlineBold,
 } from '../../components/Button';
-import {
-  UtilityTextPrimary,
-  UtilityTextPrimaryBold,
-  UtilityTextBold,
-} from '../../components/Utility';
+import { UtilityTextPrimary, UtilityTextPrimaryBold } from '../../components/Utility';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 import { OverflowGrid, OverflowGridList, OverflowGridItem } from '../../components/OverflowGrid';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
-import { notEmpty } from '../../utils/formats';
+import { notEmpty, numberSeparator } from '../../utils/formats';
 import { PortalNamespace } from '../../components/Portal';
 import PortalElement from '../../components/Portal/portal-element';
 import Modal from '../../components/Modal';
+import { getSpecificationList } from '../../utils/specification';
+import OpeningHours from '../../components/OpeningHours';
+import PhoneNumber from '../../components/PhoneNumber';
 
 interface DefaultSerchItemLayoutProps {
-  id?: string;
+  id: string;
 }
 
 const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
-  const { loading, data } = useSearchItem(id);
+  const { loading, data: result } = useSearchItem(id);
   const options = useMemo(
-    () => data?.vehicle?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
-    [data?.vehicle?.options]
+    () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
+    [result?.vehicle?.data?.options]
   );
 
   if (loading) {
@@ -72,7 +70,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     );
   }
 
-  if (!data?.vehicle) {
+  if (!result?.vehicle?.data) {
     return (
       <Page>
         <PageSection large>
@@ -84,7 +82,26 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     );
   }
 
-  const { fuelType, gearbox, manufactureYear, manufacturer } = data.vehicle;
+  const {
+    title,
+    shortDescription,
+    media,
+    contact,
+    description,
+    price,
+    data,
+    branch,
+  } = result.vehicle;
+  const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
+  const images: ImageProps[] = media.filter(notEmpty).map((x) => ({
+    gallery: x.formats.filter(notEmpty).find((x) => x?.format === '1170x')?.url as string,
+    thumbnail: x.formats.filter(notEmpty).find((x) => x?.format === '225x150')?.url as string,
+    lightbox: x.url as string,
+    url: x.url as string,
+    type: x.type,
+  }));
+
+  const specificationList = getSpecificationList(data);
 
   return (
     <>
@@ -98,11 +115,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     <LogoBox logo="https://placehold.it/24x24" alt="Logotyp" />
                   </Repeat>
                   <Repeat small>
-                    <H1 noMargin>Mercedes-Benz C 200 Coupé</H1>
+                    <H1 noMargin>{title}</H1>
                   </Repeat>
-                  <Repeat small>
-                    <div>Mercedes 7G-Tronic Plus AMG Sport Euro 6 184hk</div>
-                  </Repeat>
+                  {shortDescription && (
+                    <Repeat small>
+                      <div>{shortDescription}</div>
+                    </Repeat>
+                  )}
                   <Repeat small>
                     <UspList
                       small
@@ -111,7 +130,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                           title: manufactureYear,
                         },
                         {
-                          title: '--- mil',
+                          title: `${numberSeparator(mileage)} mil`,
                         },
                         {
                           title: gearbox,
@@ -125,7 +144,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                 </ProductPageAsideSection>
 
                 <ProductPageAsideSection mobileOrder={2}>
-                  <PriceTable />
+                  <PriceTable price={price} />
                 </ProductPageAsideSection>
 
                 <ProductPageAsideSection mobileOrder={4}>
@@ -203,28 +222,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </ButtonPrimary>
                   </Repeat>
                   <Repeat>
-                    <ActionList />
+                    <ActionList contact={contact} />
                   </Repeat>
                 </ProductPageAsideSection>
               </ProductPageAside>
               <ProductPageMain>
                 <ProductPageAsideSection mobileOrder={3}>
-                  <Gallery
-                    images={[
-                      {
-                        url:
-                          'https://cdn.wayke.se/media/8b77f417-1229-4aff-b331-3e086ac2b033/19c34cad-8696-432f-a06e-a63b06acd18c/1170x',
-                      },
-                      {
-                        url:
-                          'https://cdn.wayke.se/media/c50f7097-52d0-4d06-8deb-f818eccbe625/a14059a5-963b-4ca2-acbe-11710eabac96/1170x',
-                      },
-                      {
-                        url:
-                          'https://cdn.wayke.se/media/e2890b9e-918d-4378-91d5-206bb07a7fec/8e5c768e-f332-42b8-bfa7-176613f1f06d/1170x',
-                      },
-                    ]}
-                  />
+                  <Gallery images={images} />
                 </ProductPageAsideSection>
 
                 <ProductPageMainSection>
@@ -233,99 +237,22 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   </Repeat>
                   <Repeat>
                     <ExtendContent actionTitle="Visa mer">
-                      <DataGrid
-                        items={[
-                          {
-                            label: 'Varumärke',
-                            value: manufacturer,
-                          },
-                          {
-                            label: 'Mätarställning',
-                            value: '2150 mil',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Tillverkningsår',
-                            value: manufactureYear,
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Version',
-                            value: 'C 200 Coupé',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Modell',
-                            value: 'C-Klass',
-                          },
-                          {
-                            label: 'Varumärke1',
-                            value: 'Mercedes-Benz',
-                          },
-                          {
-                            label: 'Mätarställning1',
-                            value: '2150 mil',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Tillverkningsår1',
-                            value: '2018',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Version1',
-                            value: 'C 200 Coupé',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Modell1',
-                            value: 'C-Klass',
-                          },
-                          {
-                            label: 'Varumärke2',
-                            value: 'Mercedes-Benz',
-                          },
-                          {
-                            label: 'Mätarställning2',
-                            value: '2150 mil',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Tillverkningsår2',
-                            value: '2018',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Version2',
-                            value: 'C 200 Coupé',
-                            onClick: () => {},
-                          },
-                          {
-                            label: 'Modell2',
-                            value: 'C-Klass',
-                          },
-                          {
-                            label: 'Varumärke3',
-                            value: 'Mercedes-Benz',
-                          },
-                        ]}
-                      />
+                      <DataGrid specificationList={specificationList} />
                     </ExtendContent>
                   </Repeat>
                 </ProductPageMainSection>
 
-                <ProductPageMainSection>
-                  <Blockquote
-                    author="Anders Andersson, säljare"
-                    date="1 mars 2020"
-                    avatar="https://placehold.it/40x40"
-                  >
-                    <p>
-                      Passa på att köpa en riktigt fin C 200 Coupé med AMG Sport-paket. Det ingår
-                      både sommar och vinterdäck. En liten repa på passagerardörren.{' '}
-                    </p>
-                  </Blockquote>
-                </ProductPageMainSection>
+                {contact && (
+                  <ProductPageMainSection>
+                    <Blockquote
+                      author={contact.name}
+                      date="1 mars 2020"
+                      avatar="https://placehold.it/40x40"
+                    >
+                      {!!description && <p>{description}</p>}
+                    </Blockquote>
+                  </ProductPageMainSection>
+                )}
 
                 <ProductPageMainSection>
                   <Repeat>
@@ -340,7 +267,9 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2 noMargin>Den här bilen finns på vår anläggning i Göteborg</H2>
+                    <H2
+                      noMargin
+                    >{`Den här bilen finns på vår anläggning i ${branch?.location?.city}`}</H2>
                   </Repeat>
                   <Repeat>
                     <div
@@ -364,44 +293,15 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                             <TableColumnCell>Adress</TableColumnCell>
                             <TableColumnCell>
                               <ButtonInlineBold>
-                                <ButtonContent>Gatunamn 123, Göteborg</ButtonContent>
+                                <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
                               </ButtonInlineBold>
                             </TableColumnCell>
                           </TableColumnRow>
-                          <TableColumnRow>
-                            <TableColumnCell>Telefonnummer</TableColumnCell>
-                            <TableColumnCell>
-                              <ButtonInlineBold>
-                                <ButtonContent>Visa telefonnummer</ButtonContent>
-                              </ButtonInlineBold>
-                            </TableColumnCell>
-                          </TableColumnRow>
+                          <PhoneNumber phoneNumber="031-225566" />
                         </TableColumn>
                       </Repeat>
                       <Repeat>
-                        <Repeat small>
-                          <Badge label="Öppet" severity="positive" />
-                        </Repeat>
-                        <Repeat small>
-                          <TableColumn>
-                            <TableColumnRow>
-                              <TableColumnCell>
-                                <UtilityTextBold>Öppet idag</UtilityTextBold>
-                              </TableColumnCell>
-                              <TableColumnCell>
-                                <UtilityTextBold>9:00-19:00</UtilityTextBold>
-                              </TableColumnCell>
-                            </TableColumnRow>
-                            <TableColumnRow>
-                              <TableColumnCell>Mån-fre</TableColumnCell>
-                              <TableColumnCell>9:00-19:00</TableColumnCell>
-                            </TableColumnRow>
-                            <TableColumnRow>
-                              <TableColumnCell>Lör-sön</TableColumnCell>
-                              <TableColumnCell>10:00-16:00</TableColumnCell>
-                            </TableColumnRow>
-                          </TableColumn>
-                        </Repeat>
+                        <OpeningHours openingHours={branch?.openingHours} />
                       </Repeat>
                     </ProductPageContentLimit>
                   </Repeat>

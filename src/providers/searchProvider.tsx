@@ -17,13 +17,18 @@ const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
   });
   const [initialFacets, setInitialFacets] = useState<Facet[]>();
   const [documents, setDocuments] = useState<Document[]>();
+  const [initialize, setInitialize] = useState(false);
 
   const query = queryFilter.searchParams.toString();
-  const { loading, data: response, error } = useFetch<Search>(`${url}${query ? `?${query}` : ''}`, {
-    headers: {
-      'x-api-key': apiKey,
+  const { loading, data: response, error } = useFetch<Search>(
+    `${url}${query ? `?${query}` : ''}`,
+    {
+      headers: {
+        'x-api-key': apiKey,
+      },
     },
-  });
+    !initialize
+  );
 
   useEffect(() => {
     if (response) {
@@ -56,6 +61,8 @@ const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
     }
   }, [response]);
 
+  const onInitialize = useCallback(() => setInitialize(true), []);
+
   const value = {
     loading,
     error,
@@ -65,6 +72,7 @@ const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
     queryFilter,
     onFilterUpdate,
     onLoadMore,
+    onInitialize,
   };
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;

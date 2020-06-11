@@ -4,8 +4,8 @@ import { Wrapper, Quote, Author, AvatarWrapper, Info, Name, Date } from './wrapp
 import Avatar from '../Avatar';
 
 interface Props {
-  children: JSX.Element | JSX.Element[] | string;
-  author?: string;
+  children: JSX.Element | JSX.Element[] | false;
+  author?: string | null;
   avatar?: string;
   date?: string;
 }

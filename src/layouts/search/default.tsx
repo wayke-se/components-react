@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Container from '../../components/Container';
 import { Page, PageSection } from '../../components/Page';
@@ -18,7 +18,12 @@ interface DefaultSearchLayoutProps {
 }
 
 const DefaultSearchLayout = ({ onClickSearchItem }: DefaultSearchLayoutProps) => {
-  const { error, documents, queryFilter } = useSearch();
+  const { error, documents, queryFilter, onInitialize } = useSearch();
+
+  useEffect(() => {
+    onInitialize();
+  }, []);
+
   const searchQuery = queryFilter.searchParams.get('query');
 
   return (

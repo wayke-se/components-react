@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 // Filter function to remove any null/undefined values.
 export const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue =>
   value !== null && value !== undefined;
@@ -57,4 +59,39 @@ export const FacetIdToTitle = (f: string) => {
     default:
       return f;
   }
+};
+
+export const dateTimeFormat = {
+  DateTime: 0,
+  DateOnly: 1,
+  TimeOnly: 2,
+  DateString: 3,
+  DateTimeString: 4,
+  YearMonth: 5,
+  DayMonth: 6,
+  RelativeFromNow: 7,
+
+  format: (value: string, format: number) => {
+    const date = moment(value).locale('sv');
+    switch (format) {
+      case dateTimeFormat.DateOnly:
+        return date.format('YYYY-MM-DD');
+      case dateTimeFormat.TimeOnly:
+        return date.format('HH:mm');
+      case dateTimeFormat.DateString:
+        return date.format('Do MMMM, YYYY');
+      case dateTimeFormat.DateTimeString:
+        return date.format('dddd, D MMMM YYYY, [kl] HH:mm');
+      case dateTimeFormat.YearMonth:
+        return date.format('MMMM YYYY');
+      case dateTimeFormat.DayMonth:
+        return date.format('D MMMM YYYY');
+      case dateTimeFormat.RelativeFromNow:
+        return date.calendar();
+      case dateTimeFormat.DateTime:
+        return date.format('D MMMM HH:mm');
+      default:
+        return date.format('YYYY-MM-DD HH:mm');
+    }
+  },
 };

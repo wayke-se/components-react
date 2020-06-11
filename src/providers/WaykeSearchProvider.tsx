@@ -7,6 +7,7 @@ import SearchProvider from './searchProvider';
 interface WaykeSearchProviderProps {
   url: string;
   apiKey: string;
+  graphQlUrl: string;
   useMock?: boolean;
   children: JSX.Element;
 }
@@ -14,10 +15,11 @@ interface WaykeSearchProviderProps {
 const WaykeSearchProvider = ({
   url,
   apiKey,
+  graphQlUrl,
   useMock,
   children,
 }: WaykeSearchProviderProps): JSX.Element => (
-  <GraphqlProvider useMock={useMock}>
+  <GraphqlProvider uri={graphQlUrl} useMock={useMock}>
     <SearchProvider url={url} apiKey={apiKey}>
       <Theme>{children}</Theme>
     </SearchProvider>

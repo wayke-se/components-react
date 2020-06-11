@@ -13,7 +13,7 @@ interface Response<T> {
   error: boolean;
 }
 
-const useFetch = <T>(path: RequestInfo, options?: RequestInit): Response<T> => {
+const useFetch = <T>(path: RequestInfo, options?: RequestInit, skip?: boolean): Response<T> => {
   const [data, setData] = useState<T | undefined>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -43,8 +43,10 @@ const useFetch = <T>(path: RequestInfo, options?: RequestInit): Response<T> => {
   }, [path, options]);
 
   useEffect(() => {
-    doFetch();
-  }, [path]);
+    if (!skip) {
+      doFetch();
+    }
+  }, [path, skip]);
 
   return {
     loading,

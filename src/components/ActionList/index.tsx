@@ -1,27 +1,29 @@
 import * as React from 'react';
 
-import { List, Item, Action, Icon, Label } from './wrapper';
+import { List } from './wrapper';
 import { IconPhone, IconMail } from '../Icon';
+import { SearchItem_vehicle_contact } from '../../@types/gql/SearchItem';
+import ToggleItem from './toggle-item';
 
-const ActionList = () => (
-  <List>
-    <Item>
-      <Action onClick={() => {}} title="">
-        <Icon>
-          <IconMail block />
-        </Icon>
-        <Label>Visa mailadress</Label>
-      </Action>
-    </Item>
-    <Item>
-      <Action onClick={() => {}} title="">
-        <Icon>
-          <IconPhone block />
-        </Icon>
-        <Label>Visa telefonnummer</Label>
-      </Action>
-    </Item>
-  </List>
-);
+interface ActionListProps {
+  contact: SearchItem_vehicle_contact | null;
+}
+
+const ActionList = ({ contact }: ActionListProps) => {
+  return (
+    <List>
+      {contact?.email && (
+        <ToggleItem title="Visa mailadress" value={contact.email} icon={<IconMail block />} />
+      )}
+      {contact?.phonenumber && (
+        <ToggleItem
+          title="Visa telefonnummer"
+          value={contact.phonenumber}
+          icon={<IconPhone block />}
+        />
+      )}
+    </List>
+  );
+};
 
 export default ActionList;

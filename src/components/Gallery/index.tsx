@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -21,8 +21,13 @@ import {
 } from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import Lightbox from '../Lightbox';
+import Embed from './embed';
 
-interface ImageProps {
+export interface ImageProps {
+  gallery: string;
+  thumbnail: string;
+  lightbox: string;
+  type: string;
   url: string;
 }
 
@@ -40,20 +45,38 @@ const sliderSettings = {
 };
 
 const Gallery = ({ images }: GalleryProps) => {
-  const slider = React.useRef<Slider>(null);
-  const [index, setIndex] = React.useState(0);
-  const [lightbox, setLightbox] = React.useState(false);
+  const slider = useRef<Slider>(null);
+  const isDragging = useRef(false);
+  const [index, setIndex] = useState(0);
+  const [lightbox, setLightbox] = useState(false);
 
-  const beforeChange = React.useCallback((oldIndex, newIndex) => setIndex(newIndex), []);
+  const beforeChange = useCallback((oldIndex, newIndex) => setIndex(newIndex), []);
 
-  const nextImage = React.useCallback((): void => {
+  const onMouseDown = useCallback(() => {
+    if (isDragging.current) {
+      isDragging.current = false;
+    }
+  }, []);
+  const onMouseMove = useCallback(() => {
+    if (!isDragging.current) {
+      isDragging.current = true;
+    }
+  }, []);
+
+  const onClick = useCallback(() => {
+    if (!isDragging.current && !lightbox) {
+      setLightbox(true);
+    }
+  }, [lightbox]);
+
+  const nextImage = useCallback((): void => {
     if (!slider || !slider.current) {
       return;
     }
     slider.current.slickNext();
   }, [slider]);
 
-  const prevImage = React.useCallback((): void => {
+  const prevImage = useCallback((): void => {
     if (!slider || !slider.current) {
       return;
     }
@@ -70,7 +93,7 @@ const Gallery = ({ images }: GalleryProps) => {
     }
   };
 
-  const onToggleLightbox = React.useCallback(() => setLightbox(!lightbox), [lightbox]);
+  const onToggleLightbox = useCallback(() => setLightbox(!lightbox), [lightbox]);
 
   return (
     <>
@@ -78,11 +101,12 @@ const Gallery = ({ images }: GalleryProps) => {
         <Proportions>
           <Limiter>
             <Main>
-              <SliderWrapper>
+              <SliderWrapper onMouseDown={onMouseDown} onMouseMove={onMouseMove} onClick={onClick}>
                 <Slider {...sliderSettings} ref={slider} beforeChange={beforeChange}>
-                  {images.map(({ url }: ImageProps, i) => (
-                    <Item key={url}>
-                      <Image src={`${url}`} alt={`Bild ${i + 1}`} />
+                  {images.map(({ gallery, url, type }: ImageProps, i) => (
+                    <Item key={gallery || i}>
+                      {type === 'image' && <Image src={gallery} alt={`Bild ${i + 1}`} />}
+                      {type === 'embedded' && <Embed src={url} index={i + 1} />}
                     </Item>
                   ))}
                 </Slider>
@@ -96,10 +120,10 @@ const Gallery = ({ images }: GalleryProps) => {
             </Main>
             <Alt>
               <QuickNav>
-                {images.map(({ url }: ImageProps, i) => (
-                  <QuickNavItem key={url} active={index === i}>
+                {images.map(({ thumbnail }: ImageProps, i) => (
+                  <QuickNavItem key={thumbnail || i} active={index === i}>
                     <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
-                      <QuickNavImg src={`${url}`} alt={`Bild ${i + 1}`} />
+                      <QuickNavImg src={`${thumbnail}`} alt={`Bild ${i + 1}`} />
                     </QuickNavBtn>
                   </QuickNavItem>
                 ))}
@@ -108,8 +132,7 @@ const Gallery = ({ images }: GalleryProps) => {
           </Limiter>
         </Proportions>
       </Wrapper>
-      {lightbox && <Lightbox images={images} onClose={onToggleLightbox} />}
-      <button onClick={onToggleLightbox}>Toggle Lightbox</button>
+      {lightbox && <Lightbox images={images} index={index} onClose={onToggleLightbox} />}
     </>
   );
 };

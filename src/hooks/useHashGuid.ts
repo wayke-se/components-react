@@ -3,8 +3,13 @@ import { useState, useEffect } from 'react';
 const regexGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const HASH_CHANGE = 'hashchange';
 
+const getGuid = () => {
+  const guid = window.location.hash.substr(1, window.location.hash.length);
+  return regexGuid.test(guid) || !guid ? guid : undefined;
+};
+
 const useHashGuid = () => {
-  const [id, setId] = useState<string>();
+  const [id, setId] = useState<string | undefined>(() => getGuid());
   const onHashChange = () => {
     const guid = window.location.hash.substr(1, window.location.hash.length);
     if (regexGuid.test(guid) || !guid) {
