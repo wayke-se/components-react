@@ -2,11 +2,14 @@ import React from 'react';
 
 import { Wrapper, UiBlock, Img, CloseBtn } from './wrapper';
 import { IconCancel } from '../Icon';
+import VideoPlayer from '../Video/video-player';
+import SphereFullscreen from '../Sphere/sphere-fullscreen';
 
 interface ImageProps {
   gallery: string;
   thumbnail: string;
   lightbox: string;
+  url: string;
   type: string;
 }
 
@@ -34,14 +37,20 @@ const Lightbox = ({ index, images, onClose }: LightboxProps) => {
   return (
     <Wrapper ref={(ref) => ref?.focus()} onKeyDown={onKeyDown} tabIndex={0}>
       <UiBlock onClick={onClose} aria-hidden />
-      {images.map(({ lightbox }: ImageProps, i) => (
-        <Img
-          key={lightbox}
-          ref={index === i ? onRef : undefined}
-          id={`lightbox-image-${i}`}
-          src={`${lightbox}`}
-          alt={`Bild ${i + 1}`}
-        />
+      {images.map(({ lightbox, url, type }: ImageProps, i) => (
+        <>
+          {type === 'image' && (
+            <Img
+              key={lightbox}
+              ref={index === i ? onRef : undefined}
+              id={`lightbox-image-${i}`}
+              src={`${lightbox}`}
+              alt={`Bild ${i + 1}`}
+            />
+          )}
+          {type === 'sphere' && <SphereFullscreen url={url} />}
+          {type === 'embedded' && <VideoPlayer url={url} />}
+        </>
       ))}
       <CloseBtn onClick={onClose} title="Stäng">
         <IconCancel block />

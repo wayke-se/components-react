@@ -22,44 +22,44 @@ export interface SearchItem_vehicle_branch_flags {
 
 export interface SearchItem_vehicle_branch_openingHours_monday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_tuesday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_wednesday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_thursday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_friday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_saturday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_sunday {
   __typename: "HoursOpen";
-  from: string | null;
-  until: string | null;
+  from: string;
+  until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours {
@@ -153,6 +153,13 @@ export interface SearchItem_vehicle_ecommerce {
   withHomeDelivery: boolean | null;
 }
 
+export interface SearchItem_vehicle_insuranceOptions {
+  __typename: "InsuranceOption";
+  description: string | null;
+  logotype: string | null;
+  url: string | null;
+}
+
 export interface SearchItem_vehicle_financialOptions_downPayment {
   __typename: "FinancialOptionDetail";
   current: number;
@@ -192,22 +199,17 @@ export interface SearchItem_vehicle_financialOptions {
   downPayment: SearchItem_vehicle_financialOptions_downPayment | null;
   duration: SearchItem_vehicle_financialOptions_duration | null;
   effectiveInterest: number | null;
-  financialInstitution: string | null;
   image: string | null;
   interest: number | null;
   link: SearchItem_vehicle_financialOptions_link | null;
   loanAmount: number | null;
   logotype: string | null;
   monthlyCost: number | null;
-  name: string;
-  price: number;
-  priceUnit: string;
+  name: string | null;
   residual: SearchItem_vehicle_financialOptions_residual | null;
   setupFee: number | null;
   totalCreditCost: number | null;
-  totalVehicleCost: number | null;
   type: string;
-  vehiclePrice: number | null;
 }
 
 export interface SearchItem_vehicle_media_formats {
@@ -239,6 +241,7 @@ export interface SearchItem_vehicle {
   data: SearchItem_vehicle_data;
   description: string | null;
   ecommerce: SearchItem_vehicle_ecommerce | null;
+  insuranceOptions: SearchItem_vehicle_insuranceOptions[];
   financialOptions: SearchItem_vehicle_financialOptions[];
   media: (SearchItem_vehicle_media | null)[];
   location: SearchItem_vehicle_location | null;

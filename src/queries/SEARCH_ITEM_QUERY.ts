@@ -1,6 +1,23 @@
 import { gql } from 'apollo-boost';
 import { MockedResponse } from '@apollo/react-testing';
 
+const FinancialOptionDetail = gql`
+  fragment FinancialOptionDetail on FinancialOptionDetail {
+    current
+    default
+    max
+    min
+    step
+  }
+`;
+
+const HoursOpen = gql`
+  fragment HoursOpen on HoursOpen {
+    from
+    until
+  }
+`;
+
 const SEARCH_ITEM_QUERY = gql`
   query SearchItem($id: ID!) {
     vehicle(id: $id) {
@@ -23,32 +40,25 @@ const SEARCH_ITEM_QUERY = gql`
         logotype
         openingHours {
           monday {
-            from
-            until
+            ...HoursOpen
           }
           tuesday {
-            from
-            until
+            ...HoursOpen
           }
           wednesday {
-            from
-            until
+            ...HoursOpen
           }
           thursday {
-            from
-            until
+            ...HoursOpen
           }
           friday {
-            from
-            until
+            ...HoursOpen
           }
           saturday {
-            from
-            until
+            ...HoursOpen
           }
           sunday {
-            from
-            until
+            ...HoursOpen
           }
         }
         organization {
@@ -100,24 +110,20 @@ const SEARCH_ITEM_QUERY = gql`
         withTradeIn
         withHomeDelivery
       }
+      insuranceOptions {
+        description
+        logotype
+        url
+      }
       financialOptions {
         administrationFee
         downPayment {
-          current
-          default
-          max
-          min
-          step
+          ...FinancialOptionDetail
         }
         duration {
-          current
-          default
-          max
-          min
-          step
+          ...FinancialOptionDetail
         }
         effectiveInterest
-        financialInstitution
         image
         interest
         link {
@@ -128,20 +134,12 @@ const SEARCH_ITEM_QUERY = gql`
         logotype
         monthlyCost
         name
-        price
-        priceUnit
         residual {
-          current
-          default
-          max
-          min
-          step
+          ...FinancialOptionDetail
         }
         setupFee
         totalCreditCost
-        totalVehicleCost
         type
-        vehiclePrice
       }
       media {
         url
@@ -162,6 +160,8 @@ const SEARCH_ITEM_QUERY = gql`
       title
     }
   }
+  ${HoursOpen}
+  ${FinancialOptionDetail}
 `;
 
 export const SEARCH_ITEM_QUERY_MOCKS: MockedResponse[] = [

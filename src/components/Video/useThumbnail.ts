@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getVimeoId, getYoutubeThumbnail } from './utils/video';
+import { getVimeoId, getYoutubeThumbnail } from './utils';
 
 interface Response {
   thumbnail_large: string;

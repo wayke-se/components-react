@@ -21,7 +21,10 @@ import {
 } from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import Lightbox from '../Lightbox';
-import Embed from './embed';
+import Embed from '../Video/embed';
+import QuickNavEmbed from './quick-nav-embed';
+import SpherePreview from '../Sphere/sphere-preview';
+import EnableNavigationButton from './enable-navigation-button';
 
 export interface ImageProps {
   gallery: string;
@@ -49,6 +52,7 @@ const Gallery = ({ images }: GalleryProps) => {
   const isDragging = useRef(false);
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
+  const [navigationDisabled, setNavigationDisabled] = useState(false);
 
   const beforeChange = useCallback((oldIndex, newIndex) => setIndex(newIndex), []);
 
@@ -93,6 +97,15 @@ const Gallery = ({ images }: GalleryProps) => {
     }
   };
 
+  const onDisableNavigation = () => {
+    if (!isDragging.current) setNavigationDisabled(true);
+  };
+  const onEnableNavigation = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    isDragging.current = false;
+    setNavigationDisabled(false);
+  };
+
   const onToggleLightbox = useCallback(() => setLightbox(!lightbox), [lightbox]);
 
   return (
@@ -102,28 +115,58 @@ const Gallery = ({ images }: GalleryProps) => {
           <Limiter>
             <Main>
               <SliderWrapper onMouseDown={onMouseDown} onMouseMove={onMouseMove} onClick={onClick}>
-                <Slider {...sliderSettings} ref={slider} beforeChange={beforeChange}>
+                <Slider
+                  {...sliderSettings}
+                  swipe={!navigationDisabled}
+                  touchMove={!navigationDisabled}
+                  swipeToSlide={!navigationDisabled}
+                  arrows={!navigationDisabled}
+                  ref={slider}
+                  beforeChange={beforeChange}
+                >
                   {images.map(({ gallery, url, type }: ImageProps, i) => (
                     <Item key={gallery || i}>
                       {type === 'image' && <Image src={gallery} alt={`Bild ${i + 1}`} />}
                       {type === 'embedded' && <Embed src={url} index={i + 1} />}
+                      {type === 'sphere' && (
+                        <SpherePreview
+                          visible={i === index}
+                          url={url}
+                          preview={url}
+                          onDisableNavigation={onDisableNavigation}
+                          navigationDisabled={navigationDisabled}
+                        />
+                      )}
                     </Item>
                   ))}
                 </Slider>
+                {navigationDisabled && (
+                  <EnableNavigationButton onClick={onEnableNavigation}>
+                    Stäng
+                  </EnableNavigationButton>
+                )}
               </SliderWrapper>
-              <ArrowLeft onClick={prevImage} title="Föregående bild">
-                <IconChevronLeft block />
-              </ArrowLeft>
-              <ArrowRight onClick={nextImage} title="Nästa bild">
-                <IconChevronRight block />
-              </ArrowRight>
+              {!navigationDisabled && (
+                <>
+                  <ArrowLeft onClick={prevImage} title="Föregående bild">
+                    <IconChevronLeft block />
+                  </ArrowLeft>
+                  <ArrowRight onClick={nextImage} title="Nästa bild">
+                    <IconChevronRight block />
+                  </ArrowRight>
+                </>
+              )}
             </Main>
             <Alt>
               <QuickNav>
-                {images.map(({ thumbnail }: ImageProps, i) => (
+                {images.map(({ thumbnail, url, type }: ImageProps, i) => (
                   <QuickNavItem key={thumbnail || i} active={index === i}>
                     <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
-                      <QuickNavImg src={`${thumbnail}`} alt={`Bild ${i + 1}`} />
+                      {type === 'image' && (
+                        <QuickNavImg src={`${thumbnail}`} alt={`Bild ${i + 1}`} />
+                      )}
+                      {type === 'embedded' && <QuickNavEmbed src={`${url}`} index={i} />}
+                      {type === 'sphere' && <QuickNavImg src={`${url}`} alt={`Bild ${i + 1}`} />}
                     </QuickNavBtn>
                   </QuickNavItem>
                 ))}
