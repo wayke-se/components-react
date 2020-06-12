@@ -5,7 +5,6 @@ import UspList from '../../components/UspList';
 import Repeat from '../../components/Repeat';
 import DataGrid from '../../components/DataGrid';
 import PriceTable from '../../components/PriceTable';
-import OptionBox from '../../components/OptionBox';
 import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
@@ -16,7 +15,6 @@ import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
 import Gallery, { ImageProps } from '../../components/Gallery';
 import Loader from '../../components/Loader';
-import { OptionBoxHeading, OptionBoxContent } from '../../components/OptionBox/wrapper';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
 import {
@@ -34,7 +32,7 @@ import {
   ButtonInline,
   ButtonInlineBold,
 } from '../../components/Button';
-import { UtilityTextPrimary, UtilityTextPrimaryBold } from '../../components/Utility';
+import { UtilityTextPrimaryBold } from '../../components/Utility';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 import { OverflowGrid, OverflowGridList, OverflowGridItem } from '../../components/OverflowGrid';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
@@ -46,6 +44,8 @@ import Modal from '../../components/Modal';
 import { getSpecificationList } from '../../utils/specification';
 import OpeningHours from '../../components/OpeningHours';
 import PhoneNumber from '../../components/PhoneNumber';
+import FinancialOptions from '../../components/FinancialOptions';
+import InsuranceOptions from '../../components/InsuranceOptions';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
@@ -91,6 +91,8 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     price,
     data,
     branch,
+    financialOptions,
+    insuranceOptions,
   } = result.vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
   const images: ImageProps[] = media.filter(notEmpty).map((x) => ({
@@ -148,50 +150,12 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                 </ProductPageAsideSection>
 
                 <ProductPageAsideSection mobileOrder={4}>
-                  <Repeat small>
-                    <Repeat tiny>
-                      <VisualHeading>Andra finansieringsalternativ</VisualHeading>
+                  <>
+                    <Repeat small>
+                      <FinancialOptions id={id} financialOptions={financialOptions} />
+                      <InsuranceOptions insuranceOptions={insuranceOptions} />
                     </Repeat>
-                    <Repeat tiny>
-                      <OptionBox>
-                        <OptionBoxHeading>ca 5 800 kr/mån</OptionBoxHeading>
-                        <OptionBoxContent>
-                          <p>
-                            Privatleasing <UtilityTextPrimary>1 500 mil/år</UtilityTextPrimary> i{' '}
-                            <UtilityTextPrimary>36 mån</UtilityTextPrimary>.{' '}
-                            <ButtonInline>Läs mer</ButtonInline>
-                          </p>
-                        </OptionBoxContent>
-                      </OptionBox>
-                      <OptionBox logo="https://placehold.it/67x10" logoAlt="Logotyp">
-                        <OptionBoxHeading>5 879 kr/mån*</OptionBoxHeading>
-                        <OptionBoxContent>
-                          <p>
-                            Delbetala <UtilityTextPrimary>311 920 kr</UtilityTextPrimary> i{' '}
-                            <UtilityTextPrimary>60 mån</UtilityTextPrimary>.
-                          </p>
-                          <p>
-                            *Beräknat på 4,9% ränta. <ButtonInline>Läs mer</ButtonInline>
-                          </p>
-                        </OptionBoxContent>
-                      </OptionBox>
-                    </Repeat>
-                  </Repeat>
-                  <Repeat small>
-                    <Repeat tiny>
-                      <VisualHeading>Välj till försäkring</VisualHeading>
-                    </Repeat>
-                    <Repeat tiny>
-                      <OptionBox logo="https://placehold.it/24x24" logoAlt="Logotyp">
-                        <OptionBoxHeading>496 kr/mån</OptionBoxHeading>
-                        <OptionBoxContent>
-                          <p>
-                            Halvförsäkring med If Rulla-vidare. <ButtonInline>Läs mer</ButtonInline>
-                          </p>
-                        </OptionBoxContent>
-                      </OptionBox>
-                    </Repeat>
-                  </Repeat>
+                  </>
                 </ProductPageAsideSection>
 
                 <ProductPageAsideSection mobileOrder={5}>

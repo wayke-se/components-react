@@ -114,6 +114,8 @@ const SEARCH_ITEM_QUERY = gql`
         description
         logotype
         url
+        name
+        terms
       }
       financialOptions {
         administrationFee

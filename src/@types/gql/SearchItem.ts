@@ -158,6 +158,8 @@ export interface SearchItem_vehicle_insuranceOptions {
   description: string | null;
   logotype: string | null;
   url: string | null;
+  name: string | null;
+  terms: string | null;
 }
 
 export interface SearchItem_vehicle_financialOptions_downPayment {
