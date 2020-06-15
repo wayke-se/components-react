@@ -40,9 +40,10 @@ export const ActionIcon = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
 }))`
   position: absolute;
-  top: ${size(1)};
+  top: 50%;
   left: 0;
   font-size: 1em;
+  transform: translateY(-50%);
 `;
 
 export const ActionLabel = styled.div`

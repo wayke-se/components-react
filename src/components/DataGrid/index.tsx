@@ -4,7 +4,7 @@ import { List, Item, Label, Heading, Info, Value } from './wrapper';
 import { IconInfo } from '../Icon';
 import { ItemPropertyType, ItemPropertModalType } from '../../utils/specification';
 import Modal from '../Modal';
-import { Content } from '../ProductCard/wrapper';
+import Content from '../Content';
 
 export interface Props {
   specificationList: ItemPropertyType[];

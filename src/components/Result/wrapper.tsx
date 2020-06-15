@@ -5,7 +5,16 @@ import { size } from '../../layout/helpers';
 export const Wrapper = styled.div``;
 
 export const Header = styled.header`
+  display: flex;
   margin-bottom: ${size(4)};
+`;
+
+export const HeaderCount = styled.div`
+  flex: 1 1 auto;
+`;
+
+export const HeaderSort = styled.div`
+  flex-shrink: 0;
 `;
 
 export const Body = styled.div``;

@@ -30,6 +30,12 @@ export const UiBlock = styled.div.attrs(() => ({
   z-index: -1;
 `;
 
+export const Item = styled.div`
+  & + & {
+    margin-top: ${size(1)};
+  }
+`;
+
 export const Img = styled.img`
   position: relative;
   display: block;
@@ -37,10 +43,6 @@ export const Img = styled.img`
   max-height: calc(100vh - ${size(6)});
   margin: 0 auto;
   z-index: 1;
-
-  & + & {
-    margin-top: ${size(1)};
-  }
 
   ${(props) => props.theme.breakpoint.LtSm} {
     max-height: calc(100vh - ${size(4)});
@@ -61,6 +63,7 @@ export const CloseBtn = styled(ButtonReset)`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transform-origin: 50% 50%;
   transition: 200ms ease, transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+  z-index: 1;
 
   :before {
     content: '';

@@ -144,4 +144,8 @@ export const FooterAction = styled.div`
 export const FooterActionItem = styled.div`
   flex: 1 1 50%;
   padding: ${size(0.5)};
+
+  ${ButtonReset} {
+    padding: ${size(1.75)} ${size(2)};
+  }
 `;

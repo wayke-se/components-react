@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import SphereViewer from './sphere-viewer';
-import MediaButton from '../Gallery/media-button';
+import MediaButton from '../Gallery/MediaButton';
 
 const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
   e.stopPropagation();

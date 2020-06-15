@@ -21,7 +21,7 @@ import {
 } from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import Lightbox from '../Lightbox';
-import Embed from '../Video/embed';
+import GalleryEmbed from '../Video/GalleryEmbed';
 import QuickNavEmbed from './quick-nav-embed';
 import SpherePreview from '../Sphere/sphere-preview';
 import EnableNavigationButton from './enable-navigation-button';
@@ -127,7 +127,7 @@ const Gallery = ({ images }: GalleryProps) => {
                   {images.map(({ gallery, url, type }: ImageProps, i) => (
                     <Item key={gallery || i}>
                       {type === 'image' && <Image src={gallery} alt={`Bild ${i + 1}`} />}
-                      {type === 'embedded' && <Embed src={url} index={i + 1} />}
+                      {type === 'embedded' && <GalleryEmbed src={url} index={i + 1} />}
                       {type === 'sphere' && (
                         <SpherePreview
                           visible={i === index}

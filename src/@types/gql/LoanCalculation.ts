@@ -7,22 +7,22 @@
 // ====================================================
 
 export interface LoanCalculation_loanCalculation_downPayment {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
 }
 
 export interface LoanCalculation_loanCalculation_duration {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
 }
 
 export interface LoanCalculation_loanCalculation_residual {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
 }
 
 export interface LoanCalculation_loanCalculation {
-  __typename: "FinancialOption";
+  __typename: 'FinancialOption';
   downPayment: LoanCalculation_loanCalculation_downPayment | null;
   effectiveInterest: number | null;
   duration: LoanCalculation_loanCalculation_duration | null;

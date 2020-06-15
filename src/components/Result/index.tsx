@@ -3,6 +3,8 @@ import React from 'react';
 import {
   Wrapper,
   Header,
+  HeaderCount,
+  HeaderSort,
   Body,
   Footer,
   FooterProgress,
@@ -32,9 +34,12 @@ const Result = ({ children }: Props) => {
   return (
     <Wrapper>
       <Header>
-        <ResultCount>{`${numberSeparator(numberOfHits)} ${
-          numberOfHits === 1 ? 'bil' : 'bilar'
-        }`}</ResultCount>
+        <HeaderCount>
+          <ResultCount>{`${numberSeparator(numberOfHits)} ${
+            numberOfHits === 1 ? 'bil' : 'bilar'
+          }`}</ResultCount>
+        </HeaderCount>
+        <HeaderSort>Sort SELECT</HeaderSort>
       </Header>
       <Body>{children}</Body>
       <Footer>

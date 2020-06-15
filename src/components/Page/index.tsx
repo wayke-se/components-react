@@ -3,6 +3,9 @@ import styled, { css } from 'styled-components';
 import { size } from '../../layout/helpers';
 
 export const Page = styled.main`
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   padding-top: ${size(4)};
 `;
 
@@ -12,6 +15,7 @@ type PageSectionProps = React.DetailedHTMLProps<
 > & {
   accent?: boolean;
   large?: boolean;
+  fillSpace?: boolean;
 };
 
 export const PageSection = styled.section<PageSectionProps>`
@@ -39,5 +43,11 @@ export const PageSection = styled.section<PageSectionProps>`
     large &&
     css`
       padding: ${size(8)} 0;
+    `}
+
+  ${({ fillSpace }: { fillSpace?: boolean }) =>
+    fillSpace &&
+    css`
+      flex: 1 1 auto;
     `}
 `;

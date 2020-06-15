@@ -51,14 +51,18 @@ export const Label = styled.div`
 
 export const Heading = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__font--bold',
-}))``;
+}))`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
 
 export const Info = styled(ButtonReset).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
 }))`
   position: relative;
   display: block;
-  margin-left: ${size(1)};
+  margin-left: ${size(0.5)};
   font: inherti;
   font-size: 1em;
   transform-origin: 50% 50%;

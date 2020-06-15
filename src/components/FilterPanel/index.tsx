@@ -2,8 +2,7 @@ import React, { useCallback } from 'react';
 
 import { Facet } from '../../@types/search';
 import Panel from '../Panel';
-import { FooterAction } from '../Result/wrapper';
-import { FooterActionItem } from '../Panel/wrapper';
+import { FooterAction, FooterActionItem } from '../Panel/wrapper';
 import { ButtonSecondary, ButtonContent, ButtonPrimary } from '../Button';
 import Accordion, { AccordionItem } from '../Accordion';
 import Repeat from '../Repeat';

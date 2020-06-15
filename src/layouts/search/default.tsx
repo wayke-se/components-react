@@ -48,7 +48,7 @@ const DefaultSearchLayout = ({ onClickSearchItem }: DefaultSearchLayoutProps) =>
             <Filter />
           </Container>
         </PageSection>
-        <PageSection accent>
+        <PageSection accent fillSpace>
           <Container>
             <Result>
               <>

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Wrapper, UiBlock, Img, CloseBtn } from './wrapper';
+import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
 import { IconCancel } from '../Icon';
-import VideoPlayer from '../Video/video-player';
+import VideoPlayer from '../Video/VideoPlayer';
 import SphereFullscreen from '../Sphere/sphere-fullscreen';
 
 interface ImageProps {
@@ -40,16 +40,26 @@ const Lightbox = ({ index, images, onClose }: LightboxProps) => {
       {images.map(({ lightbox, url, type }: ImageProps, i) => (
         <>
           {type === 'image' && (
-            <Img
-              key={lightbox}
-              ref={index === i ? onRef : undefined}
-              id={`lightbox-image-${i}`}
-              src={`${lightbox}`}
-              alt={`Bild ${i + 1}`}
-            />
+            <Item>
+              <Img
+                key={lightbox}
+                ref={index === i ? onRef : undefined}
+                id={`lightbox-image-${i}`}
+                src={`${lightbox}`}
+                alt={`Bild ${i + 1}`}
+              />
+            </Item>
           )}
-          {type === 'sphere' && <SphereFullscreen url={url} />}
-          {type === 'embedded' && <VideoPlayer url={url} />}
+          {type === 'sphere' && (
+            <Item>
+              <SphereFullscreen url={url} />
+            </Item>
+          )}
+          {type === 'embedded' && (
+            <Item>
+              <VideoPlayer url={url} />
+            </Item>
+          )}
         </>
       ))}
       <CloseBtn onClick={onClose} title="Stäng">

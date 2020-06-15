@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 
 import useThumbnail from './useThumbnail';
 import { Image } from '../Gallery/wrapper';
-import MediaButton from '../Gallery/media-button';
+import MediaButton from '../Gallery/MediaButton';
 import Modal from '../Modal';
-import VideoPlayer from './video-player';
+import VideoPlayer from './VideoPlayer';
 
-interface Embed {
+interface GalleryEmbed {
   src: string;
   index: number;
 }
 
-const Embed = ({ src, index }: Embed) => {
+const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
   const [modal, setModal] = useState<string>();
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -28,7 +28,7 @@ const Embed = ({ src, index }: Embed) => {
   return thumbnail ? (
     <>
       {modal && (
-        <Modal title={''} onClose={onCloseModal}>
+        <Modal title="Video" onClose={onCloseModal}>
           <VideoPlayer url={modal} />
         </Modal>
       )}
@@ -38,4 +38,4 @@ const Embed = ({ src, index }: Embed) => {
   ) : null;
 };
 
-export default Embed;
+export default GalleryEmbed;
