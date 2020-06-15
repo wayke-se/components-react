@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 56.25%;
+  padding-bottom: 56.25%; // 16:9
 `;
 
 export const Iframe = styled.iframe.attrs(() => ({

@@ -124,6 +124,8 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
+// Arrow Nav
+
 export const Arrow = styled(ButtonReset)`
   position: absolute;
   top: 50%;
@@ -177,6 +179,8 @@ export const ArrowLeft = styled(Arrow)`
 export const ArrowRight = styled(Arrow)`
   right: ${size(2)};
 `;
+
+// Quick Nav
 
 export const QuickNav = styled.ul`
   position: relative;
@@ -261,4 +265,22 @@ export const QuickNavImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+// Media Button
+
+export const MediaButtonWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+// Sphere Close Button
+
+export const EnableNavigationButton = styled.div`
+  position: absolute;
+  bottom: ${size(2)};
+  left: 50%;
+  transform: translateX(-50%);
 `;

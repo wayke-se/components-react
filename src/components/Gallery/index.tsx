@@ -18,13 +18,14 @@ import {
   QuickNavItem,
   QuickNavBtn,
   QuickNavImg,
+  EnableNavigationButton,
 } from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
+import { ButtonSecondary, ButtonContent } from '../Button';
 import Lightbox from '../Lightbox';
 import GalleryEmbed from '../Video/GalleryEmbed';
-import QuickNavEmbed from './quick-nav-embed';
+import QuickNavEmbed from './QuickNavEmbed';
 import SpherePreview from '../Sphere/sphere-preview';
-import EnableNavigationButton from './enable-navigation-button';
 
 export interface ImageProps {
   gallery: string;
@@ -141,8 +142,10 @@ const Gallery = ({ images }: GalleryProps) => {
                   ))}
                 </Slider>
                 {navigationDisabled && (
-                  <EnableNavigationButton onClick={onEnableNavigation}>
-                    Stäng
+                  <EnableNavigationButton>
+                    <ButtonSecondary onClick={onEnableNavigation} title="Stäng">
+                      <ButtonContent>Stäng</ButtonContent>
+                    </ButtonSecondary>
                   </EnableNavigationButton>
                 )}
               </SliderWrapper>
