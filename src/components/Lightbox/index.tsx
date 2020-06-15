@@ -3,7 +3,7 @@ import React from 'react';
 import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
 import { IconCancel } from '../Icon';
 import VideoPlayer from '../Video/VideoPlayer';
-import SphereFullscreen from '../Sphere/sphere-fullscreen';
+import SphereFullscreen from '../Sphere/SphereFullscreen';
 
 interface ImageProps {
   gallery: string;

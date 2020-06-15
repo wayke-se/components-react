@@ -25,7 +25,7 @@ import { ButtonSecondary, ButtonContent } from '../Button';
 import Lightbox from '../Lightbox';
 import GalleryEmbed from '../Video/GalleryEmbed';
 import QuickNavEmbed from './QuickNavEmbed';
-import SpherePreview from '../Sphere/sphere-preview';
+import SpherePreview from '../Sphere/SpherePreview';
 
 export interface ImageProps {
   gallery: string;

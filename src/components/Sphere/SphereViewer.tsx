@@ -1,5 +1,7 @@
 import React, { lazy, useState, useEffect } from 'react';
-import { Spinner } from '../Loader/wrapper';
+
+import { Wrapper } from './wrapper';
+import Loader from '../Loader';
 
 const ReactPannellum = lazy(() => import('react-pannellum'));
 
@@ -37,32 +39,17 @@ const style = {
   touchAction: 'manipulation',
 };
 type PropsType = {
-  fullscreen?: boolean;
   id: string;
   src: string;
   preview: string;
   autoLoad?: boolean;
-  modifiers?: string;
   onStart?: () => void;
 };
 
-const SphereViewer = ({
-  fullscreen,
-  id,
-  src,
-  preview,
-  autoLoad,
-  modifiers,
-  onStart,
-}: PropsType) => {
+const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
   const [number] = useState(Math.floor(100000000 + Math.random() * 900000000));
   useEffect(() => {
     setTimeout(() => {
-      const node = !fullscreen && document.querySelector(`#a-${id}-${number}`);
-      if (node) {
-        node.classList.add('slide-image');
-      }
-
       if (onStart) {
         const startBtn = document.querySelector('.pnlm-load-button');
         if (startBtn) startBtn.addEventListener('click', onStart);
@@ -77,8 +64,8 @@ const SphereViewer = ({
   };
 
   return (
-    <div data-am-pannellum={modifiers ? modifiers : ''}>
-      <React.Suspense fallback={<Spinner />}>
+    <Wrapper>
+      <React.Suspense fallback={<Loader />}>
         <ReactPannellum
           id={`a-${id}-${number}`}
           sceneId={src}
@@ -87,7 +74,7 @@ const SphereViewer = ({
           style={style}
         />
       </React.Suspense>
-    </div>
+    </Wrapper>
   );
 };
 
