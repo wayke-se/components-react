@@ -16,6 +16,7 @@ import { ButtonSecondary, ButtonContent } from '../Button';
 import { Spinner } from '../Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../hooks/useSearch';
+import SortSelect from '../SortSelect';
 
 interface Props {
   children: JSX.Element | JSX.Element[] | false;
@@ -39,7 +40,9 @@ const Result = ({ children }: Props) => {
             numberOfHits === 1 ? 'bil' : 'bilar'
           }`}</ResultCount>
         </HeaderCount>
-        <HeaderSort>Sort SELECT</HeaderSort>
+        <HeaderSort>
+          <SortSelect />
+        </HeaderSort>
       </Header>
       <Body>{children}</Body>
       <Footer>
