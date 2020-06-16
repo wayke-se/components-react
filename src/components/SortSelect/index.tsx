@@ -2,15 +2,29 @@ import React from 'react';
 
 import { Wrapper, Select, Option, Icon } from './wrapper';
 import { IconChevronDown } from '../Icon';
+import { DrivingDistance } from '../../@types/gql/globalTypes';
 
-const SortSelect = () => (
+export interface OptionProps {
+  value: number | string | DrivingDistance;
+  displayName?: number | string;
+}
+
+interface SortSelectProps {
+  value: string | number;
+  options: OptionProps[];
+  unit?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const SortSelect = ({ value, options, onChange, unit }: SortSelectProps) => (
   <Wrapper>
-    <Select>
-      <Option>Sort option 1</Option>
-      <Option>Sort option 2</Option>
-      <Option>Sort option 3</Option>
-      <Option>Sort option 4</Option>
-      <Option>Sort option 5</Option>
+    <Select value={value} onChange={onChange}>
+      {options.map((option) => (
+        <Option key={option.value}>
+          {option.displayName || option.value}
+          {unit ? ` ${unit}` : ''}
+        </Option>
+      ))}
     </Select>
     <Icon>
       <IconChevronDown block />

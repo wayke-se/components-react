@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import Repeat from '../Repeat';
 import { VisualHeading } from '../Heading';
 import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { ButtonInline } from '../Button';
 import { SearchItem_vehicle_insuranceOptions } from '../../@types/gql/SearchItem';
+import InsuranceOptionModal from './InsuranceOptionModal';
 
 interface InsuranceOptions {
+  id: string;
   insuranceOptions: SearchItem_vehicle_insuranceOptions[];
 }
 
-const InsuranceOptions = ({ insuranceOptions }: InsuranceOptions) => {
+const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
+  const [modal, setModal] = useState(false);
+  const toggleModal = useCallback(() => setModal(!modal), [modal]);
   if (!insuranceOptions.length) {
     return null;
   }
   return (
     <>
+      {modal && <InsuranceOptionModal id={id} onClose={toggleModal} />}
       <Repeat tiny>
         <VisualHeading>Välj till försäkring</VisualHeading>
       </Repeat>
@@ -30,7 +35,7 @@ const InsuranceOptions = ({ insuranceOptions }: InsuranceOptions) => {
               <OptionBoxHeading>??? kr/mån</OptionBoxHeading>
               <OptionBoxContent>
                 <p>
-                  {insuranceOption.name}.<ButtonInline>Läs mer</ButtonInline>
+                  {insuranceOption.name}.<ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
                 </p>
               </OptionBoxContent>
             </OptionBox>

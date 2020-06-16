@@ -149,7 +149,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <>
                     <Repeat small>
                       <FinancialOptions id={id} financialOptions={financialOptions} />
-                      <InsuranceOptions insuranceOptions={insuranceOptions} />
+                      <InsuranceOptions id={id} insuranceOptions={insuranceOptions} />
                     </Repeat>
                   </>
                 </ProductPageAsideSection>

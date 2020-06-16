@@ -41,7 +41,7 @@ const Result = ({ children }: Props) => {
           }`}</ResultCount>
         </HeaderCount>
         <HeaderSort>
-          <SortSelect />
+          <SortSelect value={1} options={[{ value: 1 }, { value: 2 }]} />
         </HeaderSort>
       </Header>
       <Body>{children}</Body>
