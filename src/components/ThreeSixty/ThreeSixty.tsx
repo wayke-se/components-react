@@ -1,8 +1,8 @@
 import React from 'react';
-import SphereViewer from './SphereViewer';
 
 import { Image } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
+import Rotation from './Rotation';
 
 const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
   e.stopPropagation();
@@ -11,16 +11,16 @@ const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: 
 };
 
 type PropsType = {
-  url: string;
-  preview: string;
+  urls: string[];
+  fullscreen?: boolean;
   navigationDisabled: boolean;
   visible: boolean;
   onDisableNavigation: () => void;
 };
 
-const SpherePreview = ({
-  url,
-  preview,
+const ThreeSixty = ({
+  urls,
+  fullscreen,
   visible,
   onDisableNavigation,
   navigationDisabled,
@@ -28,9 +28,9 @@ const SpherePreview = ({
   if (!visible || (!navigationDisabled && visible)) {
     return (
       <>
-        <Image src={preview} alt="alt" />
+        <Image src={urls[0]} alt="alt" />
         <MediaButton
-          text="Starta 360° interiört"
+          text="Starta 360° exteriört"
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void =>
             onMediaClick(e, onDisableNavigation)
           }
@@ -40,16 +40,23 @@ const SpherePreview = ({
   }
   if (navigationDisabled && visible) {
     return (
-      <SphereViewer
-        id={url}
-        preview={url}
-        src={url}
-        autoLoad={true}
-        onStart={onDisableNavigation}
-      />
+      <div
+        data-am-image360={fullscreen ? '' : 'contain'}
+        data-description="Dra i bilden för att rotera den."
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
+      >
+        <Rotation>
+          {urls.map((image, i) => (
+            <Image key={image} src={image} alt={`Bild ${i + 1}`} />
+          ))}
+        </Rotation>
+      </div>
     );
   }
   return null;
 };
 
-export default SpherePreview;
+export default ThreeSixty;

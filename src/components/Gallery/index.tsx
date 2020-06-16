@@ -23,11 +23,12 @@ import {
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import { ButtonSecondary, ButtonContent } from '../Button';
 import Lightbox from '../Lightbox';
-import GalleryEmbed from '../Video/GalleryEmbed';
-import QuickNavEmbed from './QuickNavEmbed';
-import SpherePreview from '../Sphere/SpherePreview';
+import EmbededVideo from '../Video/EmbededVideo';
+import QuickNavEmbeded from '../Video/QuickNavEmbeded';
+import Sphere from '../Sphere/Sphere';
 import { SearchItem_vehicle_media } from '../../@types/gql/SearchItem';
 import { notEmpty } from '../../utils/formats';
+import ThreeSixty from '../ThreeSixty/ThreeSixty';
 
 interface GalleryProps {
   media: SearchItem_vehicle_media[];
@@ -130,9 +131,17 @@ const Gallery = ({ media }: GalleryProps) => {
                           alt={`Bild ${i + 1}`}
                         />
                       )}
-                      {m.type === 'embedded' && <GalleryEmbed src={m.files[0].url} index={i + 1} />}
+                      {m.type === 'threesixty' && (
+                        <ThreeSixty
+                          urls={m.files.map((x) => x.url)}
+                          visible={i === index}
+                          onDisableNavigation={onDisableNavigation}
+                          navigationDisabled={navigationDisabled}
+                        />
+                      )}
+                      {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
                       {m.type === 'sphere' && (
-                        <SpherePreview
+                        <Sphere
                           visible={i === index}
                           url={m.files[0].url}
                           preview={m.files[0].url}
@@ -182,7 +191,10 @@ const Gallery = ({ media }: GalleryProps) => {
                           alt={`Bild ${i + 1}`}
                         />
                       )}
-                      {m.type === 'embedded' && <QuickNavEmbed src={m.files[0].url} index={i} />}
+                      {m.type === 'threesixty' && (
+                        <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
+                      )}
+                      {m.type === 'embedded' && <QuickNavEmbeded src={m.files[0].url} index={i} />}
                       {m.type === 'sphere' && (
                         <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
                       )}

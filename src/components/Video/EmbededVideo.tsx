@@ -4,7 +4,7 @@ import useThumbnail from './useThumbnail';
 import { Image } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
 import Modal from '../Modal';
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from './EmbeddedVideoLightbox';
 
 interface GalleryEmbed {
   src: string;

@@ -2,9 +2,10 @@ import React from 'react';
 
 import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
 import { IconCancel } from '../Icon';
-import VideoPlayer from '../Video/VideoPlayer';
-import SphereFullscreen from '../Sphere/SphereFullscreen';
+import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
+import SphereLightbox from '../Sphere/SphereLightbox';
 import { SearchItem_vehicle_media } from '../../@types/gql/SearchItem';
+import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
 
 interface LightboxProps {
   index: number;
@@ -43,14 +44,19 @@ const Lightbox = ({ index, media, onClose }: LightboxProps) => {
               />
             </Item>
           )}
+          {m.type === 'threesixty' && (
+            <Item>
+              <ThreeSixtyLightbox urls={m.files.map((x) => x.url)} />
+            </Item>
+          )}
           {m.type === 'sphere' && (
             <Item>
-              <SphereFullscreen url={m.files[0].url} />
+              <SphereLightbox url={m.files[0].url} />
             </Item>
           )}
           {m.type === 'embedded' && (
             <Item>
-              <VideoPlayer url={m.files[0].url} />
+              <EmbeddedVideoLightbox url={m.files[0].url} />
             </Item>
           )}
         </>
