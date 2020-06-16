@@ -32,34 +32,14 @@ const Lightbox = ({ index, media, onClose }: LightboxProps) => {
     <Wrapper ref={(ref) => ref?.focus()} onKeyDown={onKeyDown} tabIndex={0}>
       <UiBlock onClick={onClose} aria-hidden />
       {media.map((m, i) => (
-        <>
+        <Item key={i} ref={index === i ? onRef : undefined}>
           {m.type === 'image' && (
-            <Item>
-              <Img
-                key={m.files[0].url}
-                ref={index === i ? onRef : undefined}
-                id={`lightbox-image-${i}`}
-                src={m.files[0].url}
-                alt={`Bild ${i + 1}`}
-              />
-            </Item>
+            <Img id={`lightbox-image-${i}`} src={m.files[0].url} alt={`Bild ${i + 1}`} />
           )}
-          {m.type === 'threesixty' && (
-            <Item>
-              <ThreeSixtyLightbox urls={m.files.map((x) => x.url)} />
-            </Item>
-          )}
-          {m.type === 'sphere' && (
-            <Item>
-              <SphereLightbox url={m.files[0].url} />
-            </Item>
-          )}
-          {m.type === 'embedded' && (
-            <Item>
-              <EmbeddedVideoLightbox url={m.files[0].url} />
-            </Item>
-          )}
-        </>
+          {m.type === 'threesixty' && <ThreeSixtyLightbox urls={m.files.map((x) => x.url)} />}
+          {m.type === 'sphere' && <SphereLightbox url={m.files[0].url} />}
+          {m.type === 'embedded' && <EmbeddedVideoLightbox url={m.files[0].url} />}
+        </Item>
       ))}
       <CloseBtn onClick={onClose} title="Stäng">
         <IconCancel block />
