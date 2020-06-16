@@ -4,7 +4,7 @@ import useThumbnail from './useThumbnail';
 import { QuickNavImg } from '../Gallery/wrapper';
 
 interface QuickNavEmbededProps {
-  src: string;
+  src?: string;
   index: number;
 }
 

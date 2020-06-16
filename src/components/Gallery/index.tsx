@@ -173,34 +173,23 @@ const Gallery = ({ media }: GalleryProps) => {
             </Main>
             <Alt>
               <QuickNav>
-                {media.map((m, i) => (
-                  <QuickNavItem
-                    key={
-                      m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')
-                        ?.url || i
-                    }
-                    active={index === i}
-                  >
-                    <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
-                      {m.type === 'image' && (
-                        <QuickNavImg
-                          src={
-                            m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')
-                              ?.url
-                          }
-                          alt={`Bild ${i + 1}`}
-                        />
-                      )}
-                      {m.type === 'threesixty' && (
-                        <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
-                      )}
-                      {m.type === 'embedded' && <QuickNavEmbeded src={m.files[0].url} index={i} />}
-                      {m.type === 'sphere' && (
-                        <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
-                      )}
-                    </QuickNavBtn>
-                  </QuickNavItem>
-                ))}
+                {media.map((m, i) => {
+                  const src =
+                    m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||
+                    m.files[0].url;
+                  return (
+                    <QuickNavItem key={src || i} active={index === i}>
+                      <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
+                        {m.type === 'image' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
+                        {m.type === 'threesixty' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
+                        {m.type === 'embedded' && <QuickNavEmbeded src={src} index={i} />}
+                        {m.type === 'sphere' && (
+                          <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
+                        )}
+                      </QuickNavBtn>
+                    </QuickNavItem>
+                  );
+                })}
               </QuickNav>
             </Alt>
           </Limiter>
