@@ -93,6 +93,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     branch,
     financialOptions,
     insuranceOptions,
+    manufacturer,
   } = result.vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
   const specificationList = getSpecificationList(data);
@@ -106,7 +107,10 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               <ProductPageAside>
                 <ProductPageAsideSection mobileOrder={1}>
                   <Repeat>
-                    <LogoBox logo="https://placehold.it/24x24" alt="Logotyp" />
+                    <LogoBox
+                      logo={manufacturer?.logotype || 'https://placehold.it/24x24'}
+                      alt="Logotyp"
+                    />
                   </Repeat>
                   <Repeat small>
                     <H1 noMargin>{title}</H1>

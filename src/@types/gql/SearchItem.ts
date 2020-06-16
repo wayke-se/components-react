@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { FinancialOptionInclusion } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: SearchItem
 // ====================================================
@@ -11,6 +13,28 @@ export interface SearchItem_vehicle_contact {
   name: string | null;
   email: string | null;
   phonenumber: string | null;
+}
+
+export interface SearchItem_vehicle_manufacturer_packageOption_link {
+  __typename: "Link";
+  title: string | null;
+  href: string | null;
+}
+
+export interface SearchItem_vehicle_manufacturer_packageOption {
+  __typename: "PackageOption";
+  description: string | null;
+  image: string | null;
+  link: SearchItem_vehicle_manufacturer_packageOption_link | null;
+  title: string | null;
+}
+
+export interface SearchItem_vehicle_manufacturer {
+  __typename: "Manufacturer";
+  description: string | null;
+  logotype: string | null;
+  name: string;
+  packageOption: SearchItem_vehicle_manufacturer_packageOption | null;
 }
 
 export interface SearchItem_vehicle_branch_flags {
@@ -186,6 +210,15 @@ export interface SearchItem_vehicle_financialOptions_link {
   href: string | null;
 }
 
+export interface SearchItem_vehicle_financialOptions_mileage {
+  __typename: "FinancialOptionDetail";
+  current: number;
+  default: number;
+  max: number;
+  min: number;
+  step: number;
+}
+
 export interface SearchItem_vehicle_financialOptions_residual {
   __typename: "FinancialOptionDetail";
   current: number;
@@ -197,21 +230,27 @@ export interface SearchItem_vehicle_financialOptions_residual {
 
 export interface SearchItem_vehicle_financialOptions {
   __typename: "FinancialOption";
+  description: string | null;
   administrationFee: number | null;
   downPayment: SearchItem_vehicle_financialOptions_downPayment | null;
   duration: SearchItem_vehicle_financialOptions_duration | null;
   effectiveInterest: number | null;
   image: string | null;
+  includes: FinancialOptionInclusion[];
   interest: number | null;
   link: SearchItem_vehicle_financialOptions_link | null;
   loanAmount: number | null;
   logotype: string | null;
+  mileage: SearchItem_vehicle_financialOptions_mileage | null;
   monthlyCost: number | null;
   name: string | null;
   residual: SearchItem_vehicle_financialOptions_residual | null;
   setupFee: number | null;
+  terms: string | null;
   totalCreditCost: number | null;
+  totalResidualValue: number | null;
   type: string;
+  url: string | null;
 }
 
 export interface SearchItem_vehicle_media_files_formats {
@@ -244,6 +283,7 @@ export interface SearchItem_vehicle {
   __typename: "Vehicle";
   id: string;
   contact: SearchItem_vehicle_contact | null;
+  manufacturer: SearchItem_vehicle_manufacturer | null;
   branch: SearchItem_vehicle_branch | null;
   data: SearchItem_vehicle_data;
   description: string | null;

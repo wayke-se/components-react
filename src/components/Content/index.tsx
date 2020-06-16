@@ -3,7 +3,7 @@ import React from 'react';
 import { Wrapper } from './wrapper';
 
 interface Props {
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | Array<JSX.Element | false | null | string> | null | string | false;
   small?: boolean;
 }
 

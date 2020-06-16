@@ -1,17 +1,30 @@
 import { gql } from 'apollo-boost';
 
+const FinancialOptionDetail = gql`
+  fragment FinancialOptionDetail on FinancialOptionDetail {
+    current
+    default
+    max
+    min
+    step
+  }
+`;
+
 const LOAN_CALCULATION = gql`
   query LoanCalculation($id: ID!, $duration: Int!, $downPayment: Int!, $residual: Float!) {
     loan(id: $id, duration: $duration, downPayment: $downPayment, residual: $residual) {
       downPayment {
-        current
+        ...FinancialOptionDetail
       }
       effectiveInterest
       duration {
-        current
+        ...FinancialOptionDetail
       }
       residual {
-        current
+        ...FinancialOptionDetail
+      }
+      mileage {
+        ...FinancialOptionDetail
       }
       interest
       loanAmount
@@ -20,6 +33,7 @@ const LOAN_CALCULATION = gql`
       monthlyCost
     }
   }
+  ${FinancialOptionDetail}
 `;
 
 export default LOAN_CALCULATION;

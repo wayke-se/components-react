@@ -27,6 +27,20 @@ const SEARCH_ITEM_QUERY = gql`
         email
         phonenumber
       }
+      manufacturer {
+        description
+        logotype
+        name
+        packageOption {
+          description
+          image
+          link {
+            title
+            href
+          }
+          title
+        }
+      }
       branch {
         id
         description
@@ -118,6 +132,7 @@ const SEARCH_ITEM_QUERY = gql`
         terms
       }
       financialOptions {
+        description
         administrationFee
         downPayment {
           ...FinancialOptionDetail
@@ -127,6 +142,8 @@ const SEARCH_ITEM_QUERY = gql`
         }
         effectiveInterest
         image
+        includes
+        includes
         interest
         link {
           title
@@ -134,14 +151,20 @@ const SEARCH_ITEM_QUERY = gql`
         }
         loanAmount
         logotype
+        mileage {
+          ...FinancialOptionDetail
+        }
         monthlyCost
         name
         residual {
           ...FinancialOptionDetail
         }
         setupFee
+        terms
         totalCreditCost
+        totalResidualValue
         type
+        url
       }
       media {
         type
