@@ -144,10 +144,12 @@ const SEARCH_ITEM_QUERY = gql`
         type
       }
       media {
-        url
         type
-        formats {
-          format
+        files {
+          formats {
+            format
+            url
+          }
           url
         }
       }

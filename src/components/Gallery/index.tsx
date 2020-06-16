@@ -26,17 +26,11 @@ import Lightbox from '../Lightbox';
 import GalleryEmbed from '../Video/GalleryEmbed';
 import QuickNavEmbed from './QuickNavEmbed';
 import SpherePreview from '../Sphere/SpherePreview';
-
-export interface ImageProps {
-  gallery: string;
-  thumbnail: string;
-  lightbox: string;
-  type: string;
-  url: string;
-}
+import { SearchItem_vehicle_media } from '../../@types/gql/SearchItem';
+import { notEmpty } from '../../utils/formats';
 
 interface GalleryProps {
-  images: ImageProps[];
+  media: SearchItem_vehicle_media[];
 }
 
 const sliderSettings = {
@@ -48,7 +42,7 @@ const sliderSettings = {
   slidesToScroll: 1,
 };
 
-const Gallery = ({ images }: GalleryProps) => {
+const Gallery = ({ media }: GalleryProps) => {
   const slider = useRef<Slider>(null);
   const isDragging = useRef(false);
   const [index, setIndex] = useState(0);
@@ -125,15 +119,23 @@ const Gallery = ({ images }: GalleryProps) => {
                   ref={slider}
                   beforeChange={beforeChange}
                 >
-                  {images.map(({ gallery, url, type }: ImageProps, i) => (
-                    <Item key={gallery || i}>
-                      {type === 'image' && <Image src={gallery} alt={`Bild ${i + 1}`} />}
-                      {type === 'embedded' && <GalleryEmbed src={url} index={i + 1} />}
-                      {type === 'sphere' && (
+                  {media.map((m, i) => (
+                    <Item key={m.files[0].url || i}>
+                      {m.type === 'image' && (
+                        <Image
+                          src={
+                            m.files[0].formats.filter(notEmpty).find((x) => x.format === '1170x')
+                              ?.url
+                          }
+                          alt={`Bild ${i + 1}`}
+                        />
+                      )}
+                      {m.type === 'embedded' && <GalleryEmbed src={m.files[0].url} index={i + 1} />}
+                      {m.type === 'sphere' && (
                         <SpherePreview
                           visible={i === index}
-                          url={url}
-                          preview={url}
+                          url={m.files[0].url}
+                          preview={m.files[0].url}
                           onDisableNavigation={onDisableNavigation}
                           navigationDisabled={navigationDisabled}
                         />
@@ -162,14 +164,28 @@ const Gallery = ({ images }: GalleryProps) => {
             </Main>
             <Alt>
               <QuickNav>
-                {images.map(({ thumbnail, url, type }: ImageProps, i) => (
-                  <QuickNavItem key={thumbnail || i} active={index === i}>
+                {media.map((m, i) => (
+                  <QuickNavItem
+                    key={
+                      m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')
+                        ?.url || i
+                    }
+                    active={index === i}
+                  >
                     <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
-                      {type === 'image' && (
-                        <QuickNavImg src={`${thumbnail}`} alt={`Bild ${i + 1}`} />
+                      {m.type === 'image' && (
+                        <QuickNavImg
+                          src={
+                            m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')
+                              ?.url
+                          }
+                          alt={`Bild ${i + 1}`}
+                        />
                       )}
-                      {type === 'embedded' && <QuickNavEmbed src={`${url}`} index={i} />}
-                      {type === 'sphere' && <QuickNavImg src={`${url}`} alt={`Bild ${i + 1}`} />}
+                      {m.type === 'embedded' && <QuickNavEmbed src={m.files[0].url} index={i} />}
+                      {m.type === 'sphere' && (
+                        <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
+                      )}
                     </QuickNavBtn>
                   </QuickNavItem>
                 ))}
@@ -178,7 +194,7 @@ const Gallery = ({ images }: GalleryProps) => {
           </Limiter>
         </Proportions>
       </Wrapper>
-      {lightbox && <Lightbox images={images} index={index} onClose={onToggleLightbox} />}
+      {lightbox && <Lightbox media={media} index={index} onClose={onToggleLightbox} />}
     </>
   );
 };

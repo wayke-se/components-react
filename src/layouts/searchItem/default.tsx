@@ -13,7 +13,7 @@ import Blockquote from '../../components/Blockquote';
 import ProductCard from '../../components/ProductCard';
 import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
-import Gallery, { ImageProps } from '../../components/Gallery';
+import Gallery from '../../components/Gallery';
 import Loader from '../../components/Loader';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
@@ -95,14 +95,6 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     insuranceOptions,
   } = result.vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
-  const images: ImageProps[] = media.filter(notEmpty).map((x) => ({
-    gallery: x.formats.filter(notEmpty).find((x) => x?.format === '1170x')?.url as string,
-    thumbnail: x.formats.filter(notEmpty).find((x) => x?.format === '225x150')?.url as string,
-    lightbox: x.url as string,
-    url: x.url as string,
-    type: x.type,
-  }));
-
   const specificationList = getSpecificationList(data);
 
   return (
@@ -192,7 +184,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
               </ProductPageAside>
               <ProductPageMain>
                 <ProductPageAsideSection mobileOrder={3}>
-                  <Gallery images={images} />
+                  <Gallery media={media} />
                 </ProductPageAsideSection>
 
                 <ProductPageMainSection>

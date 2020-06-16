@@ -6,27 +6,27 @@
 // GraphQL query operation: LoanCalculation
 // ====================================================
 
-export interface LoanCalculation_loanCalculation_downPayment {
-  __typename: 'FinancialOptionDetail';
+export interface LoanCalculation_loan_downPayment {
+  __typename: "FinancialOptionDetail";
   current: number;
 }
 
-export interface LoanCalculation_loanCalculation_duration {
-  __typename: 'FinancialOptionDetail';
+export interface LoanCalculation_loan_duration {
+  __typename: "FinancialOptionDetail";
   current: number;
 }
 
-export interface LoanCalculation_loanCalculation_residual {
-  __typename: 'FinancialOptionDetail';
+export interface LoanCalculation_loan_residual {
+  __typename: "FinancialOptionDetail";
   current: number;
 }
 
-export interface LoanCalculation_loanCalculation {
-  __typename: 'FinancialOption';
-  downPayment: LoanCalculation_loanCalculation_downPayment | null;
+export interface LoanCalculation_loan {
+  __typename: "FinancialOption";
+  downPayment: LoanCalculation_loan_downPayment | null;
   effectiveInterest: number | null;
-  duration: LoanCalculation_loanCalculation_duration | null;
-  residual: LoanCalculation_loanCalculation_residual | null;
+  duration: LoanCalculation_loan_duration | null;
+  residual: LoanCalculation_loan_residual | null;
   interest: number | null;
   loanAmount: number | null;
   totalCreditCost: number | null;
@@ -35,7 +35,7 @@ export interface LoanCalculation_loanCalculation {
 }
 
 export interface LoanCalculation {
-  loanCalculation: LoanCalculation_loanCalculation | null;
+  loan: LoanCalculation_loan | null;
 }
 
 export interface LoanCalculationVariables {

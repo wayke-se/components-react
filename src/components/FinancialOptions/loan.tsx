@@ -20,9 +20,9 @@ const Loan = ({ id, financialOption }: LoanProps) => {
     financialOption.downPayment?.current,
     financialOption.residual?.current
   );
-  const interest = data?.loanCalculation?.interest;
-  const duration = data?.loanCalculation?.duration?.current;
-  const monthlyCost = data?.loanCalculation?.monthlyCost;
+  const interest = data?.loan?.interest;
+  const duration = data?.loan?.duration?.current;
+  const monthlyCost = data?.loan?.monthlyCost;
 
   const logo = financialOption?.logotype || 'https://placehold.it/67x10';
 

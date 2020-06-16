@@ -4,22 +4,15 @@ import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
 import { IconCancel } from '../Icon';
 import VideoPlayer from '../Video/VideoPlayer';
 import SphereFullscreen from '../Sphere/SphereFullscreen';
-
-interface ImageProps {
-  gallery: string;
-  thumbnail: string;
-  lightbox: string;
-  url: string;
-  type: string;
-}
+import { SearchItem_vehicle_media } from '../../@types/gql/SearchItem';
 
 interface LightboxProps {
   index: number;
-  images: ImageProps[];
+  media: SearchItem_vehicle_media[];
   onClose: () => void;
 }
 
-const Lightbox = ({ index, images, onClose }: LightboxProps) => {
+const Lightbox = ({ index, media, onClose }: LightboxProps) => {
   const onRef = (ref: HTMLDivElement | null) => {
     if (ref) {
       setTimeout(() => {
@@ -37,27 +30,27 @@ const Lightbox = ({ index, images, onClose }: LightboxProps) => {
   return (
     <Wrapper ref={(ref) => ref?.focus()} onKeyDown={onKeyDown} tabIndex={0}>
       <UiBlock onClick={onClose} aria-hidden />
-      {images.map(({ lightbox, url, type }: ImageProps, i) => (
+      {media.map((m, i) => (
         <>
-          {type === 'image' && (
+          {m.type === 'image' && (
             <Item>
               <Img
-                key={lightbox}
+                key={m.files[0].url}
                 ref={index === i ? onRef : undefined}
                 id={`lightbox-image-${i}`}
-                src={`${lightbox}`}
+                src={m.files[0].url}
                 alt={`Bild ${i + 1}`}
               />
             </Item>
           )}
-          {type === 'sphere' && (
+          {m.type === 'sphere' && (
             <Item>
-              <SphereFullscreen url={url} />
+              <SphereFullscreen url={m.files[0].url} />
             </Item>
           )}
-          {type === 'embedded' && (
+          {m.type === 'embedded' && (
             <Item>
-              <VideoPlayer url={url} />
+              <VideoPlayer url={m.files[0].url} />
             </Item>
           )}
         </>

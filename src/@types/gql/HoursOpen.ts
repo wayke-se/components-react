@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface HoursOpen {
-  __typename: 'HoursOpen';
+  __typename: "HoursOpen";
   from: string;
   until: string;
 }
