@@ -106,12 +106,11 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
             <ProductPage>
               <ProductPageAside>
                 <ProductPageAsideSection mobileOrder={1}>
-                  <Repeat>
-                    <LogoBox
-                      logo={manufacturer?.logotype || 'https://placehold.it/24x24'}
-                      alt="Logotyp"
-                    />
-                  </Repeat>
+                  {manufacturer?.logotype && (
+                    <Repeat>
+                      <LogoBox logo={manufacturer.logotype} alt={manufacturer.name} />
+                    </Repeat>
+                  )}
                   <Repeat small>
                     <H1 noMargin>{title}</H1>
                   </Repeat>

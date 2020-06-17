@@ -70,10 +70,12 @@ const RangeSliderSimple = ({
           </Tracks>
         </Slider>
       </OwnSlider>
-      <RangeSpan>
-        <RangeSpanItem>{`${currentMin}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
-        <RangeSpanItem>{`${currentMax}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
-      </RangeSpan>
+      {false && (
+        <RangeSpan>
+          <RangeSpanItem>{`${currentMin}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
+          <RangeSpanItem>{`${currentMax}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
+        </RangeSpan>
+      )}
     </>
   );
 };

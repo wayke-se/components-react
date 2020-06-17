@@ -21,26 +21,29 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
   return (
     <>
       {modal && <InsuranceOptionModal id={id} onClose={toggleModal} />}
-      <Repeat tiny>
-        <VisualHeading>Välj till försäkring</VisualHeading>
-      </Repeat>
-      <Repeat tiny>
-        <>
-          {insuranceOptions.map((insuranceOption, index) => (
-            <OptionBox
-              key={`${insuranceOption.url}-${index}`}
-              logo={insuranceOption.logotype || 'https://placehold.it/24x24'}
-              logoAlt="Logotyp"
-            >
-              <OptionBoxHeading>??? kr/mån</OptionBoxHeading>
-              <OptionBoxContent>
-                <p>
-                  {insuranceOption.name}.<ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
-                </p>
-              </OptionBoxContent>
-            </OptionBox>
-          ))}
-        </>
+      <Repeat>
+        <Repeat tiny>
+          <VisualHeading>Välj till försäkring</VisualHeading>
+        </Repeat>
+        <Repeat tiny>
+          <>
+            {insuranceOptions.map((insuranceOption, index) => (
+              <OptionBox
+                key={`${insuranceOption.url}-${index}`}
+                logo={insuranceOption.logotype || 'https://placehold.it/24x24'}
+                logoAlt="Logotyp"
+              >
+                <OptionBoxHeading>??? kr/mån</OptionBoxHeading>
+                <OptionBoxContent>
+                  <p>
+                    {insuranceOption.name}.{' '}
+                    <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
+                  </p>
+                </OptionBoxContent>
+              </OptionBox>
+            ))}
+          </>
+        </Repeat>
       </Repeat>
     </>
   );

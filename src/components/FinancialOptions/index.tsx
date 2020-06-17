@@ -11,22 +11,20 @@ interface FinancialOptionsProps {
 }
 
 const FinancialOptions = ({ id, financialOptions }: FinancialOptionsProps) => (
-  <>
+  <Repeat>
     <Repeat tiny>
       <VisualHeading>Andra finansieringsalternativ</VisualHeading>
     </Repeat>
 
     <Repeat tiny>
-      <>
-        {financialOptions.map((financialOption, index) => (
-          <Fragment key={index}>
-            {financialOption.type === 'leasing' && <Leasing financialOption={financialOption} />}
-            {financialOption.type === 'loan' && <Loan id={id} financialOption={financialOption} />}
-          </Fragment>
-        ))}
-      </>
+      {financialOptions.map((financialOption, index) => (
+        <Fragment key={index}>
+          {financialOption.type === 'leasing' && <Leasing financialOption={financialOption} />}
+          {financialOption.type === 'loan' && <Loan id={id} financialOption={financialOption} />}
+        </Fragment>
+      ))}
     </Repeat>
-  </>
+  </Repeat>
 );
 
 export default FinancialOptions;

@@ -107,3 +107,23 @@ export const CloseBtn = styled(ButtonReset)`
 export const Body = styled.div`
   padding: ${size(3)};
 `;
+
+export const Image = styled.img`
+  display: block;
+  width: calc(100% + ${size(6)});
+  margin-left: ${size(-3)};
+  margin-bottom: ${size(3)};
+`;
+
+export const ModalFoldout = styled.div`
+  background-color: ${(props) => props.theme.color.accent};
+  margin: ${size(-3)};
+  margin-top: ${size(3)};
+  padding: ${size(3)};
+`;
+
+export const ModalFoldoutHeader = styled.div``;
+
+export const ModalFoldoutBody = styled.div`
+  margin-top: ${size(3)};
+`;

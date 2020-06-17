@@ -3,9 +3,16 @@ import React, { useState, useCallback } from 'react';
 import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import useLoanCalculation from '../../hooks/useLoan';
 import Modal from '../Modal';
+import { ModalFoldout, ModalFoldoutHeader, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content';
+import LogoBox from '../LogoBox';
+import Repeat from '../Repeat';
 import RangeSliderSimple from '../RangeSlider/RangeSliderSimple';
+import RangeSliderLabel from '../RangeSliderLabel';
 import { numberSeparator } from '../../utils/formats';
+import { ButtonClear, ButtonContent } from '../Button';
+import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
+import DataList from '../DataList';
 
 const stepGenerator = (
   step: number,
@@ -29,6 +36,9 @@ interface LoanModalProps {
 }
 
 const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
+  const [extend, setExtend] = React.useState(false);
+  const onToggleExtend = React.useCallback(() => setExtend(!extend), [extend]);
+
   const [variables, setVariables] = useState({
     duration: financialOption.duration?.current,
     downPayment: financialOption.downPayment?.current,
@@ -65,35 +75,116 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
 
   return (
     <Modal title="Lånealternativ" onClose={onClose}>
-      <Content>
-        <p>Kontantinsatts: {numberSeparator(downPaymentCurrent)} kr</p>
-        <RangeSliderSimple
-          loading={loading}
-          values={[downPaymentCurrent]}
-          domain={[downPaymentMin, downPaymentMax]}
-          steps={downPaymentSteps}
-          onChange={onDownPaymentChange}
-          unit="kr"
-          formatValues
-        />
-
-        <p>Avbetalning: {durationCurrent} mån</p>
-        <RangeSliderSimple
-          loading={loading}
-          values={[durationCurrent]}
-          domain={[durationMin, durationMax]}
-          steps={durationSteps}
-          onChange={onDurationChange}
-          unit="mån"
-        />
-
-        <p>Restskuld: {residualText}%</p>
-
-        <p>
-          <b>{numberSeparator(loan?.monthlyCost || 0)} kr/mån</b>
-        </p>
-        <p>{`*Beräknat på ${interestText}% ränta (effektivt ${effectiveInterestText}%) och en årlig körsträcka om ${loan?.mileage} mil.`}</p>
-      </Content>
+      <Repeat>
+        <ContentLogo>
+          {financialOption?.description && (
+            <ContentLogoText>
+              <Content>
+                <p>{financialOption.description}</p>
+              </Content>
+            </ContentLogoText>
+          )}
+          {financialOption?.image && (
+            <ContentLogoMedia>
+              <LogoBox logo={financialOption.image} alt={financialOption.name || 'Logotyp'} wide />
+            </ContentLogoMedia>
+          )}
+        </ContentLogo>
+      </Repeat>
+      <Repeat>
+        <Repeat small>
+          <Repeat tiny>
+            <RangeSliderLabel
+              label="Kontantinsatts"
+              value={`${numberSeparator(downPaymentCurrent)} kr`}
+            />
+          </Repeat>
+          <Repeat tiny>
+            <RangeSliderSimple
+              loading={loading}
+              values={[downPaymentCurrent]}
+              domain={[downPaymentMin, downPaymentMax]}
+              steps={downPaymentSteps}
+              onChange={onDownPaymentChange}
+              unit="kr"
+              formatValues
+            />
+          </Repeat>
+        </Repeat>
+        <Repeat small>
+          <Repeat tiny>
+            <RangeSliderLabel label="Avbetalning" value={`${durationCurrent} mån`} />
+          </Repeat>
+          <Repeat tiny>
+            <RangeSliderSimple
+              loading={loading}
+              values={[durationCurrent]}
+              domain={[durationMin, durationMax]}
+              steps={durationSteps}
+              onChange={onDurationChange}
+              unit="mån"
+            />
+          </Repeat>
+        </Repeat>
+        <Repeat small>
+          <RangeSliderLabel label="Restskuld" value={`${residualText} %`} />
+        </Repeat>
+        <Repeat small>
+          <Repeat tiny>
+            <RangeSliderLabel
+              label="Din kostnad"
+              value={`${numberSeparator(loan?.monthlyCost || 0)} kr/mån*`}
+              highlight
+            />
+          </Repeat>
+          <Repeat tiny>
+            <Content small>
+              <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %) och en årlig körsträcka om ${loan?.mileage} mil.`}</p>
+            </Content>
+          </Repeat>
+        </Repeat>
+        {!extend ? (
+          <Repeat small>
+            <ButtonClear onClick={onToggleExtend} title="Se mer information">
+              <ButtonContent>Mer information</ButtonContent>
+            </ButtonClear>
+          </Repeat>
+        ) : (
+          <ModalFoldout>
+            <ModalFoldoutHeader>
+              <ButtonClear onClick={onToggleExtend} title="Dölj information">
+                <ButtonContent>Dölj</ButtonContent>
+              </ButtonClear>
+            </ModalFoldoutHeader>
+            <ModalFoldoutBody>
+              <DataList
+                items={[
+                  {
+                    label: 'Ränta',
+                    value: `${interestText} %`,
+                  },
+                  {
+                    label: 'Effektiv ränta',
+                    value: `${effectiveInterestText} %`,
+                  },
+                  {
+                    label: 'Uppläggningskostnad',
+                    value: `${numberSeparator(financialOption?.setupFee || 0)} kr`,
+                  },
+                  {
+                    label: 'Administrativa avgifter',
+                    value: `${numberSeparator(financialOption?.administrationFee || 0)} kr/mån`,
+                  },
+                  {
+                    label: 'Total kreditkostnad',
+                    value: `${numberSeparator(loan?.totalCreditCost || 0)} kr`,
+                  },
+                ]}
+              />
+            </ModalFoldoutBody>
+          </ModalFoldout>
+        )}
+      </Repeat>
     </Modal>
   );
 };

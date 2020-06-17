@@ -7,7 +7,10 @@ import { ButtonInline } from '../Button';
 import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import { numberSeparator } from '../../utils/formats';
 import Modal from '../Modal';
+import { Image } from '../Modal/wrapper';
+import { List, Item, Label, Heading, Value } from '../DataGrid/wrapper';
 import Content from '../Content';
+import Repeat from '../Repeat';
 
 interface LeasingProps {
   financialOption: SearchItem_vehicle_financialOptions;
@@ -23,19 +26,36 @@ const Leasing = ({ financialOption }: LeasingProps) => {
     <>
       {modal && (
         <Modal title="Privatleasing" onClose={toggleModal}>
-          {image && <img src={image} />}
-          <Content>
-            {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
-
-            <b>Månadskostand</b>
-            <p>{monthlyCost} kr/mån</p>
-
-            <b>Bindningstid</b>
-            <p>{duration?.current} månader</p>
-
-            <b>Årlig körsträcka</b>
-            <p>{mileage?.current} mil/år</p>
-          </Content>
+          {image && <Image src={image} alt="" />}
+          {description && (
+            <Repeat>
+              <Content>
+                <div dangerouslySetInnerHTML={{ __html: description }} />
+              </Content>
+            </Repeat>
+          )}
+          <Repeat>
+            <List>
+              <Item>
+                <Label>
+                  <Heading>Månadskostnad</Heading>
+                </Label>
+                <Value>{monthlyCost} kr/mån</Value>
+              </Item>
+              <Item>
+                <Label>
+                  <Heading>Bindningstid</Heading>
+                </Label>
+                <Value>{duration?.current} månader</Value>
+              </Item>
+              <Item>
+                <Label>
+                  <Heading>Årlig körsträcka</Heading>
+                </Label>
+                <Value>{mileage?.current} mil/år</Value>
+              </Item>
+            </List>
+          </Repeat>
         </Modal>
       )}
       <OptionBox>
