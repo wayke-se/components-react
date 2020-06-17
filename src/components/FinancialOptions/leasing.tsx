@@ -7,10 +7,9 @@ import { ButtonInline } from '../Button';
 import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import { numberSeparator } from '../../utils/formats';
 import Modal from '../Modal';
-import { Image } from '../Modal/wrapper';
-import { List, Item, Label, Heading, Value } from '../DataGrid/wrapper';
+import { Image, ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content';
-import Repeat from '../Repeat';
+import DataList from '../DataList';
 
 interface LeasingProps {
   financialOption: SearchItem_vehicle_financialOptions;
@@ -28,34 +27,30 @@ const Leasing = ({ financialOption }: LeasingProps) => {
         <Modal title="Privatleasing" onClose={toggleModal}>
           {image && <Image src={image} alt="" />}
           {description && (
-            <Repeat>
-              <Content>
-                <div dangerouslySetInnerHTML={{ __html: description }} />
-              </Content>
-            </Repeat>
+            <Content>
+              <div dangerouslySetInnerHTML={{ __html: description }} />
+            </Content>
           )}
-          <Repeat>
-            <List>
-              <Item>
-                <Label>
-                  <Heading>Månadskostnad</Heading>
-                </Label>
-                <Value>{monthlyCost} kr/mån</Value>
-              </Item>
-              <Item>
-                <Label>
-                  <Heading>Bindningstid</Heading>
-                </Label>
-                <Value>{duration?.current} månader</Value>
-              </Item>
-              <Item>
-                <Label>
-                  <Heading>Årlig körsträcka</Heading>
-                </Label>
-                <Value>{mileage?.current} mil/år</Value>
-              </Item>
-            </List>
-          </Repeat>
+          <ModalFoldout>
+            <ModalFoldoutBody>
+              <DataList
+                items={[
+                  {
+                    label: 'Månadskostnad',
+                    value: `${numberSeparator(monthlyCost || 0)} kr/mån`,
+                  },
+                  {
+                    label: 'Bindningstid',
+                    value: `${duration?.current} månader`,
+                  },
+                  {
+                    label: 'Årlig körsträcka',
+                    value: `${numberSeparator(mileage?.current || 0)} mil/år`,
+                  },
+                ]}
+              />
+            </ModalFoldoutBody>
+          </ModalFoldout>
         </Modal>
       )}
       <OptionBox>

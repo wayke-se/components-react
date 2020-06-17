@@ -22,6 +22,6 @@ export const ContentLogoMedia = styled.div`
 
   ${(props) => props.theme.breakpoint.Sm} {
     flex-shrink: 0;
-    padding-left: ${size(2)};
+    padding-left: ${size(4)};
   }
 `;

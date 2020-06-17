@@ -122,8 +122,8 @@ export const ModalFoldout = styled.div`
   padding: ${size(3)};
 `;
 
-export const ModalFoldoutHeader = styled.div``;
-
-export const ModalFoldoutBody = styled.div`
-  margin-top: ${size(3)};
+export const ModalFoldoutHeader = styled.div`
+  margin-bottom: ${size(3)};
 `;
+
+export const ModalFoldoutBody = styled.div``;
