@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import {
   Wrapper,
@@ -16,18 +16,32 @@ import { ButtonSecondary, ButtonContent } from '../Button';
 import { Spinner } from '../Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../hooks/useSearch';
-import SortSelect from '../SortSelect';
+import SortSelect, { OptionProps } from '../SortSelect';
+import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
 
 interface Props {
   children: JSX.Element | JSX.Element[] | false;
 }
 
 const Result = ({ children }: Props) => {
-  const { loading, response, documents, queryFilter, onLoadMore } = useSearch();
+  const { loading, response, documents, queryFilter, onLoadMore, onFilterUpdate } = useSearch();
+
+  const onSortOptionChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => onFilterUpdate(e.currentTarget.value),
+    []
+  );
 
   const numberOfDocuments = documents?.length || 0;
   const numberOfHits = response?.documentList.numberOfHits || 0;
   const useSkeletons = !!queryFilter?.concatResult;
+
+  const selectedSortOption = response?.documentList.sortOptions.find((x) => x.selected)?.query;
+  const sortOptions = response?.documentList.sortOptions.map(
+    (so): OptionProps => ({
+      value: so.query,
+      displayName: getTranslatedSortOptionDisplayName(so.displayName),
+    })
+  );
 
   if (loading && !useSkeletons) {
     return <Spinner />;
@@ -40,9 +54,15 @@ const Result = ({ children }: Props) => {
             numberOfHits === 1 ? 'bil' : 'bilar'
           }`}</ResultCount>
         </HeaderCount>
-        <HeaderSort>
-          <SortSelect value={1} options={[{ value: 1 }, { value: 2 }]} />
-        </HeaderSort>
+        {sortOptions && selectedSortOption && (
+          <HeaderSort>
+            <SortSelect
+              value={selectedSortOption}
+              options={sortOptions}
+              onChange={onSortOptionChange}
+            />
+          </HeaderSort>
+        )}
       </Header>
       <Body>{children}</Body>
       <Footer>

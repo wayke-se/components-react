@@ -20,7 +20,7 @@ const SortSelect = ({ value, options, onChange, unit }: SortSelectProps) => (
   <Wrapper>
     <Select value={value} onChange={onChange}>
       {options.map((option) => (
-        <Option key={option.value}>
+        <Option key={option.value} value={option.value}>
           {option.displayName || option.value}
           {unit ? ` ${unit}` : ''}
         </Option>
