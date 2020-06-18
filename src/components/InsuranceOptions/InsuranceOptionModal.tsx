@@ -2,12 +2,20 @@ import React, { useState, useCallback } from 'react';
 
 import Modal from '../Modal';
 import Content from '../Content';
+import Repeat from '../Repeat';
+import LogoBox from '../LogoBox';
+import InputLabel from '../InputLabel';
+import InputText from '../InputText';
+import InputSelect, { OptionProps } from '../InputSelect';
+import { InputGroup, InputGroupColumn } from '../InputGroup';
+import { ButtonPrimary, ButtonContent } from '../Button';
+import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
 import { DrivingDistance } from '../../@types/gql/globalTypes';
-import SortSelect, { OptionProps } from '../SortSelect';
 import useInsuranceCalculation from '../../hooks/useInsurance';
 import { ssnIsValid } from '../../utils/ssn';
 import { Spinner } from '../Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
+import { SearchItem_vehicle_insuranceOptions } from '../../@types/gql/SearchItem';
 
 interface FormData {
   ssn: string;
@@ -17,9 +25,10 @@ interface FormData {
 interface InsuranceOptionModal {
   id: string;
   onClose: () => void;
+  insuranceOptions: SearchItem_vehicle_insuranceOptions;
 }
 
-const InsuranceOptionModal = ({ id, onClose }: InsuranceOptionModal) => {
+const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOptionModal) => {
   const [form, setForm] = useState<FormData>({
     ssn: '',
     drivingDistance: DrivingDistance.BETWEEN0AND1000,
@@ -54,41 +63,99 @@ const InsuranceOptionModal = ({ id, onClose }: InsuranceOptionModal) => {
 
   return (
     <Modal title="Försäkring" onClose={onClose}>
-      <Content>
-        <p>
-          <b>Personnummer</b>
-        </p>
-        <input value={form.ssn} onChange={onChangeSsn} />
+      {(insuranceOptions?.description || insuranceOptions?.logotype) && (
+        <Repeat>
+          <ContentLogo>
+            {insuranceOptions.description && (
+              <ContentLogoText>
+                <Content>
+                  <p>{insuranceOptions.description}</p>
+                </Content>
+              </ContentLogoText>
+            )}
+            {insuranceOptions.logotype && (
+              <ContentLogoMedia>
+                <LogoBox
+                  logo={insuranceOptions.logotype}
+                  alt={insuranceOptions.name || 'Logotyp'}
+                  wide
+                />
+              </ContentLogoMedia>
+            )}
+          </ContentLogo>
+        </Repeat>
+      )}
 
-        <p>
-          <b>Uppskattad körsträcka per år</b>
-        </p>
-        <SortSelect
-          value={form.drivingDistance}
-          onChange={onChangeDrivingDistance}
-          options={options}
-          unit="mil"
-        />
+      <Repeat>
+        <Repeat tiny>
+          <InputGroup>
+            <InputGroupColumn>
+              <InputLabel htmlFor="input-insurance-personalnumber">Personnummer</InputLabel>
+              <InputText
+                placeholder="ÅÅÅÅMMDD-XXXX"
+                label="Personnummer"
+                value={form.ssn}
+                onChange={onChangeSsn}
+                id="input-insurance-personalnumber"
+              />
+            </InputGroupColumn>
+            <InputGroupColumn>
+              <InputLabel htmlFor="input-insurance-mileage">
+                Uppskattad körsträcka per år
+              </InputLabel>
+              <InputSelect
+                value={form.drivingDistance}
+                onChange={onChangeDrivingDistance}
+                options={options}
+                unit="mil"
+              />
+            </InputGroupColumn>
+          </InputGroup>
+        </Repeat>
+        <Repeat tiny>
+          <ButtonPrimary
+            fullWidth
+            disabled={!ssnIsValid(form.ssn) || loading}
+            onClick={onShowInsurances}
+          >
+            <ButtonContent>Visa försäkringar</ButtonContent>
+          </ButtonPrimary>
+        </Repeat>
+        <Repeat tiny>
+          <div>Checkbox</div>
+        </Repeat>
+        <Repeat tiny>
+          <Content small>
+            <p>
+              Spara personnummer på denna dator för att direkt visa försäkringskostnaderna i Wayke.
+              Personnumret lagras inte hos Wayke utan finns bara sparad i din webbläsare.
+            </p>
+          </Content>
+        </Repeat>
+      </Repeat>
 
-        {loading && <Spinner />}
+      {loading && (
+        <Repeat>
+          <Spinner />
+        </Repeat>
+      )}
 
-        <button disabled={!ssnIsValid(form.ssn) || loading} onClick={onShowInsurances}>
-          Visa försäkringar
-        </button>
-
-        <>
-          {data?.insurances.map((insurance) => (
-            <div key={insurance.name}>
-              <p>
-                <b>
-                  {numberSeparator(insurance.price)} {insurance.unit}
-                </b>
-              </p>
-              <p>{insurance.name}</p>
-            </div>
-          ))}
-        </>
-      </Content>
+      <>
+        {data?.insurances && (
+          <Repeat>
+            {data?.insurances.map((insurance) => (
+              <div key={insurance.name}>
+                <p>
+                  <b>
+                    {numberSeparator(insurance.price)} {insurance.unit}
+                  </b>
+                </p>
+                <p>{insurance.name}</p>
+              </div>
+            ))}
+          </Repeat>
+        )}
+      </>
     </Modal>
   );
 };

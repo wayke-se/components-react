@@ -18,9 +18,16 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
   if (!insuranceOptions.length) {
     return null;
   }
+
   return (
     <>
-      {modal && <InsuranceOptionModal id={id} onClose={toggleModal} />}
+      {modal && (
+        <InsuranceOptionModal
+          id={id}
+          onClose={toggleModal}
+          insuranceOptions={insuranceOptions[0]}
+        />
+      )}
       <Repeat>
         <Repeat tiny>
           <VisualHeading>Välj till försäkring</VisualHeading>

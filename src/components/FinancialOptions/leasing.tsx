@@ -25,7 +25,7 @@ const Leasing = ({ financialOption }: LeasingProps) => {
     <>
       {modal && (
         <Modal title="Privatleasing" onClose={toggleModal}>
-          {image && <Image src={image} alt="" />}
+          {image && <Image src={image} alt="Privatleasing" />}
           {description && (
             <Content>
               <div dangerouslySetInnerHTML={{ __html: description }} />
