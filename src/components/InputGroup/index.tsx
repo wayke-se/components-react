@@ -6,7 +6,7 @@ export const InputGroup = styled.div`
   ${(props) => props.theme.breakpoint.Sm} {
     display: flex;
     align-items: flex-start;
-    marign: ${size(-0.5)};
+    margin: ${size(-0.5)};
   }
 `;
 

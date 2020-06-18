@@ -6,6 +6,7 @@ import Repeat from '../Repeat';
 import LogoBox from '../LogoBox';
 import InputLabel from '../InputLabel';
 import InputText from '../InputText';
+import InputCheckbox from '../InputCheckbox';
 import InputSelect, { OptionProps } from '../InputSelect';
 import { InputGroup, InputGroupColumn } from '../InputGroup';
 import { ButtonPrimary, ButtonContent } from '../Button';
@@ -112,7 +113,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
             </InputGroupColumn>
           </InputGroup>
         </Repeat>
-        <Repeat tiny>
+        <Repeat small>
           <ButtonPrimary
             fullWidth
             disabled={!ssnIsValid(form.ssn) || loading}
@@ -121,10 +122,12 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
             <ButtonContent>Visa försäkringar</ButtonContent>
           </ButtonPrimary>
         </Repeat>
-        <Repeat tiny>
-          <div>Checkbox</div>
+        <Repeat small>
+          <InputCheckbox id="input-insurance-save-personalnumber">
+            Spara personnummer på denna enhet
+          </InputCheckbox>
         </Repeat>
-        <Repeat tiny>
+        <Repeat small>
           <Content small>
             <p>
               Spara personnummer på denna dator för att direkt visa försäkringskostnaderna i Wayke.
