@@ -30,6 +30,7 @@ export const Label = styled.label.attrs(() => ({
     font-size: 15px;
     cursor: pointer;
     border-radius: 3px;
+    margin-top: -2px;
   }
 `;
 

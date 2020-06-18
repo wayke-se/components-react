@@ -4,6 +4,7 @@ import Modal from '../Modal';
 import Content from '../Content';
 import Repeat from '../Repeat';
 import LogoBox from '../LogoBox';
+import DetailBox from '../DetailBox';
 import InputLabel from '../InputLabel';
 import InputText from '../InputText';
 import InputCheckbox from '../InputCheckbox';
@@ -147,14 +148,37 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
         {data?.insurances && (
           <Repeat>
             {data?.insurances.map((insurance) => (
-              <div key={insurance.name}>
-                <p>
-                  <b>
-                    {numberSeparator(insurance.price)} {insurance.unit}
-                  </b>
-                </p>
-                <p>{insurance.name}</p>
-              </div>
+              <Repeat key={insurance.name}>
+                <DetailBox
+                  heading={`${numberSeparator(insurance.price)} ${insurance.unit}`}
+                  description={insurance.name}
+                >
+                  <Repeat>
+                    <>
+                      {insurance.description && (
+                        <Repeat tiny>
+                          <Content>
+                            <p>{insurance.description}</p>
+                          </Content>
+                        </Repeat>
+                      )}
+                    </>
+                    <>
+                      {insurance.url && (
+                        <Repeat tiny>
+                          <a
+                            href={insurance.url || ''}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow"
+                          >
+                            Förköpsinformation och villkor (öppnas i ny flik)
+                          </a>
+                        </Repeat>
+                      )}
+                    </>
+                  </Repeat>
+                </DetailBox>
+              </Repeat>
             ))}
           </Repeat>
         )}
