@@ -42,7 +42,7 @@ import FinancialOptions from '../../components/FinancialOptions';
 import InsuranceOptions from '../../components/InsuranceOptions';
 import Ecome from '../../components/Ecome';
 import ManufacturerPackageOption from '../../components/ManufacturerPackagesOption';
-import StaticMap from '../../components/Map/StaticMap';
+import Map from '../../components/Map';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
@@ -241,7 +241,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     >{`Den här bilen finns på vår anläggning i ${branch?.location?.city}`}</H2>
                   </Repeat>
                   <Repeat>
-                    <StaticMap position={branch?.location?.position} />
+                    <Map position={branch?.location?.position} />
                   </Repeat>
                   <Repeat>
                     <ProductPageContentLimit>

@@ -1,55 +1,54 @@
-import React from 'react';
-
+import React, { useState, useCallback } from 'react';
 import { SearchItem_vehicle_branch_location_position } from '../../@types/gql/SearchItem';
-import { Wrapper } from './wrapper';
+import useSettings from '../../hooks/useSettings';
 
-const MAP_CENTER = { lat: 63.176683, lng: 14.636068 };
-const createMarker = (map: google.maps.Map<HTMLDivElement>, position: google.maps.LatLng) =>
-  new google.maps.Marker({
-    position,
-    map,
-  });
-
-interface MapProps {
+interface StaticMapProps {
   position?: SearchItem_vehicle_branch_location_position | null;
 }
 
-const Map = ({ position }: MapProps) => {
-  const onRef = (ref: HTMLDivElement | null) => {
-    if (ref && position) {
-      const { latitude, longitude } = position;
+const StaticMap = ({ position }: StaticMapProps) => {
+  const { googleMapsApiKey } = useSettings();
+  const [visible, setVisible] = useState(false);
 
-      let markerPosition;
-      let zoom = 15;
-      let marker = true;
-      if (position && latitude && longitude) {
-        markerPosition = new google.maps.LatLng(latitude, longitude);
-      } else {
-        markerPosition = new google.maps.LatLng(MAP_CENTER.lat, MAP_CENTER.lng);
-        zoom = 3;
-        marker = false;
-      }
-
-      const _map = new google.maps.Map(ref, {
-        center: markerPosition,
-        zoom,
-        disableDefaultUI: true,
-        scrollwheel: false,
-        zoomControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        clickableIcons: false,
-        disableDoubleClickZoom: true,
-        draggable: false,
-        fullscreenControl: false,
-      });
-      if (marker) {
-        createMarker(_map, markerPosition);
-      }
+  const onShowMap = useCallback(() => {
+    if (googleMapsApiKey) {
+      setVisible(true);
     }
-  };
+  }, []);
 
-  return <Wrapper ref={onRef} />;
+  if (!position) {
+    return null;
+  }
+
+  const { latitude, longitude } = position;
+
+  if (visible && googleMapsApiKey) {
+    return (
+      <a
+        href={`http://maps.google.com/maps?q=${latitude},${longitude}`}
+        title="Visa på Google Maps"
+        target="_blank"
+        rel="nofollow noopener noreferrer"
+      >
+        <img
+          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=610x286&maptype=roadmap&markers=icon:${encodeURIComponent(
+            `${location.protocol}//${location.hostname}/images/map/marker.png`
+          )}%7C${latitude},${longitude}&key=${googleMapsApiKey}`}
+          className="l-block l-full"
+        />
+      </a>
+    );
+  }
+  return (
+    <button
+      style={{
+        backgroundImage: `${location.protocol}//${location.hostname}/images/placeholders/staticmap.png`,
+      }}
+      onClick={onShowMap}
+    >
+      Visa karta
+    </button>
+  );
 };
 
-export default Map;
+export default StaticMap;
