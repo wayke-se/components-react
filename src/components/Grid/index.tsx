@@ -32,6 +32,9 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
               description={document.shortDescription}
               uspList={[
                 {
+                  title: document.modelYear,
+                },
+                {
                   title: document.modelSeries,
                 },
                 {

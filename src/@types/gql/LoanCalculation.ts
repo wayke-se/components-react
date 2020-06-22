@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface LoanCalculation_loan_downPayment {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -16,7 +16,7 @@ export interface LoanCalculation_loan_downPayment {
 }
 
 export interface LoanCalculation_loan_duration {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -25,7 +25,7 @@ export interface LoanCalculation_loan_duration {
 }
 
 export interface LoanCalculation_loan_residual {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -34,7 +34,7 @@ export interface LoanCalculation_loan_residual {
 }
 
 export interface LoanCalculation_loan_mileage {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -43,7 +43,7 @@ export interface LoanCalculation_loan_mileage {
 }
 
 export interface LoanCalculation_loan {
-  __typename: "FinancialOption";
+  __typename: 'FinancialOption';
   downPayment: LoanCalculation_loan_downPayment | null;
   effectiveInterest: number | null;
   duration: LoanCalculation_loan_duration | null;

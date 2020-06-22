@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface FinancialOptionDetail {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;

@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@wayke-se/ecom-react": "^3.0.2",
     "babel-plugin-styled-components": "^1.10.7",
     "core-js": "^3.6.5",
     "dotenv": "^8.2.0",

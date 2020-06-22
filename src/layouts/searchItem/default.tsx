@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 
 import Container from '../../components/Container';
 import UspList from '../../components/UspList';
@@ -46,13 +46,17 @@ import OpeningHours from '../../components/OpeningHours';
 import PhoneNumber from '../../components/PhoneNumber';
 import FinancialOptions from '../../components/FinancialOptions';
 import InsuranceOptions from '../../components/InsuranceOptions';
+import Ecome from '../../components/Ecome';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
 }
 
 const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
+  const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
+  const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
+
   const options = useMemo(
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
     [result?.vehicle?.data?.options]
@@ -94,12 +98,16 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     financialOptions,
     insuranceOptions,
     manufacturer,
+    ecommerce,
   } = result.vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
   const specificationList = getSpecificationList(data);
 
   return (
     <>
+      {ecomModal && (
+        <Ecome vehicle={result.vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />
+      )}
       <Page>
         <PageSection large>
           <Container>
@@ -175,11 +183,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                       <CheckMarkListItem>Vinterhjul inkluderade</CheckMarkListItem>
                     </CheckMarkList>
                   </Repeat>
-                  <Repeat>
-                    <ButtonPrimary fullWidth>
-                      <ButtonContent>Köp bilen online</ButtonContent>
-                    </ButtonPrimary>
-                  </Repeat>
+                  {ecommerce && ecommerce.enabled && (
+                    <Repeat>
+                      <ButtonPrimary fullWidth onClick={toggleEcomModal}>
+                        <ButtonContent>Köp bilen online</ButtonContent>
+                      </ButtonPrimary>
+                    </Repeat>
+                  )}
                   <Repeat>
                     <ActionList contact={contact} />
                   </Repeat>
@@ -264,9 +274,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                       </Repeat>
                     </ProductPageContentLimit>
                   </Repeat>
-                  <Repeat>
-                    <ButtonPrimary title="Köp bilen online">Köp bilen online</ButtonPrimary>
-                  </Repeat>
+                  {ecommerce && ecommerce.enabled && (
+                    <Repeat>
+                      <ButtonPrimary title="Köp bilen online" onClick={toggleEcomModal}>
+                        Köp bilen online
+                      </ButtonPrimary>
+                    </Repeat>
+                  )}
                 </ProductPageMainSection>
 
                 <ProductPageMainSection>
