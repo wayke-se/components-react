@@ -1,7 +1,7 @@
 import React from 'react';
 import SphereViewer from './SphereViewer';
 
-import { Image } from '../Gallery/wrapper';
+import { ImageFull } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
 
 const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
@@ -22,7 +22,7 @@ const Sphere = ({ url, preview, visible, onDisableNavigation, navigationDisabled
   if (!visible || (!navigationDisabled && visible)) {
     return (
       <>
-        <Image src={preview} alt="alt" />
+        <ImageFull src={preview} alt="alt" />
         <MediaButton
           text="Starta 360° interiört"
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void =>

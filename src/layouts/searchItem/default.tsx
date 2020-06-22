@@ -15,6 +15,7 @@ import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
 import Gallery from '../../components/Gallery';
 import Loader from '../../components/Loader';
+import ExtendInfo from '../../components/ExtendInfo';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
 import {
@@ -25,14 +26,15 @@ import {
   ProductPageAsideSection,
   ProductPageContentLimit,
 } from '../../components/ProductPage';
-import { H1, H2, VisualHeading } from '../../components/Heading';
+import { H1, H2, H3, VisualHeading } from '../../components/Heading';
 import {
   ButtonPrimary,
   ButtonContent,
   ButtonInline,
   ButtonInlineBold,
 } from '../../components/Button';
-import { UtilityTextPrimaryBold } from '../../components/Utility';
+import { UtilityTextPrimaryBold, UtilityTextBold } from '../../components/Utility';
+import { ColumnRow, ColumnRowItem } from '../../components/ColumnRow';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 import { OverflowGrid, OverflowGridList, OverflowGridItem } from '../../components/OverflowGrid';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
@@ -303,51 +305,75 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   </Repeat>
                 </ProductPageMainSection>
 
+                {false && (
+                  <ProductPageMainSection>
+                    <Repeat>
+                      <H2 noMargin>Historik</H2>
+                    </Repeat>
+                    <Repeat>
+                      <Content>
+                        <p>
+                          Bilhandlare X bjuder på rapporten från Carfax som innehåller{' '}
+                          <UtilityTextPrimaryBold>
+                            2 registrerade uppgifter för ABC123
+                          </UtilityTextPrimaryBold>
+                          .
+                        </p>
+                      </Content>
+                    </Repeat>
+                    <Repeat>
+                      <InputAction>
+                        <InputActionInput>
+                          <InputText placeholder="Fyll i din e-postadress" label="E-postadress" />
+                        </InputActionInput>
+                        <InputActionBtn>
+                          <ButtonPrimary title="Köp bilen online" inputHeight>
+                            Köp bilen online
+                          </ButtonPrimary>
+                        </InputActionBtn>
+                      </InputAction>
+                    </Repeat>
+                    <Repeat>
+                      <LogoBox
+                        logo="https://placehold.it/145x19"
+                        logo2x="https://placehold.it/290x38"
+                        alt="Logotyp"
+                        wide
+                      />
+                    </Repeat>
+                    <Repeat>
+                      <Content small>
+                        <p>
+                          Alla personuppgifter som skickas in till Bilhandlare X kommer att
+                          behandlas enligt bestämmelserna i EU:s dataskyddsförordningen (GDPR).{' '}
+                          <ButtonInline>Här</ButtonInline> kan du läsa mer om hur vi behandlar dina
+                          personuppgifter.
+                        </p>
+                      </Content>
+                    </Repeat>
+                  </ProductPageMainSection>
+                )}
+
                 <ProductPageMainSection>
-                  <Repeat>
-                    <H2 noMargin>Historik</H2>
+                  <H3>Välj till</H3>
+                  <Repeat tiny>
+                    <ColumnRow>
+                      <ColumnRowItem>
+                        <ExtendInfo title="Stor bilextra">
+                          <>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis hic
+                            voluptates explicabo doloribus placeat, sint nemo id, doloremque vel
+                            quasi minus, libero voluptatibus nostrum? Ipsum expedita magnam iusto
+                            doloremque amet!
+                          </>
+                        </ExtendInfo>
+                      </ColumnRowItem>
+                      <ColumnRowItem>
+                        <UtilityTextBold>+ 50 kr/mån</UtilityTextBold>
+                      </ColumnRowItem>
+                    </ColumnRow>
                   </Repeat>
-                  <Repeat>
-                    <Content>
-                      <p>
-                        Bilhandlare X bjuder på rapporten från Carfax som innehåller{' '}
-                        <UtilityTextPrimaryBold>
-                          2 registrerade uppgifter för ABC123
-                        </UtilityTextPrimaryBold>
-                        .
-                      </p>
-                    </Content>
-                  </Repeat>
-                  <Repeat>
-                    <InputAction>
-                      <InputActionInput>
-                        <InputText placeholder="Fyll i din e-postadress" label="E-postadress" />
-                      </InputActionInput>
-                      <InputActionBtn>
-                        <ButtonPrimary title="Köp bilen online" inputHeight>
-                          Köp bilen online
-                        </ButtonPrimary>
-                      </InputActionBtn>
-                    </InputAction>
-                  </Repeat>
-                  <Repeat>
-                    <LogoBox
-                      logo="https://placehold.it/145x19"
-                      logo2x="https://placehold.it/290x38"
-                      alt="Logotyp"
-                      wide
-                    />
-                  </Repeat>
-                  <Repeat>
-                    <Content small>
-                      <p>
-                        Alla personuppgifter som skickas in till Bilhandlare X kommer att behandlas
-                        enligt bestämmelserna i EU:s dataskyddsförordningen (GDPR).{' '}
-                        <ButtonInline>Här</ButtonInline> kan du läsa mer om hur vi behandlar dina
-                        personuppgifter.
-                      </p>
-                    </Content>
-                  </Repeat>
+                  <Repeat tiny>Item 2</Repeat>
                 </ProductPageMainSection>
               </ProductPageMain>
             </ProductPage>

@@ -23,7 +23,7 @@ const ThreeSixtyLightbox = ({ urls }: PropsType) => {
   }
 
   return (
-    <div data-am-image360 data-description="Dra i bilden för att rotera den.">
+    <div data-description="Dra i bilden för att rotera den.">
       <Rotation>
         {urls.map((image, i) => (
           <Image key={image} src={image} alt={`Bild ${i + 1}`} />

@@ -46,7 +46,7 @@ export const Limiter = styled.div`
 export const Main = styled.div`
   flex: 1 1 auto;
   position: relative;
-  background-color: ${(props) => props.theme.color.accentDark};
+  background-color: ${(props) => props.theme.color.accent};
 
   .slick-slider,
   .slick-list,
@@ -124,6 +124,16 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
+export const ImageFull = styled.img`
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 // Arrow Nav
 
 export const Arrow = styled(ButtonReset)`
@@ -140,7 +150,8 @@ export const Arrow = styled(ButtonReset)`
   line-height: 1;
   background-color: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(5px);
-  color: ${(props) => props.theme.color.textLight};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: ${(props) => props.theme.color.textDark};
   transform-origin: 50% 50%;
   transition: transform 200ms ease;
 
@@ -271,9 +282,9 @@ export const QuickNavImg = styled.img`
 
 export const MediaButtonWrapper = styled.div`
   position: absolute;
-  top: 50%;
+  bottom: ${size(2)};
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 `;
 
 // Sphere Close Button

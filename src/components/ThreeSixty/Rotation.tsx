@@ -120,7 +120,12 @@ const Rotation = ({ children }: PropsType) => {
       onMouseMove={touchMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      style={{ position: 'relative', touchAction: 'manipulation' }}
+      style={{
+        position: 'relative',
+        height: '0',
+        paddingBottom: '66.666%',
+        touchAction: 'manipulation',
+      }}
     >
       {Children.map(children, (child, i) =>
         cloneElement(child, {
