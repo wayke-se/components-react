@@ -46,6 +46,7 @@ import PhoneNumber from '../../components/PhoneNumber';
 import FinancialOptions from '../../components/FinancialOptions';
 import InsuranceOptions from '../../components/InsuranceOptions';
 import Ecome from '../../components/Ecome';
+import ManufacturerPackageOption from '../../components/ManufacturerPackagesOption';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
@@ -165,11 +166,14 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                 <ProductPageAsideSection mobileOrder={5}>
                   <Repeat>
                     <CheckMarkList>
-                      <CheckMarkListItem>
-                        <>
-                          Inkl. <ButtonInline>Das WeltAuto</ButtonInline> begagnatgaranti
-                        </>
-                      </CheckMarkListItem>
+                      {manufacturer?.packageOption?.title && (
+                        <CheckMarkListItem>
+                          <>
+                            Inkl. <ButtonInline>{manufacturer.packageOption.title}</ButtonInline>{' '}
+                            begagnatgaranti
+                          </>
+                        </CheckMarkListItem>
+                      )}
                       <CheckMarkListItem>
                         <>
                           Inkl. <ButtonInline>Bilia Total</ButtonInline>
@@ -283,6 +287,8 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </Repeat>
                   )}
                 </ProductPageMainSection>
+
+                <ManufacturerPackageOption packageOption={manufacturer?.packageOption} />
 
                 <ProductPageMainSection>
                   <Repeat>
