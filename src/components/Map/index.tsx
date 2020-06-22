@@ -2,6 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { SearchItem_vehicle_branch_location_position } from '../../@types/gql/SearchItem';
 import useSettings from '../../hooks/useSettings';
 
+import { Wrapper, Image, Placeholder, PlaceholderAction } from './wrapper';
+import { ButtonSecondary, ButtonContent } from '../Button';
+
 interface StaticMapProps {
   position?: SearchItem_vehicle_branch_location_position | null;
 }
@@ -25,33 +28,34 @@ const StaticMap = ({ position }: StaticMapProps) => {
 
   if (visible && googleMapsApiKey) {
     return (
-      <a
+      <Wrapper
         href={`http://maps.google.com/maps?q=${latitude},${longitude}`}
         title="Visa på Google Maps"
         target="_blank"
         rel="nofollow noopener noreferrer"
       >
-        <img
-          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=610x286&maptype=roadmap&markers=icon:${encodeURIComponent(
+        <Image
+          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=640x280&maptype=roadmap&markers=icon:${encodeURIComponent(
             `${location.protocol}//${location.hostname}/images/map/marker.png`
           )}%7C${latitude},${longitude}&key=${googleMapsApiKey}`}
-          className="l-block l-full"
+          alt="Karta"
         />
-      </a>
+      </Wrapper>
     );
   }
   return (
-    <a
+    <Placeholder
       href={`http://maps.google.com/maps?q=${latitude},${longitude}`}
       target="_blank"
       rel="noopener noreferrer nofollow"
-      style={{
-        backgroundImage: `${location.protocol}//${location.hostname}/images/placeholders/staticmap.png`,
-      }}
       onClick={onShowMap}
     >
-      Visa karta
-    </a>
+      <PlaceholderAction>
+        <ButtonSecondary as="div">
+          <ButtonContent>Visa karta</ButtonContent>
+        </ButtonSecondary>
+      </PlaceholderAction>
+    </Placeholder>
   );
 };
 
