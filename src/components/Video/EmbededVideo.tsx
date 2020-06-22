@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import useThumbnail from './useThumbnail';
-import { Image } from '../Gallery/wrapper';
+import { ImageFull } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
 import Modal from '../Modal';
 import VideoPlayer from './EmbeddedVideoLightbox';
@@ -32,7 +32,7 @@ const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
           <VideoPlayer url={modal} />
         </Modal>
       )}
-      <Image src={`${thumbnail}`} alt={`Bild ${index + 1}`} />
+      <ImageFull src={`${thumbnail}`} alt={`Bild ${index + 1}`} />
       <MediaButton text="Spela video" onClick={onClick} />
     </>
   ) : null;

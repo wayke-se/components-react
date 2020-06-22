@@ -31,6 +31,8 @@ export const UiBlock = styled.div.attrs(() => ({
 `;
 
 export const Item = styled.div`
+  position: relative;
+
   & + & {
     margin-top: ${size(1)};
   }

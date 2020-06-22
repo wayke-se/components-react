@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import useLoanCalculation from '../../hooks/useLoan';
 import Modal from '../Modal';
-import { ModalFoldout, ModalFoldoutHeader, ModalFoldoutBody } from '../Modal/wrapper';
+import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content';
 import LogoBox from '../LogoBox';
 import Repeat from '../Repeat';
@@ -143,47 +143,46 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
             </Content>
           </Repeat>
         </Repeat>
-        {!extend ? (
-          <Repeat small>
-            <ButtonClear onClick={onToggleExtend} title="Se mer information">
-              <ButtonContent>Mer information</ButtonContent>
-            </ButtonClear>
-          </Repeat>
-        ) : (
-          <ModalFoldout>
-            <ModalFoldoutHeader>
-              <ButtonClear onClick={onToggleExtend} title="Dölj information">
-                <ButtonContent>Dölj</ButtonContent>
-              </ButtonClear>
-            </ModalFoldoutHeader>
-            <ModalFoldoutBody>
-              <DataList
-                items={[
-                  {
-                    label: 'Ränta',
-                    value: `${interestText} %`,
-                  },
-                  {
-                    label: 'Effektiv ränta',
-                    value: `${effectiveInterestText} %`,
-                  },
-                  {
-                    label: 'Uppläggningskostnad',
-                    value: `${numberSeparator(financialOption?.setupFee || 0)} kr`,
-                  },
-                  {
-                    label: 'Administrativa avgifter',
-                    value: `${numberSeparator(financialOption?.administrationFee || 0)} kr/mån`,
-                  },
-                  {
-                    label: 'Total kreditkostnad',
-                    value: `${numberSeparator(loan?.totalCreditCost || 0)} kr`,
-                  },
-                ]}
-              />
-            </ModalFoldoutBody>
-          </ModalFoldout>
-        )}
+        <Repeat small>
+          <ButtonClear
+            onClick={onToggleExtend}
+            title={extend ? 'Visa mindre information' : 'Visa mer information'}
+          >
+            <ButtonContent>{extend ? 'Mindre information' : 'Mer information'}</ButtonContent>
+          </ButtonClear>
+        </Repeat>
+        <>
+          {extend && (
+            <ModalFoldout>
+              <ModalFoldoutBody>
+                <DataList
+                  items={[
+                    {
+                      label: 'Ränta',
+                      value: `${interestText} %`,
+                    },
+                    {
+                      label: 'Effektiv ränta',
+                      value: `${effectiveInterestText} %`,
+                    },
+                    {
+                      label: 'Uppläggningskostnad',
+                      value: `${numberSeparator(financialOption?.setupFee || 0)} kr`,
+                    },
+                    {
+                      label: 'Administrativa avgifter',
+                      value: `${numberSeparator(financialOption?.administrationFee || 0)} kr/mån`,
+                    },
+                    {
+                      label: 'Total kreditkostnad',
+                      value: `${numberSeparator(loan?.totalCreditCost || 0)} kr`,
+                    },
+                  ]}
+                />
+              </ModalFoldoutBody>
+            </ModalFoldout>
+          )}
+        </>
       </Repeat>
     </Modal>
   );

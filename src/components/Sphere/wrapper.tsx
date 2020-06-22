@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 
   .pnlm-container {
     background-image: none;
-    background-color: red;
+    background-color: ${(props) => props.theme.color.accentDark};
   }
 
   // Compass
@@ -26,23 +26,15 @@ export const Wrapper = styled.div`
     right: auto;
     margin-top: 0;
     border: 5px solid transparent;
-    border-top-color: ${(props) => props.theme.color.border};
+    border-top-color: ${(props) => props.theme.color.textLight};
     background-color: rgba(255, 255, 255, 0.4);
     background-image: none;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 
     &:hover {
       background-color: red;
-    }
-
-    &:before {
-      content: 'A';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: red;
-      font-size: 8px;
     }
   }
 
@@ -77,13 +69,15 @@ export const Wrapper = styled.div`
     width: ${controlBtnSize};
     height: ${controlBtnSize};
     background-image: none;
-    background-color: red;
-    color: blue;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: ${(props) => props.theme.color.textDark};
     border: 0;
     border-radius: 50%;
 
     &:hover {
-      background-color: red;
+      background-color: rgba(255, 255, 255, 0.6);
     }
 
     &:before {
@@ -97,12 +91,12 @@ export const Wrapper = styled.div`
 
   .pnlm-fullscreen-toggle-button-inactive {
     &:before {
-      content: 'B';
+      content: '⤢';
     }
 
     &.pnlm-fullscreen-toggle-button-active {
       &:before {
-        content: 'C';
+        content: '⤢';
       }
     }
   }
@@ -113,10 +107,10 @@ export const Wrapper = styled.div`
     background-image: none;
     width: ${controlBtnSize};
     height: ${controlBtnSize};
-    background-color: red;
-    color: blue;
+    background-color: ${(props) => props.theme.color.accentDark};
+    color: ${(props) => props.theme.color.textDark};
     border: 0;
-    border-radius: 50%;
+    border-radius: 999px;
 
     &:hover {
       background-color: red;
@@ -147,7 +141,9 @@ export const Wrapper = styled.div`
     height: auto;
     width: auto;
     background-color: transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 0;
+    border-radius: 999px;
 
     > * {
       &:first-child {
@@ -169,8 +165,9 @@ export const Wrapper = styled.div`
     width: ${controlBtnSize};
     height: ${controlBtnSize};
     background-image: none;
-    background-color: red;
-    color: blue;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    color: ${(props) => props.theme.color.textDark};
     border-radius: 0;
 
     &:before {
@@ -181,7 +178,7 @@ export const Wrapper = styled.div`
     }
 
     &:hover {
-      background-color: red;
+      background-color: rgba(255, 255, 255, 0.6);
     }
   }
 
@@ -195,7 +192,7 @@ export const Wrapper = styled.div`
 
   .pnlm-zoom-out {
     bottom: auto;
-    border-top: 1px solid ${(props) => props.theme.color.border};
+    border-top: 1px solid ${(props) => props.theme.color.textDark};
 
     &:before {
       content: '-';
@@ -211,26 +208,20 @@ export const Wrapper = styled.div`
     width: auto;
     height: auto;
     padding: ${size(1.75)} ${size(2)};
-    border-radius: 999px;
+    border-radius: 3px;
     margin: 0;
-    background-color: red;
-    color: blue;
+    background-color: ${(props) => props.theme.color.accentDark};
+    color: ${(props) => props.theme.color.textDark};
     line-height: 1.1;
     user-select: none;
 
     &:hover {
-      background-color: red;
+      background-color: ${(props) => props.theme.color.accentDark};
     }
 
     p {
       margin: 0;
       font-size: 0.875rem;
-
-      &:before {
-        content: 'D';
-        color: blue;
-        margin-right: ${size(1)};
-      }
     }
   }
 
@@ -252,11 +243,11 @@ export const Wrapper = styled.div`
 
   .pnlm-lbar {
     width: 100%;
-    background-color: red;
+    background-color: rgba(255, 255, 255, 0.4);
     border: 0;
   }
 
   .pnlm-lbar-fill {
-    background-color: blue;
+    background-color: ${(props) => props.theme.color.textLight};
   }
 `;

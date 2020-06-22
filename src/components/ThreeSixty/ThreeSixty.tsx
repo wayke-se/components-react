@@ -12,19 +12,12 @@ const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: 
 
 type PropsType = {
   urls: string[];
-  fullscreen?: boolean;
   navigationDisabled: boolean;
   visible: boolean;
   onDisableNavigation: () => void;
 };
 
-const ThreeSixty = ({
-  urls,
-  fullscreen,
-  visible,
-  onDisableNavigation,
-  navigationDisabled,
-}: PropsType) => {
+const ThreeSixty = ({ urls, visible, onDisableNavigation, navigationDisabled }: PropsType) => {
   if (!visible || (!navigationDisabled && visible)) {
     return (
       <>
@@ -41,8 +34,6 @@ const ThreeSixty = ({
   if (navigationDisabled && visible) {
     return (
       <div
-        data-am-image360={fullscreen ? '' : 'contain'}
-        data-description="Dra i bilden för att rotera den."
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
