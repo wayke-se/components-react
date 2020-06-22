@@ -9,17 +9,43 @@ Install
 
 
 ```javascript
-import WaykeSearch { WaykeSearchProvider } from '@wayke-se/components-react'
+import WaykeSearch { WaykeProvider } from '@wayke-se/components-react'
 
 const App = () => (
-  <WaykeSearchProvider
+  <WaykeProvider
     url="https://test-ext-api.wayketech.se/vehicles"
     apiKey="YOUR_API_KEY"
+    ecomUrl="OPTION_ECOM_URL"
   >
     <WaykeSearch />
-  </WaykeSearchProvider>
+  </WaykeProvider>
 )
 
+```
+
+By default all filters will be visible, but you can provide a list with the following types:
+'manufacturer',
+'modelSeries',
+'fuelType',
+'gearboxType',
+'branch',
+'color',
+'environmentClass',
+'properties.segment',
+'drivingWheel',
+'price',
+'mileage',
+'modelYear'
+
+order have effect
+
+example:
+```
+return (
+  ...
+  <WaykeSearch  filterList={['price', 'modelSeries']}/>
+  ...
+)
 ```
 
 ## Run example from repo
@@ -30,6 +56,7 @@ To start the example create a .env file in ./example
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
+WAYKE_ECOM_URL=https://ecom.wayketech.se
 ```
 Then
 ```

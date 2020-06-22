@@ -2,14 +2,14 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { DrivingDistance } from "./globalTypes";
+import { DrivingDistance } from './globalTypes';
 
 // ====================================================
 // GraphQL query operation: InsuranceCalculation
 // ====================================================
 
 export interface InsuranceCalculation_insurances_addons {
-  __typename: "InsuranceAddon";
+  __typename: 'InsuranceAddon';
   id: string;
   title: string | null;
   description: string | null;
@@ -19,19 +19,19 @@ export interface InsuranceCalculation_insurances_addons {
 }
 
 export interface InsuranceCalculation_insurances_items {
-  __typename: "InsuranceItem";
+  __typename: 'InsuranceItem';
   name: string | null;
   description: string | null;
 }
 
 export interface InsuranceCalculation_insurances_legality {
-  __typename: "InsuranceLegality";
+  __typename: 'InsuranceLegality';
   description: string | null;
   url: string | null;
 }
 
 export interface InsuranceCalculation_insurances {
-  __typename: "Insurance";
+  __typename: 'Insurance';
   name: string;
   price: number;
   unit: string;

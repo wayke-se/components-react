@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 
 import Container from '../../components/Container';
 import UspList from '../../components/UspList';
@@ -8,14 +8,12 @@ import PriceTable from '../../components/PriceTable';
 import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
-import InputText from '../../components/InputText';
 import Blockquote from '../../components/Blockquote';
-import ProductCard from '../../components/ProductCard';
-import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
 import Gallery from '../../components/Gallery';
 import Loader from '../../components/Loader';
 import ExtendInfo from '../../components/ExtendInfo';
+import InputText from '../../components/InputText';
 import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
 import {
@@ -36,7 +34,6 @@ import {
 import { UtilityTextPrimaryBold, UtilityTextBold } from '../../components/Utility';
 import { ColumnRow, ColumnRowItem } from '../../components/ColumnRow';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
-import { OverflowGrid, OverflowGridList, OverflowGridItem } from '../../components/OverflowGrid';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator } from '../../utils/formats';
@@ -48,13 +45,17 @@ import OpeningHours from '../../components/OpeningHours';
 import PhoneNumber from '../../components/PhoneNumber';
 import FinancialOptions from '../../components/FinancialOptions';
 import InsuranceOptions from '../../components/InsuranceOptions';
+import Ecome from '../../components/Ecome';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
 }
 
 const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
+  const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
+  const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
+
   const options = useMemo(
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
     [result?.vehicle?.data?.options]
@@ -96,12 +97,16 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     financialOptions,
     insuranceOptions,
     manufacturer,
+    ecommerce,
   } = result.vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
   const specificationList = getSpecificationList(data);
 
   return (
     <>
+      {ecomModal && (
+        <Ecome vehicle={result.vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />
+      )}
       <Page>
         <PageSection large>
           <Container>
@@ -179,11 +184,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                       <CheckMarkListItem>Vinterhjul inkluderade</CheckMarkListItem>
                     </CheckMarkList>
                   </Repeat>
-                  <Repeat>
-                    <ButtonPrimary fullWidth>
-                      <ButtonContent>Köp bilen online</ButtonContent>
-                    </ButtonPrimary>
-                  </Repeat>
+                  {ecommerce && ecommerce.enabled && (
+                    <Repeat>
+                      <ButtonPrimary fullWidth onClick={toggleEcomModal}>
+                        <ButtonContent>Köp bilen online</ButtonContent>
+                      </ButtonPrimary>
+                    </Repeat>
+                  )}
                   <Repeat>
                     <ActionList contact={contact} />
                   </Repeat>
@@ -268,9 +275,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                       </Repeat>
                     </ProductPageContentLimit>
                   </Repeat>
-                  <Repeat>
-                    <ButtonPrimary title="Köp bilen online">Köp bilen online</ButtonPrimary>
-                  </Repeat>
+                  {ecommerce && ecommerce.enabled && (
+                    <Repeat>
+                      <ButtonPrimary title="Köp bilen online" onClick={toggleEcomModal}>
+                        Köp bilen online
+                      </ButtonPrimary>
+                    </Repeat>
+                  )}
                 </ProductPageMainSection>
 
                 <ProductPageMainSection>
@@ -304,7 +315,6 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     <LogoBox logo="https://placehold.it/145x19" alt="Logotyp" wide />
                   </Repeat>
                 </ProductPageMainSection>
-
                 {false && (
                   <ProductPageMainSection>
                     <Repeat>
@@ -353,7 +363,6 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </Repeat>
                   </ProductPageMainSection>
                 )}
-
                 <ProductPageMainSection>
                   <H3>Välj till</H3>
                   <Repeat tiny>
@@ -380,6 +389,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
           </Container>
         </PageSection>
 
+        {/*
         <PageSection accent large>
           <Container>
             <Repeat>
@@ -495,6 +505,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
             </Repeat>
           </Container>
         </PageSection>
+        */}
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>

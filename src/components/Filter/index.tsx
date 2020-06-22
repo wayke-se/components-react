@@ -6,11 +6,7 @@ import FilterPanel from '../FilterPanel';
 import { FacetIdToTitle } from '../../utils/formats';
 import { PRICE, MILEAGE, MODEL_YEAR } from '../../utils/constants';
 import useSearch from '../../hooks/useSearch';
-
-export interface FilterProps {
-  label: string;
-  activeFilters?: number;
-}
+import { SearchFilterTypes } from '../../@types/filter';
 
 const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {
@@ -23,8 +19,12 @@ const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   }
 };
 
-const Filter = () => {
-  const { queryFilter, initialFacets, response } = useSearch();
+interface FilterProps {
+  filterList?: SearchFilterTypes[];
+}
+
+const Filter = ({ filterList }: FilterProps) => {
+  const { queryFilter, initialFacets, loading, response, onFilterUpdate } = useSearch();
 
   const facets = response?.facets;
 
@@ -36,11 +36,30 @@ const Filter = () => {
     return null;
   }
 
+  const filteredFacets = facets
+    ?.filter((f) => (filterList ? filterList.includes(f.id as SearchFilterTypes) : true))
+    .sort((a, b) =>
+      filterList
+        ? filterList.indexOf(a.id as SearchFilterTypes) -
+          filterList.indexOf(b.id as SearchFilterTypes)
+        : 0
+    );
+
   return (
     <>
-      {initialFacets && facet && <FilterPanel facet={facet} onClose={onClose} />}
+      {initialFacets && facet && (
+        <FilterPanel
+          filterList={filterList}
+          facet={facet}
+          loading={loading}
+          filteredFacets={filteredFacets}
+          numberOfHits={response?.documentList.numberOfHits || 0}
+          onFilterUpdate={onFilterUpdate}
+          onClose={onClose}
+        />
+      )}
       <List>
-        {facets?.map((f) => {
+        {filteredFacets.map((f) => {
           const selected = isSelected(f, queryFilter.searchParams);
           return (
             <Item key={f.id}>

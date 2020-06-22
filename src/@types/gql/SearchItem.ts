@@ -2,27 +2,27 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { FinancialOptionInclusion } from "./globalTypes";
+import { FinancialOptionInclusion } from './globalTypes';
 
 // ====================================================
 // GraphQL query operation: SearchItem
 // ====================================================
 
 export interface SearchItem_vehicle_contact {
-  __typename: "ContactOptions";
+  __typename: 'ContactOptions';
   name: string | null;
   email: string | null;
   phonenumber: string | null;
 }
 
 export interface SearchItem_vehicle_manufacturer_packageOption_link {
-  __typename: "Link";
+  __typename: 'Link';
   title: string | null;
   href: string | null;
 }
 
 export interface SearchItem_vehicle_manufacturer_packageOption {
-  __typename: "PackageOption";
+  __typename: 'PackageOption';
   description: string | null;
   image: string | null;
   link: SearchItem_vehicle_manufacturer_packageOption_link | null;
@@ -30,7 +30,7 @@ export interface SearchItem_vehicle_manufacturer_packageOption {
 }
 
 export interface SearchItem_vehicle_manufacturer {
-  __typename: "Manufacturer";
+  __typename: 'Manufacturer';
   description: string | null;
   logotype: string | null;
   name: string;
@@ -38,56 +38,56 @@ export interface SearchItem_vehicle_manufacturer {
 }
 
 export interface SearchItem_vehicle_branch_flags {
-  __typename: "BranchFlags";
+  __typename: 'BranchFlags';
   mrf: boolean | null;
   centralStorage: boolean | null;
   ecommerce: boolean | null;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_monday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_tuesday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_wednesday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_thursday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_friday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_saturday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours_sunday {
-  __typename: "HoursOpen";
+  __typename: 'HoursOpen';
   from: string;
   until: string;
 }
 
 export interface SearchItem_vehicle_branch_openingHours {
-  __typename: "OpeningHours";
+  __typename: 'OpeningHours';
   monday: SearchItem_vehicle_branch_openingHours_monday | null;
   tuesday: SearchItem_vehicle_branch_openingHours_tuesday | null;
   wednesday: SearchItem_vehicle_branch_openingHours_wednesday | null;
@@ -98,23 +98,23 @@ export interface SearchItem_vehicle_branch_openingHours {
 }
 
 export interface SearchItem_vehicle_branch_organization_branches {
-  __typename: "Branch";
+  __typename: 'Branch';
   id: string;
 }
 
 export interface SearchItem_vehicle_branch_organization_parent {
-  __typename: "Branch";
+  __typename: 'Branch';
   id: string;
 }
 
 export interface SearchItem_vehicle_branch_organization {
-  __typename: "Organization";
+  __typename: 'Organization';
   branches: (SearchItem_vehicle_branch_organization_branches | null)[];
   parent: SearchItem_vehicle_branch_organization_parent | null;
 }
 
 export interface SearchItem_vehicle_branch_location {
-  __typename: "Location";
+  __typename: 'Location';
   city: string | null;
   county: string | null;
   streetAddress: string | null;
@@ -122,20 +122,20 @@ export interface SearchItem_vehicle_branch_location {
 }
 
 export interface SearchItem_vehicle_branch_promos {
-  __typename: "Promo";
+  __typename: 'Promo';
   description: string | null;
   image: string | null;
   title: string | null;
 }
 
 export interface SearchItem_vehicle_branch_services {
-  __typename: "Service";
+  __typename: 'Service';
   markdown: string | null;
   title: string | null;
 }
 
 export interface SearchItem_vehicle_branch {
-  __typename: "Branch";
+  __typename: 'Branch';
   id: string;
   description: string | null;
   name: string | null;
@@ -150,7 +150,7 @@ export interface SearchItem_vehicle_branch {
 }
 
 export interface SearchItem_vehicle_data {
-  __typename: "VehicleData";
+  __typename: 'VehicleData';
   enginePower: number | null;
   equipmentLevel: string | null;
   fuelType: string | null;
@@ -170,7 +170,7 @@ export interface SearchItem_vehicle_data {
 }
 
 export interface SearchItem_vehicle_ecommerce {
-  __typename: "Ecommerce";
+  __typename: 'Ecommerce';
   enabled: boolean | null;
   reserved: boolean | null;
   withTradeIn: boolean | null;
@@ -178,7 +178,7 @@ export interface SearchItem_vehicle_ecommerce {
 }
 
 export interface SearchItem_vehicle_insuranceOptions {
-  __typename: "InsuranceOption";
+  __typename: 'InsuranceOption';
   description: string | null;
   logotype: string | null;
   url: string | null;
@@ -187,7 +187,7 @@ export interface SearchItem_vehicle_insuranceOptions {
 }
 
 export interface SearchItem_vehicle_financialOptions_downPayment {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -196,7 +196,7 @@ export interface SearchItem_vehicle_financialOptions_downPayment {
 }
 
 export interface SearchItem_vehicle_financialOptions_duration {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -205,13 +205,13 @@ export interface SearchItem_vehicle_financialOptions_duration {
 }
 
 export interface SearchItem_vehicle_financialOptions_link {
-  __typename: "Link";
+  __typename: 'Link';
   title: string | null;
   href: string | null;
 }
 
 export interface SearchItem_vehicle_financialOptions_mileage {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -220,7 +220,7 @@ export interface SearchItem_vehicle_financialOptions_mileage {
 }
 
 export interface SearchItem_vehicle_financialOptions_residual {
-  __typename: "FinancialOptionDetail";
+  __typename: 'FinancialOptionDetail';
   current: number;
   default: number;
   max: number;
@@ -229,7 +229,7 @@ export interface SearchItem_vehicle_financialOptions_residual {
 }
 
 export interface SearchItem_vehicle_financialOptions {
-  __typename: "FinancialOption";
+  __typename: 'FinancialOption';
   description: string | null;
   administrationFee: number | null;
   downPayment: SearchItem_vehicle_financialOptions_downPayment | null;
@@ -254,25 +254,25 @@ export interface SearchItem_vehicle_financialOptions {
 }
 
 export interface SearchItem_vehicle_media_files_formats {
-  __typename: "MediaFileFormat";
+  __typename: 'MediaFileFormat';
   format: string;
   url: string;
 }
 
 export interface SearchItem_vehicle_media_files {
-  __typename: "MediaFile";
+  __typename: 'MediaFile';
   formats: (SearchItem_vehicle_media_files_formats | null)[];
   url: string;
 }
 
 export interface SearchItem_vehicle_media {
-  __typename: "Media";
+  __typename: 'Media';
   type: string;
   files: SearchItem_vehicle_media_files[];
 }
 
 export interface SearchItem_vehicle_location {
-  __typename: "Location";
+  __typename: 'Location';
   city: string | null;
   county: string | null;
   streetAddress: string | null;
@@ -280,7 +280,7 @@ export interface SearchItem_vehicle_location {
 }
 
 export interface SearchItem_vehicle {
-  __typename: "Vehicle";
+  __typename: 'Vehicle';
   id: string;
   contact: SearchItem_vehicle_contact | null;
   manufacturer: SearchItem_vehicle_manufacturer | null;
