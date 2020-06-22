@@ -6,7 +6,6 @@ import Repeat from '../../components/Repeat';
 import DataGrid from '../../components/DataGrid';
 import PriceTable from '../../components/PriceTable';
 import LogoBox from '../../components/LogoBox';
-import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
 import Blockquote from '../../components/Blockquote';
 import ExtendContent from '../../components/ExtendContent';
@@ -22,14 +21,8 @@ import {
   ProductPageContentLimit,
 } from '../../components/ProductPage';
 import { H1, H2 } from '../../components/Heading';
-import {
-  ButtonPrimary,
-  ButtonContent,
-  ButtonInline,
-  ButtonInlineBold,
-} from '../../components/Button';
+import { ButtonPrimary, ButtonContent, ButtonInlineBold } from '../../components/Button';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
-import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator } from '../../utils/formats';
 import { PortalNamespace } from '../../components/Portal';
@@ -43,6 +36,7 @@ import InsuranceOptions from '../../components/InsuranceOptions';
 import Ecome from '../../components/Ecome';
 import ManufacturerPackageOption from '../../components/ManufacturerPackagesOption';
 import Map from '../../components/Map';
+import CheckList from './CheckList';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
@@ -82,6 +76,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     );
   }
 
+  const { vehicle } = result;
   const {
     title,
     shortDescription,
@@ -95,15 +90,14 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     insuranceOptions,
     manufacturer,
     ecommerce,
-    packageOptions,
-  } = result.vehicle;
-  const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
+  } = vehicle;
+  const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
   const specificationList = getSpecificationList(data);
 
   return (
     <>
       {ecomModal && (
-        <Ecome vehicle={result.vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />
+        <Ecome vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />
       )}
       <Page>
         <PageSection large>
@@ -161,38 +155,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                 )}
 
                 <ProductPageAsideSection mobileOrder={5}>
-                  <Repeat>
-                    <CheckMarkList>
-                      {manufacturer?.packageOption?.title && (
-                        <CheckMarkListItem>
-                          <>
-                            Inkl. <ButtonInline>{manufacturer.packageOption.title}</ButtonInline>{' '}
-                            begagnatgaranti
-                          </>
-                        </CheckMarkListItem>
-                      )}
-                      {packageOptions?.map((packageOption, index) => (
-                        <CheckMarkListItem key={packageOption.title || index}>
-                          <>
-                            Inkl. <ButtonInline>{packageOption.title}</ButtonInline>
-                          </>
-                        </CheckMarkListItem>
-                      ))}
-                      {ecommerce?.withHomeDelivery && (
-                        <CheckMarkListItem>Gratis hemleverans</CheckMarkListItem>
-                      )}
-                    </CheckMarkList>
-                  </Repeat>
-                  {ecommerce && ecommerce.enabled && (
-                    <Repeat>
-                      <ButtonPrimary fullWidth onClick={toggleEcomModal}>
-                        <ButtonContent>Köp bilen online</ButtonContent>
-                      </ButtonPrimary>
-                    </Repeat>
-                  )}
-                  <Repeat>
-                    <ActionList contact={contact} />
-                  </Repeat>
+                  <CheckList vehicle={vehicle} toggleEcomModal={toggleEcomModal} />
                 </ProductPageAsideSection>
               </ProductPageAside>
               <ProductPageMain>

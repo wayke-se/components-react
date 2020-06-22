@@ -19,7 +19,7 @@ import {
 interface ModalProps {
   id?: string | null;
   title: string | null;
-  children: Array<JSX.Element | false | null | string> | JSX.Element | false | null | string;
+  children: React.ReactNode;
   onClose: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>) => void;
 }
 
