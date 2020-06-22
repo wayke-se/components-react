@@ -285,6 +285,7 @@ export const MediaButtonWrapper = styled.div`
   bottom: ${size(2)};
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1;
 `;
 
 // Sphere Close Button
@@ -294,4 +295,5 @@ export const EnableNavigationButton = styled.div`
   bottom: ${size(2)};
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1;
 `;

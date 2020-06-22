@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 
-import { Image } from '../Gallery/wrapper';
+import { Item, Img } from '../Lightbox/wrapper';
 import MediaButton from '../Gallery/MediaButton';
 import Rotation from './Rotation';
 
@@ -15,21 +15,19 @@ const ThreeSixtyLightbox = ({ urls }: PropsType) => {
 
   if (!started) {
     return (
-      <>
-        <Image src={urls[0]} alt="alt" />
+      <Item>
+        <Img src={urls[0]} alt="alt" />
         <MediaButton text="Starta 360° exteriört" onClick={onStart} />
-      </>
+      </Item>
     );
   }
 
   return (
-    <div data-description="Dra i bilden för att rotera den.">
-      <Rotation>
-        {urls.map((image, i) => (
-          <Image key={image} src={image} alt={`Bild ${i + 1}`} />
-        ))}
-      </Rotation>
-    </div>
+    <Rotation>
+      {urls.map((image, i) => (
+        <Img key={image} src={image} alt={`Bild ${i + 1}`} />
+      ))}
+    </Rotation>
   );
 };
 
