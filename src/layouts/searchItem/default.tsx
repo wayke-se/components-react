@@ -37,12 +37,14 @@ import Ecome from '../../components/Ecome';
 import ManufacturerPackageOption from '../../components/ManufacturerPackagesOption';
 import Map from '../../components/Map';
 import CheckList from './CheckList';
+import Related from './Related';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
+  onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
+const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayoutProps) => {
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
@@ -179,7 +181,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     <Blockquote
                       author={contact && contact.name ? contact.name : null}
                       date="???"
-                      avatar="https://placehold.it/40x40"
+                      avatar={contact?.avatarUrl || 'https://placehold.it/40x40'}
                     >
                       {!!description && <p>{description}</p>}
                     </Blockquote>
@@ -240,6 +242,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
             </ProductPage>
           </Container>
         </PageSection>
+        <Related vehicle={vehicle} onClickSearchItem={onClickSearchItem} />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>

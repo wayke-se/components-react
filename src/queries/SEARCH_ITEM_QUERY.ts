@@ -26,6 +26,7 @@ const SEARCH_ITEM_QUERY = gql`
         name
         email
         phonenumber
+        avatarUrl
       }
       manufacturer {
         description

@@ -17,7 +17,7 @@ const BaseLayout = ({ filterList }: BaseLayout) => {
   return (
     <>
       {id ? (
-        <DefaultSearchItemLayout id={id} />
+        <DefaultSearchItemLayout id={id} onClickSearchItem={onClickSearchItem} />
       ) : (
         <DefaultSearchLayout filterList={filterList} onClickSearchItem={onClickSearchItem} />
       )}

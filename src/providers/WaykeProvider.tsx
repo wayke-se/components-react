@@ -7,6 +7,7 @@ import SearchProvider from './searchProvider';
 import '@wayke-se/ecom-react/assets/styles/default.css';
 import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
+import SearchSearchProvider from './relatedSearchProvider';
 
 interface WaykeProviderProps {
   url: string;
@@ -32,7 +33,9 @@ const WaykeProvider = ({
     <SettingsProvider googleMapsApiKey={googleMapsApiKey}>
       <GraphqlProvider uri={graphQlUrl} useMock={useMock}>
         <SearchProvider url={url} apiKey={apiKey}>
-          <Theme>{children}</Theme>
+          <SearchSearchProvider url={url} apiKey={apiKey}>
+            <Theme>{children}</Theme>
+          </SearchSearchProvider>
         </SearchProvider>
       </GraphqlProvider>
     </SettingsProvider>
