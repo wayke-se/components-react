@@ -8,14 +8,10 @@ import PriceTable from '../../components/PriceTable';
 import LogoBox from '../../components/LogoBox';
 import ActionList from '../../components/ActionList';
 import Content from '../../components/Content';
-import InputText from '../../components/InputText';
 import Blockquote from '../../components/Blockquote';
-import ProductCard from '../../components/ProductCard';
-import SectionHeader from '../../components/SectionHeader';
 import ExtendContent from '../../components/ExtendContent';
 import Gallery from '../../components/Gallery';
 import Loader from '../../components/Loader';
-import { InputAction, InputActionInput, InputActionBtn } from '../../components/InputAction';
 import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
@@ -32,9 +28,7 @@ import {
   ButtonInline,
   ButtonInlineBold,
 } from '../../components/Button';
-import { UtilityTextPrimaryBold } from '../../components/Utility';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
-import { OverflowGrid, OverflowGridList, OverflowGridItem } from '../../components/OverflowGrid';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator } from '../../utils/formats';
@@ -317,6 +311,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   </Repeat>
                 </ProductPageMainSection>
 
+                {/*
                 <ProductPageMainSection>
                   <Repeat>
                     <H2 noMargin>Historik</H2>
@@ -363,11 +358,13 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     </Content>
                   </Repeat>
                 </ProductPageMainSection>
+                */}
               </ProductPageMain>
             </ProductPage>
           </Container>
         </PageSection>
 
+        {/* 
         <PageSection accent large>
           <Container>
             <Repeat>
@@ -483,6 +480,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
             </Repeat>
           </Container>
         </PageSection>
+        */}
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>

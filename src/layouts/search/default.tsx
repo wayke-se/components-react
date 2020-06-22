@@ -12,12 +12,14 @@ import Repeat from '../../components/Repeat';
 import SearchFilter from '../../components/SearchFilter';
 import Snackbar from '../../components/Snackbar';
 import useSearch from '../../hooks/useSearch';
+import { SearchFilterTypes } from '../../@types/filter';
 
 interface DefaultSearchLayoutProps {
+  filterList?: SearchFilterTypes[];
   onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSearchLayout = ({ onClickSearchItem }: DefaultSearchLayoutProps) => {
+const DefaultSearchLayout = ({ filterList, onClickSearchItem }: DefaultSearchLayoutProps) => {
   const { error, documents, queryFilter, onInitialize } = useSearch();
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const DefaultSearchLayout = ({ onClickSearchItem }: DefaultSearchLayoutProps) =>
         )}
         <PageSection>
           <Container>
-            <Filter />
+            <Filter filterList={filterList} />
           </Container>
         </PageSection>
         <PageSection accent fillSpace>

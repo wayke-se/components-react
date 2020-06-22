@@ -23,6 +23,31 @@ const App = () => (
 
 ```
 
+By default all filters will be visible, but you can provide a list with the following types:
+'manufacturer',
+'modelSeries',
+'fuelType',
+'gearboxType',
+'branch',
+'color',
+'environmentClass',
+'properties.segment',
+'drivingWheel',
+'price',
+'mileage',
+'modelYear'
+
+order have effect
+
+example:
+```
+return (
+  ...
+  <WaykeSearch  filterList={['price', 'modelSeries']}/>
+  ...
+)
+```
+
 ## Run example from repo
 This repository contains a example app that uses @wayke-se/components-react.
 
