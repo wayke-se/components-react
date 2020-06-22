@@ -40,11 +40,12 @@ By default all filters will be visible, but you can provide a list with the foll
 order have effect
 
 example:
-```
-return (
-  ...
-  <WaykeSearch  filterList={['price', 'modelSeries']}/>
-  ...
+```javascript
+import WaykeSearch { WaykeProvider } from '@wayke-se/components-react'
+const App = () => (
+  <WaykeProvider>
+    <WaykeSearch  filterList={['price', 'modelSeries']}/>
+  </WaykeProvider>
 )
 ```
 

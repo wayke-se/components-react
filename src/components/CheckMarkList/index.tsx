@@ -4,7 +4,7 @@ import { List, Item, Icon, Label } from './wrapper';
 import { IconCheck } from '../Icon';
 
 export interface ICheckMarkList {
-  children: JSX.Element | JSX.Element[] | string;
+  children: React.ReactNode;
 }
 
 export const CheckMarkListItem = ({ children }: ICheckMarkList) => (

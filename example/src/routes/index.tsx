@@ -9,11 +9,7 @@ const NotFound = lazy(() => import('./NotFound/index'));
 const Routes = () => (
   <Suspense fallback="Loading...">
     <Switch>
-      <Route
-        path="/"
-        exact
-        component={(props: any) => <BaseLayout {...props} filterList={['modelSeries', 'price']} />}
-      />
+      <Route path="/" exact component={(props: any) => <BaseLayout {...props} />} />
       <Route path="/search" exact component={DefaultSearchLayout} />
       <Route path="/product-page" exact component={SearchItem} />
       <Route component={NotFound} />
