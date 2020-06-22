@@ -8,7 +8,7 @@ import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList
 import { SearchItem_vehicle } from '../../@types/gql/SearchItem';
 import Modal from '../../components/Modal';
 import Content from '../../components/Content';
-import { Image } from '../../components/Modal/wrapper';
+import LogoBox from '../../components/LogoBox';
 
 interface ModelLink {
   href: string | null;
@@ -40,17 +40,23 @@ const CheckList = ({ vehicle, toggleEcomModal }: CheckList) => {
     <>
       {modal && (
         <Modal title={modal.title} onClose={onClose}>
-          {modal.image && <Image src={modal.image} alt={modal.title || undefined} />}
-          <Content>
-            {modal.description && (
-              <div dangerouslySetInnerHTML={{ __html: marked(modal.description) }} />
-            )}
-            {modal.link?.href && modal.link.title && (
-              <a href={modal.link.href} target="_blank" rel="noopener noreferrer nofollow">
-                {modal.link.title}
-              </a>
-            )}
-          </Content>
+          {modal.image && (
+            <Repeat>
+              <LogoBox logo={modal.image} alt={modal.title || undefined} wide />
+            </Repeat>
+          )}
+          <Repeat>
+            <Content>
+              {modal.description && (
+                <div dangerouslySetInnerHTML={{ __html: marked(modal.description) }} />
+              )}
+              {modal.link?.href && modal.link.title && (
+                <a href={modal.link.href} target="_blank" rel="noopener noreferrer nofollow">
+                  {modal.link.title}
+                </a>
+              )}
+            </Content>
+          </Repeat>
         </Modal>
       )}
       <Repeat>
