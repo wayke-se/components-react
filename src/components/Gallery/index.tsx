@@ -116,7 +116,6 @@ const Gallery = ({ media }: GalleryProps) => {
                   swipe={!navigationDisabled}
                   touchMove={!navigationDisabled}
                   swipeToSlide={!navigationDisabled}
-                  arrows={!navigationDisabled}
                   ref={slider}
                   beforeChange={beforeChange}
                 >

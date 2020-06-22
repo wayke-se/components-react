@@ -12,6 +12,7 @@ import InputSelect, { OptionProps } from '../InputSelect';
 import { InputGroup, InputGroupColumn } from '../InputGroup';
 import { ButtonPrimary, ButtonContent } from '../Button';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
+import { ColumnRow, ColumnRowItem } from '../ColumnRow';
 import { DrivingDistance } from '../../@types/gql/globalTypes';
 import useInsuranceCalculation from '../../hooks/useInsurance';
 import { ssnIsValid } from '../../utils/ssn';
@@ -176,6 +177,13 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                         </Repeat>
                       )}
                     </>
+                  </Repeat>
+                  <Repeat>
+                    <div>Välj till</div>
+                    <ColumnRow>
+                      <ColumnRowItem>Item</ColumnRowItem>
+                      <ColumnRowItem>Item</ColumnRowItem>
+                    </ColumnRow>
                   </Repeat>
                 </DetailBox>
               </Repeat>

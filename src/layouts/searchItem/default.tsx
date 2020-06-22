@@ -152,14 +152,16 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   <PriceTable price={price} />
                 </ProductPageAsideSection>
 
-                <ProductPageAsideSection mobileOrder={4}>
-                  <>
-                    <Repeat small>
+                {(financialOptions?.length > 0 || insuranceOptions?.length > 0) && (
+                  <ProductPageAsideSection mobileOrder={4}>
+                    {financialOptions.length > 0 && (
                       <FinancialOptions id={id} financialOptions={financialOptions} />
+                    )}
+                    {insuranceOptions.length > 0 && (
                       <InsuranceOptions id={id} insuranceOptions={insuranceOptions} />
-                    </Repeat>
-                  </>
-                </ProductPageAsideSection>
+                    )}
+                  </ProductPageAsideSection>
+                )}
 
                 <ProductPageAsideSection mobileOrder={5}>
                   <Repeat>
@@ -211,11 +213,11 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                   </Repeat>
                 </ProductPageMainSection>
 
-                {contact && (
+                {description && (
                   <ProductPageMainSection>
                     <Blockquote
-                      author={contact.name}
-                      date="1 mars 2020"
+                      author={contact && contact.name ? contact.name : null}
+                      date="???"
                       avatar="https://placehold.it/40x40"
                     >
                       {!!description && <p>{description}</p>}
