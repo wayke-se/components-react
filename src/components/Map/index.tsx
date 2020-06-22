@@ -10,8 +10,9 @@ const StaticMap = ({ position }: StaticMapProps) => {
   const { googleMapsApiKey } = useSettings();
   const [visible, setVisible] = useState(false);
 
-  const onShowMap = useCallback(() => {
+  const onShowMap = useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (googleMapsApiKey) {
+      e.preventDefault();
       setVisible(true);
     }
   }, []);
@@ -40,14 +41,17 @@ const StaticMap = ({ position }: StaticMapProps) => {
     );
   }
   return (
-    <button
+    <a
+      href={`http://maps.google.com/maps?q=${latitude},${longitude}`}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
       style={{
         backgroundImage: `${location.protocol}//${location.hostname}/images/placeholders/staticmap.png`,
       }}
       onClick={onShowMap}
     >
       Visa karta
-    </button>
+    </a>
   );
 };
 
