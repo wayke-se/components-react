@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -30,7 +30,8 @@ module.exports = {
         WAYKE_SEARCH_URL: `"${process.env.WAYKE_SEARCH_URL}"`,
         WAYKE_SEARCH_X_API_KEY: `"${process.env.WAYKE_SEARCH_X_API_KEY}"`,
         WAYKE_GRAPH_QL_URL: `"${process.env.WAYKE_GRAPH_QL_URL}"`,
-        WAYKE_ECOM_URL: `"${process.env.WAYKE_ECOM_URL}"`
+        WAYKE_ECOM_URL: `"${process.env.WAYKE_ECOM_URL}"`,
+        GOOGLE_MAPS_API_KEY: `"${process.env.GOOGLE_MAPS_API_KEY}"`,
       },
     }),
     new ForkTsCheckerWebpackPlugin({

@@ -41,6 +41,15 @@ const SEARCH_ITEM_QUERY = gql`
           title
         }
       }
+      packageOptions {
+        description
+        image
+        link {
+          title
+          href
+        }
+        title
+      }
       branch {
         id
         description
@@ -84,6 +93,10 @@ const SEARCH_ITEM_QUERY = gql`
           }
         }
         location {
+          position {
+            latitude
+            longitude
+          }
           city
           county
           streetAddress

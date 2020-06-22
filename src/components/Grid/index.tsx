@@ -44,7 +44,7 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
                   title: document.gearboxType,
                 },
                 {
-                  title: 'Diesel(???)',
+                  title: document.fuelType,
                 },
               ]}
               price={`${numberSeparator(document.price)} kr`}

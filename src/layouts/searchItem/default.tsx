@@ -21,7 +21,7 @@ import {
   ProductPageAsideSection,
   ProductPageContentLimit,
 } from '../../components/ProductPage';
-import { H1, H2, VisualHeading } from '../../components/Heading';
+import { H1, H2 } from '../../components/Heading';
 import {
   ButtonPrimary,
   ButtonContent,
@@ -42,6 +42,7 @@ import FinancialOptions from '../../components/FinancialOptions';
 import InsuranceOptions from '../../components/InsuranceOptions';
 import Ecome from '../../components/Ecome';
 import ManufacturerPackageOption from '../../components/ManufacturerPackagesOption';
+import StaticMap from '../../components/Map/StaticMap';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
@@ -94,6 +95,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
     insuranceOptions,
     manufacturer,
     ecommerce,
+    packageOptions,
   } = result.vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = result.vehicle.data;
   const specificationList = getSpecificationList(data);
@@ -169,18 +171,16 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                           </>
                         </CheckMarkListItem>
                       )}
-                      <CheckMarkListItem>
-                        <>
-                          Inkl. <ButtonInline>Bilia Total</ButtonInline>
-                        </>
-                      </CheckMarkListItem>
-                      <CheckMarkListItem>
-                        <>
-                          Inkl. <ButtonInline>Bilia MaxiTrygg</ButtonInline>-garanti
-                        </>
-                      </CheckMarkListItem>
-                      <CheckMarkListItem>Gratis hemleverans</CheckMarkListItem>
-                      <CheckMarkListItem>Vinterhjul inkluderade</CheckMarkListItem>
+                      {packageOptions?.map((packageOption, index) => (
+                        <CheckMarkListItem key={packageOption.title || index}>
+                          <>
+                            Inkl. <ButtonInline>{packageOption.title}</ButtonInline>
+                          </>
+                        </CheckMarkListItem>
+                      ))}
+                      {ecommerce?.withHomeDelivery && (
+                        <CheckMarkListItem>Gratis hemleverans</CheckMarkListItem>
+                      )}
                     </CheckMarkList>
                   </Repeat>
                   {ecommerce && ecommerce.enabled && (
@@ -241,18 +241,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     >{`Den här bilen finns på vår anläggning i ${branch?.location?.city}`}</H2>
                   </Repeat>
                   <Repeat>
-                    <div
-                      style={{
-                        height: '200px',
-                        backgroundColor: '#f0f0f0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#717171',
-                      }}
-                    >
-                      <div>Karta</div>
-                    </div>
+                    <StaticMap position={branch?.location?.position} />
                   </Repeat>
                   <Repeat>
                     <ProductPageContentLimit>
@@ -285,6 +274,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
 
                 <ManufacturerPackageOption packageOption={manufacturer?.packageOption} />
 
+                {/*
                 <ProductPageMainSection>
                   <Repeat>
                     <H2 noMargin>Begagnatgaranti</H2>
@@ -316,6 +306,7 @@ const DefaultSerchItemLayout = ({ id }: DefaultSerchItemLayoutProps) => {
                     <LogoBox logo="https://placehold.it/145x19" alt="Logotyp" wide />
                   </Repeat>
                 </ProductPageMainSection>
+                */}
 
                 {/*
                 <ProductPageMainSection>

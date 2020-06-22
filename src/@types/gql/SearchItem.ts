@@ -37,6 +37,20 @@ export interface SearchItem_vehicle_manufacturer {
   packageOption: SearchItem_vehicle_manufacturer_packageOption | null;
 }
 
+export interface SearchItem_vehicle_packageOptions_link {
+  __typename: 'Link';
+  title: string | null;
+  href: string | null;
+}
+
+export interface SearchItem_vehicle_packageOptions {
+  __typename: 'PackageOption';
+  description: string | null;
+  image: string | null;
+  link: SearchItem_vehicle_packageOptions_link | null;
+  title: string | null;
+}
+
 export interface SearchItem_vehicle_branch_flags {
   __typename: 'BranchFlags';
   mrf: boolean | null;
@@ -113,8 +127,15 @@ export interface SearchItem_vehicle_branch_organization {
   parent: SearchItem_vehicle_branch_organization_parent | null;
 }
 
+export interface SearchItem_vehicle_branch_location_position {
+  __typename: 'Position';
+  latitude: number | null;
+  longitude: number | null;
+}
+
 export interface SearchItem_vehicle_branch_location {
   __typename: 'Location';
+  position: SearchItem_vehicle_branch_location_position | null;
   city: string | null;
   county: string | null;
   streetAddress: string | null;
@@ -284,6 +305,7 @@ export interface SearchItem_vehicle {
   id: string;
   contact: SearchItem_vehicle_contact | null;
   manufacturer: SearchItem_vehicle_manufacturer | null;
+  packageOptions: SearchItem_vehicle_packageOptions[];
   branch: SearchItem_vehicle_branch | null;
   data: SearchItem_vehicle_data;
   description: string | null;

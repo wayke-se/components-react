@@ -10,7 +10,7 @@
     "clean": "rimraf ./dist ./pkg ./coverage",
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
-    "prepare": "npm run prettify && npm run type-check && npm run lint && npm run test",
+    "prepare": "npm run prettify && npm run type-check && npm run lint",
     "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/queries/**/* --endpoint https://gql.wayketech.se/query --target typescript --tagName gql --outputFlat src/@types/gql"
   },
   "author": "Peter Johansson",
@@ -28,6 +28,7 @@
     "@pika/plugin-build-types": "^0.9.2",
     "@pika/plugin-build-web": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
+    "@types/googlemaps": "^3.39.7",
     "@types/marked": "^1.1.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.8",

@@ -74,6 +74,7 @@ export interface Document {
   mileage: number;
   modelSeries: string;
   modelYear: number;
+  fuelType: string;
   price: number;
   registrationNumber: string;
   salesName: string;
