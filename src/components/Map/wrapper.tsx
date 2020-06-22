@@ -15,7 +15,7 @@ export const Placeholder = styled.a`
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 43.75%;
+  padding-bottom: 43.75%; // Proportions of Google Static Map (640x280)
   background-image: linear-gradient(-15deg, #dfe4ce, #c1d6ea, #dfe4ce);
   border-radius: 3px;
 `;
