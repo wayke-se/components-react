@@ -183,7 +183,7 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                     <Blockquote
                       author={contact && contact.name ? contact.name : null}
                       date="???"
-                      avatar={contact?.avatarUrl || 'https://placehold.it/40x40'}
+                      avatar={contact?.avatar || 'https://placehold.it/40x40'}
                     >
                       {!!description && <p>{description}</p>}
                     </Blockquote>

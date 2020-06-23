@@ -46,6 +46,7 @@ module.exports = {
       },
     ],
   },
+  ignorePatterns: ['src/@types/codegen/*'],
   extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
   settings: {
     react: {

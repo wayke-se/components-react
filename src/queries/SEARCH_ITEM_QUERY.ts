@@ -26,7 +26,7 @@ const SEARCH_ITEM_QUERY = gql`
         name
         email
         phonenumber
-        avatarUrl
+        avatar
       }
       manufacturer {
         description
@@ -37,7 +37,7 @@ const SEARCH_ITEM_QUERY = gql`
           image
           link {
             title
-            href
+            url
           }
           title
         }
@@ -47,7 +47,7 @@ const SEARCH_ITEM_QUERY = gql`
         image
         link {
           title
-          href
+          url
         }
         title
       }
@@ -161,7 +161,7 @@ const SEARCH_ITEM_QUERY = gql`
         interest
         link {
           title
-          href
+          url
         }
         loanAmount
         logotype

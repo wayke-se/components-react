@@ -7,6 +7,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
+  Email: any;
+  PersonalNumber: any;
+  PhoneNumber: any;
+  Time: any;
+  URL: any;
   VehicleDataPropertyMap: { [key: string]: string | number | boolean };
 };
 
@@ -16,8 +22,8 @@ export type Branch = {
   description?: Maybe<Scalars['String']>;
   flags?: Maybe<BranchFlags>;
   name?: Maybe<Scalars['String']>;
-  homepage?: Maybe<Scalars['String']>;
-  logotype?: Maybe<Scalars['String']>;
+  homepage?: Maybe<Scalars['URL']>;
+  logotype?: Maybe<Scalars['URL']>;
   openingHours?: Maybe<OpeningHours>;
   organization?: Maybe<Organization>;
   location?: Maybe<Location>;
@@ -35,17 +41,18 @@ export type BranchFlags = {
 export type ContactOptions = {
   __typename?: 'ContactOptions';
   name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  phonenumber?: Maybe<Scalars['String']>;
-  avatarUrl?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['Email']>;
+  phonenumber?: Maybe<Scalars['PhoneNumber']>;
+  avatar?: Maybe<Scalars['URL']>;
 };
+
 
 export enum DrivingDistance {
   Between0And1000 = 'BETWEEN0AND1000',
   Between1000And1500 = 'BETWEEN1000AND1500',
   Between1500And2000 = 'BETWEEN1500AND2000',
   Between2000And2500 = 'BETWEEN2000AND2500',
-  Over2500 = 'OVER2500',
+  Over2500 = 'OVER2500'
 }
 
 export type Ecommerce = {
@@ -56,6 +63,7 @@ export type Ecommerce = {
   withHomeDelivery?: Maybe<Scalars['Boolean']>;
 };
 
+
 export type FinancialOption = {
   __typename?: 'FinancialOption';
   administrationFee?: Maybe<Scalars['Float']>;
@@ -64,22 +72,22 @@ export type FinancialOption = {
   duration?: Maybe<FinancialOptionDetail>;
   effectiveInterest?: Maybe<Scalars['Float']>;
   identifier?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['URL']>;
   includes: Array<FinancialOptionInclusion>;
   interest?: Maybe<Scalars['Float']>;
   link?: Maybe<Link>;
   loanAmount?: Maybe<Scalars['Float']>;
-  logotype?: Maybe<Scalars['String']>;
+  logotype?: Maybe<Scalars['URL']>;
   mileage?: Maybe<FinancialOptionDetail>;
   monthlyCost?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   residual?: Maybe<FinancialOptionDetail>;
   setupFee?: Maybe<Scalars['Float']>;
-  terms?: Maybe<Scalars['String']>;
+  terms?: Maybe<Scalars['URL']>;
   totalCreditCost?: Maybe<Scalars['Float']>;
   totalResidualValue?: Maybe<Scalars['Float']>;
   type: Scalars['String'];
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['URL']>;
 };
 
 export type FinancialOptionDetail = {
@@ -94,13 +102,13 @@ export type FinancialOptionDetail = {
 export enum FinancialOptionInclusion {
   IncludesInsurance = 'INCLUDES_INSURANCE',
   IncludesService = 'INCLUDES_SERVICE',
-  IncludesWintertires = 'INCLUDES_WINTERTIRES',
+  IncludesWintertires = 'INCLUDES_WINTERTIRES'
 }
 
 export type HoursOpen = {
   __typename?: 'HoursOpen';
-  from: Scalars['String'];
-  until: Scalars['String'];
+  from?: Maybe<Scalars['Time']>;
+  until?: Maybe<Scalars['Time']>;
 };
 
 export type Insurance = {
@@ -109,17 +117,17 @@ export type Insurance = {
   price: Scalars['Float'];
   unit: Scalars['String'];
   description: Scalars['String'];
-  logotype?: Maybe<Scalars['String']>;
+  logotype?: Maybe<Scalars['URL']>;
   addons: Array<InsuranceAddon>;
   items: Array<InsuranceItem>;
   legality?: Maybe<InsuranceLegality>;
-  terms?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  terms?: Maybe<Scalars['URL']>;
+  url?: Maybe<Scalars['URL']>;
 };
 
 export type InsuranceAddon = {
   __typename?: 'InsuranceAddon';
-  id: Scalars['String'];
+  id: Scalars['ID'];
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   price: Scalars['Float'];
@@ -136,22 +144,22 @@ export type InsuranceItem = {
 export type InsuranceLegality = {
   __typename?: 'InsuranceLegality';
   description?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['URL']>;
 };
 
 export type InsuranceOption = {
   __typename?: 'InsuranceOption';
   description?: Maybe<Scalars['String']>;
-  logotype?: Maybe<Scalars['String']>;
+  logotype?: Maybe<Scalars['URL']>;
   name?: Maybe<Scalars['String']>;
-  terms?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  terms?: Maybe<Scalars['URL']>;
+  url?: Maybe<Scalars['URL']>;
 };
 
 export type Link = {
   __typename?: 'Link';
   title?: Maybe<Scalars['String']>;
-  href?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['URL']>;
 };
 
 export type Location = {
@@ -166,7 +174,7 @@ export type Location = {
 export type Manufacturer = {
   __typename?: 'Manufacturer';
   description?: Maybe<Scalars['String']>;
-  logotype?: Maybe<Scalars['String']>;
+  logotype?: Maybe<Scalars['URL']>;
   name: Scalars['String'];
   packageOption?: Maybe<PackageOption>;
 };
@@ -180,13 +188,13 @@ export type Media = {
 export type MediaFile = {
   __typename?: 'MediaFile';
   formats: Array<Maybe<MediaFileFormat>>;
-  url: Scalars['String'];
+  url: Scalars['URL'];
 };
 
 export type MediaFileFormat = {
   __typename?: 'MediaFileFormat';
   format: Scalars['String'];
-  url: Scalars['String'];
+  url: Scalars['URL'];
 };
 
 export type OpeningHours = {
@@ -209,10 +217,12 @@ export type Organization = {
 export type PackageOption = {
   __typename?: 'PackageOption';
   description?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['URL']>;
   link?: Maybe<Link>;
   title?: Maybe<Scalars['String']>;
 };
+
+
 
 export type Position = {
   __typename?: 'Position';
@@ -223,7 +233,7 @@ export type Position = {
 export type Promo = {
   __typename?: 'Promo';
   description?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['URL']>;
   link?: Maybe<Link>;
   title?: Maybe<Scalars['String']>;
 };
@@ -235,9 +245,11 @@ export type Query = {
   insurances: Array<Insurance>;
 };
 
+
 export type QueryVehicleArgs = {
   id: Scalars['ID'];
 };
+
 
 export type QueryLoanArgs = {
   id: Scalars['ID'];
@@ -246,9 +258,10 @@ export type QueryLoanArgs = {
   residual: Scalars['Float'];
 };
 
+
 export type QueryInsurancesArgs = {
   id: Scalars['ID'];
-  personalNumber: Scalars['String'];
+  personalNumber: Scalars['PersonalNumber'];
   drivingDistance: DrivingDistance;
 };
 
@@ -257,7 +270,7 @@ export type SafetyOption = {
   content?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['URL']>;
 };
 
 export type Service = {
@@ -265,6 +278,8 @@ export type Service = {
   markdown?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
+
+
 
 export type Vehicle = {
   __typename?: 'Vehicle';
@@ -278,7 +293,7 @@ export type Vehicle = {
   financialOptions: Array<FinancialOption>;
   flags?: Maybe<VehicleFlags>;
   insuranceOptions: Array<InsuranceOption>;
-  itemPublished: Scalars['String'];
+  publishedAt?: Maybe<Scalars['DateTime']>;
   manufacturer?: Maybe<Manufacturer>;
   media: Array<Media>;
   location?: Maybe<Location>;
@@ -308,6 +323,7 @@ export type VehicleData = {
   salesName?: Maybe<Scalars['String']>;
   vin?: Maybe<Scalars['String']>;
 };
+
 
 export type VehicleFlags = {
   __typename?: 'VehicleFlags';
