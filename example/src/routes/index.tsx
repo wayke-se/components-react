@@ -5,19 +5,10 @@ import BaseLayout from '../../../src';
 
 const NotFound = lazy(() => import('./NotFound/index'));
 
-const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('query', 't roc');
-
 const Routes = () => (
   <Suspense fallback="Loading...">
     <Switch>
-      <Route
-        path="/"
-        exact
-        component={(props: any) => (
-          <BaseLayout {...props} initialQueryParams={initialQueryParams} />
-        )}
-      />
+      <Route path="/" exact component={(props: any) => <BaseLayout {...props} />} />
       <Route component={NotFound} />
     </Switch>
   </Suspense>
