@@ -5,7 +5,7 @@ interface ToggleItemProps {
   title: string;
   value: string;
   icon: React.ReactNode;
-  type: string;
+  type: 'tel' | 'mailto';
 }
 
 const ToggleItem = ({ title, value, icon, type }: ToggleItemProps) => {
