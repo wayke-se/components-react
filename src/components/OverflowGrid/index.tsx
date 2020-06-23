@@ -55,13 +55,16 @@ export const OverflowGridList = styled.ul`
 export const OverflowGridItem = styled.li`
   flex: 1 0 auto;
   width: calc(100% - ${size(2)});
+  max-width: calc(100% - ${size(2)});
   padding: ${size(1)};
 
   ${(props) => props.theme.breakpoint.Sm} {
     width: calc(50% - ${size(3)});
+    max-width: calc(50% - ${size(3)});
   }
 
   ${(props) => props.theme.breakpoint.Md} {
-    width: 25%;
+    width: 33.333%;
+    max-width: 33.333%;
   }
 `;

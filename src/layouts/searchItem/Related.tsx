@@ -21,6 +21,10 @@ interface RelatedProps {
 const Related = ({ vehicle, onClickSearchItem }: RelatedProps) => {
   const { loading, response } = useRelatedSearch(vehicle.data.modelYear, vehicle.data.modelSeries);
 
+  if (response?.documentList.documents.length === 0) {
+    return null;
+  }
+
   if (loading) {
     return <Spinner />;
   }
