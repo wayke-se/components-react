@@ -59,6 +59,15 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
 
   const onShowInsurances = useCallback(() => setPayload(form), [form]);
 
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.keyCode === 13) {
+        onShowInsurances();
+      }
+    },
+    [form]
+  );
+
   const options: OptionProps[] = [
     { value: DrivingDistance.Between0And1000, displayName: '0 - 1000' },
     { value: DrivingDistance.Between1000And1500, displayName: '1000 - 1500' },
@@ -102,6 +111,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                 label="Personnummer"
                 value={form.ssn}
                 onChange={onChangeSsn}
+                onKeyDown={onKeyDown}
                 id="input-insurance-personalnumber"
               />
             </InputGroupColumn>

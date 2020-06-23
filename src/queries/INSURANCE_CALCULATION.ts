@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost';
 const INSURANCE_CALCULATION = gql`
   query InsuranceCalculation(
     $id: ID!
-    $personalNumber: String!
+    $personalNumber: PersonalNumber!
     $drivingDistance: DrivingDistance!
   ) {
     insurances(id: $id, personalNumber: $personalNumber, drivingDistance: $drivingDistance) {
