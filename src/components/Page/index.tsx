@@ -19,23 +19,20 @@ type PageSectionProps = React.DetailedHTMLProps<
 };
 
 export const PageSection = styled.section<PageSectionProps>`
-  & + & {
-    margin-top: ${size(4)};
-  }
+  margin-bottom: ${size(4)};
 
   ${({ accent }: { accent?: boolean }) =>
     accent &&
     css`
       padding: ${size(4)} 0;
       background-color: ${(props) => props.theme.color.accent};
+      margin-bottom: 0;
     `}
 
   ${({ large }: { large?: boolean }) =>
     large &&
     css`
-      & + & {
-        margin-top: ${size(8)};
-      }
+      margin-bottom: ${size(8)};
     `}
 
   ${({ accent, large }) =>
@@ -43,6 +40,7 @@ export const PageSection = styled.section<PageSectionProps>`
     large &&
     css`
       padding: ${size(8)} 0;
+      margin-bottom: 0;
     `}
 
   ${({ fillSpace }: { fillSpace?: boolean }) =>
