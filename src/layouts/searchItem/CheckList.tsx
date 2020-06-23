@@ -45,18 +45,23 @@ const CheckList = ({ vehicle, toggleEcomModal }: CheckList) => {
               <LogoBox logo={modal.image} alt={modal.title || undefined} wide />
             </Repeat>
           )}
-          <Repeat>
-            <Content>
-              {modal.description && (
-                <div dangerouslySetInnerHTML={{ __html: marked(modal.description) }} />
-              )}
-              {modal.link?.href && modal.link.title && (
-                <a href={modal.link.href} target="_blank" rel="noopener noreferrer nofollow">
-                  {modal.link.title}
-                </a>
-              )}
-            </Content>
-          </Repeat>
+          {modal.description && (
+            <Repeat>
+              <Content dangerouslySetInnerHTML={{ __html: marked(modal.description) }} />
+            </Repeat>
+          )}
+          {modal.link?.href && modal.link.title && (
+            <Repeat>
+              <ButtonInline
+                as="a"
+                href={modal.link.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+              >
+                {modal.link.title}
+              </ButtonInline>
+            </Repeat>
+          )}
         </Modal>
       )}
       <Repeat>

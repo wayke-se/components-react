@@ -4,7 +4,8 @@ import marked from 'marked';
 import Repeat from '../../components/Repeat';
 import { ProductPageMainSection } from '../../components/ProductPage';
 import Content from '../../components/Content';
-import { H2, VisualHeading } from '../../components/Heading';
+import { H2 } from '../../components/Heading';
+import { ButtonInline } from '../../components/Button';
 import LogoBox from '../../components/LogoBox';
 import { SearchItem_vehicle_manufacturer_packageOption } from '../../@types/gql/SearchItem';
 
@@ -20,20 +21,24 @@ const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption)
   return (
     <ProductPageMainSection>
       <Repeat>
-        <H2 noMargin>Begagnatgaranti</H2>
+        <H2 noMargin>{packageOption.title}</H2>
       </Repeat>
-      <Repeat>
-        <Content>
-          <VisualHeading>{packageOption.title}</VisualHeading>
-          {packageOption.description && (
-            <div dangerouslySetInnerHTML={{ __html: marked(packageOption.description) }} />
-          )}
-        </Content>
-      </Repeat>
+      {packageOption.description && (
+        <Repeat>
+          <Content dangerouslySetInnerHTML={{ __html: marked(packageOption.description) }} />
+        </Repeat>
+      )}
       {packageOption.link?.href && (
-        <a href={packageOption.link.href} target="_blank" rel="noopener noreferrer">
-          {packageOption.link.title}
-        </a>
+        <Repeat>
+          <ButtonInline
+            as="a"
+            href={packageOption.link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {packageOption.link.title}
+          </ButtonInline>
+        </Repeat>
       )}
       {packageOption.image && (
         <Repeat>
