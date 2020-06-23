@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Checklist from '../Checklist';
-import OverflowBox from '../OverflowBox';
+import Checklist from '../Checklist/index';
+import OverflowBox from '../OverflowBox/index';
 import { Facet, FacetFilter } from '../../@types/search';
 import useSearch from '../../hooks/useSearch';
 

@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { Wrapper, Search, Action, ActionBtn, Input, Icon } from './wrapper';
-import { IconSearch } from '../Icon';
+import { IconSearch } from '../Icon/index';
 
 type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
-
-type OmitInputProps = Omit<InputProps, 'type' | 'className' | 'ref'>;
 
 type Props = InputProps & {
   placeholder: string;
@@ -18,7 +16,7 @@ type Props = InputProps & {
   onSearch: () => void;
 };
 
-const InputSearch = ({ placeholder, label, value, id, onSearch, ...props }: Props) => (
+const InputSearch = ({ placeholder, label, value, id, onSearch, onChange, onKeyDown }: Props) => (
   <Wrapper>
     <Search>
       <Icon htmlFor={id}>
@@ -30,7 +28,8 @@ const InputSearch = ({ placeholder, label, value, id, onSearch, ...props }: Prop
         value={value}
         id={id}
         aria-label={label}
-        {...(props as OmitInputProps)}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
       />
     </Search>
     <Action>

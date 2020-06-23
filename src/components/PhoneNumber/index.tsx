@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
-import { TableColumnRow, TableColumnCell } from '../TableColumn';
-import { ButtonContent, ButtonInlineBold } from '../Button';
+import { TableColumnRow, TableColumnCell } from '../TableColumn/index';
+import { ButtonContent, ButtonInlineBold } from '../Button/index';
 
 interface PhoneNumberProps {
   phoneNumber: string;

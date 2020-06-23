@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, Header, Title, Info, InfoBtn, Extend } from './wrapper';
-import { IconInfo } from '../Icon';
+import { IconInfo } from '../Icon/index';
 
 interface Props {
   title: string;

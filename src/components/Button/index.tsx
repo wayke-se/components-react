@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 
 import { size } from '../../layout/helpers';
-import { UtilityTextRight } from '../Utility';
+import { UtilityTextRight } from '../Utility/index';
 
 export const ButtonReset = styled.button`
   display: inline-block;

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 
-import Container from '../../components/Container';
-import { Page, PageSection } from '../../components/Page';
-import Result from '../../components/Result';
-import Filter from '../../components/Filter';
-import Grid from '../../components/Grid';
-import SearchTerm from '../../components/SearchTerm';
-import { PortalNamespace } from '../../components/Portal';
+import Container from '../../components/Container/index';
+import { Page, PageSection } from '../../components/Page/index';
+import Result from '../../components/Result/index';
+import Filter from '../../components/Filter/index';
+import Grid from '../../components/Grid/index';
+import SearchTerm from '../../components/SearchTerm/index';
+import { PortalNamespace } from '../../components/Portal/index';
 import PortalElement from '../../components/Portal/portal-element';
-import SearchFilter from '../../components/SearchFilter';
-import Snackbar from '../../components/Snackbar';
+import SearchFilter from '../../components/SearchFilter/index';
+import Snackbar from '../../components/Snackbar/index';
 import useSearch from '../../hooks/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 

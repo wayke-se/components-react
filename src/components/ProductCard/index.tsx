@@ -15,7 +15,7 @@ import {
   CurrentPrice,
   OldPrice,
 } from './wrapper';
-import UspList, { ItemProps } from '../UspList';
+import UspList, { ItemProps } from '../UspList/index';
 
 interface Props {
   id: string;

@@ -11,7 +11,7 @@ import {
   Icon,
   Body,
 } from './wrapper';
-import { IconChevronDown } from '../Icon';
+import { IconChevronDown } from '../Icon/index';
 
 export interface IAccordionItem {
   heading: string;

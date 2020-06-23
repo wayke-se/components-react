@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { size } from '../../layout/helpers';
-import { H2 } from '../Heading';
+import { H2 } from '../Heading/index';
 
 export const Wrapper = styled.article`
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);

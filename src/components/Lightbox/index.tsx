@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
-import { IconCancel } from '../Icon';
+import { IconCancel } from '../Icon/index';
 import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
 import SphereLightbox from '../Sphere/SphereLightbox';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';

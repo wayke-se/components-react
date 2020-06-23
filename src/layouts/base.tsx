@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import DefaultSearchLayout from './search';
-import DefaultSearchItemLayout from './searchItem';
+import DefaultSearchLayout from './search/index';
+import DefaultSearchItemLayout from './searchItem/index';
 import useHashGuid from '../hooks/useHashGuid';
 import { SearchFilterTypes } from '../@types/filter';
 

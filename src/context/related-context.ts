@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { Search } from '../@types/search';
 
-interface RelatedSearchContextProps {
+export interface RelatedSearchContextProps {
   loading: boolean;
   response?: Search;
   error: boolean;

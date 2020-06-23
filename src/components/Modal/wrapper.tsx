@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { size } from '../../layout/helpers';
 import { fadeIn, noTransform } from '../../layout/keyframes';
 
-import { ButtonReset } from '../Button';
-import { H1 } from '../Heading';
+import { ButtonReset } from '../Button/index';
+import { H1 } from '../Heading/index';
 
 export const Wrapper = styled.div`
   position: fixed;

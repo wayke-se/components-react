@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List, Item, Action, ActionIcon, ActionLabel } from './wrapper';
-import { IconCheck, IconRadio } from '../Icon';
+import { IconCheck, IconRadio } from '../Icon/index';
 
 export interface IChecklistItem {
   label: string;

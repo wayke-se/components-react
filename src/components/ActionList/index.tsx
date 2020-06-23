@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { List } from './wrapper';
-import { IconPhone, IconMail } from '../Icon';
+import { IconPhone, IconMail } from '../Icon/index';
 import ToggleItem from './toggle-item';
 import { Maybe, ContactOptions } from '../../@types/codegen/types';
 

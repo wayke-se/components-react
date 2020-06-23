@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import useSettings from '../../hooks/useSettings';
 
 import { Wrapper, Image, Placeholder, PlaceholderAction } from './wrapper';
-import { ButtonSecondary, ButtonContent } from '../Button';
+import { ButtonSecondary, ButtonContent } from '../Button/index';
 import { Position, Maybe } from '../../@types/codegen/types';
 
 interface StaticMapProps {

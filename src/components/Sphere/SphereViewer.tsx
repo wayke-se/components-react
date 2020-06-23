@@ -1,7 +1,7 @@
 import React, { lazy, useState, useEffect } from 'react';
 
 import { Wrapper } from './wrapper';
-import Loader from '../Loader';
+import Loader from '../Loader/index';
 
 const ReactPannellum = lazy(() => import('react-pannellum'));
 

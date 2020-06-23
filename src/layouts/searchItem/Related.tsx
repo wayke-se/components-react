@@ -1,13 +1,17 @@
 import React from 'react';
 
-import Container from '../../components/Container';
-import Repeat from '../../components/Repeat';
+import Container from '../../components/Container/index';
+import Repeat from '../../components/Repeat/index';
 
-import { PageSection } from '../../components/Page';
-import SectionHeader from '../../components/SectionHeader';
-import { OverflowGridList, OverflowGrid, OverflowGridItem } from '../../components/OverflowGrid';
-import ProductCard from '../../components/ProductCard';
-import { H2 } from '../../components/Heading';
+import { PageSection } from '../../components/Page/index';
+import SectionHeader from '../../components/SectionHeader/index';
+import {
+  OverflowGridList,
+  OverflowGrid,
+  OverflowGridItem,
+} from '../../components/OverflowGrid/index';
+import ProductCard from '../../components/ProductCard/index';
+import { H2 } from '../../components/Heading/index';
 import useRelatedSearch from '../../hooks/useRelatedSearch';
 import { Spinner } from '../../components/Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';

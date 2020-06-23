@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import { List, Item, Action, Label, Indicator, IndicatorValue } from './wrapper';
 import { Facet } from '../../@types/search';
-import FilterPanel from '../FilterPanel';
+import FilterPanel from '../FilterPanel/index';
 import { FacetIdToTitle } from '../../utils/formats';
 import { PRICE, MILEAGE, MODEL_YEAR } from '../../utils/constants';
 import useSearch from '../../hooks/useSearch';

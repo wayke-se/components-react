@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import Repeat from '../Repeat';
-import { VisualHeading } from '../Heading';
-import OptionBox from '../OptionBox';
+import Repeat from '../Repeat/index';
+import { VisualHeading } from '../Heading/index';
+import OptionBox from '../OptionBox/index';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { ButtonInline } from '../Button';
+import { ButtonInline } from '../Button/index';
 import InsuranceOptionModal from './InsuranceOptionModal';
 import { InsuranceOption } from '../../@types/codegen/types';
 

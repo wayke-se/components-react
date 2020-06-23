@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { Facet, Document, Search } from '../@types/search';
 import { QueryFilter } from '../@types/queryFilter';
 
-interface SearchContextProps {
+export interface SearchContextProps {
   loading: boolean;
   response?: Search;
   error: boolean;

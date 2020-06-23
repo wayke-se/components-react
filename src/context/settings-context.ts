@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface SettingsContextProps {
+export interface SettingsContextProps {
   googleMapsApiKey?: string;
   ecomSettings?: {
     useBankId?: boolean;

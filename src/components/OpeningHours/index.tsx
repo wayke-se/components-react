@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import Repeat from '../Repeat';
-import Badge from '../Badge';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn';
-import { UtilityTextBold } from '../Utility';
+import Repeat from '../Repeat/index';
+import Badge from '../Badge/index';
+import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn/index';
+import { UtilityTextBold } from '../Utility/index';
 
 import { OpeningHours, Maybe } from '../../@types/codegen/types';
 

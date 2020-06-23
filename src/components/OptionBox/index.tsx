@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Logo, Content, Wrapper } from './wrapper';
-import LogoBox from '../LogoBox';
+import LogoBox from '../LogoBox/index';
 
 interface IOptionBox {
   logo?: string;

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import useThumbnail from './useThumbnail';
 import { ImageFull } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
-import Modal from '../Modal';
+import Modal from '../Modal/index';
 import VideoPlayer from './EmbeddedVideoLightbox';
 
 interface GalleryEmbed {

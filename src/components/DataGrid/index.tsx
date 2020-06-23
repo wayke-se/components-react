@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 
 import { List, Item, Label, Heading, Info, Value } from './wrapper';
-import { IconInfo } from '../Icon';
+import { IconInfo } from '../Icon/index';
 import { ItemPropertyType, ItemPropertModalType } from '../../utils/specification';
-import Modal from '../Modal';
-import Content from '../Content';
+import Modal from '../Modal/index';
+import Content from '../Content/index';
 
 export interface Props {
   specificationList: ItemPropertyType[];

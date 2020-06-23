@@ -1,12 +1,12 @@
 import React from 'react';
 import marked from 'marked';
 
-import Repeat from '../../components/Repeat';
-import { ProductPageMainSection } from '../../components/ProductPage';
-import Content from '../../components/Content';
-import { H2 } from '../../components/Heading';
-import { ButtonInline } from '../../components/Button';
-import LogoBox from '../../components/LogoBox';
+import Repeat from '../../components/Repeat/index';
+import { ProductPageMainSection } from '../../components/ProductPage/index';
+import Content from '../../components/Content/index';
+import { H2 } from '../../components/Heading/index';
+import { ButtonInline } from '../../components/Button/index';
+import LogoBox from '../../components/LogoBox/index';
 import { Maybe, PackageOption } from '../../@types/codegen/types';
 
 interface ManufacturerPackageOption {

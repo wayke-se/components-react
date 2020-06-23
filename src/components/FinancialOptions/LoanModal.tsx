@@ -1,17 +1,17 @@
 import React, { useState, useCallback } from 'react';
 
 import useLoanCalculation from '../../hooks/useLoan';
-import Modal from '../Modal';
+import Modal from '../Modal/index';
 import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
-import Content from '../Content';
-import LogoBox from '../LogoBox';
-import Repeat from '../Repeat';
+import Content from '../Content/index';
+import LogoBox from '../LogoBox/index';
+import Repeat from '../Repeat/index';
 import RangeSliderSimple from '../RangeSlider/RangeSliderSimple';
-import RangeSliderLabel from '../RangeSliderLabel';
+import RangeSliderLabel from '../RangeSliderLabel/index';
 import { numberSeparator } from '../../utils/formats';
-import { ButtonClear, ButtonContent } from '../Button';
-import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
-import DataList from '../DataList';
+import { ButtonClear, ButtonContent } from '../Button/index';
+import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/index';
+import DataList from '../DataList/index';
 import { FinancialOption } from '../../@types/codegen/types';
 
 const stepGenerator = (

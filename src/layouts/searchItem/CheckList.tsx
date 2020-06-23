@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import marked from 'marked';
 
-import Repeat from '../../components/Repeat';
-import ActionList from '../../components/ActionList';
-import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button';
-import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
-import Modal from '../../components/Modal';
-import Content from '../../components/Content';
-import LogoBox from '../../components/LogoBox';
+import Repeat from '../../components/Repeat/index';
+import ActionList from '../../components/ActionList/index';
+import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button/index';
+import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList/index';
+import Modal from '../../components/Modal/index';
+import Content from '../../components/Content/index';
+import LogoBox from '../../components/LogoBox/index';
 import { Vehicle } from '../../@types/codegen/types';
 
 interface ModelLink {

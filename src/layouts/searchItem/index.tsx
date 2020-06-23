@@ -1,17 +1,17 @@
 import React, { useMemo, useState, useCallback } from 'react';
 
-import Container from '../../components/Container';
-import UspList from '../../components/UspList';
-import Repeat from '../../components/Repeat';
-import DataGrid from '../../components/DataGrid';
-import PriceTable from '../../components/PriceTable';
-import LogoBox from '../../components/LogoBox';
-import Content from '../../components/Content';
-import Blockquote from '../../components/Blockquote';
-import ExtendContent from '../../components/ExtendContent';
-import Gallery from '../../components/Gallery';
-import Loader from '../../components/Loader';
-import { Page, PageSection } from '../../components/Page';
+import Container from '../../components/Container/index';
+import UspList from '../../components/UspList/index';
+import Repeat from '../../components/Repeat/index';
+import DataGrid from '../../components/DataGrid/index';
+import PriceTable from '../../components/PriceTable/index';
+import LogoBox from '../../components/LogoBox/index';
+import Content from '../../components/Content/index';
+import Blockquote from '../../components/Blockquote/index';
+import ExtendContent from '../../components/ExtendContent/index';
+import Gallery from '../../components/Gallery/index';
+import Loader from '../../components/Loader/index';
+import { Page, PageSection } from '../../components/Page/index';
 import {
   ProductPage,
   ProductPageMainSection,
@@ -19,23 +19,23 @@ import {
   ProductPageMain,
   ProductPageAsideSection,
   ProductPageContentLimit,
-} from '../../components/ProductPage';
-import { H1, H2 } from '../../components/Heading';
-import { ButtonPrimary, ButtonContent, ButtonInlineBold } from '../../components/Button';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
+} from '../../components/ProductPage/index';
+import { H1, H2 } from '../../components/Heading/index';
+import { ButtonPrimary, ButtonContent, ButtonInlineBold } from '../../components/Button/index';
+import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
-import { PortalNamespace } from '../../components/Portal';
+import { PortalNamespace } from '../../components/Portal/index';
 import PortalElement from '../../components/Portal/portal-element';
-import Modal from '../../components/Modal';
+import Modal from '../../components/Modal/index';
 import { getSpecificationList } from '../../utils/specification';
-import OpeningHours from '../../components/OpeningHours';
-import PhoneNumber from '../../components/PhoneNumber';
-import FinancialOptions from '../../components/FinancialOptions';
-import InsuranceOptions from '../../components/InsuranceOptions';
-import Ecome from '../../components/Ecome';
+import OpeningHours from '../../components/OpeningHours/index';
+import PhoneNumber from '../../components/PhoneNumber/index';
+import FinancialOptions from '../../components/FinancialOptions/index';
+import InsuranceOptions from '../../components/InsuranceOptions/index';
+import Ecome from '../../components/Ecome/index';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
-import Map from '../../components/Map';
+import Map from '../../components/Map/index';
 import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';

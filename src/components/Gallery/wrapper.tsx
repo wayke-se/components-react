@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { size } from '../../layout/helpers';
-import { ButtonReset } from '../Button';
+import { ButtonReset } from '../Button/index';
 import { Wrapper as Container } from '../Container/wrapper';
 
 const quickNavWidth = 83; // 75px + 8px

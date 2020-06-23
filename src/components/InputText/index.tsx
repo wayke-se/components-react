@@ -6,6 +6,7 @@ type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {
+  value: string;
   placeholder: string;
   label: string;
 };

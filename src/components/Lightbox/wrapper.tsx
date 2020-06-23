@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { size } from '../../layout/helpers';
-import { ButtonReset } from '../Button';
+import { ButtonReset } from '../Button/index';
 
 export const Wrapper = styled.div`
   position: fixed;

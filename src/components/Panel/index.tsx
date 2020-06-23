@@ -11,9 +11,9 @@ import {
   UiBlock,
   Wrapper,
 } from './wrapper';
-import { Portal, PortalNamespace } from '../Portal';
-import { H1 } from '../Heading';
-import { IconCancel } from '../Icon';
+import { Portal, PortalNamespace } from '../Portal/index';
+import { H1 } from '../Heading/index';
+import { IconCancel } from '../Icon/index';
 
 interface IPanelPortal {
   id?: string | null;
