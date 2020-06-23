@@ -9,7 +9,7 @@ import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
 import SearchSearchProvider from './relatedSearchProvider';
 
-interface WaykeProviderProps {
+export interface WaykeProviderProps {
   url: string;
   apiKey: string;
   graphQlUrl: string;

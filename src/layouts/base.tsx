@@ -4,12 +4,12 @@ import DefaultSearchItemLayout from './searchItem';
 import useHashGuid from '../hooks/useHashGuid';
 import { SearchFilterTypes } from '../@types/filter';
 
-interface BaseLayout {
+export interface BaseLayoutProps {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams;
 }
 
-const BaseLayout = ({ filterList, initialQueryParams }: BaseLayout) => {
+const BaseLayout = ({ filterList, initialQueryParams }: BaseLayoutProps) => {
   const id = useHashGuid();
   const onClickSearchItem = useCallback(() => {
     // track id
