@@ -48,7 +48,11 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
                 },
               ]}
               price={`${numberSeparator(document.price)} kr`}
-              oldPrice={`${numberSeparator(document.price)} kr`}
+              oldPrice={
+                document.oldPrice !== undefined
+                  ? `${numberSeparator(document.oldPrice)} kr`
+                  : undefined
+              }
             />
           </Item>
         ))}
