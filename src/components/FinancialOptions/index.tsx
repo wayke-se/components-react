@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import Repeat from '../Repeat';
 import { VisualHeading } from '../Heading';
-import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import Leasing from './leasing';
 import Loan from './loan';
+import { FinancialOption } from '../../@types/codegen/types';
 
 interface FinancialOptionsProps {
   id: string;
-  financialOptions: SearchItem_vehicle_financialOptions[];
+  financialOptions: FinancialOption[];
 }
 
 const FinancialOptions = ({ id, financialOptions }: FinancialOptionsProps) => (

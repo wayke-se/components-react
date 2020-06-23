@@ -4,12 +4,12 @@ import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
 import { IconCancel } from '../Icon';
 import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
 import SphereLightbox from '../Sphere/SphereLightbox';
-import { SearchItem_vehicle_media } from '../../@types/gql/SearchItem';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
+import { Media } from '../../@types/codegen/types';
 
 interface LightboxProps {
   index: number;
-  media: SearchItem_vehicle_media[];
+  media: Media[];
   onClose: () => void;
 }
 

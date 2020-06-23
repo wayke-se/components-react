@@ -7,10 +7,10 @@ import Content from '../../components/Content';
 import { H2 } from '../../components/Heading';
 import { ButtonInline } from '../../components/Button';
 import LogoBox from '../../components/LogoBox';
-import { SearchItem_vehicle_manufacturer_packageOption } from '../../@types/gql/SearchItem';
+import { Maybe, PackageOption } from '../../@types/codegen/types';
 
 interface ManufacturerPackageOption {
-  packageOption?: SearchItem_vehicle_manufacturer_packageOption | null;
+  packageOption?: Maybe<PackageOption>;
 }
 
 const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption) => {

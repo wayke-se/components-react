@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { SearchItem_vehicle_branch_location_position } from '../../@types/gql/SearchItem';
 import useSettings from '../../hooks/useSettings';
 
 import { Wrapper, Image, Placeholder, PlaceholderAction } from './wrapper';
 import { ButtonSecondary, ButtonContent } from '../Button';
+import { Position, Maybe } from '../../@types/codegen/types';
 
 interface StaticMapProps {
-  position?: SearchItem_vehicle_branch_location_position | null;
+  position?: Maybe<Position>;
 }
 
 const StaticMap = ({ position }: StaticMapProps) => {

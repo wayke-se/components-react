@@ -98,6 +98,22 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
   const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
   const specificationList = getSpecificationList(data);
 
+  const uspList = [
+    {
+      title: manufactureYear,
+    },
+    {
+      title: `${numberSeparator(mileage)} mil`,
+    },
+  ];
+  if (gearbox) {
+    uspList.push({ title: gearbox });
+  }
+
+  if (fuelType) {
+    uspList.push({ title: fuelType });
+  }
+
   return (
     <>
       {ecomModal && (
@@ -123,23 +139,7 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                     </Repeat>
                   )}
                   <Repeat small>
-                    <UspList
-                      small
-                      items={[
-                        {
-                          title: manufactureYear,
-                        },
-                        {
-                          title: `${numberSeparator(mileage)} mil`,
-                        },
-                        {
-                          title: gearbox,
-                        },
-                        {
-                          title: fuelType,
-                        },
-                      ]}
-                    />
+                    <UspList small items={uspList} />
                   </Repeat>
                 </ProductPageAsideSection>
 

@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 
-import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import useLoanCalculation from '../../hooks/useLoan';
 import Modal from '../Modal';
 import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
@@ -13,6 +12,7 @@ import { numberSeparator } from '../../utils/formats';
 import { ButtonClear, ButtonContent } from '../Button';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
 import DataList from '../DataList';
+import { FinancialOption } from '../../@types/codegen/types';
 
 const stepGenerator = (
   step: number,
@@ -31,7 +31,7 @@ const stepGenerator = (
 
 interface LoanModalProps {
   id: string;
-  financialOption: SearchItem_vehicle_financialOptions;
+  financialOption: FinancialOption;
   onClose: () => void;
 }
 

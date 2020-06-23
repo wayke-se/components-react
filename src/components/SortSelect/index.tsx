@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wrapper, Select, Option, Icon } from './wrapper';
 import { IconChevronDown } from '../Icon';
-import { DrivingDistance } from '../../@types/gql/globalTypes';
+import { DrivingDistance } from '../../@types/codegen/types';
 
 export interface OptionProps {
   value: number | string | DrivingDistance;

@@ -4,9 +4,9 @@ import Badge from '../Badge';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn';
 import { UtilityTextBold } from '../Utility';
 
-import { SearchItem_vehicle_branch_openingHours } from '../../@types/gql/SearchItem';
+import { OpeningHours, Maybe } from '../../@types/codegen/types';
 
-type Days = Omit<SearchItem_vehicle_branch_openingHours, '__typename'>;
+type Days = Omit<OpeningHours, '__typename'>;
 type KeyType = keyof Days;
 const KeyOrder: KeyType[] = [
   'monday',
@@ -37,16 +37,16 @@ const TranslateWeekDays = (d: KeyType) => {
   }
 };
 
-interface OpeningHours {
+interface OpeningHoursSample {
   titleFrom: string;
   titleTo?: string;
   from?: string | null;
   until?: string | null;
 }
 
-const arr: OpeningHours[] = [];
+const arr: OpeningHoursSample[] = [];
 
-const GetOpeningHours = (o: SearchItem_vehicle_branch_openingHours) =>
+const GetOpeningHours = (o: OpeningHours) =>
   KeyOrder.reduce((prev, current) => {
     const title = TranslateWeekDays(current);
     const item = o[current];
@@ -64,7 +64,7 @@ const GetOpeningHours = (o: SearchItem_vehicle_branch_openingHours) =>
     return prev;
   }, arr.slice());
 
-const GetOpeningHoursToday = (o: SearchItem_vehicle_branch_openingHours) => {
+const GetOpeningHoursToday = (o: OpeningHours) => {
   const dayNumber = new Date().getDay();
   const day = KeyOrder[dayNumber === 0 ? 6 : dayNumber - 1] as KeyType;
   const current = o[day];
@@ -76,7 +76,7 @@ const GetOpeningHoursToday = (o: SearchItem_vehicle_branch_openingHours) => {
 };
 
 interface OpeningHoursProps {
-  openingHours?: SearchItem_vehicle_branch_openingHours | null;
+  openingHours?: Maybe<OpeningHours>;
 }
 
 const OpeningHours = ({ openingHours }: OpeningHoursProps) => {

@@ -1,18 +1,15 @@
 import { useQuery } from '@apollo/react-hooks';
 import { QueryResult } from '@apollo/react-common';
 import INSURANCE_CALCULATION from '../queries/INSURANCE_CALCULATION';
-import {
-  InsuranceCalculationVariables,
-  InsuranceCalculation,
-} from '../@types/gql/InsuranceCalculation';
-import { DrivingDistance } from '../@types/gql/globalTypes';
+
+import { DrivingDistance, QueryInsurancesArgs, Query } from '../@types/codegen/types';
 
 const useInsuranceCalculation = (
   id: string,
   personalNumber?: string,
   drivingDistance?: DrivingDistance
-): QueryResult<InsuranceCalculation> =>
-  useQuery<InsuranceCalculation, InsuranceCalculationVariables>(INSURANCE_CALCULATION, {
+): QueryResult<Query> =>
+  useQuery<Query, QueryInsurancesArgs>(INSURANCE_CALCULATION, {
     variables: {
       id,
       personalNumber: personalNumber as string,

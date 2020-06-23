@@ -13,12 +13,11 @@ import { InputGroup, InputGroupColumn } from '../InputGroup';
 import { ButtonPrimary, ButtonContent } from '../Button';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
 import { ColumnRow, ColumnRowItem } from '../ColumnRow';
-import { DrivingDistance } from '../../@types/gql/globalTypes';
 import useInsuranceCalculation from '../../hooks/useInsurance';
 import { ssnIsValid } from '../../utils/ssn';
 import { Spinner } from '../Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
-import { SearchItem_vehicle_insuranceOptions } from '../../@types/gql/SearchItem';
+import { DrivingDistance, InsuranceOption } from '../../@types/codegen/types';
 
 interface FormData {
   ssn: string;
@@ -28,13 +27,13 @@ interface FormData {
 interface InsuranceOptionModal {
   id: string;
   onClose: () => void;
-  insuranceOptions: SearchItem_vehicle_insuranceOptions;
+  insuranceOptions: InsuranceOption;
 }
 
 const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOptionModal) => {
   const [form, setForm] = useState<FormData>({
     ssn: '',
-    drivingDistance: DrivingDistance.BETWEEN0AND1000,
+    drivingDistance: DrivingDistance.Between0And1000,
   });
   const [payload, setPayload] = useState<FormData>();
   const { loading, data } = useInsuranceCalculation(
@@ -57,11 +56,11 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
   const onShowInsurances = useCallback(() => setPayload(form), [form]);
 
   const options: OptionProps[] = [
-    { value: DrivingDistance.BETWEEN0AND1000, displayName: '0 - 1000' },
-    { value: DrivingDistance.BETWEEN1000AND1500, displayName: '1000 - 1500' },
-    { value: DrivingDistance.BETWEEN1500AND2000, displayName: '1500 - 2000' },
-    { value: DrivingDistance.BETWEEN2000AND2500, displayName: '2000 - 2500' },
-    { value: DrivingDistance.OVER2500, displayName: '2500+' },
+    { value: DrivingDistance.Between0And1000, displayName: '0 - 1000' },
+    { value: DrivingDistance.Between1000And1500, displayName: '1000 - 1500' },
+    { value: DrivingDistance.Between1500And2000, displayName: '1500 - 2000' },
+    { value: DrivingDistance.Between2000And2500, displayName: '2000 - 2500' },
+    { value: DrivingDistance.Over2500, displayName: '2500+' },
   ];
 
   return (

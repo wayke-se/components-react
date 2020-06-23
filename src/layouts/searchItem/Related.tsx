@@ -9,12 +9,12 @@ import { OverflowGridList, OverflowGrid, OverflowGridItem } from '../../componen
 import ProductCard from '../../components/ProductCard';
 import { H2 } from '../../components/Heading';
 import useRelatedSearch from '../../hooks/useRelatedSearch';
-import { SearchItem_vehicle } from '../../@types/gql/SearchItem';
 import { Spinner } from '../../components/Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
+import { Vehicle } from '../../@types/codegen/types';
 
 interface RelatedProps {
-  vehicle: SearchItem_vehicle;
+  vehicle: Vehicle;
   onClickSearchItem?: (id: string) => void;
 }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import Ecom from '@wayke-se/ecom-react';
 
-import { SearchItem_vehicle, SearchItem_vehicle_manufacturer } from '../../@types/gql/SearchItem';
 import { IEcomExternalProps } from '@wayke-se/ecom-react/dist-types/types';
+import { Vehicle, Maybe, Manufacturer } from '../../@types/codegen/types';
 
 interface EcomeProps {
-  vehicle: SearchItem_vehicle;
-  manufacturer: SearchItem_vehicle_manufacturer | null;
+  vehicle: Vehicle;
+  manufacturer?: Maybe<Manufacturer>;
   useBankId?: boolean;
   displayBankIdAlert?: boolean;
   onExit: () => void;

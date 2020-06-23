@@ -1,0 +1,12 @@
+schema: https://gql.wayketech.se/query
+generates:
+  ./src/@types/codegen/types.ts:
+    plugins:
+      - typescript
+    config:
+      noHOC: false
+      noComponents: false
+      withHooks: false
+      scalars:
+        VehicleDataPropertyMap: "{ [key: string]: string | number | boolean }"
+        JSON: "{ [key: string]: any }"

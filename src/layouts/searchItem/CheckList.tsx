@@ -5,25 +5,25 @@ import Repeat from '../../components/Repeat';
 import ActionList from '../../components/ActionList';
 import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
-import { SearchItem_vehicle } from '../../@types/gql/SearchItem';
 import Modal from '../../components/Modal';
 import Content from '../../components/Content';
 import LogoBox from '../../components/LogoBox';
+import { Vehicle } from '../../@types/codegen/types';
 
 interface ModelLink {
-  href: string | null;
-  title: string | null;
+  href?: string | null;
+  title?: string | null;
 }
 
 interface ModalProps {
-  title: string | null;
+  title?: string | null;
   image?: string | null;
   description?: string | null;
   link?: ModelLink | null;
 }
 
 interface CheckList {
-  vehicle: SearchItem_vehicle;
+  vehicle: Vehicle;
   toggleEcomModal: () => void;
 }
 
@@ -39,7 +39,7 @@ const CheckList = ({ vehicle, toggleEcomModal }: CheckList) => {
   return (
     <>
       {modal && (
-        <Modal title={modal.title} onClose={onClose}>
+        <Modal title={modal.title || ''} onClose={onClose}>
           {modal.image && (
             <Repeat>
               <LogoBox logo={modal.image} alt={modal.title || undefined} wide />

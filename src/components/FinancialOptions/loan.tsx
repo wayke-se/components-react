@@ -4,14 +4,14 @@ import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { UtilityTextPrimary } from '../Utility';
 import { ButtonInline } from '../Button';
-import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import { numberSeparator } from '../../utils/formats';
 import useLoanCalculation from '../../hooks/useLoan';
 import LoanModal from './LoanModal';
+import { FinancialOption } from '../../@types/codegen/types';
 
 interface LoanProps {
   id: string;
-  financialOption: SearchItem_vehicle_financialOptions;
+  financialOption: FinancialOption;
 }
 
 const Loan = ({ id, financialOption }: LoanProps) => {
@@ -24,6 +24,7 @@ const Loan = ({ id, financialOption }: LoanProps) => {
     financialOption.downPayment?.current,
     financialOption.residual?.current
   );
+
   const interest = data?.loan?.interest;
   const duration = data?.loan?.duration?.current;
   const monthlyCost = data?.loan?.monthlyCost;

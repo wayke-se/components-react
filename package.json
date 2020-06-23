@@ -11,7 +11,8 @@
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "npm run prettify && npm run type-check && npm run lint",
-    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/queries/**/* --endpoint https://gql.wayketech.se/query --target typescript --tagName gql --outputFlat src/@types/gql"
+    "generate": "apollo codegen:generate --excludes=node_modules/* --includes=./src/queries/**/* --endpoint https://gql.wayketech.se/query --target typescript --tagName gql --outputFlat src/@types/gql --passthroughCustomScalars --customScalarsPrefix=GraphQL_",
+    "gen": "graphql-codegen --config ./codegen.yml"
   },
   "author": "Peter Johansson",
   "license": "MIT",
@@ -23,6 +24,10 @@
   },
   "devDependencies": {
     "@apollo/react-common": "^3.1.4",
+    "@graphql-codegen/cli": "^1.15.4",
+    "@graphql-codegen/typescript": "^1.15.4",
+    "@graphql-codegen/typescript-operations": "^1.15.4",
+    "@graphql-codegen/typescript-react-apollo": "^1.15.4",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-types": "^0.9.2",

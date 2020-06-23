@@ -4,12 +4,12 @@ import { VisualHeading } from '../Heading';
 import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { ButtonInline } from '../Button';
-import { SearchItem_vehicle_insuranceOptions } from '../../@types/gql/SearchItem';
 import InsuranceOptionModal from './InsuranceOptionModal';
+import { InsuranceOption } from '../../@types/codegen/types';
 
 interface InsuranceOptions {
   id: string;
-  insuranceOptions: SearchItem_vehicle_insuranceOptions[];
+  insuranceOptions: InsuranceOption[];
 }
 
 const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {

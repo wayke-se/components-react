@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import { List } from './wrapper';
 import { IconPhone, IconMail } from '../Icon';
-import { SearchItem_vehicle_contact } from '../../@types/gql/SearchItem';
 import ToggleItem from './toggle-item';
+import { Maybe, ContactOptions } from '../../@types/codegen/types';
 
 interface ActionListProps {
-  contact: SearchItem_vehicle_contact | null;
+  contact?: Maybe<ContactOptions>;
 }
 
 const ActionList = ({ contact }: ActionListProps) => {

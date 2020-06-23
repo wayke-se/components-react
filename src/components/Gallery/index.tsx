@@ -26,12 +26,12 @@ import Lightbox from '../Lightbox';
 import EmbededVideo from '../Video/EmbededVideo';
 import QuickNavEmbeded from '../Video/QuickNavEmbeded';
 import Sphere from '../Sphere/Sphere';
-import { SearchItem_vehicle_media } from '../../@types/gql/SearchItem';
 import { notEmpty } from '../../utils/formats';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
+import { Media } from '../../@types/codegen/types';
 
 interface GalleryProps {
-  media: SearchItem_vehicle_media[];
+  media: Media[];
 }
 
 const sliderSettings = {

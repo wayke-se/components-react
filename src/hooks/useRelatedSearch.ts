@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 
 import { RelatedSearchContext } from '../context/related-context';
 
-const useRelatedSearch = (modelYear: number, modelSeries: string | null) => {
+const useRelatedSearch = (modelYear: number, modelSeries?: string | null) => {
   const data = useContext(RelatedSearchContext);
 
   useEffect(() => {

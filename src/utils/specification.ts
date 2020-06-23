@@ -1,5 +1,5 @@
-import { SearchItem_vehicle_data } from '../@types/gql/SearchItem';
 import { notEmpty, dateTimeFormat, numberSeparator } from './formats';
+import { VehicleData } from '../@types/codegen/types';
 
 export interface ItemPropertModalType {
   title: string;
@@ -12,26 +12,32 @@ export interface ItemPropertyType {
   modal?: ItemPropertModalType;
 }
 
+type ValueTypes =
+  | number
+  | string
+  | null
+  | undefined
+  | string[]
+  | boolean
+  | { [key: string]: string | number | boolean };
+
 export interface SpecPropertyType {
   label?: string;
-  formatLabel?: (item: SearchItem_vehicle_data) => string;
-  formatData?: (value: number | string, item: SearchItem_vehicle_data) => string | null;
+  formatLabel?: (item: VehicleData) => string;
+  formatData?: (value: ValueTypes, item: VehicleData) => string | null;
   modal?: {
     title?: string;
-    dynamicTitle?: (item: SearchItem_vehicle_data) => string;
+    dynamicTitle?: (item: VehicleData) => string;
     text?: string;
-    dynamicText?: (item: SearchItem_vehicle_data) => string;
+    dynamicText?: (item: VehicleData) => string;
     nonConcatablePropValue?: string;
     concatPropValue?: string;
   };
 }
 
-const isElectric = (item: SearchItem_vehicle_data): boolean =>
+const isElectric = (item: VehicleData): boolean =>
   !!item.fuelType && item.fuelType.toLowerCase() === 'el';
-const getFuelConsumption = (
-  value: string | number,
-  item: SearchItem_vehicle_data
-): string | null => {
+const getFuelConsumption = (value: ValueTypes, item: VehicleData): string | null => {
   if (!value) return null;
 
   return isElectric(item) ? `${value} kWh/100 km` : `${value} liter/100 km`;
@@ -64,8 +70,8 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   mileage: {
     label: 'Mätarställning',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value >= 0 ? `${numberSeparator(value as number)} mil` : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
+      (value || -1) >= 0 ? `${numberSeparator(value as number)} mil` : null,
     modal: {
       title: 'Mätarställning',
       text: 'Antal mil som bilen har körts. I bilen anges det i kilometer istället.',
@@ -85,7 +91,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   colorName: { label: 'Färg' },
   enginePower: {
     label: 'Effekt',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} hk` : null,
   },
   engineCylinders: {
@@ -97,7 +103,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   engineVolume: {
     label: 'Motorvolym',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} cm3` : null,
     modal: {
       title: 'Motorvolym',
@@ -106,7 +112,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   maxSpeed: {
     label: 'Toppfart',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} km/h` : null,
     modal: {
       title: 'Toppfart',
@@ -122,7 +128,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   torque: {
     label: 'Vridmoment',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} Nm` : null,
     modal: {
       title: 'Vridmoment',
@@ -132,7 +138,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   acceleration: {
     label: 'Acceleration 0-100 km/h',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} sek` : null,
     modal: {
       title: 'Acceleration 0-100 km/h',
@@ -165,29 +171,28 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   status: { label: 'Status' },
   imported: {
     label: 'Import/införsel',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
   },
   firstRegistrationDate: {
     label: 'Först registrerad',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? dateTimeFormat.format(`${value}`, dateTimeFormat.YearMonth) : null,
   },
   firstInService: {
     label: 'Först i trafik',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? dateTimeFormat.format(`${value}`, dateTimeFormat.YearMonth) : null,
   },
   height: {
     label: 'Längd/höjd/bredd',
-    formatData: (_: number | string, data: SearchItem_vehicle_data): string | null =>
-      `${data.properties.length || '-'} cm/${data.properties.height || '-'} cm/${
-        data.properties.width || '-'
+    formatData: (_: ValueTypes, data: VehicleData): string | null =>
+      `${data?.properties?.length || '-'} cm/${data?.properties?.height || '-'} cm/${
+        data?.properties?.width || '-'
       } cm`,
   },
   serviceWeight: {
     label: 'Tjänstevikt',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${numberSeparator(value as number)} kg` : null,
     modal: {
       title: 'Tjänstevikt',
@@ -196,12 +201,12 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   maxTotalWeight: {
     label: 'Maxlast',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${numberSeparator(value as number)} kg` : null,
   },
   maxRoofWeight: {
     label: 'Max taklast',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${numberSeparator(value as number)} kg` : null,
     modal: {
       title: 'Max taklast',
@@ -210,12 +215,12 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   trailerWeight: {
     label: 'Max släpvagnsvikt',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${numberSeparator(value as number)} kg` : null,
   },
   trailerTotalWeightB: {
     label: 'Totalvikt släp, B',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${numberSeparator(value as number)} kg` : null,
     modal: {
       title: 'Totalvikt släp, B',
@@ -224,7 +229,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   trailerTotalWeightBPlus: {
     label: 'Totalvikt släp, B+',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${numberSeparator(value as number)} kg` : null,
     modal: {
       title: 'Totalvikt släp, B+',
@@ -233,7 +238,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   groundClearence: {
     label: 'Markfrigång',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} cm` : null,
     modal: {
       title: 'Markfrigång',
@@ -242,7 +247,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   trunkSpace: {
     label: 'Bagageutrymme - normalt',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} liter` : null,
     modal: {
       title: 'Bagageutrymme - normalt',
@@ -250,18 +255,18 @@ const specLabels: { [key: string]: SpecPropertyType } = {
     },
   },
   tankVolume: {
-    formatLabel: (item: SearchItem_vehicle_data): string =>
+    formatLabel: (item: VehicleData): string =>
       isElectric(item) ? 'Batterikapacitet' : 'Volym, bränsletank',
-    formatData: (value: number | string, data: SearchItem_vehicle_data): string | null => {
+    formatData: (value: ValueTypes, data: VehicleData): string | null => {
       if (!value) return null;
 
       return isElectric(data) ? `${value} kWh` : `${value} liter`;
     },
 
     modal: {
-      dynamicTitle: (item: SearchItem_vehicle_data): string =>
+      dynamicTitle: (item: VehicleData): string =>
         isElectric(item) ? 'Batterikapacitet' : 'Volym, bränsletank',
-      dynamicText: (item: SearchItem_vehicle_data): string =>
+      dynamicText: (item: VehicleData): string =>
         isElectric(item)
           ? 'Batteriets kapacitet i kilowattimmar'
           : 'Antal liter bränsle som ryms i tanken.',
@@ -269,7 +274,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   wheelBase: {
     label: 'Hjulbas',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} cm` : null,
     modal: {
       title: 'Hjulbas',
@@ -283,7 +288,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   trailerWeightWithoutBreaks: { label: 'Totalvikt släp, utan bromsar' },
   co2: {
     label: 'CO2',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} g/km` : null,
     modal: {
       title: 'C02',
@@ -342,8 +347,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   ncapMonth: { label: 'Testmånad' },
   abs: {
     label: 'ABS',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
     modal: {
       title: 'ABS',
       text: 'Förhindrar att bromsarna låser sig och reducerar bromssträckan.',
@@ -351,13 +355,11 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   espSystem: {
     label: 'Antisladd (ESP/DSTC/VSC/ASC)',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
   },
   trcSystem: {
     label: 'Antispinn',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
     modal: {
       title: 'Antispinn',
       text: 'Får bilen att skicka kraft till hjulet som har bästa kontakt med underlaget.',
@@ -365,8 +367,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   isofixRearSeat: {
     label: 'Isofix bak',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
     modal: {
       title: 'Isofix bak',
       text: 'Universiell fästanordning för barnstolar.',
@@ -374,8 +375,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   airbagDriver: {
     label: 'Airbag, förare',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
     modal: {
       title: 'Airbag, förare',
       text: 'Krockkudde för föraren.',
@@ -383,8 +383,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   airbagPassenger: {
     label: 'Airbag, passagerare',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
     modal: {
       title: 'Airbag, passagerare',
       text: 'Krockkudde för passagerare.',
@@ -392,13 +391,11 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   airbagFrontSide: {
     label: 'Airbag, sida fram',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
   },
   brakeAssistance: {
     label: 'Bromsassistans (Panikbroms - BA/EBA/BAS/AFU)',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
     modal: {
       title: 'Bromsassistans (Panikbroms - BA/EBA/BAS/AFU)',
       text: 'Säkerhetssystem som kan hjälpa till att bromsa och undvika olyckor. ',
@@ -406,12 +403,11 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   tco3yrs: {
     label: 'TCO, 3 år 2500 mil/år',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
-      value ? 'Ja' : null,
+    formatData: (value: ValueTypes, _: VehicleData): string | null => (value ? 'Ja' : null),
   },
   annualTax: {
     label: 'Skatt',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} kr/år` : null,
     modal: {
       title: 'Skatt',
@@ -420,7 +416,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   annualMalus: {
     label: 'Skatt (Malus)',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} kr/år` : null,
     modal: {
       title: 'Malus - förhöjd fordonsskatt',
@@ -433,7 +429,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   },
   annualBonus: {
     label: 'Bonus',
-    formatData: (value: number | string, _: SearchItem_vehicle_data): string | null =>
+    formatData: (value: ValueTypes, _: VehicleData): string | null =>
       value ? `${value} kr` : null,
     modal: {
       title: 'Bonus - för nya bilar med låga utsläpp',
@@ -513,17 +509,24 @@ const All = [
 
 type KEYS = typeof All[number];
 type SPEC_KEYS = keyof typeof specLabels;
-type ITEM_KEYS = keyof SearchItem_vehicle_data;
+type ITEM_KEYS = keyof VehicleData;
 
-const extractSpecData = (key: KEYS, item: SearchItem_vehicle_data): ItemPropertyType | null => {
+const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null => {
   const spec = specLabels[key];
-  let data: number | string | null = null;
+  let data:
+    | number
+    | string
+    | null
+    | undefined
+    | string[]
+    | boolean
+    | { [key: string]: string | number | boolean } = null;
 
-  if (!!item[key as ITEM_KEYS] || item[key as ITEM_KEYS] >= -1) {
+  if (!!item[key as ITEM_KEYS] || (item[key as ITEM_KEYS] || -1) >= -1) {
     data = item[key as ITEM_KEYS];
   } else if (
-    !!item.properties[key] ||
-    (typeof item.properties[key] === 'number' && item.properties[key] >= -1)
+    !!item?.properties?.[key] ||
+    (typeof item?.properties?.[key] === 'number' && (item?.properties?.[key] || -1) >= -1)
   ) {
     data = item.properties[key];
   }
@@ -630,5 +633,5 @@ const extractSpecData = (key: KEYS, item: SearchItem_vehicle_data): ItemProperty
   */
 };
 
-export const getSpecificationList = (item: SearchItem_vehicle_data): ItemPropertyType[] =>
+export const getSpecificationList = (item: VehicleData): ItemPropertyType[] =>
   All.map((x: KEYS) => extractSpecData(x, item)).filter(notEmpty);

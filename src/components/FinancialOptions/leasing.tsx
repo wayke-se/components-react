@@ -4,15 +4,15 @@ import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { UtilityTextPrimary } from '../Utility';
 import { ButtonInline } from '../Button';
-import { SearchItem_vehicle_financialOptions } from '../../@types/gql/SearchItem';
 import { numberSeparator } from '../../utils/formats';
 import Modal from '../Modal';
 import { Image, ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content';
 import DataList from '../DataList';
+import { FinancialOption } from '../../@types/codegen/types';
 
 interface LeasingProps {
-  financialOption: SearchItem_vehicle_financialOptions;
+  financialOption: FinancialOption;
 }
 
 const Leasing = ({ financialOption }: LeasingProps) => {
@@ -51,7 +51,7 @@ const Leasing = ({ financialOption }: LeasingProps) => {
       )}
       <OptionBox>
         <>
-          {monthlyCost !== null && (
+          {monthlyCost !== null && monthlyCost !== undefined && (
             <OptionBoxHeading>{`ca ${numberSeparator(monthlyCost)} kr/mån`}</OptionBoxHeading>
           )}
         </>

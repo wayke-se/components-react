@@ -7,10 +7,10 @@ import Content from '../../components/Content';
 import { H2 } from '../../components/Heading';
 import { ButtonInline } from '../../components/Button';
 import LogoBox from '../../components/LogoBox';
-import { SearchItem_vehicle_packageOptions } from '../../@types/gql/SearchItem';
+import { PackageOption } from '../../@types/codegen/types';
 
 interface PackageOptionsProps {
-  packageOptions?: SearchItem_vehicle_packageOptions[] | null;
+  packageOptions?: PackageOption[] | null;
 }
 
 const PackageOptions = ({ packageOptions }: PackageOptionsProps) => {
