@@ -40,12 +40,12 @@ import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';
 
-interface DefaultSerchItemLayoutProps {
+interface DefaultSearchItemLayoutProps {
   id: string;
   onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayoutProps) => {
+const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLayoutProps) => {
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
@@ -262,4 +262,4 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
   );
 };
 
-export default DefaultSerchItemLayout;
+export default DefaultSearchItemLayout;

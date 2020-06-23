@@ -61,7 +61,14 @@ const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
     }
   }, [response]);
 
-  const onInitialize = useCallback(() => setInitialize(true), []);
+  const onInitialize = useCallback((initialQueryParams?: URLSearchParams) => {
+    if (initialQueryParams) {
+      setQueryFilter({
+        searchParams: initialQueryParams,
+      });
+    }
+    setInitialize(true);
+  }, []);
 
   const value = {
     loading,
