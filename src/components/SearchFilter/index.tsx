@@ -32,7 +32,7 @@ const SearchFilter = () => {
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}
-      placeholder="Söker"
+      placeholder="Sök"
       label="Sök"
       id="main-search"
     />

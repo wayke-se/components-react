@@ -8,7 +8,6 @@ import Grid from '../../components/Grid';
 import SearchTerm from '../../components/SearchTerm';
 import { PortalNamespace } from '../../components/Portal';
 import PortalElement from '../../components/Portal/portal-element';
-import Repeat from '../../components/Repeat';
 import SearchFilter from '../../components/SearchFilter';
 import Snackbar from '../../components/Snackbar';
 import useSearch from '../../hooks/useSearch';
@@ -31,15 +30,13 @@ const DefaultSearchLayout = ({ filterList, onClickSearchItem }: DefaultSearchLay
   return (
     <>
       <Page>
-        <PageSection large>
+        <PageSection>
           <Container>
-            <Repeat small>
-              <SearchFilter />
-            </Repeat>
+            <SearchFilter />
           </Container>
         </PageSection>
         {searchQuery && (
-          <PageSection large>
+          <PageSection>
             <Container>
               <SearchTerm>{searchQuery}</SearchTerm>
             </Container>

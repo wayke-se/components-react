@@ -1,13 +1,38 @@
 import styled from 'styled-components';
 
 import { size } from '../../layout/helpers';
+import { ButtonReset } from '../Button';
 
 export const Wrapper = styled.div`
+  display: flex;
+  align-items: stretch;
+  border-radius: 3px;
+`;
+
+export const Search = styled.div`
+  flex: 1 1 auto;
   position: relative;
   display: flex;
   align-items: stretch;
   background-color: ${(props) => props.theme.color.accentDark};
-  border-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+`;
+
+export const Action = styled.div`
+  flex-shrink: 0;
+`;
+
+export const ActionBtn = styled(ButtonReset).attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-bg',
+}))`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.theme.distances.inputHeight};
+  height: ${(props) => props.theme.distances.inputHeight};
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 `;
 
 export const Icon = styled.label`

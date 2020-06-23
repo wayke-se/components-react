@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Input, Icon } from './wrapper';
+import { Wrapper, Search, Action, ActionBtn, Input, Icon } from './wrapper';
 import { IconSearch } from '../Icon';
 
 type InputProps = React.DetailedHTMLProps<
@@ -19,17 +19,24 @@ type Props = InputProps & {
 
 const InputSearch = ({ placeholder, label, value, id, ...props }: Props): JSX.Element => (
   <Wrapper>
-    <Icon htmlFor={id}>
-      <IconSearch block />
-    </Icon>
-    <Input
-      placeholder={placeholder}
-      name="search"
-      value={value}
-      id={id}
-      aria-label={label}
-      {...(props as OmitInputProps)}
-    />
+    <Search>
+      <Icon htmlFor={id}>
+        <IconSearch block />
+      </Icon>
+      <Input
+        placeholder={placeholder}
+        name="search"
+        value={value}
+        id={id}
+        aria-label={label}
+        {...(props as OmitInputProps)}
+      />
+    </Search>
+    <Action>
+      <ActionBtn>
+        <IconSearch block />
+      </ActionBtn>
+    </Action>
   </Wrapper>
 );
 
