@@ -16,9 +16,15 @@ const PhoneNumber = ({ phoneNumber }: PhoneNumberProps) => {
     <TableColumnRow>
       <TableColumnCell>Telefonnummer</TableColumnCell>
       <TableColumnCell>
-        <ButtonInlineBold onClick={onClick}>
-          <ButtonContent>{visible ? phoneNumber : 'Visa telefonnummer'}</ButtonContent>
-        </ButtonInlineBold>
+        {visible ? (
+          <ButtonInlineBold as="a" href={`tel:${phoneNumber}`} title={`Ring ${phoneNumber}`}>
+            <ButtonContent>{phoneNumber}</ButtonContent>
+          </ButtonInlineBold>
+        ) : (
+          <ButtonInlineBold onClick={onClick} title="Visa telefonnummer">
+            <ButtonContent>Visa telefonnummer</ButtonContent>
+          </ButtonInlineBold>
+        )}
       </TableColumnCell>
     </TableColumnRow>
   );
