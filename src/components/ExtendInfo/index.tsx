@@ -5,7 +5,7 @@ import { IconInfo } from '../Icon';
 
 interface Props {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const ExtendInfo = ({ title, children }: Props) => {
@@ -16,11 +16,13 @@ const ExtendInfo = ({ title, children }: Props) => {
     <Wrapper>
       <Header>
         <Title>{title}</Title>
-        <Info>
-          <InfoBtn onClick={onToggleExtend} title="Mer information">
-            <IconInfo block />
-          </InfoBtn>
-        </Info>
+        {children && (
+          <Info>
+            <InfoBtn onClick={onToggleExtend} title="Mer information">
+              <IconInfo block />
+            </InfoBtn>
+          </Info>
+        )}
       </Header>
       {extend && <Extend>{children}</Extend>}
     </Wrapper>

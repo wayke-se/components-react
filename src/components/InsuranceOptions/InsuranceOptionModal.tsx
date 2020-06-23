@@ -5,12 +5,15 @@ import Content from '../Content';
 import Repeat from '../Repeat';
 import LogoBox from '../LogoBox';
 import DetailBox from '../DetailBox';
+import ExtendInfo from '../ExtendInfo';
+import { UtilityTextBold } from '../Utility';
 import InputLabel from '../InputLabel';
 import InputText from '../InputText';
 import InputCheckbox from '../InputCheckbox';
 import InputSelect, { OptionProps } from '../InputSelect';
+import { H4 } from '../Heading';
 import { InputGroup, InputGroupColumn } from '../InputGroup';
-import { ButtonPrimary, ButtonContent } from '../Button';
+import { ButtonPrimary, ButtonContent, ButtonInline } from '../Button';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
 import { ColumnRow, ColumnRowItem } from '../ColumnRow';
 import { DrivingDistance } from '../../@types/gql/globalTypes';
@@ -167,24 +170,47 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                     <>
                       {insurance.url && (
                         <Repeat tiny>
-                          <a
+                          <ButtonInline
+                            as="a"
                             href={insurance.url || ''}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
                           >
                             Förköpsinformation och villkor (öppnas i ny flik)
-                          </a>
+                          </ButtonInline>
                         </Repeat>
                       )}
                     </>
                   </Repeat>
-                  <Repeat>
-                    <div>Välj till</div>
-                    <ColumnRow>
-                      <ColumnRowItem>Item</ColumnRowItem>
-                      <ColumnRowItem>Item</ColumnRowItem>
-                    </ColumnRow>
-                  </Repeat>
+                  {insurance.items && insurance.items.length > 0 && (
+                    <Repeat>
+                      <H4>Försäkringen innehåller</H4>
+                      {insurance.items.map((item) => (
+                        <Repeat small key={item.name || ''}>
+                          <ExtendInfo title={item.name || ''}>{item.description}</ExtendInfo>
+                        </Repeat>
+                      ))}
+                    </Repeat>
+                  )}
+                  {insurance.addons && insurance.addons.length > 0 && (
+                    <Repeat>
+                      <H4>Välj till</H4>
+                      {insurance.addons.map((addon) => (
+                        <Repeat small key={addon.title || ''}>
+                          <ColumnRow>
+                            <ColumnRowItem>
+                              <ExtendInfo title={addon.title || ''}>{addon.description}</ExtendInfo>
+                            </ColumnRowItem>
+                            <ColumnRowItem>
+                              <UtilityTextBold>
+                                +{addon.price} {addon.unit}
+                              </UtilityTextBold>
+                            </ColumnRowItem>
+                          </ColumnRow>
+                        </Repeat>
+                      ))}
+                    </Repeat>
+                  )}
                 </DetailBox>
               </Repeat>
             ))}
