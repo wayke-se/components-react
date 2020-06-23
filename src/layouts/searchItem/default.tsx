@@ -190,16 +190,18 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
                   </ProductPageMainSection>
                 )}
 
-                <ProductPageMainSection>
-                  <Repeat>
-                    <H2 noMargin>Utrustning</H2>
-                  </Repeat>
-                  <Repeat>
-                    <ExtendContent actionTitle="Visa mer">
-                      <UspList items={options} />
-                    </ExtendContent>
-                  </Repeat>
-                </ProductPageMainSection>
+                {options && options.length > 0 && (
+                  <ProductPageMainSection>
+                    <Repeat>
+                      <H2 noMargin>Utrustning</H2>
+                    </Repeat>
+                    <Repeat>
+                      <ExtendContent actionTitle="Visa mer">
+                        <UspList items={options} />
+                      </ExtendContent>
+                    </Repeat>
+                  </ProductPageMainSection>
+                )}
 
                 <ProductPageMainSection>
                   <Repeat>
