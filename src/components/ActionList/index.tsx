@@ -13,13 +13,19 @@ const ActionList = ({ contact }: ActionListProps) => {
   return (
     <List>
       {contact?.email && (
-        <ToggleItem title="Visa mailadress" value={contact.email} icon={<IconMail block />} />
+        <ToggleItem
+          title="Visa mailadress"
+          value={contact.email}
+          icon={<IconMail block />}
+          type="mailto"
+        />
       )}
       {contact?.phonenumber && (
         <ToggleItem
           title="Visa telefonnummer"
           value={contact.phonenumber}
           icon={<IconPhone block />}
+          type="tel"
         />
       )}
     </List>
