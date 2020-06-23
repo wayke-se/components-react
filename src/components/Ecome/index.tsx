@@ -3,24 +3,17 @@ import Ecom from '@wayke-se/ecom-react';
 
 import { IEcomExternalProps } from '@wayke-se/ecom-react/dist-types/types';
 import { Vehicle, Maybe, Manufacturer } from '../../@types/codegen/types';
+import useSettings from '../../hooks/useSettings';
 
 interface EcomeProps {
   vehicle: Vehicle;
   manufacturer?: Maybe<Manufacturer>;
-  useBankId?: boolean;
-  displayBankIdAlert?: boolean;
   onExit: () => void;
   onUserEvent?: () => void;
 }
 
-const Ecome = ({
-  useBankId,
-  displayBankIdAlert,
-  vehicle,
-  manufacturer,
-  onExit,
-  onUserEvent,
-}: EcomeProps) => {
+const Ecome = ({ vehicle, manufacturer, onExit, onUserEvent }: EcomeProps) => {
+  const { ecomSettings } = useSettings();
   const { id, title, shortDescription, price, data, media } = vehicle;
 
   const { modelYear, mileage, gearbox, fuelType } = data;
@@ -43,8 +36,8 @@ const Ecome = ({
       manufacturer?.logotype || 'https://cdn.wayke.se/wui/images/ecom/wayke-logo.svg',
     onExit,
     onUserEvent,
-    useBankId,
-    displayBankIdAlert,
+    useBankId: ecomSettings?.useBankId,
+    displayBankIdAlert: ecomSettings?.displayBankIdAlert,
   };
 
   return <Ecom {...ecomData} />;

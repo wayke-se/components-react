@@ -9,11 +9,17 @@ import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
 import SearchSearchProvider from './relatedSearchProvider';
 
+export interface EcomSettings {
+  url: string;
+  useBankId?: boolean;
+  displayBankIdAlert?: boolean;
+}
+
 export interface WaykeProviderProps {
   url: string;
   apiKey: string;
   graphQlUrl: string;
-  ecomUrl?: string;
+  ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;
   useMock?: boolean;
   children: React.ReactNode;
@@ -22,16 +28,16 @@ export interface WaykeProviderProps {
 const WaykeProvider = ({
   url,
   apiKey,
-  ecomUrl,
+  ecomSettings,
   graphQlUrl,
   googleMapsApiKey,
   useMock,
   children,
 }: WaykeProviderProps) => {
-  useEcom(ecomUrl);
+  useEcom(ecomSettings?.url);
 
   return (
-    <SettingsProvider googleMapsApiKey={googleMapsApiKey}>
+    <SettingsProvider googleMapsApiKey={googleMapsApiKey} ecomSettings={ecomSettings}>
       <GraphqlProvider uri={graphQlUrl} useMock={useMock}>
         <SearchProvider url={url} apiKey={apiKey}>
           <SearchSearchProvider url={url} apiKey={apiKey}>

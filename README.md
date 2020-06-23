@@ -17,6 +17,7 @@ const App = () => (
     apiKey="YOUR_API_KEY"
     ecomUrl="OPTIONAL_ECOM_URL"
     googleMapsApiKey="OPTIONAL_GOOGLE_MAPS_API_KEY"
+    ecomSettings={ecomSettings}
   >
     <WaykeSearch />
   </WaykeProvider>
@@ -37,6 +38,7 @@ const App = () => (
     apiKey="YOUR_API_KEY"
     ecomUrl="OPTIONAL_ECOM_URL"
     googleMapsApiKey="OPTIONAL_GOOGLE_MAPS_API_KEY"
+    ecomSettings={ecomSettings}
     filterList={filterList}
     initialQueryParams={intialQueryParams}
   />
@@ -45,12 +47,20 @@ const App = () => (
 
 
 ### WaykeProvider
-| Property          | Type   | Required |
-|-------------------|--------|----------|
-| url               | String | true     |
-| apiKey            | String | true     |
-| ecomUrl           | String | false    |
-| googleMapsApiKey  | String | false    |
+| Property          | Type         | Required |
+|-------------------|--------------|----------|
+| url               | String       | true     |
+| apiKey            | String       | true     |
+| ecomUrl           | String       | false    |
+| googleMapsApiKey  | String       | false    |
+| ecomSettings      | EcomSettings | false    |
+
+#### EcomSettings
+| Property           | Type         | Required |
+|--------------------|--------------|----------|
+| url                | String       | true     |
+| useBankId          | boolean      | false    |
+| displayBankIdAlert | boolean      | false    |
 
 
 Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
