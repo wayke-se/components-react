@@ -25,7 +25,7 @@ const Ecome = ({
 
   const { modelYear, mileage, gearbox, fuelType } = data;
 
-  const imageUrl = media?.[0].files[0].url;
+  const imageUrl = media?.[0]?.files?.[0]?.url;
 
   const ecomData: IEcomExternalProps = {
     vehicle: {

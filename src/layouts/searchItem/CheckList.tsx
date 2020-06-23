@@ -100,7 +100,7 @@ const CheckList = ({ vehicle, toggleEcomModal }: CheckList) => {
               </>
             </CheckMarkListItem>
           ))}
-          {ecommerce?.withHomeDelivery && <CheckMarkListItem>Gratis hemleverans</CheckMarkListItem>}
+          {ecommerce?.withHomeDelivery && <CheckMarkListItem>Hemleverans</CheckMarkListItem>}
         </CheckMarkList>
       </Repeat>
       {ecommerce && ecommerce.enabled && (

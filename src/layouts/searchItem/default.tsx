@@ -34,10 +34,11 @@ import PhoneNumber from '../../components/PhoneNumber';
 import FinancialOptions from '../../components/FinancialOptions';
 import InsuranceOptions from '../../components/InsuranceOptions';
 import Ecome from '../../components/Ecome';
-import ManufacturerPackageOption from '../../components/ManufacturerPackagesOption';
+import ManufacturerPackageOption from './ManufacturerPackagesOption';
 import Map from '../../components/Map';
 import CheckList from './CheckList';
 import Related from './Related';
+import PackageOptions from './PackageOptions';
 
 interface DefaultSerchItemLayoutProps {
   id: string;
@@ -92,6 +93,7 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
     insuranceOptions,
     manufacturer,
     ecommerce,
+    packageOptions,
   } = vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
   const specificationList = getSpecificationList(data);
@@ -236,7 +238,7 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
                     </Repeat>
                   )}
                 </ProductPageMainSection>
-
+                <PackageOptions packageOptions={packageOptions} />
                 <ManufacturerPackageOption packageOption={manufacturer?.packageOption} />
               </ProductPageMain>
             </ProductPage>

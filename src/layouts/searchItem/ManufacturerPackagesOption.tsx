@@ -1,11 +1,11 @@
 import React from 'react';
 import marked from 'marked';
 
-import Repeat from '../Repeat';
-import { ProductPageMainSection } from '../ProductPage';
-import Content from '../Content';
-import { H2, VisualHeading } from '../Heading';
-import LogoBox from '../LogoBox';
+import Repeat from '../../components/Repeat';
+import { ProductPageMainSection } from '../../components/ProductPage';
+import Content from '../../components/Content';
+import { H2, VisualHeading } from '../../components/Heading';
+import LogoBox from '../../components/LogoBox';
 import { SearchItem_vehicle_manufacturer_packageOption } from '../../@types/gql/SearchItem';
 
 interface ManufacturerPackageOption {
