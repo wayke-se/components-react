@@ -56,12 +56,18 @@ const DefaultSearchLayout = ({
           <Container>
             <Result>
               <>
-                {error && <Snackbar severity="error" heading="Ett fel uppstod." />}
+                {error && (
+                  <Snackbar severity="error" icon heading="Ett fel har inträffat">
+                    Vänligen försök igen.
+                  </Snackbar>
+                )}
                 {!error && documents && documents.length > 0 && (
                   <Grid onClickItem={onClickSearchItem} documents={documents} />
                 )}
                 {!error && documents && documents.length === 0 && (
-                  <Snackbar severity="warning" heading="Inga resultat" />
+                  <Snackbar severity="warning" icon heading="Inga resultat">
+                    Det finns inga resultat som matchar din sökning.
+                  </Snackbar>
                 )}
               </>
             </Result>
