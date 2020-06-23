@@ -33,20 +33,17 @@ const App = () => (
 | googleMapsApiKey  | String | false    |
 
 
-Google maps will be used if a googleMapsApiKey is provided, else the map will open in another tab (google maps)
+Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 
 
-## WaykeSearch
+### WaykeSearch
 | Property           | Type              | Default                  | Values                                                                                                                                         |
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
-By default all filters will be visible, but you can provide a list with the following types:
-
-manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear
-
-order have effect
+#### Note
+By default all filters will be visible. If a `filterList` is provided, the order will have effect.
 
 example:
 ```javascript
