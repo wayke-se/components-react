@@ -4,7 +4,7 @@ import { Item, Action, Icon, Label } from './wrapper';
 interface ToggleItemProps {
   title: string;
   value: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
 }
 
 const ToggleItem = ({ title, value, icon }: ToggleItemProps) => {

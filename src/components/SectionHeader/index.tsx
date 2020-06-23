@@ -4,7 +4,7 @@ import { Wrapper, Heading, Action } from './wrapper';
 import { ButtonClear, ButtonContent } from '../Button';
 
 interface Props {
-  children: JSX.Element | JSX.Element[] | string;
+  children: React.ReactNode;
   onClick?: () => void;
   actionTitle?: string;
 }

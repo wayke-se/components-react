@@ -6,10 +6,10 @@ import GlobalStyle from '../layout/global-style';
 import theme from '../layout/theme';
 
 interface ThemeProps {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
-const ThemeProvider = ({ children }: ThemeProps): JSX.Element => (
+const ThemeProvider = ({ children }: ThemeProps) => (
   <ThemeProviderBase theme={theme}>
     <GlobalStyle />
     {children}

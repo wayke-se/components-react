@@ -7,7 +7,7 @@ interface IOptionBox {
   logo?: string;
   logo2x?: string;
   logoAlt?: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
 const OptionBox = ({ logo, logo2x, logoAlt, children }: IOptionBox) => (

@@ -8,7 +8,7 @@ import { SearchContext } from '../context/search-context';
 interface SearchProviderProps {
   url: string;
   apiKey: string;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {

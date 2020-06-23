@@ -7,10 +7,10 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 > & {
   id: string;
-  children: string | JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 };
 
-const InputCheckbox = ({ children, ...props }: Props): JSX.Element => {
+const InputCheckbox = ({ children, ...props }: Props) => {
   const { id } = props;
   return (
     <Wrapper aria-labelledby={id ? `${id}-label` : undefined}>

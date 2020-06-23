@@ -8,7 +8,7 @@ import { RelatedSearchContext } from '../context/related-context';
 interface RelatedSearchProviderProps {
   url: string;
   apiKey: string;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const RelatedSearchProvider = ({ url, apiKey, children }: RelatedSearchProviderProps) => {

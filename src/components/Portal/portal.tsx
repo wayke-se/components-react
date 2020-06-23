@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 export interface IPortal {
   id: string;
-  children: JSX.Element[] | JSX.Element;
+  children: React.ReactNode;
 }
 
 const Portal = ({ id, children }: IPortal) => {

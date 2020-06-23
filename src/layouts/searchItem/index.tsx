@@ -205,9 +205,11 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2
-                      noMargin
-                    >{`Den här bilen finns på vår anläggning i ${branch?.location?.city}`}</H2>
+                    <H2 noMargin>
+                      {branch?.location?.city
+                        ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
+                        : 'Kontakt'}
+                    </H2>
                   </Repeat>
                   <Repeat>
                     <Map position={branch?.location?.position} />
@@ -216,14 +218,16 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                     <ProductPageContentLimit>
                       <Repeat>
                         <TableColumn>
-                          <TableColumnRow>
-                            <TableColumnCell>Adress</TableColumnCell>
-                            <TableColumnCell>
-                              <ButtonInlineBold>
-                                <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
-                              </ButtonInlineBold>
-                            </TableColumnCell>
-                          </TableColumnRow>
+                          {branch?.location?.streetAddress && branch?.location?.city && (
+                            <TableColumnRow>
+                              <TableColumnCell>Adress</TableColumnCell>
+                              <TableColumnCell>
+                                <ButtonInlineBold>
+                                  <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
+                                </ButtonInlineBold>
+                              </TableColumnCell>
+                            </TableColumnRow>
+                          )}
                           <PhoneNumber phoneNumber="031-225566" />
                         </TableColumn>
                       </Repeat>

@@ -6,7 +6,7 @@ interface SettingsProps {
   children: React.ReactNode;
 }
 
-const SettingsProvider = ({ googleMapsApiKey, children }: SettingsProps): JSX.Element => (
+const SettingsProvider = ({ googleMapsApiKey, children }: SettingsProps) => (
   <SettingsContext.Provider value={{ googleMapsApiKey }}>{children}</SettingsContext.Provider>
 );
 
