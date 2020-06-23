@@ -71,7 +71,7 @@ export const dateTimeFormat = {
   DayMonth: 6,
   RelativeFromNow: 7,
 
-  format: (value: string, format: number) => {
+  format: (value: string | Date, format: number) => {
     const date = moment(value).locale('sv');
     switch (format) {
       case dateTimeFormat.DateOnly:

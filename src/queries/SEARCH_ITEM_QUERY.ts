@@ -51,6 +51,7 @@ const SEARCH_ITEM_QUERY = gql`
         }
         title
       }
+      publishedAt
       branch {
         id
         description

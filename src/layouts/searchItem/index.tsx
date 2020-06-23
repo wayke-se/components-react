@@ -24,7 +24,7 @@ import { H1, H2 } from '../../components/Heading';
 import { ButtonPrimary, ButtonContent, ButtonInlineBold } from '../../components/Button';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 import useSearchItem from '../../hooks/useSearchItem';
-import { notEmpty, numberSeparator } from '../../utils/formats';
+import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
 import { PortalNamespace } from '../../components/Portal';
 import PortalElement from '../../components/Portal/portal-element';
 import Modal from '../../components/Modal';
@@ -94,6 +94,7 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
     manufacturer,
     ecommerce,
     packageOptions,
+    publishedAt,
   } = vehicle;
   const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
   const specificationList = getSpecificationList(data);
@@ -182,7 +183,11 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                   <ProductPageMainSection>
                     <Blockquote
                       author={contact && contact.name ? contact.name : null}
-                      date="???"
+                      date={
+                        publishedAt
+                          ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth)
+                          : undefined
+                      }
                       avatar={contact?.avatar || 'https://placehold.it/40x40'}
                     >
                       {!!description && <p>{description}</p>}

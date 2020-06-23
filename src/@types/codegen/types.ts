@@ -7,12 +7,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTime: any;
-  Email: any;
-  PersonalNumber: any;
-  PhoneNumber: any;
-  Time: any;
-  URL: any;
+  DateTime: Date;
+  Email: string;
+  PersonalNumber: string;
+  PhoneNumber: string;
+  Time: string;
+  URL: string;
   VehicleDataPropertyMap: { [key: string]: string | number | boolean };
 };
 

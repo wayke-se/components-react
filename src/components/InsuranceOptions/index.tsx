@@ -37,13 +37,12 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
             {insuranceOptions.map((insuranceOption, index) => (
               <OptionBox
                 key={`${insuranceOption.url}-${index}`}
-                logo={insuranceOption.logotype || 'https://placehold.it/24x24'}
-                logoAlt="Logotyp"
+                logo={insuranceOption.logotype || undefined}
+                logoAlt={insuranceOption.name || 'Logotyp'}
               >
-                <OptionBoxHeading>??? kr/mån</OptionBoxHeading>
+                <OptionBoxHeading>{insuranceOption.name}</OptionBoxHeading>
                 <OptionBoxContent>
                   <p>
-                    {insuranceOption.name}.{' '}
                     <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
                   </p>
                 </OptionBoxContent>

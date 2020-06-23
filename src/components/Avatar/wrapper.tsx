@@ -14,4 +14,8 @@ export const Wrapper = styled.div.attrs(() => ({
   height: ${size(5)};
   border-radius: 50%;
   background-image: ${(props): string => `url(${props.image})`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: ${(props) => props.theme.color.accent};
 `;

@@ -4,9 +4,11 @@ generates:
     plugins:
       - typescript
     config:
-      noHOC: false
-      noComponents: false
-      withHooks: false
       scalars:
         VehicleDataPropertyMap: "{ [key: string]: string | number | boolean }"
-        JSON: "{ [key: string]: any }"
+        DateTime: Date
+        Email: string
+        PersonalNumber: string
+        PhoneNumber: string
+        Time: string
+        URL: string
