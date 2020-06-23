@@ -43,7 +43,7 @@ Google maps will be used if a `googleMapsApiKey` is provided, else the map will 
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
 #### Note
-By default all filters will be visible. If a `filterList` is provided, the order will have effect.
+By default all filters will be visible. If `filterList` is provided, the order will have effect.
 
 example:
 ```javascript
