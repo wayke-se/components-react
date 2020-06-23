@@ -13,7 +13,7 @@ type Props = React.DetailedHTMLProps<
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputText = ({ placeholder, label, value, id, onChange }: Props): JSX.Element => (
+const InputText = ({ placeholder, label, value, id, onChange }: Props) => (
   <Wrapper>
     <Input placeholder={placeholder} value={value} id={id} aria-label={label} onChange={onChange} />
   </Wrapper>

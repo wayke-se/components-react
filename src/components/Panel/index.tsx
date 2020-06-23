@@ -19,8 +19,8 @@ interface IPanelPortal {
   id?: string | null;
   title: string | null;
   onClose: () => void;
-  children: JSX.Element[] | JSX.Element;
-  footer?: JSX.Element[] | JSX.Element;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 const Panel = ({ id, title, footer, onClose, children }: IPanelPortal) => {

@@ -40,12 +40,12 @@ import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';
 
-interface DefaultSerchItemLayoutProps {
+interface DefaultSearchItemLayoutProps {
   id: string;
   onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayoutProps) => {
+const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLayoutProps) => {
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
@@ -205,9 +205,11 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2
-                      noMargin
-                    >{`Den här bilen finns på vår anläggning i ${branch?.location?.city}`}</H2>
+                    <H2 noMargin>
+                      {branch?.location?.city
+                        ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
+                        : 'Kontakt'}
+                    </H2>
                   </Repeat>
                   <Repeat>
                     <Map position={branch?.location?.position} />
@@ -216,14 +218,16 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
                     <ProductPageContentLimit>
                       <Repeat>
                         <TableColumn>
-                          <TableColumnRow>
-                            <TableColumnCell>Adress</TableColumnCell>
-                            <TableColumnCell>
-                              <ButtonInlineBold>
-                                <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
-                              </ButtonInlineBold>
-                            </TableColumnCell>
-                          </TableColumnRow>
+                          {branch?.location?.streetAddress && branch?.location?.city && (
+                            <TableColumnRow>
+                              <TableColumnCell>Adress</TableColumnCell>
+                              <TableColumnCell>
+                                <ButtonInlineBold>
+                                  <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
+                                </ButtonInlineBold>
+                              </TableColumnCell>
+                            </TableColumnRow>
+                          )}
                           <PhoneNumber phoneNumber="031-225566" />
                         </TableColumn>
                       </Repeat>
@@ -264,4 +268,4 @@ const DefaultSerchItemLayout = ({ id, onClickSearchItem }: DefaultSerchItemLayou
   );
 };
 
-export default DefaultSerchItemLayout;
+export default DefaultSearchItemLayout;

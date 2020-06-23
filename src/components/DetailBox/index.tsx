@@ -6,7 +6,7 @@ import { ButtonClear, ButtonContent } from '../Button';
 interface Props {
   heading: string;
   description?: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
 const DetailBox = ({ heading, description, children }: Props) => {

@@ -33,26 +33,31 @@ const App = () => (
 | googleMapsApiKey  | String | false    |
 
 
-Google maps will be used if a googleMapsApiKey is provided, else the map will open in another tab (google maps)
+Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 
 
-## WaykeSearch
-| Property   | Type     | Default                  | Values                                                                                                                                         |
-|------------|----------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterList | String[] | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+### WaykeSearch
+| Property           | Type              | Default                  | Values                                                                                                                                         |
+|--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
-By default all filters will be visible, but you can provide a list with the following types:
-
-manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear
-
-order have effect
+#### Note
+By default all filters will be visible. If `filterList` is provided, the order will have effect.
 
 example:
 ```javascript
 import WaykeSearch { WaykeProvider } from '@wayke-se/components-react'
+
+const initialQueryParams = new URLSearchParams();
+initialQueryParams.set('query', 't roc');
+
 const App = () => (
   <WaykeProvider>
-    <WaykeSearch  filterList={['price', 'modelSeries']}/>
+    <WaykeSearch 
+      filterList={['price', 'modelSeries']}
+      initialQueryParams={initialQueryParams}
+    />
   </WaykeProvider>
 )
 ```

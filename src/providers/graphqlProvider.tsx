@@ -10,7 +10,7 @@ const GraphqlProvider = ({
 }: {
   uri: string;
   useMock?: boolean;
-  children: JSX.Element;
+  children: React.ReactNode;
 }) => {
   const client = new ApolloClient({ uri });
   if (useMock) {

@@ -15,14 +15,19 @@ import { SearchFilterTypes } from '../../@types/filter';
 
 interface DefaultSearchLayoutProps {
   filterList?: SearchFilterTypes[];
+  initialQueryParams?: URLSearchParams;
   onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSearchLayout = ({ filterList, onClickSearchItem }: DefaultSearchLayoutProps) => {
+const DefaultSearchLayout = ({
+  filterList,
+  initialQueryParams,
+  onClickSearchItem,
+}: DefaultSearchLayoutProps) => {
   const { error, documents, queryFilter, onInitialize } = useSearch();
 
   useEffect(() => {
-    onInitialize();
+    onInitialize(initialQueryParams);
   }, []);
 
   const searchQuery = queryFilter.searchParams.get('query');

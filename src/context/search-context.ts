@@ -11,7 +11,7 @@ interface SearchContextProps {
   queryFilter: QueryFilter;
   onFilterUpdate: (nextQuery: string) => void;
   onLoadMore: () => void;
-  onInitialize: () => void;
+  onInitialize: (initialQueryParams?: URLSearchParams) => void;
 }
 
 export const SearchContext = createContext<SearchContextProps>({
@@ -23,5 +23,5 @@ export const SearchContext = createContext<SearchContextProps>({
   queryFilter: { searchParams: new URLSearchParams() },
   onFilterUpdate: (_) => {},
   onLoadMore: () => {},
-  onInitialize: () => {},
+  onInitialize: (_) => {},
 });

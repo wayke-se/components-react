@@ -5,7 +5,7 @@ import { IconInfo } from '../Icon';
 
 interface Props {
   title: string;
-  children: JSX.Element | JSX.Element[] | string;
+  children: React.ReactNode;
 }
 
 const ExtendInfo = ({ title, children }: Props) => {

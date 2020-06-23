@@ -10,7 +10,7 @@ const calculateCurrentFrame = (startFrame: number, delta: number, length: number
 };
 
 type PropsType = {
-  children: JSX.Element[];
+  children: React.ReactNode;
 };
 
 type RotationEvent = any;
@@ -122,7 +122,7 @@ const Rotation = ({ children }: PropsType) => {
       onMouseLeave={onMouseLeave}
     >
       {Children.map(children, (child, i) =>
-        cloneElement(child, {
+        cloneElement(child as React.ReactElement, {
           style: {
             width: '100%',
             display: state.current === i ? 'block' : 'none',

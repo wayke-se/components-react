@@ -17,7 +17,7 @@ type Props = InputProps & {
   id: string;
 };
 
-const InputSearch = ({ placeholder, label, value, id, ...props }: Props): JSX.Element => (
+const InputSearch = ({ placeholder, label, value, id, ...props }: Props) => (
   <Wrapper>
     <Search>
       <Icon htmlFor={id}>

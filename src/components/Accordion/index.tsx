@@ -16,12 +16,12 @@ import { IconChevronDown } from '../Icon';
 export interface IAccordionItem {
   heading: string;
   activeCount?: number;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   isActive?: boolean;
 }
 
 export interface IAccordion {
-  children?: JSX.Element | JSX.Element[];
+  children?: React.ReactNode;
 }
 
 export const AccordionItem = ({ heading, children, activeCount, isActive }: IAccordionItem) => {

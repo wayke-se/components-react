@@ -16,7 +16,7 @@ interface WaykeProviderProps {
   ecomUrl?: string;
   googleMapsApiKey?: string;
   useMock?: boolean;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const WaykeProvider = ({
@@ -27,8 +27,9 @@ const WaykeProvider = ({
   googleMapsApiKey,
   useMock,
   children,
-}: WaykeProviderProps): JSX.Element => {
+}: WaykeProviderProps) => {
   useEcom(ecomUrl);
+
   return (
     <SettingsProvider googleMapsApiKey={googleMapsApiKey}>
       <GraphqlProvider uri={graphQlUrl} useMock={useMock}>

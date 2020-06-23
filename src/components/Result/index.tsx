@@ -20,7 +20,7 @@ import SortSelect, { OptionProps } from '../SortSelect';
 import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
 
 interface Props {
-  children: JSX.Element | JSX.Element[] | false;
+  children: React.ReactNode;
 }
 
 const Result = ({ children }: Props) => {

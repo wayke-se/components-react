@@ -3,9 +3,9 @@ import React from 'react';
 import { Wrapper } from './wrapper';
 
 interface IProps {
-  children?: JSX.Element | JSX.Element[] | string | false;
+  children?: React.ReactNode;
 }
 
-const OverflowBox = ({ children }: IProps): JSX.Element => <Wrapper>{children}</Wrapper>;
+const OverflowBox = ({ children }: IProps) => <Wrapper>{children}</Wrapper>;
 
 export default OverflowBox;

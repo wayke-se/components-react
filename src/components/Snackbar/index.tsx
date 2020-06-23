@@ -8,10 +8,10 @@ interface Props {
   severity?: string;
   icon?: boolean;
   heading?: string;
-  children?: JSX.Element | JSX.Element[] | string;
+  children?: React.ReactNode;
 }
 
-const Snackbar = ({ severity, icon, heading, children }: Props): JSX.Element => {
+const Snackbar = ({ severity, icon, heading, children }: Props) => {
   let iconSelector = <IconInfo block />;
   if (severity === 'error') {
     iconSelector = <IconExclamationCircle block />;
