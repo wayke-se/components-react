@@ -8,7 +8,6 @@ export const Wrapper = styled.div``;
 export const Header = styled.div`
   display: flex;
   align-items: center;
-  line-height: 1;
 `;
 
 export const Title = styled.div``;

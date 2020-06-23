@@ -8,7 +8,6 @@ import Grid from '../../components/Grid';
 import SearchTerm from '../../components/SearchTerm';
 import { PortalNamespace } from '../../components/Portal';
 import PortalElement from '../../components/Portal/portal-element';
-import Repeat from '../../components/Repeat';
 import SearchFilter from '../../components/SearchFilter';
 import Snackbar from '../../components/Snackbar';
 import useSearch from '../../hooks/useSearch';
@@ -36,15 +35,13 @@ const DefaultSearchLayout = ({
   return (
     <>
       <Page>
-        <PageSection large>
+        <PageSection>
           <Container>
-            <Repeat small>
-              <SearchFilter />
-            </Repeat>
+            <SearchFilter />
           </Container>
         </PageSection>
         {searchQuery && (
-          <PageSection large>
+          <PageSection>
             <Container>
               <SearchTerm>{searchQuery}</SearchTerm>
             </Container>
@@ -59,12 +56,18 @@ const DefaultSearchLayout = ({
           <Container>
             <Result>
               <>
-                {error && <Snackbar severity="error" heading="Ett fel uppstod." />}
+                {error && (
+                  <Snackbar severity="error" icon heading="Ett fel har inträffat">
+                    Vänligen försök igen.
+                  </Snackbar>
+                )}
                 {!error && documents && documents.length > 0 && (
                   <Grid onClickItem={onClickSearchItem} documents={documents} />
                 )}
                 {!error && documents && documents.length === 0 && (
-                  <Snackbar severity="warning" heading="Inga resultat" />
+                  <Snackbar severity="warning" icon heading="Inga resultat">
+                    Det finns inga resultat som matchar din sökning.
+                  </Snackbar>
                 )}
               </>
             </Result>
