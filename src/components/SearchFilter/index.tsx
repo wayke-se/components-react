@@ -11,20 +11,28 @@ const SearchFilter = () => {
     []
   );
 
+  const onSearch = useCallback(() => {
+    const nextQuery = new URLSearchParams(queryFilter.searchParams);
+    if (value === nextQuery.get('query')) {
+      return;
+    }
+
+    if (value) {
+      nextQuery.set('query', value);
+    } else {
+      nextQuery.delete('query');
+    }
+
+    onFilterUpdate(nextQuery.toString());
+  }, [queryFilter, value]);
+
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.keyCode === 13) {
-        const nextQuery = new URLSearchParams(queryFilter.searchParams);
-        if (e.currentTarget.value) {
-          nextQuery.set('query', e.currentTarget.value);
-        } else {
-          nextQuery.delete('query');
-        }
-
-        onFilterUpdate(nextQuery.toString());
+        onSearch();
       }
     },
-    [queryFilter]
+    [queryFilter, value]
   );
 
   return (
@@ -32,6 +40,7 @@ const SearchFilter = () => {
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}
+      onSearch={onSearch}
       placeholder="Sök"
       label="Sök"
       id="main-search"

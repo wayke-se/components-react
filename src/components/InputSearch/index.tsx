@@ -15,9 +15,10 @@ type Props = InputProps & {
   label: string;
   value?: string;
   id: string;
+  onSearch: () => void;
 };
 
-const InputSearch = ({ placeholder, label, value, id, ...props }: Props) => (
+const InputSearch = ({ placeholder, label, value, id, onSearch, ...props }: Props) => (
   <Wrapper>
     <Search>
       <Icon htmlFor={id}>
@@ -33,7 +34,7 @@ const InputSearch = ({ placeholder, label, value, id, ...props }: Props) => (
       />
     </Search>
     <Action>
-      <ActionBtn>
+      <ActionBtn onClick={onSearch}>
         <IconSearch block />
       </ActionBtn>
     </Action>
