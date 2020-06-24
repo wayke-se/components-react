@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -13,7 +13,7 @@
     "prepare": "npm run prettify && npm run type-check && npm run lint",
     "gen": "graphql-codegen --config ./codegen.yml"
   },
-  "author": "Peter Johansson",
+  "author": "Ourstudio",
   "license": "MIT",
   "peerDependencies": {
     "@wayke-se/ecom-react": "^3.0.2",
