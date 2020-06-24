@@ -13,7 +13,7 @@ import Map from '../../components/Map/index';
 import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 
-import { Branch, Maybe } from '../../@types/codegen/types';
+import { Branch, Maybe, BranchConnection } from '../../@types/codegen/types';
 import useSessionStorage from '../../hooks/useSessionStorage';
 import useBranch from '../../hooks/useBranch';
 
@@ -32,9 +32,15 @@ const Branch = ({ branch }: BranchProps) => {
     const connections = branch?.connections;
     if ((connections?.length || 0) > 1) {
       const connected = connections?.find((x) => x.id === value);
+      if (!connected) {
+        set((connections as BranchConnection[])[0].id);
+      }
       return connected?.id === branch?.id ? branch : data?.branch;
     } else if ((connections?.length || 0) === 1) {
       const connected = branch?.connections?.[0];
+      if (!connected) {
+        set((connections as BranchConnection[])[0].id);
+      }
       return connected?.id === branch?.id ? branch : data?.branch;
     }
     return branch;
