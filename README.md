@@ -8,6 +8,7 @@ Install
 ```
 
 ```javascript
+import React from 'react';
 import WaykeComposite from '@wayke-se/components-react'
 
 const App = () => (
@@ -22,34 +23,35 @@ const App = () => (
       googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
     }}
   />
-)
+);
 ```
 
 
 ### I only want to use the search component
 
 ```javascript
+import React, { useCallback } from 'react';
 import { WaykeProvider, WaykeSearch } from '@wayke-se/components-react'
 
-const App = () => (
-  <WaykeProvider
-    provider={{
-      graphQlUrl: "https://gql.wayketech.se/query",
-      url: "https://test-ext-api.wayketech.se/vehicles",
-      apiKey: "YOUR_API_KEY",
-      ecomSettings: {
+const App = () => {
+  const onClickSearchItem = useCallback((id: string) => {
+    console.log(id);
+  }, []);
+
+  return (
+    <WaykeProvider
+      graphQlUrl={"https://gql.wayketech.se/query"}
+      url={"https://test-ext-api.wayketech.se/vehicles"}
+      apiKey={"YOUR_API_KEY"}
+      ecomSettings={{
         url: "OPTIONAL_ECOM_URL",
-      },
-      googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
-    }}
-   >
-    <WaykeSearch
-      filterList={filterList}
-      intialQueryParams={intialQueryParams}
-      onClickSearchItem={(id: string) => console.log(id)}
-    />
-  </WaykeProvider>
-)
+      }}
+      googleMapsApiKey={"OPTIONAL_GOOGLE_MAPS_API_KEY"}
+    >
+      <WaykeSearch onClickSearchItem={onClickSearchItem} />
+    </WaykeProvider>
+  );
+};
 ```
 
 ### WaykeComposite
