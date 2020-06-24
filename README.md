@@ -7,27 +7,34 @@ Install
   npm install @wayke-se/components-react
 ```
 
+
+```javascript
+const ProviderSettings = {
+  graphQlUrl: "https://gql.wayketech.se/query",
+  url: "https://test-ext-api.wayketech.se/vehicles",
+  apiKey: "YOUR_API_KEY",
+  ecomSettings: {
+    url: "OPTIONAL_ECOM_URL",
+  },
+  googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
+}
+```
+
 ```javascript
 import React from 'react';
 import WaykeComposite from '@wayke-se/components-react'
 
 const App = () => (
   <WaykeComposite
-    provider={{
-      graphQlUrl: "https://gql.wayketech.se/query",
-      url: "https://test-ext-api.wayketech.se/vehicles",
-      apiKey: "YOUR_API_KEY",
-      ecomSettings: {
-        url: "OPTIONAL_ECOM_URL",
-      },
-      googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
-    }}
+    provider={ProviderSettings}
   />
 );
 ```
 
 
 ### I only want to use the search component
+
+It's recomended to place WaykeProvider close to app-root in order to keep the cache
 
 ```javascript
 import React, { useCallback } from 'react';
@@ -39,15 +46,7 @@ const App = () => {
   }, []);
 
   return (
-    <WaykeProvider
-      graphQlUrl={"https://gql.wayketech.se/query"}
-      url={"https://test-ext-api.wayketech.se/vehicles"}
-      apiKey={"YOUR_API_KEY"}
-      ecomSettings={{
-        url: "OPTIONAL_ECOM_URL",
-      }}
-      googleMapsApiKey={"OPTIONAL_GOOGLE_MAPS_API_KEY"}
-    >
+    <WaykeProvider {...ProviderSettings}>
       <WaykeSearch onClickSearchItem={onClickSearchItem} />
     </WaykeProvider>
   );
@@ -108,6 +107,7 @@ initialQueryParams.set('query', 't roc');
 
 const App = () => (
   <WaykeComposite
+    provider={ProviderSettings}
     composite={{,
       intialQueryParams,
     }}
@@ -123,6 +123,7 @@ import WaykeComposite from '@wayke-se/components-react'
 
 const App = () => (
   <WaykeComposite
+    provider={ProviderSettings}
     composite={{,
       filterList={['price', 'modelSeries']}
     }}
