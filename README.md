@@ -31,7 +31,6 @@ const App = () => (
 );
 ```
 
-
 ### I only want to use the search component
 
 It's recomended to place WaykeProvider close to app-root in order to keep the cache
@@ -92,6 +91,10 @@ const App = ({}) => {
 | hashRoute          | boolean  | false    |                      |
 | onClickSearchItem  | Function | false    | (id: string) => void |
 
+* `id` - Guid that represents a vehicle.
+* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
+* `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
+
 ### WaykeSearch
 | Property           | Type              | Default                  | Values                                                                                                                                         |
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -100,6 +103,11 @@ const App = ({}) => {
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
+* `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
+* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
+* `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
+* `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
+
 ## Types
 
 ### WaykeProviderSettings
@@ -107,11 +115,15 @@ const App = ({}) => {
 |-------------------|--------------|----------|
 | url               | String       | true     |
 | apiKey            | String       | true     |
-| ecomUrl           | String       | false    |
+| graphQlUrl        | String       | true     |
 | googleMapsApiKey  | String       | false    |
 | ecomSettings      | EcomSettings | false    |
 
-Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
+* `url` - Url to Wayke ext-api.
+* `apiKey` - Api key to use with "ayke ext-api.
+* `graphQlUrl` - Url to the GraphQl endpoint.
+* `googleMapsApiKey` - An *optional* flag. Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
+* `ecomSettings` - An *optional* flag. Allow the use of ecom.
 
 ### EcomSettings
 | Property           | Type         | Required |
@@ -120,6 +132,10 @@ Google maps will be used if a `googleMapsApiKey` is provided, else the map will 
 | useBankId          | boolean      | false    |
 | displayBankIdAlert | boolean      | false    |
 
+* `url` - Wayke ecom url.
+* `useBankId`: An *optional* flag. If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
+* `displayBankIdAlert`: An *optional* flag. By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
+
 
 ### WaykeSearchSettings
 | Property           | Type              | Default                  | Values                                                                                                                                         |
@@ -127,16 +143,15 @@ Google maps will be used if a `googleMapsApiKey` is provided, else the map will 
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
-#### Note
-By default all filters will be visible. If `filterList` is provided, the order will have effect.
-
+* `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
+* `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
 
 ### Set initial query filter
 ```javascript
 import WaykeComposite from '@wayke-se/components-react'
 
 const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('query', 't roc');
+initialQueryParams.set('price.min', '2000');
 
 const App = () => (
   <WaykeComposite
