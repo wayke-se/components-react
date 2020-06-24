@@ -11,6 +11,7 @@ import Blockquote from '../../components/Blockquote/index';
 import ExtendContent from '../../components/ExtendContent/index';
 import Gallery from '../../components/Gallery/index';
 import Loader from '../../components/Loader/index';
+import Snackbar from '../../components/Snackbar/index';
 import { Page, PageSection } from '../../components/Page/index';
 import {
   ProductPage,
@@ -24,6 +25,7 @@ import { H1, H2 } from '../../components/Heading/index';
 import {
   ButtonPrimary,
   ButtonContent,
+  ButtonInline,
   ButtonInlineBold,
   ButtonInlineLight,
 } from '../../components/Button/index';
@@ -234,6 +236,15 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                         ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
                         : 'Kontakt'}
                     </H2>
+                  </Repeat>
+                  <Repeat>
+                    <Snackbar heading="Centrallager" severity="warning" icon>
+                      Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar.{' '}
+                      <ButtonInline>
+                        Klicka här för att visa kontaktuppgifter till en annan anläggning
+                      </ButtonInline>
+                      .
+                    </Snackbar>
                   </Repeat>
                   <Repeat>
                     <Map position={branch?.location?.position} />
