@@ -64,6 +64,7 @@ import { WaykeProvider, WaykeSearchItem } from '@wayke-se/components-react'
 const App = ({}) => {
   const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';
 
+  // Optional, get id when related vehicles are clicked
   const onClickSearchItem = useCallback((id: string) => {
     console.log(id);
   }, []);
@@ -97,6 +98,13 @@ const App = ({}) => {
 | url                | String       | true     |
 | useBankId          | boolean      | false    |
 | displayBankIdAlert | boolean      | false    |
+
+#### WaykeSearchItem
+| Property           | Type     | Required | Value                |
+|--------------------|----------|----------|----------------------|
+| id                 | String   | true     |                      |
+| hashRoute          | boolean  | false    |                      |
+| onClickSearchItem  | Function | false    | (id: string) => void |
 
 
 Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
