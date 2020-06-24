@@ -1,28 +1,20 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import Repeat from '../../components/Repeat/index';
 
 import Snackbar from '../../components/Snackbar/index';
-import InputSelect from '../../components/InputSelect/index';
 import { ProductPageContentLimit } from '../../components/ProductPage/index';
 import { H2 } from '../../components/Heading/index';
-import {
-  ButtonPrimary,
-  ButtonContent,
-  ButtonInline,
-  ButtonInlineBold,
-} from '../../components/Button/index';
+import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button/index';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
 
 import OpeningHours from '../../components/OpeningHours/index';
 import PhoneNumber from '../../components/PhoneNumber/index';
 import Map from '../../components/Map/index';
-import Modal from '../../components/Modal/index';
-import Content from '../../components/Content/index';
 
 import { Branch, Maybe, BranchConnection } from '../../@types/codegen/types';
 import useSessionStorage from '../../hooks/useSessionStorage';
 import useBranch from '../../hooks/useBranch';
-import InputLabel from '../../components/InputLabel/index';
+import BranchModal from './BranchModal';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
@@ -30,10 +22,23 @@ interface BranchProps {
 
 const Branch = ({ branch }: BranchProps) => {
   const { value, set } = useSessionStorage('centralStorage');
-  const { data } = useBranch(value);
+  const { data, loading } = useBranch(value);
   const [modal, setModal] = useState(false);
 
-  const toggleModal = useCallback(() => setModal(!modal), [modal]);
+  const openModal = useCallback(() => setModal(true), []);
+  const closeModal = useCallback(() => setModal(false), []);
+
+  const onConfirm = useCallback((id: string) => {
+    if (id) {
+      set(id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (data && modal) {
+      closeModal();
+    }
+  }, [data]);
 
   const selectedBranch = useMemo(() => {
     const connections = branch?.connections;
@@ -56,29 +61,13 @@ const Branch = ({ branch }: BranchProps) => {
   return (
     <>
       {modal && value && (
-        <Modal title="Centrallager" onClose={toggleModal}>
-          <Repeat>
-            <Content>
-              <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>
-            </Content>
-          </Repeat>
-          <Repeat>
-            <InputLabel>Välj anläggning</InputLabel>
-            <InputSelect
-              value={value}
-              onChange={(e) => set(e.currentTarget.value)}
-              options={branch?.connections?.map((x) => ({
-                value: x.id,
-                displayName: x.name,
-              }))}
-            />
-          </Repeat>
-          <Repeat>
-            <ButtonPrimary fullWidth>
-              <ButtonContent>Välj</ButtonContent>
-            </ButtonPrimary>
-          </Repeat>
-        </Modal>
+        <BranchModal
+          loading={loading}
+          value={value}
+          connections={branch?.connections}
+          onConfirm={onConfirm}
+          onClose={closeModal}
+        />
       )}
       <Repeat>
         <H2 noMargin>
@@ -91,7 +80,7 @@ const Branch = ({ branch }: BranchProps) => {
         <Repeat>
           <Snackbar heading="Centrallager" severity="warning" icon>
             Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar.{' '}
-            <ButtonInline onClick={toggleModal}>
+            <ButtonInline onClick={openModal}>
               Klicka här för att visa kontaktuppgifter till en annan anläggning
             </ButtonInline>
             .
