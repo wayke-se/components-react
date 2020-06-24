@@ -4,6 +4,10 @@ export const UtilityTextRight = styled.div`
   text-align: right;
 `;
 
+export const UtilityFontSizeSmall = styled.span`
+  font-size: 0.875rem;
+`;
+
 export const UtilityTextPrimary = styled.span.attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
 }))``;
