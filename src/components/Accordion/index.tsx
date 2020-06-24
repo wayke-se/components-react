@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 import {
   List,
@@ -25,8 +25,8 @@ export interface IAccordion {
 }
 
 export const AccordionItem = ({ heading, children, activeCount, isActive }: IAccordionItem) => {
-  const [extend, setExtend] = React.useState(isActive || false);
-  const onToggleExtend = React.useCallback(() => setExtend(!extend), [extend]);
+  const [extend, setExtend] = useState(isActive || false);
+  const onToggleExtend = useCallback(() => setExtend(!extend), [extend]);
 
   return (
     <Item isOpen={extend}>

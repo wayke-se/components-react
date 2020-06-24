@@ -19,10 +19,11 @@ import { Vehicle } from '../../@types/codegen/types';
 
 interface RelatedProps {
   vehicle: Vehicle;
+  hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({ vehicle, onClickSearchItem }: RelatedProps) => {
+const Related = ({ vehicle, hashRoute, onClickSearchItem }: RelatedProps) => {
   const { loading, response } = useRelatedSearch(vehicle.data.modelYear, vehicle.data.modelSeries);
 
   if (response?.documentList.documents.length === 0) {
@@ -50,7 +51,7 @@ const Related = ({ vehicle, onClickSearchItem }: RelatedProps) => {
                     id={document._id}
                     onClick={onClickSearchItem}
                     title={document.title}
-                    href={`#${document._id}`}
+                    href={hashRoute ? `#${document._id}` : undefined}
                     image={
                       `${document.featuredImage?.files?.[0]?.url}?w=567&q=72` ||
                       'http://placehold.it/600x400'

@@ -7,10 +7,11 @@ import { numberSeparator } from '../../utils/formats';
 
 interface GridProps {
   documents?: Document[];
+  hashRoute?: boolean;
   onClickItem?: (id: string) => void;
 }
 
-const Grid = ({ documents, onClickItem }: GridProps) => {
+const Grid = ({ documents, hashRoute, onClickItem }: GridProps) => {
   if (!documents) {
     return null;
   }
@@ -24,7 +25,7 @@ const Grid = ({ documents, onClickItem }: GridProps) => {
               id={document._id}
               onClick={onClickItem}
               title={document.title}
-              href={`#${document._id}`}
+              href={hashRoute ? `#${document._id}` : undefined}
               image={
                 `${document.featuredImage?.files?.[0]?.url}?w=567&q=72` ||
                 'http://placehold.it/600x400'
