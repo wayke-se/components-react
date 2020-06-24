@@ -21,8 +21,15 @@ import {
   ProductPageContentLimit,
 } from '../../components/ProductPage/index';
 import { H1, H2 } from '../../components/Heading/index';
-import { ButtonPrimary, ButtonContent, ButtonInlineBold } from '../../components/Button/index';
+import {
+  ButtonPrimary,
+  ButtonContent,
+  ButtonInlineBold,
+  ButtonInlineLight,
+} from '../../components/Button/index';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
+import { UtilityFontSizeSmall } from '../../components/Utility/index';
+import { IconChevronLeft } from '../../components/Icon/index';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
 import { PortalNamespace } from '../../components/Portal/index';
@@ -126,6 +133,16 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
             <ProductPage>
               <ProductPageAside>
                 <ProductPageAsideSection mobileOrder={1}>
+                  <Repeat>
+                    <UtilityFontSizeSmall>
+                      <ButtonInlineLight as="a" href="#" title="Tillbaka till bilsök">
+                        <ButtonContent>
+                          <IconChevronLeft block />
+                        </ButtonContent>
+                        <ButtonContent>Tillbaka till bilsök</ButtonContent>
+                      </ButtonInlineLight>
+                    </UtilityFontSizeSmall>
+                  </Repeat>
                   {manufacturer?.logotype && (
                     <Repeat>
                       <LogoBox logo={manufacturer.logotype} alt={manufacturer.name} />

@@ -161,7 +161,7 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
 export const ButtonInline = styled(ButtonReset).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text wayke__font--regular',
 }))`
-  display: inline;
+  display: inline-flex;
   vertical-align: baseline;
   text-align: left;
   text-decoration: underline;
@@ -174,11 +174,24 @@ export const ButtonInline = styled(ButtonReset).attrs(() => ({
 export const ButtonInlineBold = styled(ButtonReset).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text wayke__font--bold',
 }))`
-  display: inline;
+  display: inline-flex;
   vertical-align: baseline;
   text-align: left;
 
   :hover {
     text-decoration: underline;
+  }
+`;
+
+export const ButtonInlineLight = styled(ButtonReset).attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-text wayke__font--regular',
+}))`
+  display: inline-flex;
+  vertical-align: baseline;
+  text-align: left;
+  text-decoration: none;
+
+  :not(:hover) {
+    color: ${(props) => props.theme.color.textDarkLighten};
   }
 `;
