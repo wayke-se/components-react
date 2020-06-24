@@ -30,14 +30,10 @@ const Branch = ({ branch }: BranchProps) => {
 
   const selectedBranch = useMemo(() => {
     const connections = branch?.connections;
-    if ((connections?.length || 0) > 1) {
-      const connected = connections?.find((x) => x.id === value);
-      if (!connected) {
-        set((connections as BranchConnection[])[0].id);
-      }
-      return connected?.id === branch?.id ? branch : data?.branch;
-    } else if ((connections?.length || 0) === 1) {
-      const connected = branch?.connections?.[0];
+    const connectionsLength = connections?.length || 0;
+    if (connectionsLength > 0) {
+      const connected =
+        connectionsLength > 1 ? connections?.find((x) => x.id === value) : branch?.connections?.[0];
       if (!connected) {
         set((connections as BranchConnection[])[0].id);
       }
