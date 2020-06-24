@@ -77,11 +77,30 @@ const App = ({}) => {
 };
 ```
 
+## Components
+
 ### WaykeComposite
 | Property          | Type                   | Required |
 |-------------------|------------------------|----------|
 | provider          | WaykeProviderSettings  | true     |
 | composite         | WaykeSearchSettings    | false    |
+
+### WaykeSearchItem
+| Property           | Type     | Required | Value                |
+|--------------------|----------|----------|----------------------|
+| id                 | String   | true     |                      |
+| hashRoute          | boolean  | false    |                      |
+| onClickSearchItem  | Function | false    | (id: string) => void |
+
+### WaykeSearch
+| Property           | Type              | Default                  | Values                                                                                                                                         |
+|--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| onClickSearchItem  | Function          | undefined                | (id: string) => void                                                                                                                           |
+| hashRoute          | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
+| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+
+## Types
 
 ### WaykeProviderSettings
 | Property          | Type         | Required |
@@ -94,19 +113,12 @@ const App = ({}) => {
 
 Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 
-#### EcomSettings
+### EcomSettings
 | Property           | Type         | Required |
 |--------------------|--------------|----------|
 | url                | String       | true     |
 | useBankId          | boolean      | false    |
 | displayBankIdAlert | boolean      | false    |
-
-#### WaykeSearchItem
-| Property           | Type     | Required | Value                |
-|--------------------|----------|----------|----------------------|
-| id                 | String   | true     |                      |
-| hashRoute          | boolean  | false    |                      |
-| onClickSearchItem  | Function | false    | (id: string) => void |
 
 
 ### WaykeSearchSettings
@@ -114,16 +126,6 @@ Google maps will be used if a `googleMapsApiKey` is provided, else the map will 
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-
-
-### WaykeSearch
-| Property           | Type              | Default                  | Values                                                                                                                                         |
-|--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| onClickSearchItem  | Function          | undefined                | (id: string) => void                                                                                                                           |
-| hashRoute          | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
-| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
-| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-
 
 #### Note
 By default all filters will be visible. If `filterList` is provided, the order will have effect.
