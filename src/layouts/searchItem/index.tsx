@@ -11,7 +11,6 @@ import Blockquote from '../../components/Blockquote/index';
 import ExtendContent from '../../components/ExtendContent/index';
 import Gallery from '../../components/Gallery/index';
 import Loader from '../../components/Loader/index';
-import Snackbar from '../../components/Snackbar/index';
 import { Page, PageSection } from '../../components/Page/index';
 import {
   ProductPage,
@@ -19,17 +18,9 @@ import {
   ProductPageAside,
   ProductPageMain,
   ProductPageAsideSection,
-  ProductPageContentLimit,
 } from '../../components/ProductPage/index';
 import { H1, H2 } from '../../components/Heading/index';
-import {
-  ButtonPrimary,
-  ButtonContent,
-  ButtonInline,
-  ButtonInlineBold,
-  ButtonInlineLight,
-} from '../../components/Button/index';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
+import { ButtonPrimary, ButtonContent, ButtonInlineLight } from '../../components/Button/index';
 import { UtilityFontSizeSmall } from '../../components/Utility/index';
 import { IconChevronLeft } from '../../components/Icon/index';
 import useSearchItem from '../../hooks/useSearchItem';
@@ -38,16 +29,14 @@ import { PortalNamespace } from '../../components/Portal/index';
 import PortalElement from '../../components/Portal/portal-element';
 import Modal from '../../components/Modal/index';
 import { getSpecificationList } from '../../utils/specification';
-import OpeningHours from '../../components/OpeningHours/index';
-import PhoneNumber from '../../components/PhoneNumber/index';
 import FinancialOptions from '../../components/FinancialOptions/index';
 import InsuranceOptions from '../../components/InsuranceOptions/index';
 import Ecome from '../../components/Ecome/index';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
-import Map from '../../components/Map/index';
 import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';
+import Branch from './Branch';
 
 interface WaykeSearchItemProps {
   id: string;
@@ -231,47 +220,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                 )}
 
                 <ProductPageMainSection>
-                  <Repeat>
-                    <H2 noMargin>
-                      {branch?.location?.city
-                        ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
-                        : 'Kontakt'}
-                    </H2>
-                  </Repeat>
-                  <Repeat>
-                    <Snackbar heading="Centrallager" severity="warning" icon>
-                      Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar.{' '}
-                      <ButtonInline>
-                        Klicka här för att visa kontaktuppgifter till en annan anläggning
-                      </ButtonInline>
-                      .
-                    </Snackbar>
-                  </Repeat>
-                  <Repeat>
-                    <Map position={branch?.location?.position} />
-                  </Repeat>
-                  <Repeat>
-                    <ProductPageContentLimit>
-                      <Repeat>
-                        <TableColumn>
-                          {branch?.location?.streetAddress && branch?.location?.city && (
-                            <TableColumnRow>
-                              <TableColumnCell>Adress</TableColumnCell>
-                              <TableColumnCell>
-                                <ButtonInlineBold>
-                                  <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
-                                </ButtonInlineBold>
-                              </TableColumnCell>
-                            </TableColumnRow>
-                          )}
-                          <PhoneNumber phoneNumber="031-225566" />
-                        </TableColumn>
-                      </Repeat>
-                      <Repeat>
-                        <OpeningHours openingHours={branch?.openingHours} />
-                      </Repeat>
-                    </ProductPageContentLimit>
-                  </Repeat>
+                  <Branch branch={branch} />
                   {ecommerce && ecommerce.enabled && (
                     <Repeat>
                       <ButtonPrimary title="Köp bilen online" onClick={toggleEcomModal}>

@@ -7,7 +7,6 @@ Install
   npm install @wayke-se/components-react
 ```
 
-
 ```javascript
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
