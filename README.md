@@ -9,7 +9,7 @@ Install
 
 
 ```javascript
-const ProviderSettings = {
+const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
   url: "https://test-ext-api.wayketech.se/vehicles",
   apiKey: "YOUR_API_KEY",
@@ -78,12 +78,12 @@ const App = ({}) => {
 ```
 
 ### WaykeComposite
-| Property          | Type                | Required |
-|-------------------|---------------------|----------|
-| provider          | WaykeProviderProps  | true     |
-| composite         | WaykeSearchProps    | false    |
+| Property          | Type                   | Required |
+|-------------------|------------------------|----------|
+| provider          | WaykeProviderSettings  | true     |
+| composite         | WaykeSearchSettings    | false    |
 
-### WaykeProvider (WaykeProviderProps)
+### WaykeProviderSettings
 | Property          | Type         | Required |
 |-------------------|--------------|----------|
 | url               | String       | true     |
@@ -91,6 +91,8 @@ const App = ({}) => {
 | ecomUrl           | String       | false    |
 | googleMapsApiKey  | String       | false    |
 | ecomSettings      | EcomSettings | false    |
+
+Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 
 #### EcomSettings
 | Property           | Type         | Required |
@@ -107,9 +109,7 @@ const App = ({}) => {
 | onClickSearchItem  | Function | false    | (id: string) => void |
 
 
-Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
-
-### WaykeSearchProps
+### WaykeSearchSettings
 | Property           | Type              | Default                  | Values                                                                                                                                         |
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |

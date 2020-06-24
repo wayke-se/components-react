@@ -13,12 +13,15 @@ import Snackbar from '../../components/Snackbar/index';
 import useSearch from '../../hooks/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 
-interface WaykeSearchProps {
+interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams;
+}
+
+type WaykeSearchProps = WaykeSearchSettings & {
   hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
-}
+};
 
 const WaykeSearch = ({
   filterList,

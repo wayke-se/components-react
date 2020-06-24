@@ -15,14 +15,17 @@ export interface EcomSettings {
   displayBankIdAlert?: boolean;
 }
 
-export interface WaykeProviderProps {
+export interface WaykeProviderSettings {
   url: string;
   apiKey: string;
   graphQlUrl: string;
   ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;
-  children?: React.ReactNode;
 }
+
+export type WaykeProviderProps = WaykeProviderSettings & {
+  children?: React.ReactNode;
+};
 
 const WaykeProvider = ({
   url,
