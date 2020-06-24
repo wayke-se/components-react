@@ -2,9 +2,15 @@ import React, { useState, useCallback, useMemo } from 'react';
 import Repeat from '../../components/Repeat/index';
 
 import Snackbar from '../../components/Snackbar/index';
+import InputSelect from '../../components/InputSelect/index';
 import { ProductPageContentLimit } from '../../components/ProductPage/index';
 import { H2 } from '../../components/Heading/index';
-import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button/index';
+import {
+  ButtonPrimary,
+  ButtonContent,
+  ButtonInline,
+  ButtonInlineBold,
+} from '../../components/Button/index';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
 
 import OpeningHours from '../../components/OpeningHours/index';
@@ -16,6 +22,7 @@ import Content from '../../components/Content/index';
 import { Branch, Maybe, BranchConnection } from '../../@types/codegen/types';
 import useSessionStorage from '../../hooks/useSessionStorage';
 import useBranch from '../../hooks/useBranch';
+import InputLabel from '../../components/InputLabel';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
@@ -50,14 +57,31 @@ const Branch = ({ branch }: BranchProps) => {
     <>
       {modal && (
         <Modal title="Centrallager" onClose={toggleModal}>
-          <Content>
-            <p>Välj branch</p>
-            {branch?.connections.map((b, index) => (
-              <li key={b.name || index} onClick={() => set(b.id)}>
-                {b.name} {value === b.id ? 'Vald' : ''}
-              </li>
-            ))}
-          </Content>
+          <Repeat>
+            <Content>
+              <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>
+            </Content>
+          </Repeat>
+          <Repeat>
+            <InputLabel>Välj anläggning</InputLabel>
+            <InputSelect
+              options={[
+                {
+                  value: 'item1',
+                  displayName: 'Item 1',
+                },
+                {
+                  value: 'item1',
+                  displayName: 'Item 1',
+                },
+              ]}
+            />
+          </Repeat>
+          <Repeat>
+            <ButtonPrimary fullWidth>
+              <ButtonContent>Välj</ButtonContent>
+            </ButtonPrimary>
+          </Repeat>
         </Modal>
       )}
       <Repeat>
