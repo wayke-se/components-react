@@ -13,17 +13,19 @@ import Snackbar from '../../components/Snackbar/index';
 import useSearch from '../../hooks/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 
-interface DefaultSearchLayoutProps {
+interface WaykeSearchProps {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams;
+  hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSearchLayout = ({
+const WaykeSearch = ({
   filterList,
   initialQueryParams,
+  hashRoute,
   onClickSearchItem,
-}: DefaultSearchLayoutProps) => {
+}: WaykeSearchProps) => {
   const { error, documents, queryFilter, onInitialize } = useSearch();
 
   useEffect(() => {
@@ -62,7 +64,11 @@ const DefaultSearchLayout = ({
                   </Snackbar>
                 )}
                 {!error && documents && documents.length > 0 && (
-                  <Grid onClickItem={onClickSearchItem} documents={documents} />
+                  <Grid
+                    hashRoute={hashRoute}
+                    onClickItem={onClickSearchItem}
+                    documents={documents}
+                  />
                 )}
                 {!error && documents && documents.length === 0 && (
                   <Snackbar severity="warning" icon heading="Inga resultat">
@@ -79,4 +85,4 @@ const DefaultSearchLayout = ({
   );
 };
 
-export default DefaultSearchLayout;
+export default WaykeSearch;

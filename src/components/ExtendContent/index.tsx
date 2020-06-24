@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { Wrapper, Extend, Action } from './wrapper';
 import { ButtonClear, ButtonContent } from '../Button/index';
@@ -9,8 +9,8 @@ interface Props {
 }
 
 const ExtendContent = ({ children, actionTitle }: Props) => {
-  const [extend, setExtend] = React.useState(false);
-  const onExtend = React.useCallback(() => setExtend(true), [extend]);
+  const [extend, setExtend] = useState(false);
+  const onExtend = useCallback(() => setExtend(true), []);
 
   return (
     <Wrapper>

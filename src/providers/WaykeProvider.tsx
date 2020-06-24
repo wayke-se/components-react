@@ -22,7 +22,7 @@ export interface WaykeProviderProps {
   ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;
   useMock?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const WaykeProvider = ({

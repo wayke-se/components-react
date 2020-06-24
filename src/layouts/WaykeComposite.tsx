@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
-import DefaultSearchLayout from './search/index';
-import DefaultSearchItemLayout from './searchItem/index';
+import WaykeSearch from './search/index';
+import WaykeSearchItem from './searchItem/index';
 import useHashGuid from '../hooks/useHashGuid';
 import { SearchFilterTypes } from '../@types/filter';
 
-export interface BaseLayoutProps {
+export interface WaykeCompositeProps {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams;
 }
 
-const BaseLayout = ({ filterList, initialQueryParams }: BaseLayoutProps) => {
+const WaykeComposite = ({ filterList, initialQueryParams }: WaykeCompositeProps) => {
   const id = useHashGuid();
   const onClickSearchItem = useCallback(() => {
     // track id
@@ -18,16 +18,17 @@ const BaseLayout = ({ filterList, initialQueryParams }: BaseLayoutProps) => {
   return (
     <>
       {id ? (
-        <DefaultSearchItemLayout id={id} onClickSearchItem={onClickSearchItem} />
+        <WaykeSearchItem id={id} />
       ) : (
-        <DefaultSearchLayout
+        <WaykeSearch
           filterList={filterList}
           onClickSearchItem={onClickSearchItem}
           initialQueryParams={initialQueryParams}
+          hashRoute
         />
       )}
     </>
   );
 };
 
-export default BaseLayout;
+export default WaykeComposite;

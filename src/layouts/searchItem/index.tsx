@@ -40,12 +40,13 @@ import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';
 
-interface DefaultSearchItemLayoutProps {
+interface WaykeSearchItemProps {
   id: string;
+  hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLayoutProps) => {
+const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemProps) => {
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
@@ -188,7 +189,7 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                           ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth)
                           : undefined
                       }
-                      avatar={contact?.avatar || 'https://placehold.it/40x40'}
+                      avatar={contact?.avatar || undefined}
                     >
                       {!!description && <p>{description}</p>}
                     </Blockquote>
@@ -255,7 +256,7 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
             </ProductPage>
           </Container>
         </PageSection>
-        <Related vehicle={vehicle} onClickSearchItem={onClickSearchItem} />
+        <Related vehicle={vehicle} hashRoute={hashRoute} onClickSearchItem={onClickSearchItem} />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>
@@ -273,4 +274,4 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
   );
 };
 
-export default DefaultSearchItemLayout;
+export default WaykeSearchItem;

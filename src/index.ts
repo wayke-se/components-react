@@ -1,7 +1,9 @@
-import BaseLayout from './layouts/base';
+// import WaykeComposite from './layouts/WaykeComposite';
+import WaykeSearch from './layouts/search/index';
+import WaykeSearchItem from './layouts/searchItem/index';
 import WaykeProvider from './providers/WaykeProvider';
-import BaseLayoutWithProvider from './layouts/baseWithProvider';
+import WaykeComposite from './layouts/WaykeCompositeWithProvider';
 
-export { WaykeProvider, BaseLayoutWithProvider as WaykeSearchWithProvider };
+export { WaykeProvider, WaykeSearch, WaykeSearchItem };
 
-export default BaseLayout;
+export default WaykeComposite;

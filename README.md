@@ -7,44 +7,56 @@ Install
   npm install @wayke-se/components-react
 ```
 
-
 ```javascript
-import WaykeSearch { WaykeProvider } from '@wayke-se/components-react'
+import WaykeComposite from '@wayke-se/components-react'
 
 const App = () => (
-  <WaykeProvider
-    url="https://test-ext-api.wayketech.se/vehicles"
-    apiKey="YOUR_API_KEY"
-    ecomUrl="OPTIONAL_ECOM_URL"
-    googleMapsApiKey="OPTIONAL_GOOGLE_MAPS_API_KEY"
-    ecomSettings={ecomSettings}
-  >
-    <WaykeSearch />
-  </WaykeProvider>
-)
-```
-
-Or
-
-```javascript
-import { WaykeSearchWithProvider } from '@wayke-se/components-react'
-
-const filterList = [...]
-const intialQueryParams = new URLSearchParams();
-
-const App = () => (
-  <WaykeSearchWithProvider
-    url="https://test-ext-api.wayketech.se/vehicles"
-    apiKey="YOUR_API_KEY"
-    ecomUrl="OPTIONAL_ECOM_URL"
-    googleMapsApiKey="OPTIONAL_GOOGLE_MAPS_API_KEY"
-    ecomSettings={ecomSettings}
-    filterList={filterList}
-    initialQueryParams={intialQueryParams}
+  <WaykeComposite
+    provider={{
+      graphQlUrl: "https://gql.wayketech.se/query",
+      url: "https://test-ext-api.wayketech.se/vehicles",
+      apiKey: "YOUR_API_KEY",
+      ecomSettings: {
+        url: "OPTIONAL_ECOM_URL",
+      },
+      googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
+    }}
   />
 )
 ```
 
+
+### I only want to use the search component
+
+```javascript
+import { WaykeProvider, WaykeSearch } from '@wayke-se/components-react'
+
+const App = () => (
+  <WaykeProvider
+    provider={{
+      graphQlUrl: "https://gql.wayketech.se/query",
+      url: "https://test-ext-api.wayketech.se/vehicles",
+      apiKey: "YOUR_API_KEY",
+      ecomSettings: {
+        url: "OPTIONAL_ECOM_URL",
+      },
+      googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
+    }}
+   >
+    <WaykeSearch
+      filterList={filterList}
+      intialQueryParams={intialQueryParams}
+      onClickSearchItem={(id: string) => console.log(id)}
+    />
+  </WaykeProvider>
+)
+```
+
+### WaykeComposite
+| Property          | Type          | Required |
+|-------------------|---------------|----------|
+| provider          | WaykeProvider | true     |
+| base              | WaykeSearch   | true     |
 
 ### WaykeProvider
 | Property          | Type         | Required |
@@ -65,33 +77,45 @@ const App = () => (
 
 Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 
-
 ### WaykeSearch
 | Property           | Type              | Default                  | Values                                                                                                                                         |
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
-### WaykeSearchWithProvider
-Consumes both properties from `WaykeProvider` and `WaykeSearch`
 
 #### Note
 By default all filters will be visible. If `filterList` is provided, the order will have effect.
 
-example:
+
+### Set initial query filter
 ```javascript
-import WaykeSearch { WaykeProvider } from '@wayke-se/components-react'
+import WaykeComposite from '@wayke-se/components-react'
 
 const initialQueryParams = new URLSearchParams();
 initialQueryParams.set('query', 't roc');
 
 const App = () => (
-  <WaykeProvider>
-    <WaykeSearch 
+  <WaykeComposite
+    base={{,
+      intialQueryParams,
+    }}
+  />
+)
+```
+
+### Select only some of the filters
+Order will have effect
+
+```javascript
+import WaykeComposite from '@wayke-se/components-react'
+
+const App = () => (
+  <WaykeComposite
+    base={{,
       filterList={['price', 'modelSeries']}
-      initialQueryParams={initialQueryParams}
-    />
-  </WaykeProvider>
+    }}
+  />
 )
 ```
 
