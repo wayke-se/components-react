@@ -13,6 +13,10 @@
     "prepare": "npm run prettify && npm run type-check && npm run lint",
     "gen": "graphql-codegen --config ./codegen.yml"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wayke/components-react.git"
+  },
   "author": "Ourstudio",
   "license": "MIT",
   "peerDependencies": {
