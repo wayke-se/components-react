@@ -22,7 +22,7 @@ import Content from '../../components/Content/index';
 import { Branch, Maybe, BranchConnection } from '../../@types/codegen/types';
 import useSessionStorage from '../../hooks/useSessionStorage';
 import useBranch from '../../hooks/useBranch';
-import InputLabel from '../../components/InputLabel';
+import InputLabel from '../../components/InputLabel/index';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
@@ -55,7 +55,7 @@ const Branch = ({ branch }: BranchProps) => {
 
   return (
     <>
-      {modal && (
+      {modal && value && (
         <Modal title="Centrallager" onClose={toggleModal}>
           <Repeat>
             <Content>
@@ -65,16 +65,12 @@ const Branch = ({ branch }: BranchProps) => {
           <Repeat>
             <InputLabel>Välj anläggning</InputLabel>
             <InputSelect
-              options={[
-                {
-                  value: 'item1',
-                  displayName: 'Item 1',
-                },
-                {
-                  value: 'item1',
-                  displayName: 'Item 1',
-                },
-              ]}
+              value={value}
+              onChange={(e) => set(e.currentTarget.value)}
+              options={branch?.connections?.map((x) => ({
+                value: x.id,
+                displayName: x.name,
+              }))}
             />
           </Repeat>
           <Repeat>

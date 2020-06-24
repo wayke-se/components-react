@@ -5,12 +5,12 @@ import { IconChevronDown } from '../Icon/index';
 
 export interface OptionProps {
   value: number | string;
-  displayName?: number | string;
+  displayName?: number | string | null;
 }
 
 interface Props {
   value?: string | number;
-  options: OptionProps[];
+  options?: OptionProps[];
   unit?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -18,7 +18,7 @@ interface Props {
 const InputSelect = ({ value, options, onChange, unit }: Props) => (
   <Wrapper>
     <Select value={value} onChange={onChange}>
-      {options.map((option) => (
+      {options?.map((option) => (
         <Option key={option.value} value={option.value}>
           {option.displayName || option.value}
           {unit ? ` ${unit}` : ''}
