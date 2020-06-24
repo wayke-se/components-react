@@ -164,9 +164,11 @@ const DefaultSearchItemLayout = ({ id, onClickSearchItem }: DefaultSearchItemLay
                 </ProductPageAsideSection>
               </ProductPageAside>
               <ProductPageMain>
-                <ProductPageAsideSection mobileOrder={3}>
-                  <Gallery media={media} />
-                </ProductPageAsideSection>
+                {media && media.length > 0 && (
+                  <ProductPageAsideSection mobileOrder={3}>
+                    <Gallery media={media} />
+                  </ProductPageAsideSection>
+                )}
 
                 <ProductPageMainSection>
                   <Repeat>
