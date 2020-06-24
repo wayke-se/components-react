@@ -55,12 +55,12 @@ const App = () => {
 ```
 
 ### WaykeComposite
-| Property          | Type          | Required |
-|-------------------|---------------|----------|
-| provider          | WaykeProvider | true     |
-| base              | WaykeSearch   | true     |
+| Property          | Type                | Required |
+|-------------------|---------------------|----------|
+| provider          | WaykeProviderProps  | true     |
+| composite         | WaykeSearchProps    | false    |
 
-### WaykeProvider
+### WaykeProvider (WaykeProviderProps)
 | Property          | Type         | Required |
 |-------------------|--------------|----------|
 | url               | String       | true     |
@@ -79,9 +79,18 @@ const App = () => {
 
 Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 
+### WaykeSearchProps
+| Property           | Type              | Default                  | Values                                                                                                                                         |
+|--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+
+
 ### WaykeSearch
 | Property           | Type              | Default                  | Values                                                                                                                                         |
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| onClickSearchItem  | Function          | undefined                | (id: string) => void                                                                                                                           |
+| hashRoute          | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 | filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
@@ -99,7 +108,7 @@ initialQueryParams.set('query', 't roc');
 
 const App = () => (
   <WaykeComposite
-    base={{,
+    composite={{,
       intialQueryParams,
     }}
   />
@@ -114,7 +123,7 @@ import WaykeComposite from '@wayke-se/components-react'
 
 const App = () => (
   <WaykeComposite
-    base={{,
+    composite={{,
       filterList={['price', 'modelSeries']}
     }}
   />

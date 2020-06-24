@@ -1,16 +1,16 @@
 import React from 'react';
 
 import WaykeProvider, { WaykeProviderProps } from '../providers/WaykeProvider';
-import BaseLayout, { WaykeCompositeProps } from './WaykeComposite';
+import WaykeComposite, { WaykeCompositeProps } from './WaykeComposite';
 
 interface WaykeCompositeWithProviderProps {
   provider: WaykeProviderProps;
-  base?: WaykeCompositeProps;
+  composite?: WaykeCompositeProps;
 }
 
-const WaykeCompositeWithProvider = ({ provider, base }: WaykeCompositeWithProviderProps) => (
+const WaykeCompositeWithProvider = ({ provider, composite }: WaykeCompositeWithProviderProps) => (
   <WaykeProvider {...provider}>
-    <BaseLayout {...base} />
+    <WaykeComposite {...composite} />
   </WaykeProvider>
 );
 
