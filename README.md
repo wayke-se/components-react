@@ -53,6 +53,29 @@ const App = () => {
 };
 ```
 
+### I only want to use the Search Item component
+
+It's recomended to place WaykeProvider close to app-root in order to keep the cache
+
+```javascript
+import React, { useCallback } from 'react';
+import { WaykeProvider, WaykeSearchItem } from '@wayke-se/components-react'
+
+const App = ({}) => {
+  const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';
+
+  const onClickSearchItem = useCallback((id: string) => {
+    console.log(id);
+  }, []);
+
+  return (
+    <WaykeProvider {...ProviderSettings}>
+      <WaykeSearchItem id={id} onClickSearchItem={onClickSearchItem} />
+    </WaykeProvider>
+  );
+};
+```
+
 ### WaykeComposite
 | Property          | Type                | Required |
 |-------------------|---------------------|----------|
