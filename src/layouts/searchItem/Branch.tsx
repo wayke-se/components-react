@@ -62,7 +62,7 @@ const Branch = ({ branch }: BranchProps) => {
               <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>
             </Content>
           </Repeat>
-          <Repeat>
+          <Repeat tiny>
             <InputLabel>Välj anläggning</InputLabel>
             <InputSelect
               value={value}
