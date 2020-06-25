@@ -92,9 +92,6 @@
         "@pika/plugin-build-web"
       ],
       [
-        "@pika/plugin-bundle-web"
-      ],
-      [
         "@pika/plugin-build-umd"
       ],
       [
