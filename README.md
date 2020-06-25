@@ -178,6 +178,99 @@ const App = () => (
 )
 ```
 
+## Theme
+It is possible to apply a custom theme using CSS. The things that can be styled are:
+- Brand color
+- Font (regular)
+- Font (bold)
+
+To style the components, copy the following snippet into your CSS file and modify are your needs.
+
+```css
+/* === Color === */
+
+/*
+  Primary (background-color)
+  Used to add primary background-color to elements. Should also include
+  a color for text placed on top of the primary color.
+*/
+.wayke__theme.wayke__color--primary-bg {
+  background-color: #ff5a1c;
+  color: #fff;
+}
+
+/*
+  Primary (text color)
+  Used to add primary color to text. Make sure to add the same color as
+  in the background-color selector above.
+*/
+.wayke__theme.wayke__color--primary-text {
+  color: #ff5a1c;
+}
+
+/* === Font === */
+
+/*
+  Regular
+  This is the regular font used on most text elements. It is recommended
+  to use a light (300) or regular (400) font for this type.
+*/
+.wayke__theme.wayke__font--regular {
+  font-family: sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
+}
+
+/*
+  Bold
+  This font will be applied to headings and some other elements using
+  the same styling.
+*/
+.wayke__theme.wayke__font--bold {
+  font-family: sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
+}
+```
+
+...or if you want to use it as Sass (scss):
+
+```scss
+.wayke__theme {
+  $c-primary: #ff5a1c;
+  $c-primaryText: #fff; // Text placed on top of $c-primary
+
+  &.wayke__color {
+    &--primary-bg {
+      background-color: $c-primary;
+      color: $c-primaryText;
+    }
+
+    &--primary-text {
+      color: $c-primary;
+    }
+  }
+
+  &.wayke__font {
+    &--regular {
+      font-family: sans-serif;
+      font-weight: 300;
+    }
+
+    &--bold {
+      font-family: sans-serif;
+      font-weight: 700;
+    }
+  }
+}
+```
+
+It is highly recommended to *NOT* add or remove any properties defined above in the color selectors. However, since fonts usually requires more configuration we encourage you to add the necessary font styling required to match your current profile. If you add new properties to the font selectors, please be careful and ensure everything looks as intended before going into production.
+
 ## Run example from repo
 This repository contains a example app that uses @wayke-se/components-react.
 
