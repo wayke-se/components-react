@@ -8,6 +8,7 @@ import '@wayke-se/ecom-react/assets/styles/default.css';
 import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
 import SearchSearchProvider from './relatedSearchProvider';
+import CentralStorageProvider from './centralStorageProvider';
 
 export interface EcomSettings {
   url: string;
@@ -39,13 +40,15 @@ const WaykeProvider = ({
 
   return (
     <SettingsProvider googleMapsApiKey={googleMapsApiKey} ecomSettings={ecomSettings}>
-      <GraphqlProvider uri={graphQlUrl}>
-        <SearchProvider url={url} apiKey={apiKey}>
-          <SearchSearchProvider url={url} apiKey={apiKey}>
-            <Theme>{children}</Theme>
-          </SearchSearchProvider>
-        </SearchProvider>
-      </GraphqlProvider>
+      <CentralStorageProvider>
+        <GraphqlProvider uri={graphQlUrl}>
+          <SearchProvider url={url} apiKey={apiKey}>
+            <SearchSearchProvider url={url} apiKey={apiKey}>
+              <Theme>{children}</Theme>
+            </SearchSearchProvider>
+          </SearchProvider>
+        </GraphqlProvider>
+      </CentralStorageProvider>
     </SettingsProvider>
   );
 };

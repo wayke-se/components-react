@@ -37,6 +37,7 @@ import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';
 import Branch from './Branch';
+import useCentralStorage from '../../hooks/useCentralStorage';
 
 interface WaykeSearchItemProps {
   id: string;
@@ -48,6 +49,9 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
+  const { vehicle: centralStorageVehicle, loading: loadingCentralStorage } = useCentralStorage(
+    result?.vehicle
+  );
 
   const options = useMemo(
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
@@ -79,15 +83,15 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
   }
 
   const { vehicle } = result;
+  const contact = centralStorageVehicle?.contact;
+  const branch = centralStorageVehicle?.branch;
   const {
     title,
     shortDescription,
     media,
-    contact,
     description,
     price,
     data,
-    branch,
     financialOptions,
     insuranceOptions,
     manufacturer,
@@ -220,7 +224,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                 )}
 
                 <ProductPageMainSection>
-                  <Branch branch={branch} />
+                  <Branch branch={branch} loading={loadingCentralStorage} />
                   {ecommerce && ecommerce.enabled && (
                     <Repeat>
                       <ButtonPrimary title="Köp bilen online" onClick={toggleEcomModal}>

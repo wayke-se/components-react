@@ -258,6 +258,7 @@ export type Query = {
 
 export type QueryVehicleArgs = {
   id: Scalars['ID'];
+  branch?: Maybe<Scalars['ID']>;
 };
 
 

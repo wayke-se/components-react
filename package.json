@@ -32,7 +32,6 @@
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-types": "^0.9.2",
-    "@pika/plugin-build-umd": "^0.9.2",
     "@pika/plugin-build-web": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/googlemaps": "^3.39.7",
@@ -58,10 +57,8 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
-    "@apollo/react-testing": "^3.1.4",
     "apollo-boost": "^0.4.9",
     "graphql": "^15.1.0",
-    "graphql-tools": "^6.0.10",
     "marked": "^1.1.0",
     "moment": "^2.27.0",
     "react-compound-slider": "^2.5.0",
@@ -90,9 +87,6 @@
       ],
       [
         "@pika/plugin-build-web"
-      ],
-      [
-        "@pika/plugin-build-umd"
       ],
       [
         "@pika/plugin-build-types"

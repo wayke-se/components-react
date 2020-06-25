@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import Repeat from '../../components/Repeat/index';
 
 import Snackbar from '../../components/Snackbar/index';
@@ -11,59 +11,45 @@ import OpeningHours from '../../components/OpeningHours/index';
 import PhoneNumber from '../../components/PhoneNumber/index';
 import Map from '../../components/Map/index';
 
-import { Branch, Maybe, BranchConnection } from '../../@types/codegen/types';
-import useSessionStorage from '../../hooks/useSessionStorage';
-import useBranch from '../../hooks/useBranch';
+import { Branch, Maybe } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
+import { CentralStorageContext } from '../../context/central-storage-context';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
+  loading: boolean;
 }
 
-const Branch = ({ branch }: BranchProps) => {
-  const { value, set } = useSessionStorage('centralStorage');
-  const { data, loading } = useBranch(value);
+const Branch = ({ branch, loading }: BranchProps) => {
+  const { centralStorageId, setCentralStorageId } = useContext(CentralStorageContext);
+
   const [modal, setModal] = useState(false);
 
   const openModal = useCallback(() => setModal(true), []);
   const closeModal = useCallback(() => setModal(false), []);
 
+  useEffect(() => {
+    if (branch && modal) {
+      setModal(false);
+    }
+  }, [branch]);
+
   const onConfirm = useCallback((id: string) => {
     if (id) {
-      set(id);
+      setCentralStorageId(id);
     }
   }, []);
 
-  useEffect(() => {
-    if (data && modal) {
-      closeModal();
-    }
-  }, [data]);
-
-  const selectedBranch = useMemo(() => {
-    const connections = branch?.connections;
-    const connectionsLength = connections?.length || 0;
-    if (connectionsLength > 0) {
-      const connected =
-        connectionsLength > 1 ? connections?.find((x) => x.id === value) : branch?.connections?.[0];
-      if (!connected) {
-        set((connections as BranchConnection[])[0].id);
-      }
-      return connected?.id === branch?.id ? branch : data?.branch;
-    }
-    return branch;
-  }, [value, branch, data]);
-
-  if (!selectedBranch) {
+  if (!branch) {
     return null;
   }
 
   return (
     <>
-      {modal && value && (
+      {modal && centralStorageId && (
         <BranchModal
           loading={loading}
-          value={value}
+          value={centralStorageId}
           connections={branch?.connections}
           onConfirm={onConfirm}
           onClose={closeModal}
@@ -71,8 +57,8 @@ const Branch = ({ branch }: BranchProps) => {
       )}
       <Repeat>
         <H2 noMargin>
-          {selectedBranch?.location?.city
-            ? `Den här bilen finns på vår anläggning i ${selectedBranch?.location?.city}`
+          {branch?.location?.city
+            ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
             : 'Kontakt'}
         </H2>
       </Repeat>
@@ -88,30 +74,30 @@ const Branch = ({ branch }: BranchProps) => {
         </Repeat>
       )}
       <Repeat>
-        <Map position={selectedBranch?.location?.position} />
+        <Map position={branch?.location?.position} />
       </Repeat>
       <Repeat>
         <ProductPageContentLimit>
           <Repeat>
             <TableColumn>
-              {selectedBranch?.location?.streetAddress && selectedBranch?.location?.city && (
+              {branch?.location?.streetAddress && branch?.location?.city && (
                 <TableColumnRow>
                   <TableColumnCell>Adress</TableColumnCell>
                   <TableColumnCell>
                     <ButtonInlineBold>
-                      <ButtonContent>{`${selectedBranch?.location?.streetAddress}, ${selectedBranch?.location?.city}`}</ButtonContent>
+                      <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
                     </ButtonInlineBold>
                   </TableColumnCell>
                 </TableColumnRow>
               )}
-              {selectedBranch?.contact?.phonenumber && (
-                <PhoneNumber phoneNumber={selectedBranch.contact.phonenumber} />
+              {branch?.contact?.phonenumber && (
+                <PhoneNumber phoneNumber={branch.contact.phonenumber} />
               )}
             </TableColumn>
           </Repeat>
-          {selectedBranch?.openingHours && (
+          {branch?.openingHours && (
             <Repeat>
-              <OpeningHours openingHours={selectedBranch.openingHours} />
+              <OpeningHours openingHours={branch.openingHours} />
             </Repeat>
           )}
         </ProductPageContentLimit>
