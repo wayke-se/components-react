@@ -4,6 +4,7 @@ import { List } from './wrapper';
 import { IconPhone, IconMail } from '../Icon/index';
 import ToggleItem from './toggle-item';
 import { Maybe, ContactOptions, Branch } from '../../@types/codegen/types';
+import { formatPhonenumber } from '../../utils/phonenumbers';
 
 interface ActionListProps {
   branch?: Maybe<Branch>;
@@ -26,7 +27,7 @@ const ActionList = ({ contact, branch }: ActionListProps) => {
       {phonenumber && (
         <ToggleItem
           title="Visa telefonnummer"
-          value={phonenumber}
+          value={formatPhonenumber(phonenumber)}
           icon={<IconPhone block />}
           type="tel"
         />

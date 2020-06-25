@@ -13,6 +13,7 @@ import Map from '../../components/Map/index';
 
 import { Branch, Maybe } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
+import { formatPhonenumber } from '../../utils/phonenumbers';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
@@ -78,7 +79,7 @@ const Branch = ({ branch, loading }: BranchProps) => {
                 </TableColumnRow>
               )}
               {branch?.contact?.phonenumber && (
-                <PhoneNumber phoneNumber={branch.contact.phonenumber} />
+                <PhoneNumber phoneNumber={formatPhonenumber(branch.contact.phonenumber)} />
               )}
             </TableColumn>
           </Repeat>
