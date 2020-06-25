@@ -4,7 +4,7 @@
 
 Install
 ```bash
-  npm install @wayke-se/components-react
+npm install @wayke-se/components-react
 ```
 
 ```javascript
@@ -282,6 +282,7 @@ WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
 WAYKE_ECOM_URL=https://ecom.wayketech.se
 GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 ```
+
 Then run the following:
 ```bash
 npm install
