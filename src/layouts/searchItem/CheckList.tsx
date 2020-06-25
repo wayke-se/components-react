@@ -9,7 +9,14 @@ import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 import LogoBox from '../../components/LogoBox/index';
 import SwitchBar from '../../components/SwitchBar/index';
-import { Vehicle } from '../../@types/codegen/types';
+import {
+  Vehicle,
+  Manufacturer,
+  PackageOption,
+  Ecommerce,
+  ContactOptions,
+  Branch,
+} from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 
 interface ModelLink {
@@ -25,25 +32,31 @@ interface ModalProps {
 }
 
 interface CheckList {
-  vehicle: Vehicle;
+  manufacturer?: Manufacturer | null;
+  packageOptions: PackageOption[];
+  ecommerce?: Ecommerce | null;
+  branch?: Branch | null;
+  contact?: ContactOptions | null;
   centralStorageVehicle?: Vehicle | null;
   loadingCentralStorageVehicle: boolean;
   toggleEcomModal: () => void;
 }
 
 const CheckList = ({
-  vehicle,
+  manufacturer,
+  packageOptions,
+  ecommerce,
+  branch,
+  contact,
   toggleEcomModal,
   centralStorageVehicle,
   loadingCentralStorageVehicle,
 }: CheckList) => {
   const [modalBranch, setModalBranch] = useState(false);
-
   const openModalBranch = useCallback(() => setModalBranch(true), []);
   const closeModalBranch = useCallback(() => setModalBranch(false), []);
 
   const [modal, setModal] = useState<ModalProps>();
-
   const onOpen = useCallback((nextModal: ModalProps) => setModal(nextModal), []);
   const onClose = useCallback(() => setModal(undefined), []);
 
@@ -53,8 +66,6 @@ const CheckList = ({
     }
   }, [centralStorageVehicle]);
 
-  const contact = centralStorageVehicle?.contact;
-  const { manufacturer, packageOptions, ecommerce } = vehicle;
   const packageOption = manufacturer?.packageOption;
 
   return (
@@ -62,7 +73,7 @@ const CheckList = ({
       {modalBranch && (
         <BranchModal
           loading={loadingCentralStorageVehicle}
-          connections={vehicle?.branch?.connections}
+          connections={branch?.connections}
           onClose={closeModalBranch}
         />
       )}
@@ -148,7 +159,7 @@ const CheckList = ({
           <ActionList contact={contact} />
         </Repeat>
       )}
-      {(vehicle.branch?.connections.length || 0) > 1 && (
+      {(branch?.connections.length || 0) > 1 && (
         <Repeat>
           <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>
             <Content>

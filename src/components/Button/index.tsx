@@ -163,6 +163,7 @@ type ButtonInlineProps = React.DetailedHTMLProps<
   HTMLButtonElement
 > & {
   inline?: boolean;
+  as?: string;
 };
 
 export const ButtonInline = styled(ButtonReset).attrs(() => ({

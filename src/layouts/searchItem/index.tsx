@@ -100,7 +100,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
     packageOptions,
     publishedAt,
   } = vehicle;
-  const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
+  const { fuelType, mileage, gearbox, manufactureYear, modelYear, modelSeries } = vehicle.data;
   const specificationList = getSpecificationList(data);
 
   const uspList = [
@@ -175,8 +175,11 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
 
                 <ProductPageAsideSection mobileOrder={5}>
                   <CheckList
-                    vehicle={vehicle}
-                    centralStorageVehicle={centralStorageVehicle}
+                    manufacturer={manufacturer}
+                    packageOptions={packageOptions}
+                    ecommerce={ecommerce}
+                    branch={branch}
+                    contact={centralStorageVehicle?.contact}
                     loadingCentralStorageVehicle={loadingCentralStorageVehicle}
                     toggleEcomModal={toggleEcomModal}
                   />
@@ -245,7 +248,12 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
             </ProductPage>
           </Container>
         </PageSection>
-        <Related vehicle={vehicle} hashRoute={hashRoute} onClickSearchItem={onClickSearchItem} />
+        <Related
+          modelYear={modelYear}
+          modelSeries={modelSeries}
+          hashRoute={hashRoute}
+          onClickSearchItem={onClickSearchItem}
+        />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>

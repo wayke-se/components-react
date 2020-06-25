@@ -10,6 +10,7 @@ const Home = () => (
       apiKey: process.env.WAYKE_SEARCH_X_API_KEY as string,
       ecomSettings: {
         url: process.env.WAYKE_ECOM_URL as string,
+        useBankId: true,
       },
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
     }}

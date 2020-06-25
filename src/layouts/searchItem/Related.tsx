@@ -15,16 +15,16 @@ import { H2 } from '../../components/Heading/index';
 import useRelatedSearch from '../../hooks/useRelatedSearch';
 import { Spinner } from '../../components/Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
-import { Vehicle } from '../../@types/codegen/types';
 
 interface RelatedProps {
-  vehicle: Vehicle;
+  modelYear: number;
+  modelSeries?: string | null;
   hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({ vehicle, hashRoute, onClickSearchItem }: RelatedProps) => {
-  const { loading, response } = useRelatedSearch(vehicle.data.modelYear, vehicle.data.modelSeries);
+const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: RelatedProps) => {
+  const { loading, response } = useRelatedSearch(modelYear, modelSeries);
 
   if (response?.documentList.documents.length === 0) {
     return null;
