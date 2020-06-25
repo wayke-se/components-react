@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -32,6 +32,7 @@
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-types": "^0.9.2",
+    "@pika/plugin-build-umd": "^0.9.2",
     "@pika/plugin-build-web": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/googlemaps": "^3.39.7",
@@ -78,7 +79,10 @@
       [
         "@pika/plugin-ts-standard-pkg",
         {
-          "args": ["--target", "es2019"]
+          "args": [
+            "--target",
+            "es2019"
+          ]
         }
       ],
       [
@@ -86,6 +90,12 @@
       ],
       [
         "@pika/plugin-build-web"
+      ],
+      [
+        "@pika/plugin-bundle-web"
+      ],
+      [
+        "@pika/plugin-build-umd"
       ],
       [
         "@pika/plugin-build-types"
