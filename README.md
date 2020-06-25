@@ -1,5 +1,7 @@
 # Components React
 
+This repository contains components for search and items to use on external websites.
+
 ## Usage
 
 Install
