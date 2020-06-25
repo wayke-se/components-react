@@ -3,7 +3,7 @@
 ## Usage
 
 Install
-```
+```bash
   npm install @wayke-se/components-react
 ```
 
@@ -99,8 +99,8 @@ const App = ({}) => {
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | onClickSearchItem  | Function          | undefined                | (id: string) => void                                                                                                                           |
 | hashRoute          | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
-| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
-| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| filterList         | String[]          | undefined (all included) | `manufacturer`, `modelSeries`, `fuelType`, `gearboxType`, `branch`, `color`, `environmentClass`, `properties.segment`, `drivingWheel`, `price`, `mileage`, `modelYear` |
+| initialQueryParams | URLSearchParams   | undefined                | `query`, `manufacturer`, `modelSeries`, `fuelType`, `gearboxType`, `branch`, `color`, `environmentClass`, `properties.segment`, `drivingWheel`, `price.min`, `price.max`, `mileage.min`, `mileage.max`, `modelYear.min`, `modelYear.max` |
 
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
@@ -139,8 +139,8 @@ const App = ({}) => {
 ### WaykeSearchSettings
 | Property           | Type              | Default                  | Values                                                                                                                                         |
 |--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
-| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| filterList         | String[]          | undefined (all included) | `manufacturer`, `modelSeries`, `fuelType`, `gearboxType`, `branch`, `color`, `environmentClass`, `properties.segment`, `drivingWheel`, `price`, `mileage`, `modelYear` |
+| initialQueryParams | URLSearchParams   | undefined                | `query`, `manufacturer`, `modelSeries`, `fuelType`, `gearboxType`, `branch`, `color`, `environmentClass`, `properties.segment`, `drivingWheel`, `price.min`, `price.max`, `mileage.min`, `mileage.max`, `modelYear.min`, `modelYear.max` |
 
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
@@ -179,12 +179,12 @@ const App = () => (
 ```
 
 ## Theme
-It is possible to apply a custom theme using CSS. The things that can be styled are:
+It is possible to apply a custom theme using *CSS*. The things that can be styled are:
 - Brand color
 - Font (regular)
 - Font (bold)
 
-To style the components, copy the following snippet into your CSS file and modify are your needs.
+To style the components, copy the following snippet into your *CSS* file and modify are your needs.
 
 ```css
 /* === Color === */
@@ -237,7 +237,7 @@ To style the components, copy the following snippet into your CSS file and modif
 }
 ```
 
-...or if you want to use it as Sass (scss):
+...or if you want to use it as Sass (.scss):
 
 ```scss
 .wayke__theme {
@@ -269,12 +269,12 @@ To style the components, copy the following snippet into your CSS file and modif
 }
 ```
 
-It is highly recommended to *NOT* add or remove any properties defined above in the color selectors. However, since fonts usually requires more configuration we encourage you to add the necessary font styling required to match your current profile. If you add new properties to the font selectors, please be careful and ensure everything looks as intended before going into production.
+> **It is highly recommended to *NOT* add or remove any properties defined above in the color selectors**. However, since fonts usually requires more configuration we encourage you to add the necessary font styling required to match your current profile. If you add new properties to the font selectors, please be careful and ensure everything looks as intended before going into production.
 
 ## Run example from repo
-This repository contains a example app that uses @wayke-se/components-react.
+This repository contains a example app that uses [@wayke-se/components-react](https://www.npmjs.com/package/@wayke-se/components-react).
 
-To start the example create a .env file in ./example
+To start the example create an `.env` file in `./example`.
 ```
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
@@ -282,8 +282,8 @@ WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
 WAYKE_ECOM_URL=https://ecom.wayketech.se
 GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 ```
-Then
-```
+Then run the following:
+```bash
 npm install
 cd example
 npm install
@@ -292,11 +292,11 @@ npm start
 
 ### Available Routes (Independent)
 
-#### WaykeComposite
+**WaykeComposite**
 [http://localhost:5000](http://localhost:5000)
 
-#### WaykeSearch With WaykeProvider
+**WaykeSearch With WaykeProvider**
 [http://localhost:5000/search](http://localhost:5000/search)
 
-#### WaykeSearchItem With WaykeProvider
+**WaykeSearchItem With WaykeProvider**
 [http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31](http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31)
