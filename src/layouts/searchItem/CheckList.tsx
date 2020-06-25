@@ -143,23 +143,21 @@ const CheckList = ({
           </ButtonPrimary>
         </Repeat>
       )}
-      {!contact && (
+      {contact && (
         <Repeat>
           <ActionList contact={contact} />
-          {(vehicle.branch?.connections.length || 0) > 1 && (
-            <SwitchBar
-              title="Centrallagerbil"
-              actionTitle="Byt anläggning"
-              onClick={openModalBranch}
-            >
-              <Content>
-                <p>
-                  Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
-                  anläggning för att visa kontaktuppgifter till just den anläggningen.
-                </p>
-              </Content>
-            </SwitchBar>
-          )}
+        </Repeat>
+      )}
+      {(vehicle.branch?.connections.length || 0) > 1 && (
+        <Repeat>
+          <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>
+            <Content>
+              <p>
+                Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
+                anläggning för att visa kontaktuppgifter till just den anläggningen.
+              </p>
+            </Content>
+          </SwitchBar>
         </Repeat>
       )}
     </>
