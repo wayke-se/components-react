@@ -9,6 +9,11 @@ Install
 npm install @wayke-se/components-react
 ```
 
+Install peer dependencies
+```bash
+npm install react react-dom styled-components
+```
+
 ```javascript
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
