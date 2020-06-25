@@ -88,11 +88,11 @@ export const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
       width: 100%;
     `}
 
-    ${({ inputHeight }) =>
-      inputHeight &&
-      css`
-        height: ${(props) => props.theme.distances.inputHeight};
-      `}
+  ${({ inputHeight }) =>
+    inputHeight &&
+    css`
+      height: ${(props) => props.theme.distances.inputHeight};
+    `}
 
   ${(props) => props.theme.breakpoint.LtSm} {
     padding: ${size(1.75)} ${size(2.5)};
@@ -158,9 +158,16 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
   }
 `;
 
+type ButtonInlineProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> & {
+  inline?: boolean;
+};
+
 export const ButtonInline = styled(ButtonReset).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text wayke__font--regular',
-}))`
+}))<ButtonInlineProps>`
   display: inline-flex;
   vertical-align: baseline;
   text-align: left;
@@ -169,6 +176,12 @@ export const ButtonInline = styled(ButtonReset).attrs(() => ({
   :not(:hover) {
     color: ${(props) => props.theme.color.textDark};
   }
+
+  ${({ inline }) =>
+    inline &&
+    css`
+      display: inline;
+    `}
 `;
 
 export const ButtonInlineBold = styled(ButtonReset).attrs(() => ({

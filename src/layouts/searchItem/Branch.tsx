@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Repeat from '../../components/Repeat/index';
 
-import Snackbar from '../../components/Snackbar/index';
+import Content from '../../components/Content/index';
 import { ProductPageContentLimit } from '../../components/ProductPage/index';
 import { H2 } from '../../components/Heading/index';
 import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button/index';
@@ -47,20 +47,22 @@ const Branch = ({ branch, loading }: BranchProps) => {
             : 'Kontakt'}
         </H2>
       </Repeat>
-      {(branch?.connections?.length || 0) > 1 && (
-        <Repeat>
-          <Snackbar heading="Centrallager" severity="warning" icon>
-            Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar.{' '}
-            <ButtonInline onClick={openModal}>
-              Klicka här för att visa kontaktuppgifter till en annan anläggning
-            </ButtonInline>
-            .
-          </Snackbar>
-        </Repeat>
-      )}
       <Repeat>
         <Map position={branch?.location?.position} />
       </Repeat>
+      {(branch?.connections?.length || 0) > 1 && (
+        <Repeat>
+          <Content>
+            <p>
+              Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar.{' '}
+              <ButtonInline as="span" role="button" onClick={openModal} inline>
+                Klicka här för att visa kontaktuppgifter till en annan anläggning
+              </ButtonInline>
+              .
+            </p>
+          </Content>
+        </Repeat>
+      )}
       <Repeat>
         <ProductPageContentLimit>
           <Repeat>

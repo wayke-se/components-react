@@ -35,7 +35,7 @@ const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
   }
 
   return (
-    <Modal title="Centrallager" onClose={onClose}>
+    <Modal title="Byt anläggning" onClose={onClose}>
       <Repeat>
         <Content>
           <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>

@@ -8,6 +8,7 @@ import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList
 import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 import LogoBox from '../../components/LogoBox/index';
+import SwitchBar from '../../components/SwitchBar/index';
 import { Vehicle } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 
@@ -142,12 +143,25 @@ const CheckList = ({
           </ButtonPrimary>
         </Repeat>
       )}
-      <Repeat>
-        <ActionList contact={contact} />
-        {(vehicle.branch?.connections.length || 0) > 1 && (
-          <button onClick={openModalBranch}>byt branch</button>
-        )}
-      </Repeat>
+      {!contact && (
+        <Repeat>
+          <ActionList contact={contact} />
+          {(vehicle.branch?.connections.length || 0) > 1 && (
+            <SwitchBar
+              title="Centrallagerbil"
+              actionTitle="Byt anläggning"
+              onClick={openModalBranch}
+            >
+              <Content>
+                <p>
+                  Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
+                  anläggning för att visa kontaktuppgifter till just den anläggningen.
+                </p>
+              </Content>
+            </SwitchBar>
+          )}
+        </Repeat>
+      )}
     </>
   );
 };
