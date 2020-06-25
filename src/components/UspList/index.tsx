@@ -38,7 +38,7 @@ const UspList = ({ items, small }: Props) => {
   return (
     <List isSmall={small}>
       {items.map((item, index) => (
-        <UspItem key={item.title || index} title={item.title} onClick={item.onClick} />
+        <UspItem key={`${item.title}-${index}`} title={item.title} onClick={item.onClick} />
       ))}
     </List>
   );
