@@ -49,9 +49,10 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
-  const { vehicle: centralStorageVehicle, loading: loadingCentralStorage } = useCentralStorage(
-    result?.vehicle
-  );
+  const {
+    vehicle: centralStorageVehicle,
+    loading: loadingCentralStorageVehicle,
+  } = useCentralStorage(result?.vehicle);
 
   const options = useMemo(
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
@@ -173,7 +174,12 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                 )}
 
                 <ProductPageAsideSection mobileOrder={5}>
-                  <CheckList vehicle={vehicle} toggleEcomModal={toggleEcomModal} />
+                  <CheckList
+                    vehicle={vehicle}
+                    centralStorageVehicle={centralStorageVehicle}
+                    loadingCentralStorageVehicle={loadingCentralStorageVehicle}
+                    toggleEcomModal={toggleEcomModal}
+                  />
                 </ProductPageAsideSection>
               </ProductPageAside>
               <ProductPageMain>
@@ -224,7 +230,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                 )}
 
                 <ProductPageMainSection>
-                  <Branch branch={branch} loading={loadingCentralStorage} />
+                  <Branch branch={branch} loading={loadingCentralStorageVehicle} />
                   {ecommerce && ecommerce.enabled && (
                     <Repeat>
                       <ButtonPrimary title="Köp bilen online" onClick={toggleEcomModal}>

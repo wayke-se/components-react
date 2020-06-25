@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import marked from 'marked';
 
 import Repeat from '../../components/Repeat/index';
@@ -9,6 +9,7 @@ import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 import LogoBox from '../../components/LogoBox/index';
 import { Vehicle } from '../../@types/codegen/types';
+import BranchModal from './BranchModal';
 
 interface ModelLink {
   href?: string | null;
@@ -24,20 +25,46 @@ interface ModalProps {
 
 interface CheckList {
   vehicle: Vehicle;
+  centralStorageVehicle?: Vehicle | null;
+  loadingCentralStorageVehicle: boolean;
   toggleEcomModal: () => void;
 }
 
-const CheckList = ({ vehicle, toggleEcomModal }: CheckList) => {
+const CheckList = ({
+  vehicle,
+  toggleEcomModal,
+  centralStorageVehicle,
+  loadingCentralStorageVehicle,
+}: CheckList) => {
+  const [modalBranch, setModalBranch] = useState(false);
+
+  const openModalBranch = useCallback(() => setModalBranch(true), []);
+  const closeModalBranch = useCallback(() => setModalBranch(false), []);
+
   const [modal, setModal] = useState<ModalProps>();
 
   const onOpen = useCallback((nextModal: ModalProps) => setModal(nextModal), []);
   const onClose = useCallback(() => setModal(undefined), []);
 
-  const { manufacturer, packageOptions, ecommerce, contact } = vehicle;
+  useEffect(() => {
+    if (centralStorageVehicle && modalBranch) {
+      setModalBranch(false);
+    }
+  }, [centralStorageVehicle]);
+
+  const contact = centralStorageVehicle?.contact;
+  const { manufacturer, packageOptions, ecommerce } = vehicle;
   const packageOption = manufacturer?.packageOption;
 
   return (
     <>
+      {modalBranch && (
+        <BranchModal
+          loading={loadingCentralStorageVehicle}
+          connections={vehicle?.branch?.connections}
+          onClose={closeModalBranch}
+        />
+      )}
       {modal && (
         <Modal title={modal.title || ''} onClose={onClose}>
           {modal.image && (
@@ -117,6 +144,9 @@ const CheckList = ({ vehicle, toggleEcomModal }: CheckList) => {
       )}
       <Repeat>
         <ActionList contact={contact} />
+        {(vehicle.branch?.connections.length || 0) > 1 && (
+          <button onClick={openModalBranch}>byt branch</button>
+        )}
       </Repeat>
     </>
   );

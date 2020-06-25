@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Repeat from '../../components/Repeat/index';
 
 import Snackbar from '../../components/Snackbar/index';
@@ -13,7 +13,6 @@ import Map from '../../components/Map/index';
 
 import { Branch, Maybe } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
-import { CentralStorageContext } from '../../context/central-storage-context';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
@@ -21,8 +20,6 @@ interface BranchProps {
 }
 
 const Branch = ({ branch, loading }: BranchProps) => {
-  const { centralStorageId, setCentralStorageId } = useContext(CentralStorageContext);
-
   const [modal, setModal] = useState(false);
 
   const openModal = useCallback(() => setModal(true), []);
@@ -34,26 +31,14 @@ const Branch = ({ branch, loading }: BranchProps) => {
     }
   }, [branch]);
 
-  const onConfirm = useCallback((id: string) => {
-    if (id) {
-      setCentralStorageId(id);
-    }
-  }, []);
-
   if (!branch) {
     return null;
   }
 
   return (
     <>
-      {modal && centralStorageId && (
-        <BranchModal
-          loading={loading}
-          value={centralStorageId}
-          connections={branch?.connections}
-          onConfirm={onConfirm}
-          onClose={closeModal}
-        />
+      {modal && (
+        <BranchModal loading={loading} connections={branch?.connections} onClose={closeModal} />
       )}
       <Repeat>
         <H2 noMargin>

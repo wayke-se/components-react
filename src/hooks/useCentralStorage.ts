@@ -7,39 +7,29 @@ const useCentralStorage = (vehicle?: Vehicle | null) => {
   const { centralStorageId, setCentralStorageId } = useContext(CentralStorageContext);
 
   const connections = vehicle?.branch?.connections;
-  const branchId =
-    vehicle?.id !== centralStorageId
-      ? connections?.find((x) => x.id === centralStorageId)?.id
-      : undefined;
+  const branchId = centralStorageId
+    ? connections?.find((x) => x.id === centralStorageId)?.id
+    : undefined;
 
   const { data, loading } = useSearchItemBranch(vehicle?.id, branchId);
 
   useEffect(() => {
     if ((connections?.length || 0) > 0) {
-      if (centralStorageId) {
-        const match = connections?.find((x) => x.id === centralStorageId);
-        if (!match) {
-          const first = connections?.[0];
-          if (first) {
-            setCentralStorageId(first.id);
-          }
-        }
-      } else {
+      const match = centralStorageId
+        ? connections?.find((x) => x.id === centralStorageId)
+        : undefined;
+
+      if (!match) {
         const first = connections?.[0];
         if (first) {
           setCentralStorageId(first.id);
         }
       }
     }
-  }, [vehicle]);
+  }, []);
 
   return {
-    vehicle:
-      (connections?.length || 0) > 0
-        ? vehicle?.id === centralStorageId
-          ? vehicle
-          : data?.vehicle
-        : vehicle,
+    vehicle: (connections?.length || 0) > 0 ? data?.vehicle : vehicle,
     loading,
   };
 };

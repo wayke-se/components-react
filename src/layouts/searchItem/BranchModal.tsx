@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 
 import Repeat from '../../components/Repeat/index';
 import InputSelect from '../../components/InputSelect/index';
@@ -7,22 +7,32 @@ import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 import InputLabel from '../../components/InputLabel/index';
 import { BranchConnection } from '../../@types/codegen/types';
+import { CentralStorageContext } from '../../context/central-storage-context';
 
 interface BranchModalProps {
-  value: string;
   loading: boolean;
   connections?: BranchConnection[];
-  onConfirm: (value: string) => void;
   onClose: () => void;
 }
 
-const BranchModal = ({ value, loading, connections, onConfirm, onClose }: BranchModalProps) => {
-  const [localValue, setLocalValue] = useState(value);
+const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
+  const { centralStorageId, setCentralStorageId } = useContext(CentralStorageContext);
+  const [localValue, setLocalValue] = useState(centralStorageId);
+
+  const onConfirm = useCallback((id: string) => {
+    if (id) {
+      setCentralStorageId(id);
+    }
+  }, []);
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => setLocalValue(e.currentTarget.value),
     []
   );
+
+  if (!localValue) {
+    return null;
+  }
 
   return (
     <Modal title="Centrallager" onClose={onClose}>
