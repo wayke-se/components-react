@@ -293,11 +293,11 @@ npm start
 
 ### Available Routes (Independent)
 
-**WaykeComposite**
+#####WaykeComposite
 [http://localhost:5000](http://localhost:5000)
 
-**WaykeSearch With WaykeProvider**
+#####WaykeSearch With WaykeProvider
 [http://localhost:5000/search](http://localhost:5000/search)
 
-**WaykeSearchItem With WaykeProvider**
+#####WaykeSearchItem With WaykeProvider
 [http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31](http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31)
