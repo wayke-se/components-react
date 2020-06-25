@@ -8,10 +8,19 @@ interface ToggleItemProps {
   type: 'tel' | 'mailto';
 }
 
-const ToggleItem = ({ title, value, icon, type }: ToggleItemProps) => {
-  const [visible, setVisible] = useState(false);
+const initialValue: { [key: string]: boolean | undefined } = {};
 
-  const onClick = useCallback(() => !visible && setVisible(true), [visible]);
+const getInitialValue = (title: string) => title && !!initialValue[title];
+
+const ToggleItem = ({ title, value, icon, type }: ToggleItemProps) => {
+  const [visible, setVisible] = useState(() => getInitialValue(type));
+
+  const onClick = useCallback(() => {
+    if (!visible) {
+      initialValue[type] = true;
+      setVisible(true);
+    }
+  }, [visible]);
 
   const visibleTitle = type === 'tel' ? 'Ring' : type === 'mailto' ? 'Skicka ett mail till' : '';
 

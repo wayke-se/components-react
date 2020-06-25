@@ -1,16 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import marked from 'marked';
 
 import Repeat from '../../components/Repeat/index';
 import ActionList from '../../components/ActionList/index';
 import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button/index';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList/index';
-import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
-import LogoBox from '../../components/LogoBox/index';
 import SwitchBar from '../../components/SwitchBar/index';
 import {
-  Vehicle,
   Manufacturer,
   PackageOption,
   Ecommerce,
@@ -18,18 +14,7 @@ import {
   Branch,
 } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
-
-interface ModelLink {
-  href?: string | null;
-  title?: string | null;
-}
-
-interface ModalProps {
-  title?: string | null;
-  image?: string | null;
-  description?: string | null;
-  link?: ModelLink | null;
-}
+import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 
 interface CheckList {
   manufacturer?: Manufacturer | null;
@@ -37,7 +22,6 @@ interface CheckList {
   ecommerce?: Ecommerce | null;
   branch?: Branch | null;
   contact?: ContactOptions | null;
-  centralStorageVehicle?: Vehicle | null;
   loadingCentralStorageVehicle: boolean;
   toggleEcomModal: () => void;
 }
@@ -49,22 +33,21 @@ const CheckList = ({
   branch,
   contact,
   toggleEcomModal,
-  centralStorageVehicle,
   loadingCentralStorageVehicle,
 }: CheckList) => {
   const [modalBranch, setModalBranch] = useState(false);
   const openModalBranch = useCallback(() => setModalBranch(true), []);
   const closeModalBranch = useCallback(() => setModalBranch(false), []);
 
-  const [modal, setModal] = useState<ModalProps>();
-  const onOpen = useCallback((nextModal: ModalProps) => setModal(nextModal), []);
+  const [modal, setModal] = useState<PackageOptionModalData>();
+  const onOpen = useCallback((nextModal: PackageOptionModalData) => setModal(nextModal), []);
   const onClose = useCallback(() => setModal(undefined), []);
 
   useEffect(() => {
-    if (centralStorageVehicle && modalBranch) {
+    if ((branch || contact) && modalBranch) {
       setModalBranch(false);
     }
-  }, [centralStorageVehicle]);
+  }, [branch, contact]);
 
   const packageOption = manufacturer?.packageOption;
 
@@ -77,32 +60,7 @@ const CheckList = ({
           onClose={closeModalBranch}
         />
       )}
-      {modal && (
-        <Modal title={modal.title || ''} onClose={onClose}>
-          {modal.image && (
-            <Repeat>
-              <LogoBox logo={modal.image} alt={modal.title || undefined} wide />
-            </Repeat>
-          )}
-          {modal.description && (
-            <Repeat>
-              <Content dangerouslySetInnerHTML={{ __html: marked(modal.description) }} />
-            </Repeat>
-          )}
-          {modal.link?.href && modal.link.title && (
-            <Repeat>
-              <ButtonInline
-                as="a"
-                href={modal.link.href}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-              >
-                {modal.link.title}
-              </ButtonInline>
-            </Repeat>
-          )}
-        </Modal>
-      )}
+      {modal && <PackageOptionModal packageOption={modal} onClose={onClose} />}
       <Repeat>
         <CheckMarkList>
           {packageOption?.title && (
@@ -154,11 +112,9 @@ const CheckList = ({
           </ButtonPrimary>
         </Repeat>
       )}
-      {contact && (
-        <Repeat>
-          <ActionList contact={contact} />
-        </Repeat>
-      )}
+      <Repeat>
+        <ActionList branch={branch} contact={contact} />
+      </Repeat>
       {(branch?.connections.length || 0) > 1 && (
         <Repeat>
           <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>

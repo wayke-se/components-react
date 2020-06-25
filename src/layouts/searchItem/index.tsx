@@ -10,7 +10,6 @@ import Content from '../../components/Content/index';
 import Blockquote from '../../components/Blockquote/index';
 import ExtendContent from '../../components/ExtendContent/index';
 import Gallery from '../../components/Gallery/index';
-import Loader from '../../components/Loader/index';
 import { Page, PageSection } from '../../components/Page/index';
 import {
   ProductPage,
@@ -38,6 +37,8 @@ import Related from './Related';
 import PackageOptions from './PackageOptions';
 import Branch from './Branch';
 import useCentralStorage from '../../hooks/useCentralStorage';
+import Page404 from './Page404';
+import PageLoading from './PageLoading';
 
 interface WaykeSearchItemProps {
   id: string;
@@ -60,27 +61,11 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
   );
 
   if (loading) {
-    return (
-      <Page>
-        <PageSection large>
-          <Container>
-            <Loader />
-          </Container>
-        </PageSection>
-      </Page>
-    );
+    return <PageLoading />;
   }
 
   if (!result?.vehicle?.data) {
-    return (
-      <Page>
-        <PageSection large>
-          <Container>
-            <H1 noMargin>404</H1>
-          </Container>
-        </PageSection>
-      </Page>
-    );
+    return <Page404 />;
   }
 
   const { vehicle } = result;
@@ -162,7 +147,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                   <PriceTable price={price} />
                 </ProductPageAsideSection>
 
-                {(financialOptions?.length > 0 || insuranceOptions?.length > 0) && (
+                {(financialOptions.length > 0 || insuranceOptions.length > 0) && (
                   <ProductPageAsideSection mobileOrder={4}>
                     {financialOptions.length > 0 && (
                       <FinancialOptions id={id} financialOptions={financialOptions} />
@@ -219,7 +204,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                   </ProductPageMainSection>
                 )}
 
-                {options && options.length > 0 && (
+                {(options?.length || 0) > 0 && (
                   <ProductPageMainSection>
                     <Repeat>
                       <H2 noMargin>Utrustning</H2>
