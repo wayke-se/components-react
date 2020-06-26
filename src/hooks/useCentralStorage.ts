@@ -26,7 +26,7 @@ const useCentralStorage = (vehicle?: Vehicle | null) => {
         }
       }
     }
-  }, []);
+  }, [connections]);
 
   return {
     vehicle: (connections?.length || 0) > 0 ? data?.vehicle : vehicle,

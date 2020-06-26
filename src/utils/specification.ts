@@ -508,7 +508,6 @@ const All = [
 ] as const;
 
 type KEYS = typeof All[number];
-type SPEC_KEYS = keyof typeof specLabels;
 type ITEM_KEYS = keyof VehicleData;
 
 const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null => {
@@ -581,59 +580,6 @@ const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null 
     value,
     modal,
   };
-
-  /*
-  if (!spec || (typeof spec === 'string' && !data)) {
-    return null;
-  }
-
-  let label: SpecPropertyType | string = spec;
-  if (typeof spec === 'object' && typeof spec.label === 'string') {
-    label = spec.label;
-  }
-  if (typeof spec === 'object' && typeof spec.label === 'function') {
-    label = spec.label(item);
-  }
-
-  let value = data;
-  if (typeof spec === 'object' && typeof spec.data === 'string') {
-    value = spec.data;
-  }
-  if (typeof spec === 'object' && typeof spec.data === 'function') {
-    value = spec.data(data, item);
-  }
-
-  const modal = spec.modal ? { ...spec.modal } : null;
-
-  if (modal) {
-    if (spec.modal.title && typeof spec.modal.title === 'function') {
-      modal.title = spec.modal.title(item);
-    } else if (spec.modal.title) {
-      modal.title = spec.modal.title;
-    }
-
-    if (spec.modal.text && typeof spec.modal.text === 'function') {
-      modal.text = spec.modal.text(item);
-    } else if (spec.modal.text) {
-      modal.text = spec.modal.text;
-    }
-  }
-
-  if (!(!!value || (typeof value === 'number' && value < -1))) {
-    return null;
-  }
-
-  if (modal && modal.concatPropValue) {
-    const concatobj = extractSpecData(modal.concatPropValue, item);
-    if (concatobj && concatobj.value) {
-      modal.text = modal.text.replace('{insertValue}', concatobj.value);
-    } else if (modal.nonConcatablePropValue) {
-      modal.text = modal.nonConcatablePropValue;
-    }
-  }
-
-  return { label, value: `${value || ''}`, modal };
-  */
 };
 
 export const getSpecificationList = (item: VehicleData): ItemPropertyType[] =>
