@@ -11,9 +11,12 @@ interface SearchProviderProps {
   children: React.ReactNode;
 }
 
+const initialSearchParams = new URLSearchParams();
+initialSearchParams.set('hits', '30');
+
 const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
   const [queryFilter, setQueryFilter] = useState<QueryFilter>({
-    searchParams: new URLSearchParams(),
+    searchParams: initialSearchParams,
   });
   const [initialFacets, setInitialFacets] = useState<Facet[]>();
   const [documents, setDocuments] = useState<Document[]>();
@@ -63,6 +66,9 @@ const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
 
   const onInitialize = useCallback((initialQueryParams?: URLSearchParams) => {
     if (initialQueryParams) {
+      if (!initialQueryParams.has('hits')) {
+        initialQueryParams.set('hits', '30');
+      }
       setQueryFilter({
         searchParams: initialQueryParams,
       });
