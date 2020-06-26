@@ -2,6 +2,9 @@ import React from 'react';
 
 import WaykeComposite from '../../../../src/index';
 
+const initialQueryParams = new URLSearchParams();
+initialQueryParams.set('hits', '30');
+
 const Home = () => (
   <WaykeComposite
     provider={{
@@ -14,6 +17,7 @@ const Home = () => (
       },
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
     }}
+    composite={{ initialQueryParams }}
   />
 );
 

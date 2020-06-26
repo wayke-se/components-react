@@ -24,9 +24,7 @@ const DataGrid = ({ specificationList }: Props) => {
     <>
       {modal && (
         <Modal title={modal.title} onClose={onClose}>
-          <Content>
-            <p>{modal.text}</p>
-          </Content>
+          <Content dangerouslySetInnerHTML={{ __html: modal.text }} />
         </Modal>
       )}
       <List>

@@ -522,11 +522,11 @@ const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null 
     | boolean
     | { [key: string]: string | number | boolean } = null;
 
-  if (!!item[key as ITEM_KEYS] || (item[key as ITEM_KEYS] || -1) >= -1) {
+  if (!!item[key as ITEM_KEYS] || (item[key as ITEM_KEYS] || -1) > -1) {
     data = item[key as ITEM_KEYS];
   } else if (
     !!item?.properties?.[key] ||
-    (typeof item?.properties?.[key] === 'number' && (item?.properties?.[key] || -1) >= -1)
+    (typeof item?.properties?.[key] === 'number' && (item?.properties?.[key] || -1) > -1)
   ) {
     data = item.properties[key];
   }
@@ -564,9 +564,12 @@ const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null 
     }
 
     if (spec.modal?.concatPropValue) {
-      const concatObj = extractSpecData(spec.modal.concatPropValue as KEYS, item);
+      const concatObj =
+        spec.modal.concatPropValue === key
+          ? { value }
+          : extractSpecData(spec.modal.concatPropValue as KEYS, item);
       if (concatObj?.value) {
-        modal.text.replace('{insertValue}', concatObj.value);
+        modal.text = modal.text.replace('{insertValue}', concatObj.value);
       } else if (spec.modal.nonConcatablePropValue) {
         modal.text = spec.modal.nonConcatablePropValue;
       }
