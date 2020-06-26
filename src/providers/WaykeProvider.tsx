@@ -18,7 +18,7 @@ export interface EcomSettings {
 
 export interface WaykeProviderSettings {
   url: string;
-  apiKey: string;
+  apiKey?: string;
   graphQlUrl: string;
   ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;

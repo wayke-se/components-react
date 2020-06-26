@@ -283,6 +283,7 @@ This repository contains a example app that uses [@wayke-se/components-react](ht
 
 To start the example create an `.env` file in `./example`.
 ```
+WAYKE_HOST=YOUR_HOST
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query

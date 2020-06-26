@@ -6,7 +6,7 @@ import {
   Metadata,
 } from 'libphonenumber-js/custom';
 
-import metadata from './metadata.min.json';
+import metadata from './metadata.min';
 
 const typedMetadata = (metadata as unknown) as Metadata;
 const NATIONAL = 'NATIONAL';

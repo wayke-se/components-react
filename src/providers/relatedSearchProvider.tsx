@@ -7,7 +7,7 @@ import { RelatedSearchContext } from '../context/related-context';
 
 interface RelatedSearchProviderProps {
   url: string;
-  apiKey: string;
+  apiKey?: string;
   children: React.ReactNode;
 }
 
@@ -18,9 +18,11 @@ const RelatedSearchProvider = ({ url, apiKey, children }: RelatedSearchProviderP
   const { loading, data: response, error } = useFetch<Search>(
     `${url}${query ? `?${query}` : ''}`,
     {
-      headers: {
-        'x-api-key': apiKey,
-      },
+      headers: apiKey
+        ? {
+            'x-api-key': apiKey,
+          }
+        : {},
     },
     !queryFilter
   );

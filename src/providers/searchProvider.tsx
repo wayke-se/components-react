@@ -7,7 +7,7 @@ import { SearchContext } from '../context/search-context';
 
 interface SearchProviderProps {
   url: string;
-  apiKey: string;
+  apiKey?: string;
   children: React.ReactNode;
 }
 
@@ -26,9 +26,11 @@ const SearchProvider = ({ url, apiKey, children }: SearchProviderProps) => {
   const { loading, data: response, error } = useFetch<Search>(
     `${url}${query ? `?${query}` : ''}`,
     {
-      headers: {
-        'x-api-key': apiKey,
-      },
+      headers: apiKey
+        ? {
+            'x-api-key': apiKey,
+          }
+        : {},
     },
     !initialize
   );

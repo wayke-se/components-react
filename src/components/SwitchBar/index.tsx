@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 
 import { Wrapper, Info, Action, InfoContent, InfoBtn, Title } from './wrapper';
-import Modal from '../Modal';
-import { ButtonInline } from '../Button';
-import { IconInfo } from '../Icon';
+import Modal from '../Modal/index';
+import { ButtonInline } from '../Button/index';
+import { IconInfo } from '../Icon/index';
 
 interface Props {
   title: string;

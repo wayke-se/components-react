@@ -77,5 +77,6 @@ module.exports = {
     port: 5000,
     historyApiFallback: true,
     writeToDisk: true,
+    public: process.env.WAYKE_HOST,
   },
 };
