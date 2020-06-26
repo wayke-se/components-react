@@ -7,7 +7,6 @@ import { ButtonSecondary, ButtonContent, ButtonPrimary } from '../Button/index';
 import Accordion, { AccordionItem } from '../Accordion/index';
 import Repeat from '../Repeat/index';
 import FacetSelector from './faceSelector';
-import { FacetIdToTitle } from '../../utils/formats';
 import { SearchFilterTypes } from '../../@types/filter';
 
 export interface FilterProps {
@@ -60,11 +59,7 @@ const FilterPanel = ({
     >
       <Accordion>
         {filteredFacets.map((f) => (
-          <AccordionItem
-            key={f.displayName}
-            heading={FacetIdToTitle(f.id)}
-            isActive={f.id === facet?.id}
-          >
+          <AccordionItem key={f.displayName} heading={f.displayName} isActive={f.id === facet?.id}>
             <Repeat>
               <FacetSelector facet={f} />
             </Repeat>

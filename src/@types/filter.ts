@@ -1,4 +1,4 @@
-export type SearchFilterTypes =
+export type SearchFilterNameTypes =
   | 'manufacturer'
   | 'modelSeries'
   | 'fuelType'
@@ -11,3 +11,8 @@ export type SearchFilterTypes =
   | 'price'
   | 'mileage'
   | 'modelYear';
+
+export type SearchFilterTypes = {
+  filterName: SearchFilterNameTypes;
+  displayName?: string;
+};

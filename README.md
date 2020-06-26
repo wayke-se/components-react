@@ -144,13 +144,21 @@ const App = ({}) => {
 
 
 ### WaykeSearchSettings
-| Property           | Type              | Default                  | Values                                                                                                                                         |
-|--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
-| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| Property           | Type                | Required             | Values                                                                                                                                         |
+|--------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| filterList         | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
+| initialQueryParams | URLSearchParams     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
+
+### SearchFilterTypes
+| Property    | Type                  | Required | Values                                                                                                                                         |
+|-------------|-----------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+| displayName | string                | false    |                                                                                                                                                |
+
+* `displayName` override default translation of title
 
 ### Set initial query filter
 ```javascript
@@ -175,11 +183,21 @@ Order will have effect
 ```javascript
 import WaykeComposite from '@wayke-se/components-react'
 
+const filterList: SearchFilterTypes[] = [
+  {
+    filterName: 'price',
+  },
+  {
+    filterName: 'modelSeries',
+    displayName: 'MODEL SERIES',
+  },
+];
+
 const App = () => (
   <WaykeComposite
     provider={ProviderSettings}
     composite={{,
-      filterList={['price', 'modelSeries']}
+      filterList={filterList}
     }}
   />
 )

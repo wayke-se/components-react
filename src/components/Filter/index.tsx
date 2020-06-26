@@ -6,7 +6,7 @@ import FilterPanel from '../FilterPanel/index';
 import { FacetIdToTitle } from '../../utils/formats';
 import { PRICE, MILEAGE, MODEL_YEAR } from '../../utils/constants';
 import useSearch from '../../hooks/useSearch';
-import { SearchFilterTypes } from '../../@types/filter';
+import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
 
 const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {
@@ -35,15 +35,29 @@ const Filter = ({ filterList }: FilterProps) => {
   if (!facets) {
     return null;
   }
+  const filterNames = filterList ? filterList.map((x) => x.filterName) : undefined;
 
   const filteredFacets = facets
-    ?.filter((f) => (filterList ? filterList.includes(f.id as SearchFilterTypes) : true))
+    ?.filter((f) => (filterNames ? filterNames.includes(f.id as SearchFilterNameTypes) : true))
     .sort((a, b) =>
-      filterList
-        ? filterList.indexOf(a.id as SearchFilterTypes) -
-          filterList.indexOf(b.id as SearchFilterTypes)
+      filterNames
+        ? filterNames.indexOf(a.id as SearchFilterNameTypes) -
+          filterNames.indexOf(b.id as SearchFilterNameTypes)
         : 0
-    );
+    )
+    .map((x) => {
+      const match = filterList?.find((y) => y.filterName === x.id);
+      if (match?.displayName) {
+        return {
+          ...x,
+          displayName: match.displayName,
+        };
+      }
+      return {
+        ...x,
+        displayName: FacetIdToTitle(x.id),
+      };
+    });
 
   return (
     <>
@@ -65,7 +79,7 @@ const Filter = ({ filterList }: FilterProps) => {
             <Item key={f.id}>
               <Action
                 onClick={() => onSelectFacet(f)}
-                title={FacetIdToTitle(f.id)}
+                title={f.displayName}
                 aria-label={f.displayName}
                 className={
                   selected > 0
@@ -73,7 +87,7 @@ const Filter = ({ filterList }: FilterProps) => {
                     : 'wayke__theme wayke__font--regular'
                 }
               >
-                <Label>{FacetIdToTitle(f.id)}</Label>
+                <Label>{f.displayName}</Label>
                 {selected > 0 && (
                   <Indicator>
                     <IndicatorValue>{selected}</IndicatorValue>
