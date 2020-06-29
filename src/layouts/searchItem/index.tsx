@@ -39,6 +39,7 @@ import Branch from './Branch';
 import useCentralStorage from '../../hooks/useCentralStorage';
 import Page404 from './Page404';
 import PageLoading from './PageLoading';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface WaykeSearchItemProps {
   id: string;
@@ -59,6 +60,9 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
     [result?.vehicle?.data?.options]
   );
+
+  const onShowMoreSpecificationClick = useCallback(() => PubSub.publish('InformationClick'), []);
+  const onShowMoreOptionsClick = useCallback(() => PubSub.publish('OptionsClick'), []);
 
   if (loading) {
     return <PageLoading />;
@@ -182,7 +186,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                     <H2 noMargin>Biluppgifter</H2>
                   </Repeat>
                   <Repeat>
-                    <ExtendContent actionTitle="Visa mer">
+                    <ExtendContent actionTitle="Visa mer" onClick={onShowMoreSpecificationClick}>
                       <DataGrid specificationList={specificationList} />
                     </ExtendContent>
                   </Repeat>
@@ -210,7 +214,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                       <H2 noMargin>Utrustning</H2>
                     </Repeat>
                     <Repeat>
-                      <ExtendContent actionTitle="Visa mer">
+                      <ExtendContent actionTitle="Visa mer" onClick={onShowMoreOptionsClick}>
                         <UspList items={options} />
                       </ExtendContent>
                     </Repeat>

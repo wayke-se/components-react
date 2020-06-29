@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import Container from '../../components/Container/index';
 import Repeat from '../../components/Repeat/index';
@@ -15,6 +15,7 @@ import { H2 } from '../../components/Heading/index';
 import useRelatedSearch from '../../hooks/useRelatedSearch';
 import { Spinner } from '../../components/Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface RelatedProps {
   modelYear: number;
@@ -25,6 +26,13 @@ interface RelatedProps {
 
 const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: RelatedProps) => {
   const { loading, response } = useRelatedSearch(modelYear, modelSeries);
+
+  const onItemClicked = useCallback((id: string) => {
+    PubSub.publish('ItemClicked', id);
+    if (onClickSearchItem) {
+      onClickSearchItem(id);
+    }
+  }, []);
 
   if (response?.documentList.documents.length === 0) {
     return null;
@@ -49,7 +57,7 @@ const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: Relat
                 <OverflowGridItem key={document._id}>
                   <ProductCard
                     id={document._id}
-                    onClick={onClickSearchItem}
+                    onClick={onItemClicked}
                     title={document.title}
                     href={hashRoute ? `#${document._id}` : undefined}
                     image={

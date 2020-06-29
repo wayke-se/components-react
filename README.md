@@ -203,6 +203,45 @@ const App = () => (
 )
 ```
 
+## Subscribe to events
+
+```javascript
+import { WaykePubSub}  from '@wayke-se/components-react';
+
+const event = {
+  eventName: 'ItemClicked',
+  callback: (id) => console.log('subscribed ItemClicked:', id),
+};
+
+WaykePubSub.subscribe(event);
+WaykePubSub.unsubscribe(event);
+
+```
+
+| Method       | Arguments                      |
+|--------------|--------------------------------|
+| subscribe    | EventBase                      |
+| unsubscribe  | -                              |
+| publish      | eventName: string, ...arg: any |
+
+### EventBase
+| eventName          | callback                                         |
+|--------------------|--------------------------------------------------|
+| HashRouteChange    | (id: string) => void                             |
+| ItemClicked        | (id: string) => void                             |
+| EcomOnUserEvent    | (userEvent: string, currentStep: string) => void |
+| EcomOnExit         | () => void                                       |
+| ImagesClick        | () => void                                       |
+| InformationClick   | () => void                                       |
+| OptionsClick       | () => void                                       |
+| PhonenumberVisible | () => void                                       |
+| PhonenumberCall    | () => void                                       |
+| MailVisible        | () => void                                       |
+| All                | (eventName: string, data: any[]) => void         |
+
+* `All` - Subscribes to all events.
+
+
 ## Theme
 It is possible to apply a custom theme using *CSS*. The things that can be styled are:
 - Brand color

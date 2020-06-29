@@ -6,19 +6,37 @@ interface ToggleItemProps {
   value: string;
   icon: React.ReactNode;
   type: 'tel' | 'mailto';
+  onClickVisible?: () => void;
+  onClickValue?: () => void;
 }
 
 const initialValue: { [key: string]: boolean | undefined } = {};
 
 const getInitialValue = (title: string) => title && !!initialValue[title];
 
-const ToggleItem = ({ title, value, icon, type }: ToggleItemProps) => {
+const ToggleItem = ({
+  title,
+  value,
+  icon,
+  type,
+  onClickVisible,
+  onClickValue,
+}: ToggleItemProps) => {
   const [visible, setVisible] = useState(() => getInitialValue(type));
+
+  const _onClickValue = useCallback(() => {
+    if (onClickValue) {
+      onClickValue();
+    }
+  }, []);
 
   const onClick = useCallback(() => {
     if (!visible) {
       initialValue[type] = true;
       setVisible(true);
+      if (onClickVisible) {
+        onClickVisible();
+      }
     }
   }, [visible]);
 
@@ -27,7 +45,12 @@ const ToggleItem = ({ title, value, icon, type }: ToggleItemProps) => {
   return (
     <Item>
       {visible ? (
-        <Action as="a" href={`${type}:${value}`} title={`${visibleTitle} ${value}`}>
+        <Action
+          onClick={_onClickValue}
+          as="a"
+          href={`${type}:${value}`}
+          title={`${visibleTitle} ${value}`}
+        >
           <Icon>{icon}</Icon>
           <Label>{value}</Label>
         </Action>

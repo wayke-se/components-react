@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import Container from '../../components/Container/index';
 import { Page, PageSection } from '../../components/Page/index';
@@ -12,6 +12,7 @@ import SearchFilter from '../../components/SearchFilter/index';
 import Snackbar from '../../components/Snackbar/index';
 import useSearch from '../../hooks/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
@@ -33,6 +34,13 @@ const WaykeSearch = ({
 
   useEffect(() => {
     onInitialize(initialQueryParams);
+  }, []);
+
+  const onItemClicked = useCallback((id: string) => {
+    PubSub.publish('ItemClicked', id);
+    if (onClickSearchItem) {
+      onClickSearchItem(id);
+    }
   }, []);
 
   const searchQuery = queryFilter.searchParams.get('query');
@@ -67,11 +75,7 @@ const WaykeSearch = ({
                   </Snackbar>
                 )}
                 {!error && documents && documents.length > 0 && (
-                  <Grid
-                    hashRoute={hashRoute}
-                    onClickItem={onClickSearchItem}
-                    documents={documents}
-                  />
+                  <Grid hashRoute={hashRoute} onClickItem={onItemClicked} documents={documents} />
                 )}
                 {!error && documents && documents.length === 0 && (
                   <Snackbar severity="warning" icon heading="Inga resultat">

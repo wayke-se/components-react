@@ -29,6 +29,7 @@ import Sphere from '../Sphere/Sphere';
 import { notEmpty } from '../../utils/formats';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import { Media } from '../../@types/codegen/types';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface GalleryProps {
   media: Media[];
@@ -64,6 +65,7 @@ const Gallery = ({ media }: GalleryProps) => {
   }, []);
 
   const onClick = useCallback(() => {
+    PubSub.publish('ImagesClick');
     if (!isDragging.current && !lightbox) {
       setLightbox(true);
     }

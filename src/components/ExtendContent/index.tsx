@@ -6,11 +6,17 @@ import { ButtonClear, ButtonContent } from '../Button/index';
 interface Props {
   children: React.ReactNode;
   actionTitle: string;
+  onClick?: () => void;
 }
 
-const ExtendContent = ({ children, actionTitle }: Props) => {
+const ExtendContent = ({ children, actionTitle, onClick }: Props) => {
   const [extend, setExtend] = useState(false);
-  const onExtend = useCallback(() => setExtend(true), []);
+  const onExtend = useCallback(() => {
+    setExtend(true);
+    if (onClick) {
+      onClick();
+    }
+  }, []);
 
   return (
     <Wrapper>

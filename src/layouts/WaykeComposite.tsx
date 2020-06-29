@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import WaykeSearch from './search/index';
 import WaykeSearchItem from './searchItem/index';
 import useHashGuid from '../hooks/useHashGuid';
 import { SearchFilterTypes } from '../@types/filter';
+import PubSub from '../utils/pubsub/pubsub';
 
 export interface WaykeCompositeProps {
   filterList?: SearchFilterTypes[];
@@ -11,21 +12,19 @@ export interface WaykeCompositeProps {
 
 const WaykeComposite = ({ filterList, initialQueryParams }: WaykeCompositeProps) => {
   const id = useHashGuid();
-  const onClickSearchItem = useCallback(() => {
-    // track id
-  }, []);
+
+  useEffect(() => {
+    if (id) {
+      PubSub.publish('HashRouteChange', id);
+    }
+  }, [id]);
 
   return (
     <>
       {id ? (
-        <WaykeSearchItem id={id} />
+        <WaykeSearchItem id={id} hashRoute />
       ) : (
-        <WaykeSearch
-          filterList={filterList}
-          onClickSearchItem={onClickSearchItem}
-          initialQueryParams={initialQueryParams}
-          hashRoute
-        />
+        <WaykeSearch filterList={filterList} initialQueryParams={initialQueryParams} hashRoute />
       )}
     </>
   );
