@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { Logo, Content, Wrapper } from './wrapper';
-import LogoBox from '../LogoBox/index';
+import { Logo, LogoImg, Content, Wrapper } from './wrapper';
 
 interface IOptionBox {
   logo?: string;
@@ -14,7 +13,7 @@ const OptionBox = ({ logo, logo2x, logoAlt, children }: IOptionBox) => (
   <Wrapper>
     {logo && (
       <Logo>
-        <LogoBox logo={logo} logo2x={logo2x} alt={logoAlt} />
+        <LogoImg src={logo} srcSet={logo2x} alt={logoAlt} />
       </Logo>
     )}
     <Content>{children}</Content>

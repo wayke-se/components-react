@@ -15,8 +15,23 @@ export const Wrapper = styled.div`
 `;
 
 export const Logo = styled.div`
+  position: relative;
   flex-shrink: 0;
-  padding-right: ${size(1)};
+  margin-right: ${size(1)};
+  width: ${size(9.5)};
+  height: ${size(6)};
+`;
+
+export const LogoImg = styled.img`
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
 `;
 
 export const Content = styled.div`

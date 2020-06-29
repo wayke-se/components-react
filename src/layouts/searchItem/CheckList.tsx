@@ -105,14 +105,14 @@ const CheckList = ({
           {ecommerce?.withHomeDelivery && <CheckMarkListItem>Hemleverans</CheckMarkListItem>}
         </CheckMarkList>
       </Repeat>
-      {ecommerce && ecommerce.enabled && (
-        <Repeat>
-          <ButtonPrimary fullWidth onClick={toggleEcomModal}>
-            <ButtonContent>Köp bilen online</ButtonContent>
-          </ButtonPrimary>
-        </Repeat>
-      )}
       <Repeat>
+        {ecommerce && ecommerce.enabled && (
+          <Repeat tiny>
+            <ButtonPrimary fullWidth onClick={toggleEcomModal}>
+              <ButtonContent>Köp bilen online</ButtonContent>
+            </ButtonPrimary>
+          </Repeat>
+        )}
         <ActionList branch={branch} contact={contact} />
       </Repeat>
       {(branch?.connections.length || 0) > 1 && (
