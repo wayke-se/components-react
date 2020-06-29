@@ -1,7 +1,5 @@
 import React, { useCallback } from 'react';
 
-import { List } from './wrapper';
-import { IconPhone, IconMail } from '../Icon/index';
 import ToggleItem from './toggle-item';
 import { Maybe, ContactOptions, Branch } from '../../@types/codegen/types';
 import { formatPhonenumber } from '../../utils/phonenumbers';
@@ -25,13 +23,12 @@ const ActionList = ({ contact, branch }: ActionListProps) => {
   }
 
   return (
-    <List>
+    <>
       {email && (
         <ToggleItem
           onClickVisible={onClickMailVisible}
           title="Visa mailadress"
           value={email}
-          icon={<IconMail block />}
           type="mailto"
         />
       )}
@@ -39,13 +36,12 @@ const ActionList = ({ contact, branch }: ActionListProps) => {
         <ToggleItem
           title="Visa telefonnummer"
           value={formatPhonenumber(phonenumber)}
-          icon={<IconPhone block />}
           type="tel"
           onClickVisible={onClickPhoneVisible}
           onClickValue={onClickPhoneValue}
         />
       )}
-    </List>
+    </>
   );
 };
 

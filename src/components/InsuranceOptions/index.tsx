@@ -40,10 +40,10 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
                 logo={insuranceOption.logotype || undefined}
                 logoAlt={insuranceOption.name || 'Logotyp'}
               >
-                <OptionBoxHeading>{insuranceOption.name}</OptionBoxHeading>
+                <OptionBoxHeading>Få prisförslag</OptionBoxHeading>
                 <OptionBoxContent>
                   <p>
-                    <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
+                    <ButtonInline onClick={toggleModal}>Mer information</ButtonInline>
                   </p>
                 </OptionBoxContent>
               </OptionBox>

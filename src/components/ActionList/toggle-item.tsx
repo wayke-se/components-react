@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { Item, Action, Icon, Label } from './wrapper';
+import { ButtonSecondary, ButtonContent } from '../Button';
+import Repeat from '../Repeat';
 
 interface ToggleItemProps {
   title: string;
   value: string;
-  icon: React.ReactNode;
   type: 'tel' | 'mailto';
   onClickVisible?: () => void;
   onClickValue?: () => void;
@@ -14,14 +14,7 @@ const initialValue: { [key: string]: boolean | undefined } = {};
 
 const getInitialValue = (title: string) => title && !!initialValue[title];
 
-const ToggleItem = ({
-  title,
-  value,
-  icon,
-  type,
-  onClickVisible,
-  onClickValue,
-}: ToggleItemProps) => {
+const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: ToggleItemProps) => {
   const [visible, setVisible] = useState(() => getInitialValue(type));
 
   const _onClickValue = useCallback(() => {
@@ -43,24 +36,23 @@ const ToggleItem = ({
   const visibleTitle = type === 'tel' ? 'Ring' : type === 'mailto' ? 'Skicka ett mail till' : '';
 
   return (
-    <Item>
+    <Repeat tiny>
       {visible ? (
-        <Action
+        <ButtonSecondary
           onClick={_onClickValue}
           as="a"
           href={`${type}:${value}`}
           title={`${visibleTitle} ${value}`}
+          fullWidth
         >
-          <Icon>{icon}</Icon>
-          <Label>{value}</Label>
-        </Action>
+          <ButtonContent>{value}</ButtonContent>
+        </ButtonSecondary>
       ) : (
-        <Action onClick={onClick} title={title}>
-          <Icon>{icon}</Icon>
-          <Label>{title}</Label>
-        </Action>
+        <ButtonSecondary onClick={onClick} title={title} fullWidth>
+          <ButtonContent>{title}</ButtonContent>
+        </ButtonSecondary>
       )}
-    </Item>
+    </Repeat>
   );
 };
 
