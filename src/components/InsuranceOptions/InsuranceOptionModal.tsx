@@ -22,6 +22,7 @@ import { ssnIsValid } from '../../utils/ssn';
 import { Spinner } from '../Loader/wrapper';
 import { numberSeparator } from '../../utils/formats';
 import { DrivingDistance, InsuranceOption } from '../../@types/codegen/types';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface FormData {
   ssn: string;
@@ -57,11 +58,14 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
     [form]
   );
 
-  const onShowInsurances = useCallback(() => setPayload(form), [form]);
+  const onShowInsurances = useCallback(() => {
+    PubSub.publish('InsuranceInterest');
+    setPayload(form);
+  }, [form]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.keyCode === 13) {
+      if (e.keyCode === 13 && ssnIsValid(form.ssn) && !loading) {
         onShowInsurances();
       }
     },

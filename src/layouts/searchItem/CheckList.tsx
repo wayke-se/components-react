@@ -107,7 +107,7 @@ const CheckList = ({
       </Repeat>
       {ecommerce && ecommerce.enabled && (
         <Repeat>
-          <ButtonPrimary fullWidth onClick={toggleEcomModal}>
+          <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
             <ButtonContent>Köp bilen online</ButtonContent>
           </ButtonPrimary>
         </Repeat>
@@ -123,6 +123,15 @@ const CheckList = ({
                 Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
                 anläggning för att visa kontaktuppgifter till just den anläggningen.
               </p>
+            </Content>
+          </SwitchBar>
+        </Repeat>
+      )}
+      {ecommerce?.reserved && (
+        <Repeat>
+          <SwitchBar title="Reserverad">
+            <Content>
+              <p>Denna bil är reserverad av en annan köpare.</p>
             </Content>
           </SwitchBar>
         </Repeat>

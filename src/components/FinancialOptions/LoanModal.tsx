@@ -13,6 +13,7 @@ import { ButtonClear, ButtonContent } from '../Button/index';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/index';
 import DataList from '../DataList/index';
 import { FinancialOption } from '../../@types/codegen/types';
+import PubSub from '../../utils/pubsub/pubsub';
 
 const stepGenerator = (
   step: number,
@@ -37,7 +38,12 @@ interface LoanModalProps {
 
 const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   const [extend, setExtend] = React.useState(false);
-  const onToggleExtend = React.useCallback(() => setExtend(!extend), [extend]);
+  const onToggleExtend = React.useCallback(() => {
+    if (!extend) {
+      PubSub.publish('FinanceInterest');
+    }
+    setExtend(!extend);
+  }, [extend]);
 
   const [variables, setVariables] = useState({
     duration: financialOption.duration?.current,
@@ -55,7 +61,10 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   const downPaymentStep = loan?.downPayment?.step || 0;
   const downPaymentSteps = stepGenerator(downPaymentStep, downPaymentMax);
   const onDownPaymentChange = useCallback(
-    (values: readonly number[]) => setVariables({ ...variables, downPayment: values[0] }),
+    (values: readonly number[]) => {
+      PubSub.publish('FinanceInterest');
+      setVariables({ ...variables, downPayment: values[0] });
+    },
     [variables]
   );
 
@@ -65,7 +74,10 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   const durationStep = loan?.duration?.step || 0;
   const durationSteps = stepGenerator(durationStep, durationMax);
   const onDurationChange = useCallback(
-    (values: readonly number[]) => setVariables({ ...variables, duration: values[0] }),
+    (values: readonly number[]) => {
+      PubSub.publish('FinanceInterest');
+      setVariables({ ...variables, duration: values[0] });
+    },
     [variables]
   );
 
