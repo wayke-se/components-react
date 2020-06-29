@@ -30,7 +30,7 @@ import Modal from '../../components/Modal/index';
 import { getSpecificationList } from '../../utils/specification';
 import FinancialOptions from '../../components/FinancialOptions/index';
 import InsuranceOptions from '../../components/InsuranceOptions/index';
-import Ecome from '../../components/Ecome/index';
+import Ecom from '../../components/Ecom/index';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
 import CheckList from './CheckList';
 import Related from './Related';
@@ -110,9 +110,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
 
   return (
     <>
-      {ecomModal && (
-        <Ecome vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />
-      )}
+      {ecomModal && <Ecom vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />}
       <Page>
         <PageSection large>
           <Container>

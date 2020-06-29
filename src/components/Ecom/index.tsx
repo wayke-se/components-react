@@ -1,19 +1,19 @@
 import React, { useCallback } from 'react';
-import Ecom from '@wayke-se/ecom-react';
+import EcomBase from '@wayke-se/ecom-react';
 
 import { IEcomExternalProps } from '@wayke-se/ecom-react/dist-types/types';
 import { Vehicle, Maybe, Manufacturer } from '../../@types/codegen/types';
 import useSettings from '../../hooks/useSettings';
 import PubSub from '../../utils/pubsub/pubsub';
 
-interface EcomeProps {
+interface EcomProps {
   vehicle: Vehicle;
   manufacturer?: Maybe<Manufacturer>;
   onExit: () => void;
   onUserEvent?: (userEvent: string, currentStep: string) => void;
 }
 
-const Ecome = ({ vehicle, manufacturer, onExit, onUserEvent }: EcomeProps) => {
+const Ecom = ({ vehicle, manufacturer, onExit, onUserEvent }: EcomProps) => {
   const { ecomSettings } = useSettings();
 
   const onUserEventLocal = useCallback((userEvent: string, currentStep: string) => {
@@ -56,7 +56,7 @@ const Ecome = ({ vehicle, manufacturer, onExit, onUserEvent }: EcomeProps) => {
     displayBankIdAlert: ecomSettings?.displayBankIdAlert,
   };
 
-  return <Ecom {...ecomData} />;
+  return <EcomBase {...ecomData} />;
 };
 
-export default Ecome;
+export default Ecom;

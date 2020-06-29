@@ -1,6 +1,7 @@
 import {
   EventHashRouteChange,
   EventItemClicked,
+  EventEcomOnInit,
   EventEcomOnUser,
   EventEcomOnExit,
   EventImagesClick,
@@ -21,6 +22,7 @@ import {
 type EventSubscriptions = {
   HashRouteChange: EventHashRouteChange[];
   ItemClicked: EventItemClicked[];
+  EcomOnInit: EventEcomOnInit[];
   EcomOnUserEvent: EventEcomOnUser[];
   EcomOnExit: EventEcomOnExit[];
   ImagesClick: EventImagesClick[];
@@ -36,6 +38,7 @@ export class PubSub {
   private static events: EventSubscriptions = {
     HashRouteChange: [],
     ItemClicked: [],
+    EcomOnInit: [],
     EcomOnUserEvent: [],
     EcomOnExit: [],
     ImagesClick: [],
@@ -76,6 +79,7 @@ export class PubSub {
           case 'EcomOnUserEvent':
             (event.callback as CallbackEcomOnUserEvent)(args[0], args[1]);
             break;
+          case 'EcomOnInit':
           case 'EcomOnExit':
           case 'ImagesClick':
           case 'InformationClick':

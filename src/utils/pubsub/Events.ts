@@ -15,6 +15,10 @@ export interface EventItemClicked extends EventBase<CallbackEventItemClicked> {
   eventName: 'ItemClicked';
 }
 
+export interface EventEcomOnInit extends EventBase<CallbackEmpty> {
+  eventName: 'EcomOnInit';
+}
+
 export type CallbackEcomOnUserEvent = (userEvent: string, currentStep: string) => void;
 export interface EventEcomOnUser extends EventBase<CallbackEcomOnUserEvent> {
   eventName: 'EcomOnUserEvent';
@@ -56,6 +60,7 @@ export interface EventAll extends EventBase<CallbackAll> {
 export type EventType =
   | EventHashRouteChange
   | EventItemClicked
+  | EventEcomOnInit
   | EventEcomOnUser
   | EventEcomOnExit
   | EventImagesClick

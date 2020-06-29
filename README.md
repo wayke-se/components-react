@@ -229,6 +229,7 @@ WaykePubSub.unsubscribe(event);
 |--------------------|--------------------------------------------------|
 | HashRouteChange    | (id: string) => void                             |
 | ItemClicked        | (id: string) => void                             |
+| EcomOnInit         | () => void                                       |
 | EcomOnUserEvent    | (userEvent: string, currentStep: string) => void |
 | EcomOnExit         | () => void                                       |
 | ImagesClick        | () => void                                       |
