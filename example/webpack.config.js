@@ -78,5 +78,8 @@ module.exports = {
     historyApiFallback: true,
     writeToDisk: true,
     public: process.env.WAYKE_HOST,
+    allowedHosts: [
+      `"${process.env.WAYKE_HOST}"`,
+    ]
   },
 };
