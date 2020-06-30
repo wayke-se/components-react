@@ -344,7 +344,7 @@ This repository contains a example app that uses [@wayke-se/components-react](ht
 
 To start the example create an `.env` file in `./example`.
 ```
-WAYKE_HOST=YOUR_HOST
+WAYKE_HOST=YOUR_HOST_1,YOUR_HOST_2
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
@@ -365,6 +365,13 @@ Update your local host file and add:
 127.0.0.1   test.com.localhost
 This will change the origin, while still pointing to localhost.
 Start the example and open `test.com.localhost:5000`.
+
+To add more hosts, add all to your local host file and then update `WAYKE_HOST` (comma separated):
+```
+WAYKE_HOST=a.com.localhost,b.com.localhost
+```
+`a.com.localhost:5000` and `b.com.localhost:5000` can now be accessed.
+
 
 ### Available Routes (Independent)
 
