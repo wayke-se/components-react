@@ -18,7 +18,6 @@ npm install react react-dom styled-components
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
   url: "https://test-ext-api.wayketech.se/vehicles",
-  apiKey: "YOUR_API_KEY",
   ecomSettings: {
     url: "OPTIONAL_ECOM_URL",
   },
@@ -120,14 +119,14 @@ const App = ({}) => {
 | Property          | Type         | Required |
 |-------------------|--------------|----------|
 | url               | String       | true     |
-| apiKey            | String       | true     |
 | graphQlUrl        | String       | true     |
+| apiKey            | String       | false    |
 | googleMapsApiKey  | String       | false    |
 | ecomSettings      | EcomSettings | false    |
 
 * `url` - Url to Wayke ext-api.
-* `apiKey` - Api key to use with "ayke ext-api.
 * `graphQlUrl` - Url to the GraphQl endpoint.
+* `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
 * `googleMapsApiKey` - An *optional* flag. Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 * `ecomSettings` - An *optional* flag. Allow the use of ecom.
 
@@ -341,6 +340,8 @@ To style the components, copy the following snippet into your *CSS* file and mod
 ## Run example from repo
 This repository contains a example app that uses [@wayke-se/components-react](https://www.npmjs.com/package/@wayke-se/components-react).
 
+
+
 To start the example create an `.env` file in `./example`.
 ```
 WAYKE_HOST=YOUR_HOST
@@ -358,6 +359,12 @@ cd example
 npm install
 npm start
 ```
+
+`WAYKE_HOST` can be used instead of using and exposing the `WAYKE_SEARCH_X_API_KEY`. If, for example, your development host is `test.com.localhost`
+Update your local host file and add:
+127.0.0.1   test.com.localhost
+This will change the origin, while still pointing to localhost.
+Start the example and open `test.com.localhost:5000`.
 
 ### Available Routes (Independent)
 
