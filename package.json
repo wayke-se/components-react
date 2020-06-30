@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -66,6 +66,7 @@
     "react-compound-slider": "^2.5.0",
     "react-pannellum": "^0.1.13",
     "react-slick": "^0.26.1",
+    "scroll-into-view-if-needed": "^2.2.25",
     "slick-carousel": "^1.8.1"
   },
   "workspaces": {

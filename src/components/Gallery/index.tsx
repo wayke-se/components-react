@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 import Slider from 'react-slick';
+import scrollIntoView from 'scroll-into-view-if-needed';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
@@ -46,12 +47,19 @@ const sliderSettings = {
 
 const Gallery = ({ media }: GalleryProps) => {
   const slider = useRef<Slider>(null);
+  const quickNavRef = useRef<HTMLUListElement>(null);
   const isDragging = useRef(false);
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
   const [navigationDisabled, setNavigationDisabled] = useState(false);
 
-  const beforeChange = useCallback((oldIndex, newIndex) => setIndex(newIndex), []);
+  const beforeChange = useCallback((_, newIndex) => {
+    const element = quickNavRef.current?.querySelectorAll('li')?.[newIndex];
+    if (element) {
+      scrollIntoView(element, { scrollMode: 'if-needed', block: 'nearest', inline: 'nearest' });
+    }
+    setIndex(newIndex);
+  }, []);
 
   const onMouseDown = useCallback(() => {
     if (isDragging.current) {
@@ -173,7 +181,7 @@ const Gallery = ({ media }: GalleryProps) => {
               )}
             </Main>
             <Alt>
-              <QuickNav>
+              <QuickNav ref={quickNavRef}>
                 {media.map((m, i) => {
                   const src =
                     m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||
