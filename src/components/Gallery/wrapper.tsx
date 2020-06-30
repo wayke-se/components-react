@@ -30,6 +30,7 @@ export const Proportions = styled.div`
 
   ${(props) => props.theme.breakpoint.LtMd} {
     padding-bottom: 66.66666667%;
+    padding-bottom: calc(63.3333333365% - ${size(1)}); // (66.66666667 * 0.95) - border-right
   }
 `;
 
@@ -46,7 +47,10 @@ export const Limiter = styled.div`
 export const Main = styled.div`
   flex: 1 1 auto;
   position: relative;
-  background-color: ${(props) => props.theme.color.accent};
+
+  ${(props) => props.theme.breakpoint.Md} {
+    background-color: ${(props) => props.theme.color.accent};
+  }
 
   .slick-slider,
   .slick-list,
@@ -87,6 +91,24 @@ export const Alt = styled.div`
   }
 `;
 
+export const Item = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  :focus {
+    outline: none;
+  }
+
+  ${(props) => props.theme.breakpoint.LtMd} {
+    background-color: ${(props) => props.theme.color.textDark};
+    border-radius: 3px;
+    overflow: hidden;
+    transition: border-radius 150ms ease;
+  }
+`;
+
 export const SliderWrapper = styled.div`
   position: relative;
   height: 100%;
@@ -98,16 +120,30 @@ export const SliderWrapper = styled.div`
     left: 0;
     right: 0;
   }
-`;
 
-export const Item = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  ${(props) => props.theme.breakpoint.LtMd} {
+    overflow: hidden;
 
-  :focus {
-    outline: none;
+    .slick-list {
+      overflow: visible;
+      width: 95%;
+    }
+
+    .slick-slide {
+      border-right: ${size(1)} solid ${(props) => props.theme.color.bg};
+      //transform: scale(0.95);
+      transform-origin: 0 50%;
+      transition: transform 150ms ease;
+    }
+
+    .slick-slide.slick-active {
+      transform: none;
+
+      ${Item} {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
   }
 `;
 
