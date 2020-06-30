@@ -19,9 +19,11 @@ type Props = InputProps & {
 const InputSearch = ({ placeholder, label, value, id, onSearch, onChange, onKeyDown }: Props) => (
   <Wrapper>
     <Search>
-      <Icon htmlFor={id}>
-        <IconSearch block />
-      </Icon>
+      {false && (
+        <Icon htmlFor={id}>
+          <IconSearch block />
+        </Icon>
+      )}
       <Input
         placeholder={placeholder}
         name="search"
