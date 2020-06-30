@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { ButtonSecondary, ButtonContent } from '../Button';
-import Repeat from '../Repeat';
+import { ButtonSecondary, ButtonContent } from '../Button/index';
+import Repeat from '../Repeat/index';
 
 interface ToggleItemProps {
   title: string;
