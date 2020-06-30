@@ -108,12 +108,21 @@ const CheckList = ({
       <Repeat>
         {ecommerce && ecommerce.enabled && (
           <Repeat tiny>
-            <ButtonPrimary fullWidth onClick={toggleEcomModal}>
+            <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
               <ButtonContent>Köp bilen online</ButtonContent>
             </ButtonPrimary>
           </Repeat>
         )}
         <ActionList branch={branch} contact={contact} />
+        {ecommerce?.reserved && (
+          <Repeat tiny>
+            <SwitchBar title="Reserverad">
+              <Content>
+                <p>Denna bil är reserverad av en annan köpare.</p>
+              </Content>
+            </SwitchBar>
+          </Repeat>
+        )}
         {(branch?.connections.length || 0) > 1 && (
           <Repeat tiny>
             <SwitchBar

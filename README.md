@@ -238,6 +238,8 @@ WaykePubSub.unsubscribe(event);
 | PhonenumberVisible | () => void                                       |
 | PhonenumberCall    | () => void                                       |
 | MailVisible        | () => void                                       |
+| InsuranceInterest  | () => void                                       |
+| FinanceInterest    | () => void                                       |
 | All                | (eventName: string, data: any[]) => void         |
 
 * `All` - Subscribes to all events.

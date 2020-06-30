@@ -52,6 +52,14 @@ export interface EventMailVisible extends EventBase<CallbackEmpty> {
   eventName: 'MailVisible';
 }
 
+export interface EventInsuranceInterest extends EventBase<CallbackEmpty> {
+  eventName: 'InsuranceInterest';
+}
+
+export interface EventFinanceInterest extends EventBase<CallbackEmpty> {
+  eventName: 'FinanceInterest';
+}
+
 export type CallbackAll = (eventName: Omit<EventNames, 'All'>, data: any) => void;
 export interface EventAll extends EventBase<CallbackAll> {
   eventName: 'All';
@@ -69,6 +77,8 @@ export type EventType =
   | EventPhonenumberVisible
   | EventPhonenumberCall
   | EventMailVisible
+  | EventInsuranceInterest
+  | EventFinanceInterest
   | EventAll;
 
 export type EventNames = Pick<EventType, 'eventName'>['eventName'];

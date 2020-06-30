@@ -10,6 +10,8 @@ import {
   EventPhonenumberVisible,
   EventPhonenumberCall,
   EventMailVisible,
+  EventInsuranceInterest,
+  EventFinanceInterest,
   EventAll,
   EventType,
   EventNames,
@@ -31,6 +33,8 @@ type EventSubscriptions = {
   PhonenumberVisible: EventPhonenumberVisible[];
   PhonenumberCall: EventPhonenumberCall[];
   MailVisible: EventMailVisible[];
+  InsuranceInterest: EventInsuranceInterest[];
+  FinanceInterest: EventFinanceInterest[];
   All: EventAll[];
 };
 
@@ -47,6 +51,8 @@ export class PubSub {
     PhonenumberVisible: [],
     PhonenumberCall: [],
     MailVisible: [],
+    InsuranceInterest: [],
+    FinanceInterest: [],
     All: [],
   };
 
@@ -87,6 +93,8 @@ export class PubSub {
           case 'PhonenumberVisible':
           case 'PhonenumberCall':
           case 'MailVisible':
+          case 'InsuranceInterest':
+          case 'FinanceInterest':
             (event.callback as CallbackEmpty)();
             break;
           default:

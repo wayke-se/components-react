@@ -7,9 +7,9 @@ import { IconInfo } from '../Icon/index';
 
 interface Props {
   title: string;
-  actionTitle: string;
+  actionTitle?: string;
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SwitchBar = ({ title, actionTitle, children, onClick }: Props) => {
@@ -31,11 +31,13 @@ const SwitchBar = ({ title, actionTitle, children, onClick }: Props) => {
             </InfoContent>
           )}
         </Info>
-        <Action>
-          <ButtonInline onClick={onClick} title={actionTitle}>
-            {actionTitle}
-          </ButtonInline>
-        </Action>
+        {actionTitle && (
+          <Action>
+            <ButtonInline onClick={onClick} title={actionTitle}>
+              {actionTitle}
+            </ButtonInline>
+          </Action>
+        )}
       </Wrapper>
       {info && (
         <Modal title={title} onClose={onToggleInfo}>

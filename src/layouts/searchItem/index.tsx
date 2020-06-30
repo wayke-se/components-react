@@ -223,7 +223,11 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
                   <Branch branch={branch} loading={loadingCentralStorageVehicle} />
                   {ecommerce && ecommerce.enabled && (
                     <Repeat>
-                      <ButtonPrimary title="Köp bilen online" onClick={toggleEcomModal}>
+                      <ButtonPrimary
+                        disabled={!!ecommerce.reserved}
+                        title="Köp bilen online"
+                        onClick={toggleEcomModal}
+                      >
                         Köp bilen online
                       </ButtonPrimary>
                     </Repeat>
