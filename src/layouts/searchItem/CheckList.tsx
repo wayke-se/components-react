@@ -114,19 +114,23 @@ const CheckList = ({
           </Repeat>
         )}
         <ActionList branch={branch} contact={contact} />
+        {(branch?.connections.length || 0) > 1 && (
+          <Repeat tiny>
+            <SwitchBar
+              title="Centrallagerbil"
+              actionTitle="Byt anläggning"
+              onClick={openModalBranch}
+            >
+              <Content>
+                <p>
+                  Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
+                  anläggning för att visa kontaktuppgifter till just den anläggningen.
+                </p>
+              </Content>
+            </SwitchBar>
+          </Repeat>
+        )}
       </Repeat>
-      {(branch?.connections.length || 0) > 1 && (
-        <Repeat>
-          <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>
-            <Content>
-              <p>
-                Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
-                anläggning för att visa kontaktuppgifter till just den anläggningen.
-              </p>
-            </Content>
-          </SwitchBar>
-        </Repeat>
-      )}
     </>
   );
 };

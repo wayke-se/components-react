@@ -38,7 +38,9 @@ const PackageOptions = ({ packageOptions }: PackageOptionsProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {packageOption.link.title}
+                {packageOption.link.title
+                  ? packageOption.link.title
+                  : 'Läs mer (Öppnas i ett nytt fönster)'}
               </ButtonInline>
             </Repeat>
           )}
