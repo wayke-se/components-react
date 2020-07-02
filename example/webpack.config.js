@@ -43,6 +43,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js(x?)$/,
+        exclude: {
+          test: /node_modules/,
+          not: [/(([^\/]+?\/){1,2}(src|es6|dist\-web))/],
+        },
+        loader: 'babel-loader',
+      },
+      {
         test: /\.ts(x?)$/,
         use: [
           {
@@ -79,7 +87,7 @@ module.exports = {
     historyApiFallback: true,
     writeToDisk: true,
     allowedHosts: process.env.WAYKE_HOST
-      ? process.env.WAYKE_HOST.replace(/\s/g, "").split(",")
+      ? process.env.WAYKE_HOST.replace(/\s/g, '').split(',')
       : undefined,
   },
 };
