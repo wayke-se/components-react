@@ -5,7 +5,6 @@ import { ButtonReset } from '../Button/index';
 import { Wrapper as Container } from '../Container/wrapper';
 
 const quickNavWidth = 83; // 75px + 8px
-const calculatedQuickNavWidth = quickNavWidth * 0.6666666667;
 
 export const Wrapper = styled.div`
   ${(props) => props.theme.breakpoint.LtMd} {
@@ -21,32 +20,17 @@ export const Wrapper = styled.div`
       margin-right: ${size(-2)};
     }
   }
-`;
 
-export const Proportions = styled.div`
-  position: relative;
-  height: 0;
-  padding-bottom: calc(66.66666667% - ${calculatedQuickNavWidth}px); // 3:2
-
-  ${(props) => props.theme.breakpoint.LtMd} {
-    padding-bottom: 66.66666667%;
-    padding-bottom: calc(63.3333333365% - ${size(1)}); // (66.66666667 * 0.95) - border-right
+  ${(props) => props.theme.breakpoint.Md} {
+    position: relative;
+    padding-right: ${quickNavWidth}px;
   }
 `;
 
-export const Limiter = styled.div`
-  display: flex;
-  align-items: stretch;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-`;
-
 export const Main = styled.div`
-  flex: 1 1 auto;
   position: relative;
+  height: 0;
+  padding-bottom: 66.66666667%;
 
   ${(props) => props.theme.breakpoint.Md} {
     background-color: ${(props) => props.theme.color.accent};
@@ -70,8 +54,10 @@ export const Main = styled.div`
 `;
 
 export const Alt = styled.div`
-  position: relative;
-  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   width: ${quickNavWidth}px;
   padding-left: ${size(1)};
 
@@ -110,8 +96,11 @@ export const Item = styled.div`
 `;
 
 export const SliderWrapper = styled.div`
-  position: relative;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   .slick-slider {
     position: absolute;

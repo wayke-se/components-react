@@ -6,8 +6,6 @@ import 'slick-carousel/slick/slick.css';
 
 import {
   Wrapper,
-  Proportions,
-  Limiter,
   SliderWrapper,
   Item,
   Image,
@@ -117,92 +115,87 @@ const Gallery = ({ media }: GalleryProps) => {
   return (
     <>
       <Wrapper>
-        <Proportions>
-          <Limiter>
-            <Main>
-              <SliderWrapper onMouseDown={onMouseDown} onMouseMove={onMouseMove} onClick={onClick}>
-                <Slider
-                  {...sliderSettings}
-                  swipe={!navigationDisabled}
-                  touchMove={!navigationDisabled}
-                  swipeToSlide={!navigationDisabled}
-                  ref={slider}
-                  beforeChange={beforeChange}
-                >
-                  {media.map((m, i) => (
-                    <Item key={m.files[0].url || i}>
-                      {m.type === 'image' && (
-                        <Image
-                          src={
-                            m.files[0].formats.filter(notEmpty).find((x) => x.format === '1170x')
-                              ?.url
-                          }
-                          alt={`Bild ${i + 1}`}
-                        />
-                      )}
-                      {m.type === 'threesixty' && (
-                        <ThreeSixty
-                          urls={m.files.map((x) => x.url)}
-                          visible={i === index}
-                          onDisableNavigation={onDisableNavigation}
-                          navigationDisabled={navigationDisabled}
-                        />
-                      )}
-                      {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
-                      {m.type === 'sphere' && (
-                        <Sphere
-                          visible={i === index}
-                          url={m.files[0].url}
-                          preview={m.files[0].url}
-                          onDisableNavigation={onDisableNavigation}
-                          navigationDisabled={navigationDisabled}
-                        />
-                      )}
-                    </Item>
-                  ))}
-                </Slider>
-                {navigationDisabled && (
-                  <EnableNavigationButton>
-                    <ButtonSecondary onClick={onEnableNavigation} title="Stäng">
-                      <ButtonContent>Stäng</ButtonContent>
-                    </ButtonSecondary>
-                  </EnableNavigationButton>
-                )}
-              </SliderWrapper>
-              {!navigationDisabled && (
-                <>
-                  <ArrowLeft onClick={prevImage} title="Föregående bild">
-                    <IconChevronLeft block />
-                  </ArrowLeft>
-                  <ArrowRight onClick={nextImage} title="Nästa bild">
-                    <IconChevronRight block />
-                  </ArrowRight>
-                </>
-              )}
-            </Main>
-            <Alt>
-              <QuickNav ref={quickNavRef}>
-                {media.map((m, i) => {
-                  const src =
-                    m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||
-                    m.files[0].url;
-                  return (
-                    <QuickNavItem key={src || i} active={index === i}>
-                      <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
-                        {m.type === 'image' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
-                        {m.type === 'threesixty' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
-                        {m.type === 'embedded' && <QuickNavEmbeded src={src} index={i} />}
-                        {m.type === 'sphere' && (
-                          <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
-                        )}
-                      </QuickNavBtn>
-                    </QuickNavItem>
-                  );
-                })}
-              </QuickNav>
-            </Alt>
-          </Limiter>
-        </Proportions>
+        <Main>
+          <SliderWrapper onMouseDown={onMouseDown} onMouseMove={onMouseMove} onClick={onClick}>
+            <Slider
+              {...sliderSettings}
+              swipe={!navigationDisabled}
+              touchMove={!navigationDisabled}
+              swipeToSlide={!navigationDisabled}
+              ref={slider}
+              beforeChange={beforeChange}
+            >
+              {media.map((m, i) => (
+                <Item key={m.files[0].url || i}>
+                  {m.type === 'image' && (
+                    <Image
+                      src={
+                        m.files[0].formats.filter(notEmpty).find((x) => x.format === '1170x')?.url
+                      }
+                      alt={`Bild ${i + 1}`}
+                    />
+                  )}
+                  {m.type === 'threesixty' && (
+                    <ThreeSixty
+                      urls={m.files.map((x) => x.url)}
+                      visible={i === index}
+                      onDisableNavigation={onDisableNavigation}
+                      navigationDisabled={navigationDisabled}
+                    />
+                  )}
+                  {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
+                  {m.type === 'sphere' && (
+                    <Sphere
+                      visible={i === index}
+                      url={m.files[0].url}
+                      preview={m.files[0].url}
+                      onDisableNavigation={onDisableNavigation}
+                      navigationDisabled={navigationDisabled}
+                    />
+                  )}
+                </Item>
+              ))}
+            </Slider>
+            {navigationDisabled && (
+              <EnableNavigationButton>
+                <ButtonSecondary onClick={onEnableNavigation} title="Stäng">
+                  <ButtonContent>Stäng</ButtonContent>
+                </ButtonSecondary>
+              </EnableNavigationButton>
+            )}
+          </SliderWrapper>
+          {!navigationDisabled && (
+            <>
+              <ArrowLeft onClick={prevImage} title="Föregående bild">
+                <IconChevronLeft block />
+              </ArrowLeft>
+              <ArrowRight onClick={nextImage} title="Nästa bild">
+                <IconChevronRight block />
+              </ArrowRight>
+            </>
+          )}
+        </Main>
+        <Alt>
+          <QuickNav ref={quickNavRef}>
+            {media.map((m, i) => {
+              const src =
+                m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||
+                m.files[0].url;
+              return (
+                <QuickNavItem key={src || i} active={index === i}>
+                  <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
+                    {m.type === 'image' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
+                    {m.type === 'threesixty' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
+                    {m.type === 'embedded' && <QuickNavEmbeded src={src} index={i} />}
+                    {m.type === 'sphere' && (
+                      <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
+                    )}
+                  </QuickNavBtn>
+                </QuickNavItem>
+              );
+            })}
+          </QuickNav>
+        </Alt>
       </Wrapper>
       {lightbox && <Lightbox media={media} index={index} onClose={onToggleLightbox} />}
     </>
