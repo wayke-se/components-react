@@ -110,7 +110,10 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
   return (
     <>
       <Repeat small>
-        <Badge label="Öppet" severity={currentlyOpen ? 'positive' : 'negative'} />
+        <Badge
+          label={currentlyOpen ? 'Öppet' : 'Stängt'}
+          severity={currentlyOpen ? 'positive' : 'negative'}
+        />
       </Repeat>
       <Repeat small>
         <TableColumn>
