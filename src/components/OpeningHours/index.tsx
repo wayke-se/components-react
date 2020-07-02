@@ -69,10 +69,15 @@ const GetOpeningHoursToday = (o: OpeningHours) => {
   const day = KeyOrder[dayNumber === 0 ? 6 : dayNumber - 1] as KeyType;
   const current = o[day];
   return {
-    title: current ? 'Öppet idag' : 'Stängt idag',
+    title: current ? 'Öppetider idag' : 'Stängt idag',
     from: current?.from,
     until: current?.until,
   };
+};
+
+const valuOfDateString = (s: string) => {
+  const splitted = s.split(':').map((x) => parseInt(x, 10));
+  return new Date().setHours(splitted[0], splitted[1]).valueOf();
 };
 
 interface OpeningHoursProps {
@@ -83,6 +88,20 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
   const today = useMemo(() => (openingHours ? GetOpeningHoursToday(openingHours) : null), [
     openingHours,
   ]);
+
+  const currentlyOpen = useMemo(() => {
+    try {
+      if (today?.from && today?.until) {
+        const currentDate = new Date().valueOf();
+        const from = valuOfDateString(today.from);
+        const until = valuOfDateString(today.until);
+        return currentDate >= from && currentDate <= until;
+      }
+    } catch (e) {
+      return false;
+    }
+  }, [today]);
+
   const oh = useMemo(() => (openingHours ? GetOpeningHours(openingHours) : null), [openingHours]);
   if (!oh) {
     return null;
@@ -90,11 +109,9 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
 
   return (
     <>
-      {today && (
-        <Repeat small>
-          <Badge label="Öppet" severity="positive" />
-        </Repeat>
-      )}
+      <Repeat small>
+        <Badge label="Öppet" severity={currentlyOpen ? 'positive' : 'negative'} />
+      </Repeat>
       <Repeat small>
         <TableColumn>
           <TableColumnRow>

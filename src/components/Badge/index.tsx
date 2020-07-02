@@ -4,7 +4,7 @@ import { Wrapper } from './wrapper';
 
 interface Props {
   label: string;
-  severity?: string;
+  severity?: 'positive' | 'negative';
 }
 
 const Badge = ({ label, severity }: Props) => <Wrapper severity={severity}>{label}</Wrapper>;
