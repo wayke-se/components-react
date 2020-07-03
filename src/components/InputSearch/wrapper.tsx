@@ -3,10 +3,22 @@ import styled from 'styled-components';
 import { size } from '../../layout/helpers';
 import { ButtonReset } from '../Button/index';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div.attrs(() => ({
+  role: 'search',
+}))`
   display: flex;
   align-items: stretch;
   border-radius: 3px;
+`;
+
+export const Label = styled.label`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
 `;
 
 export const Search = styled.div`

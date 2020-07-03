@@ -18,7 +18,7 @@ interface SortSelectProps {
 
 const SortSelect = ({ value, options, onChange, unit }: SortSelectProps) => (
   <Wrapper>
-    <Select value={value} onChange={onChange}>
+    <Select value={value} onChange={onChange} title="Sortering" aria-label="Sortering">
       {options.map((option) => (
         <Option key={option.value} value={option.value}>
           {option.displayName || option.value}
