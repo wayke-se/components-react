@@ -36,6 +36,7 @@ module.exports = {
     'no-unused-expressions': 'error',
     'no-unused-labels': 'error',
     'no-unused-vars': 'off',
+    'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
