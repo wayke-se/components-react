@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Search, Action, ActionBtn, Input, Icon, Label } from './wrapper';
+import { Wrapper, Search, Action, ActionBtn, Input, Label } from './wrapper';
 import { IconSearch } from '../Icon/index';
 
 type InputProps = React.DetailedHTMLProps<
@@ -20,11 +20,6 @@ const InputSearch = ({ placeholder, label, value, id, onSearch, onChange, onKeyD
   <Wrapper>
     <Label htmlFor={id}>{label}</Label>
     <Search>
-      {false && (
-        <Icon htmlFor={id}>
-          <IconSearch block />
-        </Icon>
-      )}
       <Input
         placeholder={placeholder}
         name="search"

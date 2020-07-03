@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Spinner, Wrapper } from './wrapper';
-import { SrOnly } from '../SrOnly';
+import { SrOnly } from '../SrOnly/index';
 
 interface Props {
   inline?: boolean;
