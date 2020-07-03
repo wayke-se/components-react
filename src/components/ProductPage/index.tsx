@@ -30,7 +30,7 @@ export const ProductPageMain = styled.div`
   }
 
   ${(props) => props.theme.breakpoint.Md} {
-    flex: 1 1 auto;
+    flex: 1 1 100%;
     min-width: 0;
     padding-left: ${size(2)};
   }
