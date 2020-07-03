@@ -50,6 +50,7 @@ const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
             value: x.id,
             displayName: x.name,
           }))}
+          title="Välj anläggning"
         />
       </Repeat>
       <Repeat>
