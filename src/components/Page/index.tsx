@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components';
 import { size } from '../../layout/helpers';
 
 export const Page = styled.main`
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   padding-top: ${size(4)};
 `;
 
