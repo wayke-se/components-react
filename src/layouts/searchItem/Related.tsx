@@ -13,7 +13,7 @@ import {
 import ProductCard from '../../components/ProductCard/index';
 import { H2 } from '../../components/Heading/index';
 import useRelatedSearch from '../../hooks/useRelatedSearch';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/index';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 

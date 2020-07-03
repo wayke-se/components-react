@@ -19,7 +19,7 @@ import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/i
 import { ColumnRow, ColumnRowItem } from '../ColumnRow/index';
 import useInsuranceCalculation from '../../hooks/useInsurance';
 import { ssnIsValid } from '../../utils/ssn';
-import Loader from '../Loader';
+import Loader from '../Loader/index';
 import { numberSeparator } from '../../utils/formats';
 import { DrivingDistance, InsuranceOption } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';

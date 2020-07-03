@@ -13,7 +13,7 @@ import {
 } from './wrapper';
 import ProgressBar from '../ProgressBar/index';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
-import Loader from '../Loader';
+import Loader from '../Loader/index';
 import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../hooks/useSearch';
 import SortSelect, { OptionProps } from '../SortSelect/index';
