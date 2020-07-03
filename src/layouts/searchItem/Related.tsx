@@ -60,10 +60,7 @@ const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: Relat
                     onClick={onItemClicked}
                     title={document.title}
                     href={hashRoute ? `#${document._id}` : undefined}
-                    image={
-                      `${document.featuredImage?.files?.[0]?.url}?w=567&q=72` ||
-                      'http://placehold.it/600x400'
-                    }
+                    image={document.featuredImage?.files?.[0]?.url}
                     description={document.shortDescription}
                     uspList={[
                       {
