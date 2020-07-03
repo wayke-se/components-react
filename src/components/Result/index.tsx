@@ -13,7 +13,7 @@ import {
 } from './wrapper';
 import ProgressBar from '../ProgressBar/index';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
-import { Spinner } from '../Loader/wrapper';
+import Loader from '../Loader';
 import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../hooks/useSearch';
 import SortSelect, { OptionProps } from '../SortSelect/index';
@@ -44,7 +44,7 @@ const Result = ({ children }: Props) => {
   );
 
   if (loading && !useSkeletons) {
-    return <Spinner />;
+    return <Loader />;
   }
   return (
     <Wrapper>

@@ -13,7 +13,7 @@ import {
 import ProductCard from '../../components/ProductCard/index';
 import { H2 } from '../../components/Heading/index';
 import useRelatedSearch from '../../hooks/useRelatedSearch';
-import { Spinner } from '../../components/Loader/wrapper';
+import Loader from '../../components/Loader';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 
@@ -39,7 +39,7 @@ const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: Relat
   }
 
   if (loading) {
-    return <Spinner />;
+    return <Loader />;
   }
 
   return (
