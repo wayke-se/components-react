@@ -5,7 +5,9 @@ import { fadeIn, noTransform } from '../../layout/keyframes';
 import { ButtonReset } from '../Button/index';
 import { H1 } from '../Heading/index';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div.attrs(() => ({
+  role: 'dialog',
+}))`
   position: relative;
   z-index: 80;
 `;
@@ -135,7 +137,9 @@ export const Footer = styled.footer`
   border-top: 1px solid ${(props) => props.theme.color.border};
 `;
 
-export const FooterAction = styled.div`
+export const FooterAction = styled.div.attrs(() => ({
+  role: 'group',
+}))`
   display: flex;
   align-items: center;
   margin: ${size(-0.5)};

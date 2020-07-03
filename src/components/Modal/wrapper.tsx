@@ -6,7 +6,9 @@ import { fadeIn, noTransform } from '../../layout/keyframes';
 import { ButtonReset } from '../Button/index';
 import { H1 } from '../Heading/index';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div.attrs(() => ({
+  role: 'dialog',
+}))`
   position: fixed;
   top: 0;
   bottom: 0;

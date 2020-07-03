@@ -4,7 +4,9 @@ import styled, { css } from 'styled-components';
 import { size } from '../../layout/helpers';
 import { UtilityTextRight } from '../Utility/index';
 
-export const ButtonReset = styled.button`
+export const ButtonReset = styled.button.attrs(() => ({
+  type: 'button',
+}))`
   display: inline-block;
   vertical-align: middle;
   padding: 0;

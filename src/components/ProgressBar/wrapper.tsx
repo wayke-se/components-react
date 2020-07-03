@@ -18,7 +18,9 @@ export const Bar = styled.div`
   background-color: ${(props) => props.theme.color.accentDark};
 `;
 
-export const BarActive = styled.div`
+export const BarActive = styled.div.attrs(() => ({
+  role: 'progressbar',
+}))`
   position: absolute;
   top: 0;
   left: 0;

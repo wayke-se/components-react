@@ -22,7 +22,9 @@ const getSnackbarBg = (severity: string | undefined): string => {
 interface Wrapper {
   severity?: string;
 }
-export const Wrapper = styled.div<Wrapper>`
+export const Wrapper = styled.div.attrs(() => ({
+  role: 'alert',
+}))<Wrapper>`
   display: flex;
   align-items: center;
   padding: ${size(1.5)} ${size(2)};

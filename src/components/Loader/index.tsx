@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Spinner, Wrapper } from './wrapper';
+import { SrOnly } from '../SrOnly';
 
 interface Props {
   inline?: boolean;
@@ -9,7 +10,8 @@ interface Props {
 
 const Loader = ({ inline, center }: Props) => (
   <Wrapper inline={inline} center={center}>
-    <Spinner />
+    <Spinner aria-hidden="true" />
+    <SrOnly>Laddar...</SrOnly>
   </Wrapper>
 );
 

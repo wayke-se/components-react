@@ -24,6 +24,7 @@ type WrapperProps = React.DetailedHTMLProps<
 
 export const Wrapper = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
+  role: 'status',
 }))<WrapperProps>`
   ${({ inline }) =>
     inline &&
