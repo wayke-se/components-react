@@ -33,6 +33,7 @@ export const ActionBtn = styled(ButtonReset).attrs(() => ({
   height: ${(props) => props.theme.distances.inputHeight};
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+  font-size: 1rem;
 `;
 
 export const Icon = styled.label`
