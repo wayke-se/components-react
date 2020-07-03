@@ -97,6 +97,10 @@ export const Link = styled.a`
     width: 100%;
     height: 100%;
   }
+
+  :focus {
+    text-decoration: underline;
+  }
 `;
 
 export const Description = styled.div`
