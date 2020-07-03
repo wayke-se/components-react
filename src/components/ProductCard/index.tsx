@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import LazyLoad from 'react-lazyload';
 
 import {
   Wrapper,
@@ -43,7 +44,17 @@ const ProductCard = ({
   const _onClick = useMemo(() => (onClick ? () => onClick(id) : undefined), [id]);
   return (
     <Wrapper onClick={_onClick}>
-      <Image>{image && <ImageSrc src={image} alt={title} />}</Image>
+      <Image>
+        <LazyLoad>
+          {image && (
+            <picture>
+              <source media="(min-width: 900px)" srcSet={`${image}?w=411&q=72`} />
+              <source media="(min-width: 600px)" srcSet={`${image}?w=410&q=72`} />
+              <ImageSrc src={`${image}?w=552&q=72`} alt={title} />
+            </picture>
+          )}
+        </LazyLoad>
+      </Image>
       <Content>
         <ContentBody>
           <Heading>
