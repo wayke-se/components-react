@@ -128,6 +128,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                 onChange={onChangeDrivingDistance}
                 options={options}
                 unit="mil"
+                title="Uppskattad körsträcka per år"
               />
             </InputGroupColumn>
           </InputGroup>

@@ -29,6 +29,7 @@ export const Select = styled.select.attrs(() => ({
 
   :focus {
     outline: none;
+    text-decoration: underline;
   }
 
   ::-ms-expand {

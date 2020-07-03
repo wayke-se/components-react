@@ -43,7 +43,11 @@ export const Image = styled.div`
   }
 `;
 
-export const ImageSrc = styled.img`
+export const Picture = styled.picture``;
+
+export const Source = styled.source``;
+
+export const Img = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -92,6 +96,10 @@ export const Link = styled.a`
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  :focus {
+    text-decoration: underline;
   }
 `;
 

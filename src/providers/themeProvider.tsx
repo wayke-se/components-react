@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ThemeProvider as ThemeProviderBase } from 'styled-components';
 
-import GlobalStyle from '../layout/global-style';
 import theme from '../layout/theme';
 
 interface ThemeProps {
@@ -10,10 +9,7 @@ interface ThemeProps {
 }
 
 const ThemeProvider = ({ children }: ThemeProps) => (
-  <ThemeProviderBase theme={theme}>
-    <GlobalStyle />
-    {children}
-  </ThemeProviderBase>
+  <ThemeProviderBase theme={theme}>{children}</ThemeProviderBase>
 );
 
 export default ThemeProvider;

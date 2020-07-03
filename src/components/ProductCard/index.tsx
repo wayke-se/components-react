@@ -4,7 +4,9 @@ import LazyLoad from 'react-lazyload';
 import {
   Wrapper,
   Image,
-  ImageSrc,
+  Picture,
+  Source,
+  Img,
   Content,
   ContentBody,
   ContentFooter,
@@ -47,11 +49,11 @@ const ProductCard = ({
       <Image>
         <LazyLoad>
           {image && (
-            <picture>
-              <source media="(min-width: 900px)" srcSet={`${image}?w=411&q=72`} />
-              <source media="(min-width: 600px)" srcSet={`${image}?w=410&q=72`} />
-              <ImageSrc src={`${image}?w=552&q=72`} alt={title} />
-            </picture>
+            <Picture>
+              <Source media="(min-width: 900px)" srcSet={`${image}?w=411&q=72`} />
+              <Source media="(min-width: 600px)" srcSet={`${image}?w=418&q=72`} />
+              <Img src={`${image}?w=567&q=72`} alt={title} />
+            </Picture>
           )}
         </LazyLoad>
       </Image>

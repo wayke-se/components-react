@@ -3,6 +3,7 @@ import React from 'react';
 import GraphqlProvider from './graphqlProvider';
 import Theme from './themeProvider';
 import SearchProvider from './searchProvider';
+import Root from '../components/Root/index';
 
 import '@wayke-se/ecom-react/assets/styles/default.css';
 import useEcom from '../hooks/useEcom';
@@ -44,7 +45,9 @@ const WaykeProvider = ({
         <GraphqlProvider uri={graphQlUrl}>
           <SearchProvider url={url} apiKey={apiKey}>
             <SearchSearchProvider url={url} apiKey={apiKey}>
-              <Theme>{children}</Theme>
+              <Theme>
+                <Root>{children}</Root>
+              </Theme>
             </SearchSearchProvider>
           </SearchProvider>
         </GraphqlProvider>
