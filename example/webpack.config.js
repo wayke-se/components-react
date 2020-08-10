@@ -37,7 +37,9 @@ module.exports = {
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
-      eslint: true,
+      eslint: {
+        files: ['./src/**/*.{ts,tsx,js,jsx}', '../src/**/*.{ts,tsx,js,jsx}'],
+      },
     }),
   ],
   module: {
@@ -72,6 +74,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
+        exclude: [/node_modules/, /build/, /__test__/],
         loader: 'source-map-loader',
       },
       {
