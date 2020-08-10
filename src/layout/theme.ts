@@ -49,7 +49,6 @@ const theme = {
     Lg: '@media (min-width: 1200px)',
     LtLg: '@media (max-width: 1199px)',
   },
-  font: 'sans-serif',
   distances: {
     baseUnit: '8px',
     inputHeight: '48px',
