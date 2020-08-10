@@ -1,5 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
-import { QueryResult } from '@apollo/react-common';
+import { useQuery, QueryResult } from '@apollo/client';
 import LOAN_CALCULATION from '../queries/LOAN_CALCULATION';
 import { QueryLoanArgs, Query } from '../@types/codegen/types';
 
@@ -8,7 +7,7 @@ const useLoanCalculation = (
   duration?: number,
   downPayment?: number,
   residual?: number
-): QueryResult<Query> =>
+): QueryResult<Query, QueryLoanArgs> =>
   useQuery<Query, QueryLoanArgs>(LOAN_CALCULATION, {
     variables: {
       id,

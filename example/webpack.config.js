@@ -19,6 +19,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
       react: path.resolve('./node_modules/react'),
+      
     },
   },
   plugins: [
@@ -72,6 +73,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
+        exclude: [/node_modules/, /build/, /__test__/],
         loader: 'source-map-loader',
       },
       {
