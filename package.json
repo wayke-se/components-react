@@ -79,6 +79,7 @@
       [
         "@pika/plugin-ts-standard-pkg",
         {
+          "tsconfig": "tsconfig-build.json",
           "args": [
             "--target",
             "es2019"
