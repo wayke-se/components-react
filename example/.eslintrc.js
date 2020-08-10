@@ -12,7 +12,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['@typescript-eslint', 'react'],
+  // plugins: ['@typescript-eslint', 'react'],
   rules: {
     semi: 'error',
     'no-console': 'error',
@@ -47,7 +47,7 @@ module.exports = {
       },
     ],
   },
-  extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
+  // extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
   settings: {
     react: {
       pragma: 'React',

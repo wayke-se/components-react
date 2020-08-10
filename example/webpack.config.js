@@ -19,7 +19,6 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
       react: path.resolve('./node_modules/react'),
-      
     },
   },
   plugins: [
@@ -38,7 +37,9 @@ module.exports = {
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
-      eslint: true,
+      eslint: {
+        files: ['./src/**/*.{ts,tsx,js,jsx}', '../src/**/*.{ts,tsx,js,jsx}'],
+      },
     }),
   ],
   module: {

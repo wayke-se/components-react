@@ -13,10 +13,10 @@
     "resolveJsonModule": true,
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "example/src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "example"
   ]
 }
