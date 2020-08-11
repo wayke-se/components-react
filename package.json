@@ -9,7 +9,7 @@
     "prebuild": "npm run clean",
     "lint": "eslint --ext .tsx,.ts 'src' 'example'",
     "start": "webpack-dev-server --mode development",
-    "clean": "rimraf ./dist ./pkg ./coverage",
+    "clean": "rimraf ./pkg",
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "npm run prettify && npm run type-check && npm run lint",
@@ -103,7 +103,7 @@
       [
         "@pika/plugin-ts-standard-pkg",
         {
-          "tsconfig": "tsconfig-build.json",
+          "tsconfig": "tsconfig.build.json",
           "args": [
             "--target",
             "es2019"
@@ -119,7 +119,7 @@
       [
         "@pika/plugin-build-types",
         {
-          "tsconfig": "tsconfig-build.json"
+          "tsconfig": "tsconfig.build.json"
         }
       ]
     ]
