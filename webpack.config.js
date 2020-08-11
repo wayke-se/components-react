@@ -7,23 +7,20 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    app: ['whatwg-fetch', './src/index'],
+    app: ['whatwg-fetch', './example/src/index'],
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: '/build/',
+    path: path.resolve(__dirname, 'example/build'),
+    publicPath: 'example/build/',
     filename: 'default.bundle.js',
   },
   target: 'web',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    alias: {
-      react: path.resolve('./node_modules/react'),
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './example/src/index.html',
     }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /sv/),
     new webpack.DefinePlugin({
@@ -38,7 +35,7 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
-        files: ['./src/**/*.{ts,tsx,js,jsx}', '../src/**/*.{ts,tsx,js,jsx}'],
+        files: ['./src/**/*.{ts,tsx,js,jsx}', './example/src/**/*.{ts,tsx,js,jsx}'],
       },
     }),
   ],
@@ -85,7 +82,7 @@ module.exports = {
   },
   devServer: {
     hot: true,
-    contentBase: path.resolve(__dirname, 'build'),
+    contentBase: path.resolve(__dirname, 'example/build'),
     port: 5000,
     historyApiFallback: true,
     writeToDisk: true,

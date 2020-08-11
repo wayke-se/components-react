@@ -342,7 +342,7 @@ This repository contains a example app that uses [@wayke-se/components-react](ht
 
 
 
-To start the example create an `.env` file in `./example`.
+To start the example create an `.env` file in root.
 ```
 WAYKE_HOST=YOUR_HOST_1,YOUR_HOST_2
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
@@ -383,3 +383,12 @@ WAYKE_HOST=a.com.localhost,b.com.localhost
 
 #### WaykeSearchItem With WaykeProvider
 [http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31](http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31)
+
+
+## Example repositories
+
+### React and Typescript example
+[https://github.com/wayke-se/components-react-boilerplate](https://github.com/wayke-se/components-react-boilerplate)
+
+### Non-React with/without Typescript example
+[https://github.com/wayke-se/components-react-example](https://github.com/wayke-se/components-react-example)
