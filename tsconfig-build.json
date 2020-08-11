@@ -1,17 +1,5 @@
 {
-  "compilerOptions": {
-    "outDir": "./build",
-    "module": "esNext",
-    "target": "es2020",
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "jsx": "react",
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-  },
+  "extends": "./tsconfig.json",
   "include": [
     "src/**/*",
   ],
