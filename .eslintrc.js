@@ -6,7 +6,7 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    project: './tsconfig.eslint.json',
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -47,7 +47,7 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['src/@types/codegen/*'],
+  ignorePatterns: ['src/@types/codegen/*', 'pkg/**/*'],
   extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
   settings: {
     react: {
