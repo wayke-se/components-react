@@ -1,4 +1,5 @@
-import moment from 'moment';
+import { format as formatFns } from 'date-fns';
+import { sv } from 'date-fns/locale';
 
 // Filter function to remove any null/undefined values.
 export const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue =>
@@ -62,36 +63,18 @@ export const FacetIdToTitle = (f: string) => {
 };
 
 export const dateTimeFormat = {
-  DateTime: 0,
-  DateOnly: 1,
-  TimeOnly: 2,
-  DateString: 3,
-  DateTimeString: 4,
-  YearMonth: 5,
-  DayMonth: 6,
-  RelativeFromNow: 7,
+  YearMonth: 1,
+  DayMonth: 2,
 
   format: (value: string | Date, format: number) => {
-    const date = moment(value).locale('sv');
+    const date = new Date(value);
     switch (format) {
-      case dateTimeFormat.DateOnly:
-        return date.format('YYYY-MM-DD');
-      case dateTimeFormat.TimeOnly:
-        return date.format('HH:mm');
-      case dateTimeFormat.DateString:
-        return date.format('Do MMMM, YYYY');
-      case dateTimeFormat.DateTimeString:
-        return date.format('dddd, D MMMM YYYY, [kl] HH:mm');
       case dateTimeFormat.YearMonth:
-        return date.format('MMMM YYYY');
+        return formatFns(date, 'MMMM yyyy', { locale: sv });
       case dateTimeFormat.DayMonth:
-        return date.format('D MMMM YYYY');
-      case dateTimeFormat.RelativeFromNow:
-        return date.calendar();
-      case dateTimeFormat.DateTime:
-        return date.format('D MMMM HH:mm');
+        return formatFns(date, 'd MMMM yyyy', { locale: sv });
       default:
-        return date.format('YYYY-MM-DD HH:mm');
+        return formatFns(date, 'yyyy-MM-dd HH:mm', { locale: sv });
     }
   },
 };

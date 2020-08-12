@@ -22,7 +22,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './example/src/index.html',
     }),
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /sv/),
     new webpack.DefinePlugin({
       'process.env': {
         WAYKE_SEARCH_URL: `"${process.env.WAYKE_SEARCH_URL}"`,
