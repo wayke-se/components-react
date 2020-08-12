@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import useLoanCalculation from '../../hooks/useLoan';
 import Modal from '../Modal/index';
@@ -12,7 +12,7 @@ import { numberSeparator } from '../../utils/formats';
 import { ButtonClear, ButtonContent } from '../Button/index';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/index';
 import DataList from '../DataList/index';
-import { FinancialOption } from '../../@types/codegen/types';
+import { FinancialOption, Query } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 
 const stepGenerator = (
@@ -21,7 +21,7 @@ const stepGenerator = (
   steps: number[] = [],
   current?: number
 ): number[] => {
-  if (current && current >= max) {
+  if (current !== undefined && current >= max) {
     return steps;
   }
 
@@ -37,6 +37,7 @@ interface LoanModalProps {
 }
 
 const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
+  const [tmp, setTmp] = useState<Query>();
   const [extend, setExtend] = React.useState(false);
   const onToggleExtend = React.useCallback(() => {
     if (!extend) {
@@ -53,7 +54,13 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
 
   const { duration, downPayment, residual } = variables;
   const { loading, data } = useLoanCalculation(id, duration, downPayment, residual);
-  const loan = data?.loan;
+  useEffect(() => {
+    if (data) {
+      setTmp(data);
+    }
+  }, [data]);
+
+  const loan = data?.loan || tmp?.loan;
 
   const downPaymentCurrent = loan?.downPayment?.current || 0;
   const downPaymentMin = loan?.downPayment?.min || 0;

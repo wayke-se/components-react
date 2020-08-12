@@ -1,14 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Loader from '../../../src/components/Loader';
 
-import Search from './Search';
-import Home from './Home';
-import SearchItem from './SearchItem';
-
+const Search = lazy(() => import('./Search'));
+const Home = lazy(() => import('./Home'));
+const SearchItem = lazy(() => import('./SearchItem'));
 const NotFound = lazy(() => import('./NotFound/index'));
 
 const Routes = () => (
-  <Suspense fallback="Loading...">
+  <Suspense fallback={<Loader />}>
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/search" exact component={Search} />

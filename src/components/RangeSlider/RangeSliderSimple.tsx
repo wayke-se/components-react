@@ -32,6 +32,10 @@ const RangeSliderSimple = ({
   const currentMin = formatValues ? numberSeparator(domain[0]) : domain[0];
   const currentMax = formatValues ? numberSeparator(domain[1]) : domain[1];
 
+  if (steps.length < 2) {
+    return null;
+  }
+
   return (
     <>
       <OwnSlider>
