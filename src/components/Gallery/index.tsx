@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, Suspense, lazy } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Slider from 'react-slick';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import 'slick-carousel/slick/slick-theme.css';
@@ -21,6 +21,7 @@ import {
 } from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon/index';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
+import Lightbox from '../Lightbox/index';
 import EmbededVideo from '../Video/EmbededVideo';
 import QuickNavEmbeded from '../Video/QuickNavEmbeded';
 import Sphere from '../Sphere/Sphere';
@@ -28,8 +29,6 @@ import { notEmpty } from '../../utils/formats';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import { Media } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
-
-const Lightbox = lazy(() => import('../Lightbox/index'));
 
 interface GalleryProps {
   media: Media[];
@@ -198,9 +197,7 @@ const Gallery = ({ media }: GalleryProps) => {
           </QuickNav>
         </Alt>
       </Wrapper>
-      <Suspense fallback={null}>
-        {lightbox && <Lightbox media={media} index={index} onClose={onToggleLightbox} />}
-      </Suspense>
+      {lightbox && <Lightbox media={media} index={index} onClose={onToggleLightbox} />}
     </>
   );
 };

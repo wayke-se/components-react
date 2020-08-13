@@ -1,12 +1,11 @@
-import React, { useState, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useCallback } from 'react';
 import Repeat from '../Repeat/index';
 import { VisualHeading } from '../Heading/index';
 import OptionBox from '../OptionBox/index';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { ButtonInline } from '../Button/index';
 import { InsuranceOption } from '../../@types/codegen/types';
-
-const InsuranceOptionModal = lazy(() => import('./InsuranceOptionModal'));
+import InsuranceOptionModal from './InsuranceOptionModal';
 
 interface InsuranceOptions {
   id: string;
@@ -22,15 +21,13 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
 
   return (
     <>
-      <Suspense fallback={null}>
-        {modal && (
-          <InsuranceOptionModal
-            id={id}
-            onClose={toggleModal}
-            insuranceOptions={insuranceOptions[0]}
-          />
-        )}
-      </Suspense>
+      {modal && (
+        <InsuranceOptionModal
+          id={id}
+          onClose={toggleModal}
+          insuranceOptions={insuranceOptions[0]}
+        />
+      )}
       <Repeat>
         <Repeat tiny>
           <VisualHeading>Välj till försäkring</VisualHeading>

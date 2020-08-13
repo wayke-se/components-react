@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import OptionBox from '../OptionBox/index';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
@@ -7,8 +7,7 @@ import { ButtonInline } from '../Button/index';
 import { numberSeparator } from '../../utils/formats';
 import useLoanCalculation from '../../hooks/useLoan';
 import { FinancialOption } from '../../@types/codegen/types';
-
-const LoanModal = lazy(() => import('./LoanModal'));
+import LoanModal from './LoanModal';
 
 interface LoanProps {
   id: string;
@@ -56,9 +55,7 @@ const Loan = ({ id, financialOption }: LoanProps) => {
 
   return (
     <>
-      <Suspense fallback={null}>
-        {modal && <LoanModal id={id} financialOption={financialOption} onClose={toggleModal} />}
-      </Suspense>
+      {modal && <LoanModal id={id} financialOption={financialOption} onClose={toggleModal} />}
       <OptionBox logo={logo} logoAlt="Logotyp">
         <>
           <OptionBoxHeading>{`${numberSeparator(monthlyCost)} kr/mån*`}</OptionBoxHeading>

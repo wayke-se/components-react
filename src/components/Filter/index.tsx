@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { List, Item, Action, Label, Indicator, IndicatorValue } from './wrapper';
 import { Facet } from '../../@types/search';
@@ -6,8 +6,7 @@ import { FacetIdToTitle } from '../../utils/formats';
 import { PRICE, MILEAGE, MODEL_YEAR } from '../../utils/constants';
 import useSearch from '../../hooks/useSearch';
 import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
-
-const FilterPanel = lazy(() => import('../FilterPanel/index'));
+import FilterPanel from '../FilterPanel/index';
 
 const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {
@@ -62,19 +61,17 @@ const Filter = ({ filterList }: FilterProps) => {
 
   return (
     <>
-      <Suspense fallback={null}>
-        {initialFacets && facet && (
-          <FilterPanel
-            filterList={filterList}
-            facet={facet}
-            loading={loading}
-            filteredFacets={filteredFacets}
-            numberOfHits={response?.documentList.numberOfHits || 0}
-            onFilterUpdate={onFilterUpdate}
-            onClose={onClose}
-          />
-        )}
-      </Suspense>
+      {initialFacets && facet && (
+        <FilterPanel
+          filterList={filterList}
+          facet={facet}
+          loading={loading}
+          filteredFacets={filteredFacets}
+          numberOfHits={response?.documentList.numberOfHits || 0}
+          onFilterUpdate={onFilterUpdate}
+          onClose={onClose}
+        />
+      )}
       <List>
         {filteredFacets.map((f) => {
           const selected = isSelected(f, queryFilter.searchParams);

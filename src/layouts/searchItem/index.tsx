@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, Suspense, lazy } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 
 import Container from '../../components/Container/index';
 import UspList from '../../components/UspList/index';
@@ -30,18 +30,16 @@ import Modal from '../../components/Modal/index';
 import { getSpecificationList } from '../../utils/specification';
 import FinancialOptions from '../../components/FinancialOptions/index';
 import InsuranceOptions from '../../components/InsuranceOptions/index';
+import Ecom from '../../components/Ecom/index';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
 import CheckList from './CheckList';
-
+import Related from './Related';
 import PackageOptions from './PackageOptions';
 import Branch from './Branch';
 import useCentralStorage from '../../hooks/useCentralStorage';
 import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
-
-const Related = lazy(() => import('./Related'));
-const Ecom = lazy(() => import('../../components/Ecom/index'));
 
 interface WaykeSearchItemProps {
   id: string;
@@ -112,11 +110,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
 
   return (
     <>
-      <Suspense fallback={null}>
-        {ecomModal && (
-          <Ecom vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />
-        )}
-      </Suspense>
+      {ecomModal && <Ecom vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />}
       <Page>
         <PageSection large>
           <Container>
@@ -245,14 +239,12 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
             </ProductPage>
           </Container>
         </PageSection>
-        <Suspense fallback="Laddar...">
-          <Related
-            modelYear={modelYear}
-            modelSeries={modelSeries}
-            hashRoute={hashRoute}
-            onClickSearchItem={onClickSearchItem}
-          />
-        </Suspense>
+        <Related
+          modelYear={modelYear}
+          modelSeries={modelSeries}
+          hashRoute={hashRoute}
+          onClickSearchItem={onClickSearchItem}
+        />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>
