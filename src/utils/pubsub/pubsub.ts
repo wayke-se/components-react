@@ -38,7 +38,7 @@ type EventSubscriptions = {
   All: EventAll[];
 };
 
-export class PubSub {
+class PubSub {
   private static events: EventSubscriptions = {
     HashRouteChange: [],
     ItemClicked: [],

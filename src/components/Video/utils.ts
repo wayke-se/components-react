@@ -10,7 +10,38 @@ export const getYouTubeId = (url: string): string => {
   return match && match[7].length === 11 ? match[7] : '';
 };
 
-export const getYoutubeThumbnail = (url: string): string =>
-  `https://img.youtube.com/vi/${getYouTubeId(url)}/maxresdefault.jpg`;
-export const getYoutubeThumbnailSafe = (url: string): string =>
-  `https://img.youtube.com/vi/${getYouTubeId(url)}/0.jpg`;
+const youtubeBase = 'https://img.youtube.com/vi/';
+export const getYoutubeThumbnail = (url: string) => {
+  const id = getYouTubeId(url);
+  if (!id) {
+    return undefined;
+  }
+  return {
+    maxresdefault: `${youtubeBase}${id}/maxresdefault.jpg`,
+    hqdefault: `${youtubeBase}${id}/hqdefault.jpg`,
+    mqdefault: `${youtubeBase}${id}/mqdefault.jpg`,
+  };
+};
+
+export const onImageLoad = (
+  e: React.SyntheticEvent<HTMLImageElement, Event>,
+  thumbnail?: string[]
+) => {
+  if (
+    thumbnail?.length === 2 &&
+    e.currentTarget.src === thumbnail[0] &&
+    e.currentTarget.naturalWidth === 120 &&
+    e.currentTarget.naturalHeight === 90
+  ) {
+    e.currentTarget.src = thumbnail[1];
+  }
+};
+
+export const onImageError = (
+  e: React.SyntheticEvent<HTMLImageElement, Event>,
+  thumbnail?: string[]
+) => {
+  if (thumbnail?.length === 2) {
+    e.currentTarget.src = thumbnail[1];
+  }
+};

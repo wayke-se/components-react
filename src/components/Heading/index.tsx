@@ -10,7 +10,7 @@ type HeadingBaseProps = React.DetailedHTMLProps<
   noMargin?: boolean;
 };
 
-export const HeadingBase = styled.div.attrs(() => ({
+const HeadingBase = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__font--bold',
 }))<HeadingBaseProps>`
   margin-top: 0;
@@ -37,11 +37,13 @@ export const H2 = styled(HeadingBase).attrs(() => ({
   font-size: 1.5rem;
 `;
 
+/*
 export const H3 = styled(HeadingBase).attrs(() => ({
   as: 'h3',
 }))`
   font-size: 1.125rem;
 `;
+*/
 
 export const H4 = styled(HeadingBase).attrs(() => ({
   as: 'h4',
@@ -49,17 +51,21 @@ export const H4 = styled(HeadingBase).attrs(() => ({
   font-size: 1rem;
 `;
 
+/*
 export const H5 = styled(HeadingBase).attrs(() => ({
   as: 'h5',
 }))`
   font-size: 0.83rem;
 `;
+*/
 
+/*
 export const H6 = styled(HeadingBase).attrs(() => ({
   as: 'h6',
 }))`
   font-size: 0.67rem;
 `;
+*/
 
 export const VisualHeading = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__font--bold',

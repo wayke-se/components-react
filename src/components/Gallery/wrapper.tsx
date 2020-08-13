@@ -161,7 +161,7 @@ export const ImageFull = styled.img`
 
 // Arrow Nav
 
-export const Arrow = styled(ButtonReset)`
+const Arrow = styled(ButtonReset)`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

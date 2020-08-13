@@ -41,7 +41,7 @@ type ButtonResetProps = React.DetailedHTMLProps<
   inputHeight?: boolean;
 };
 
-export const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
+const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
   position: relative;
   display: inline-flex;
   align-items: center;
