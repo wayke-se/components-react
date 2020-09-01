@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import InputSearch from '../InputSearch/index';
 import useSearch from '../../hooks/useSearch';
+import useOutsideClick from '../../hooks/useOutsideClick';
 
 const SearchFilter = () => {
+  const ref = useRef<HTMLDivElement>(null);
   const { queryFilter, onFilterUpdate } = useSearch();
   const [value, setValue] = useState('');
 
@@ -10,6 +12,8 @@ const SearchFilter = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value),
     []
   );
+
+  useOutsideClick(ref, () => setValue(''));
 
   const onSearch = useCallback(() => {
     const nextQuery = new URLSearchParams(queryFilter.searchParams);
@@ -24,6 +28,7 @@ const SearchFilter = () => {
     }
 
     onFilterUpdate(nextQuery.toString());
+    setValue('');
   }, [queryFilter, value]);
 
   const onKeyDown = useCallback(
@@ -37,6 +42,7 @@ const SearchFilter = () => {
 
   return (
     <InputSearch
+      ref={ref}
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}

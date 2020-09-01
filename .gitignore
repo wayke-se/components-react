@@ -3,6 +3,7 @@ build/
 dist/
 pkg/
 .env
+.env_old
 .DS_Store
 examples/build
 examples/node_modules/

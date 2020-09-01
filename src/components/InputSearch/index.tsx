@@ -16,25 +16,36 @@ type Props = InputProps & {
   onSearch: () => void;
 };
 
-const InputSearch = ({ placeholder, label, value, id, onSearch, onChange, onKeyDown }: Props) => (
-  <Wrapper>
-    <Label htmlFor={id}>{label}</Label>
-    <Search>
-      <Input
-        placeholder={placeholder}
-        name="search"
-        value={value}
-        id={id}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-    </Search>
-    <Action>
-      <ActionBtn onClick={onSearch} title={`Genomför ${label}`} aria-label={`Genomför ${label}`}>
-        <IconSearch block />
-      </ActionBtn>
-    </Action>
-  </Wrapper>
+const InputSearch = React.forwardRef(
+  (
+    { placeholder, label, value, id, onSearch, onChange, onKeyDown }: Props,
+    ref:
+      | ((instance: HTMLDivElement | null) => void)
+      | React.RefObject<HTMLDivElement>
+      | null
+      | undefined
+  ) => (
+    <Wrapper ref={ref}>
+      <Label htmlFor={id}>{label}</Label>
+      <Search>
+        <Input
+          placeholder={placeholder}
+          name="search"
+          value={value}
+          id={id}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+        />
+      </Search>
+      <Action>
+        <ActionBtn onClick={onSearch} title={`Genomför ${label}`} aria-label={`Genomför ${label}`}>
+          <IconSearch block />
+        </ActionBtn>
+      </Action>
+    </Wrapper>
+  )
 );
+
+InputSearch.displayName = 'InputSearch';
 
 export default InputSearch;
