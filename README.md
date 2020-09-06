@@ -101,17 +101,19 @@ const App = ({}) => {
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 
 ### WaykeSearch
-| Property           | Type              | Default                  | Values                                                                                                                                         |
-|--------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| onClickSearchItem  | Function          | undefined                | (id: string) => void                                                                                                                           |
-| hashRoute          | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
-| filterList         | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
-| initialQueryParams | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| Property                       | Type              | Default                  | Values                                                                                                                                         |
+|--------------------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| onClickSearchItem              | Function          | undefined                | (id: string) => void                                                                                                                           |
+| hashRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
+| filterList                     | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+| initialQueryParams             | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| readInitialQueryParamsFromUrl  | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
+* `readInitialQueryParamsFromUrl` - An *optional* flag. Reads query string from the url and using it as initial query filter. If true and then `initialQueryParams` is ignored.
 
 ## Types
 
@@ -143,13 +145,15 @@ const App = ({}) => {
 
 
 ### WaykeSearchSettings
-| Property           | Type                | Required             | Values                                                                                                                                         |
-|--------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterList         | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
-| initialQueryParams | URLSearchParams     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| Property                       | Type                | Required             | Values                                                                                                                                         |
+|--------------------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| filterList                     | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
+| initialQueryParams             | URLSearchParams     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| readInitialQueryParamsFromUrl  | Boolean             | undefined (false)    | Boolean                                                                                                                                        |
 
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
+* `readInitialQueryParamsFromUrl` - An *optional* flag. Reads query string from the url and using it as initial query filter. If true and then `initialQueryParams` is ignored.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |

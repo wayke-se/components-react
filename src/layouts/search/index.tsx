@@ -12,9 +12,11 @@ import Snackbar from '../../components/Snackbar/index';
 import useSearch from '../../hooks/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
+import { getUrlSearchParamsFromUrl } from '../../utils/url';
 
 interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
+  readInitialQueryParamsFromUrl?: boolean;
   initialQueryParams?: URLSearchParams;
 }
 
@@ -25,6 +27,7 @@ type WaykeSearchProps = WaykeSearchSettings & {
 
 const WaykeSearch = ({
   filterList,
+  readInitialQueryParamsFromUrl,
   initialQueryParams,
   hashRoute,
   onClickSearchItem,
@@ -32,7 +35,7 @@ const WaykeSearch = ({
   const { error, documents, queryFilter, onInitialize } = useSearch();
 
   useEffect(() => {
-    onInitialize(initialQueryParams);
+    onInitialize(readInitialQueryParamsFromUrl ? getUrlSearchParamsFromUrl() : initialQueryParams);
   }, []);
 
   const onItemClicked = useCallback((id: string) => {

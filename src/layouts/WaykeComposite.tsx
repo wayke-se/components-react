@@ -8,10 +8,15 @@ import WaykeSearchItem from './searchItem/index';
 
 export interface WaykeCompositeProps {
   filterList?: SearchFilterTypes[];
+  readInitialQueryParamsFromUrl?: boolean;
   initialQueryParams?: URLSearchParams;
 }
 
-const WaykeComposite = ({ filterList, initialQueryParams }: WaykeCompositeProps) => {
+const WaykeComposite = ({
+  filterList,
+  readInitialQueryParamsFromUrl,
+  initialQueryParams,
+}: WaykeCompositeProps) => {
   const id = useHashGuid();
 
   useEffect(() => {
@@ -25,7 +30,12 @@ const WaykeComposite = ({ filterList, initialQueryParams }: WaykeCompositeProps)
       {id ? (
         <WaykeSearchItem id={id} hashRoute />
       ) : (
-        <WaykeSearch filterList={filterList} initialQueryParams={initialQueryParams} hashRoute />
+        <WaykeSearch
+          filterList={filterList}
+          readInitialQueryParamsFromUrl={readInitialQueryParamsFromUrl}
+          initialQueryParams={initialQueryParams}
+          hashRoute
+        />
       )}
     </>
   );
