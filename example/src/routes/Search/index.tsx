@@ -15,6 +15,7 @@ const Search = () => {
       ecomSettings={{
         url: process.env.WAYKE_ECOM_URL as string,
         useBankId: true,
+        serviceLogotypeUrl: 'https://cdn.wayke.se/wui/images/ecom/wayke-logo.svg',
       }}
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
     >

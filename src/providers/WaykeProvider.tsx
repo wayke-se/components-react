@@ -15,6 +15,7 @@ export interface EcomSettings {
   url: string;
   useBankId?: boolean;
   displayBankIdAlert?: boolean;
+  serviceLogotypeUrl?: string;
 }
 
 export interface WaykeProviderSettings {

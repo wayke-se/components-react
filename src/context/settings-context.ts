@@ -5,6 +5,7 @@ export interface SettingsContextProps {
   ecomSettings?: {
     useBankId?: boolean;
     displayBankIdAlert?: boolean;
+    serviceLogotypeUrl?: string;
   };
 }
 

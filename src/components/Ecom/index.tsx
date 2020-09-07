@@ -49,7 +49,9 @@ const Ecom = ({ vehicle, manufacturer, onExit, onUserEvent }: EcomProps) => {
       fuelType: fuelType || '',
     },
     serviceLogotypeUrl:
-      manufacturer?.logotype || 'https://cdn.wayke.se/wui/images/ecom/wayke-logo.svg',
+      ecomSettings?.serviceLogotypeUrl ||
+      manufacturer?.logotype ||
+      'https://cdn.wayke.se/wui/images/ecom/wayke-logo.svg',
     onExit: onExitLocal,
     onUserEvent: onUserEventLocal,
     useBankId: ecomSettings?.useBankId,
