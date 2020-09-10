@@ -6,6 +6,8 @@ import WaykeComposite, {
 } from './layouts/WaykeCompositeWithProvider';
 
 import SearchBar from './components/SearchBar/index';
+import WaykeThemeProvider from './providers/themeProvider';
+
 import WaykePubSub, { EventSubscriptions } from './utils/pubsub/pubsub';
 import { SearchFilterTypes, SearchFilterNameTypes } from './@types/filter';
 import {
@@ -36,6 +38,7 @@ export {
   WaykeSearch,
   WaykeSearchItem,
   SearchBar,
+  WaykeThemeProvider,
   WaykePubSub,
   WaykeCompositeWithProviderProps,
   WaykeProviderSettings,
