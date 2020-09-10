@@ -1,57 +1,31 @@
-import React, { useState, useCallback, useRef } from 'react';
-import InputSearch from '../InputSearch/index';
+import React, { useCallback, useState } from 'react';
 import useSearch from '../../hooks/useSearch';
-import useOutsideClick from '../../hooks/useOutsideClick';
+import SearchBar from '../SearchBar';
 
 const SearchFilter = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { queryFilter, onFilterUpdate } = useSearch();
   const [value, setValue] = useState('');
+  const { queryFilter, onFilterUpdate } = useSearch();
 
-  const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value),
-    []
-  );
-
-  useOutsideClick(ref, () => setValue(''));
-
-  const onSearch = useCallback(() => {
-    const nextQuery = new URLSearchParams(queryFilter.searchParams);
-    if (value === nextQuery.get('query')) {
-      return;
-    }
-
-    if (value) {
-      nextQuery.set('query', value);
-    } else {
-      nextQuery.delete('query');
-    }
-
-    onFilterUpdate(nextQuery.toString());
-    setValue('');
-  }, [queryFilter, value]);
-
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.keyCode === 13) {
-        onSearch();
+  const onSearch = useCallback(
+    (value: string) => {
+      const nextQuery = new URLSearchParams(queryFilter.searchParams);
+      if (value === nextQuery.get('query')) {
+        return;
       }
+
+      if (value) {
+        nextQuery.set('query', value);
+      } else {
+        nextQuery.delete('query');
+      }
+
+      onFilterUpdate(nextQuery.toString());
+      setValue('');
     },
-    [queryFilter, value]
+    [queryFilter]
   );
 
-  return (
-    <InputSearch
-      ref={ref}
-      value={value}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      onSearch={onSearch}
-      placeholder="Sök"
-      label="Sök"
-      id="main-search"
-    />
-  );
+  return <SearchBar value={value} setValue={setValue} onSearch={onSearch} />;
 };
 
 export default SearchFilter;

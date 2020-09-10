@@ -21,7 +21,7 @@ import {
   CallbackEmpty,
 } from './Events';
 
-type EventSubscriptions = {
+export type EventSubscriptions = {
   HashRouteChange: EventHashRouteChange[];
   ItemClicked: EventItemClicked[];
   EcomOnInit: EventEcomOnInit[];

@@ -40,7 +40,7 @@ import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
 
-interface WaykeSearchItemProps {
+export interface WaykeSearchItemProps {
   id: string;
   hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;

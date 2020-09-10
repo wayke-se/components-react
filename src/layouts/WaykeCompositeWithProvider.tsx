@@ -3,7 +3,7 @@ import React from 'react';
 import WaykeProvider, { WaykeProviderProps } from '../providers/WaykeProvider';
 import WaykeComposite, { WaykeCompositeProps } from './WaykeComposite';
 
-interface WaykeCompositeWithProviderProps {
+export interface WaykeCompositeWithProviderProps {
   provider: WaykeProviderProps;
   composite?: WaykeCompositeProps;
 }

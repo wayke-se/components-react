@@ -14,13 +14,13 @@ import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
 import { getUrlSearchParamsFromUrl } from '../../utils/url';
 
-interface WaykeSearchSettings {
+export interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
   readInitialQueryParamsFromUrl?: boolean;
   initialQueryParams?: URLSearchParams;
 }
 
-type WaykeSearchProps = WaykeSearchSettings & {
+export type WaykeSearchProps = WaykeSearchSettings & {
   hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 };
