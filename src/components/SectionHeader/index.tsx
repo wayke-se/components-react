@@ -14,7 +14,7 @@ const SectionHeader = ({ children, onClick, actionTitle }: Props) => (
     <Heading>{children}</Heading>
     {onClick && actionTitle && (
       <Action>
-        <ButtonClear onClick={onClick}>
+        <ButtonClear as="a" href="#" onClick={onClick}>
           <ButtonContent>{actionTitle}</ButtonContent>
         </ButtonClear>
       </Action>

@@ -18,14 +18,12 @@ import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 
 interface RelatedProps {
-  modelYear: number;
-  modelSeries?: string | null;
   hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: RelatedProps) => {
-  const { loading, response } = useRelatedSearch(modelYear, modelSeries);
+const Related = ({ hashRoute, onClickSearchItem }: RelatedProps) => {
+  const { loading, response } = useRelatedSearch();
 
   const onItemClicked = useCallback((id: string) => {
     PubSub.publish('ItemClicked', id);
@@ -46,7 +44,7 @@ const Related = ({ modelYear, modelSeries, hashRoute, onClickSearchItem }: Relat
     <PageSection accent large>
       <Container>
         <Repeat>
-          <SectionHeader onClick={() => {}} actionTitle="Se alla">
+          <SectionHeader onClick={() => {}} actionTitle="Visa alla">
             <H2 noMargin>Senast inkomna</H2>
           </SectionHeader>
         </Repeat>

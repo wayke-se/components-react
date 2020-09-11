@@ -88,7 +88,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
     packageOptions,
     publishedAt,
   } = vehicle;
-  const { fuelType, mileage, gearbox, manufactureYear, modelYear, modelSeries } = vehicle.data;
+  const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
   const specificationList = getSpecificationList(data);
 
   const uspList = [
@@ -238,12 +238,7 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
             </ProductPage>
           </Container>
         </PageSection>
-        <Related
-          modelYear={modelYear}
-          modelSeries={modelSeries}
-          hashRoute={hashRoute}
-          onClickSearchItem={onClickSearchItem}
-        />
+        <Related hashRoute={hashRoute} onClickSearchItem={onClickSearchItem} />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>
