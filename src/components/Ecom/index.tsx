@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import EcomBase from '@wayke-se/ecom-react';
 
 import { IEcomExternalProps } from '@wayke-se/ecom-react/dist-types/types';
@@ -15,6 +15,10 @@ interface EcomProps {
 
 const Ecom = ({ vehicle, manufacturer, onExit, onUserEvent }: EcomProps) => {
   const { ecomSettings } = useSettings();
+
+  useEffect(() => {
+    PubSub.publish('EcomOnInit');
+  }, []);
 
   const onUserEventLocal = useCallback((userEvent: string, currentStep: string) => {
     PubSub.publish('EcomOnUserEvent', userEvent, currentStep);
