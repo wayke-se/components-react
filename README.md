@@ -107,30 +107,32 @@ const App = ({}) => {
 | hashRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 | filterList                     | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams             | URLSearchParams   | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-| readInitialQueryParamsFromUrl  | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
-* `readInitialQueryParamsFromUrl` - An *optional* flag. Reads query string from the url and using it as initial query filter. If true and then `initialQueryParams` is ignored.
 
 ## Types
 
 ### WaykeProviderSettings
-| Property          | Type         | Required |
-|-------------------|--------------|----------|
-| url               | String       | true     |
-| graphQlUrl        | String       | true     |
-| apiKey            | String       | false    |
-| googleMapsApiKey  | String       | false    |
-| ecomSettings      | EcomSettings | false    |
+| Property              | Type         | Required |
+|-----------------------|--------------|----------|
+| url                   | String       | true     |
+| graphQlUrl            | String       | true     |
+| apiKey                | String       | false    |
+| googleMapsApiKey      | String       | false    |
+| ecomSettings          | EcomSettings | false    |
+| useQueryParamsFromUrl | boolean      | false    |
+| compressQueryParams   | boolean      | false    |
 
 * `url` - Url to Wayke ext-api.
 * `graphQlUrl` - Url to the GraphQl endpoint.
 * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
 * `googleMapsApiKey` - An *optional* flag. Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
 * `ecomSettings` - An *optional* flag. Allow the use of ecom.
+* `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and then `initialQueryParams` is ignored.
+* `compressQueryParams` - An *optional* flag. Instead of using several query strings that are human readable, all query string will be encoded to base64 into a single value and only allocate query string `f`. `useQueryParamsFromUrl` must be set to true in order to apply this option.
 
 ### EcomSettings
 | Property           | Type         | Required |
@@ -151,11 +153,9 @@ const App = ({}) => {
 |--------------------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList                     | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
 | initialQueryParams             | URLSearchParams     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-| readInitialQueryParamsFromUrl  | Boolean             | undefined (false)    | Boolean                                                                                                                                        |
 
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
-* `readInitialQueryParamsFromUrl` - An *optional* flag. Reads query string from the url and using it as initial query filter. If true and then `initialQueryParams` is ignored.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
@@ -169,15 +169,45 @@ const App = ({}) => {
 ```javascript
 import WaykeComposite from '@wayke-se/components-react'
 
-const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('price.min', '2000');
-
 const App = () => (
   <WaykeComposite
     provider={ProviderSettings}
     composite={{,
       intialQueryParams,
     }}
+  />
+)
+```
+
+### Read/write query strings from/to url
+```javascript
+import WaykeComposite from '@wayke-se/components-react'
+
+const App = () => (
+  <WaykeComposite
+    provider={
+      ...ProviderSettings,
+      useQueryParamsFromUrl: true,
+      compressQueryParams: true,
+    }
+  />
+)
+```
+
+### Read/write compressed query string from/to url
+```javascript
+import WaykeComposite from '@wayke-se/components-react'
+
+const initialQueryParams = new URLSearchParams();
+initialQueryParams.set('price.min', '2000');
+
+const App = () => (
+  <WaykeComposite
+    provider={
+      ...ProviderSettings,
+      useQueryParamsFromUrl: true,
+
+    }
   />
 )
 ```

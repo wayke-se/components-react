@@ -6,6 +6,19 @@ import { Handle } from './handle';
 import { Track } from './track';
 import { numberSeparator } from '../../utils/formats';
 
+const getSteps = (steps: number[]) => {
+  let current = Number.MAX_SAFE_INTEGER;
+  steps.forEach((step, index) => {
+    if (index !== 0) {
+      const c = step - steps[index - 1];
+      if (c < current) {
+        current = c;
+      }
+    }
+  });
+  return current;
+};
+
 interface RangeSliderProps {
   loading: boolean;
   domain: number[];
@@ -26,11 +39,14 @@ const RangeSlider = ({
   onChange,
 }: RangeSliderProps) => {
   const [current, setCurrent] = useState<number[]>(values);
-  const onUpdate = useCallback((values: readonly number[]) => setCurrent(values.slice()), []);
+  const onUpdate = useCallback(
+    (nextValues: readonly number[]) => {
+      setCurrent(nextValues.slice());
+    },
+    [values]
+  );
 
-  const first = steps[0];
-  const second = steps[1];
-  const step = second - first;
+  const step = getSteps(steps);
 
   const currentMin = formatValues ? numberSeparator(current[0]) : current[0];
   const currentMax = formatValues ? numberSeparator(current[1]) : current[1];

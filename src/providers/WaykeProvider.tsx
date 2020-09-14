@@ -24,6 +24,8 @@ export interface WaykeProviderSettings {
   graphQlUrl: string;
   ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;
+  useQueryParamsFromUrl?: boolean;
+  compressQueryParams?: boolean;
 }
 
 export type WaykeProviderProps = WaykeProviderSettings & {
@@ -36,6 +38,8 @@ const WaykeProvider = ({
   ecomSettings,
   graphQlUrl,
   googleMapsApiKey,
+  useQueryParamsFromUrl,
+  compressQueryParams,
   children,
 }: WaykeProviderProps) => {
   useEcom(ecomSettings?.url);
@@ -44,7 +48,12 @@ const WaykeProvider = ({
     <SettingsProvider googleMapsApiKey={googleMapsApiKey} ecomSettings={ecomSettings}>
       <CentralStorageProvider>
         <GraphqlProvider uri={graphQlUrl}>
-          <SearchProvider url={url} apiKey={apiKey}>
+          <SearchProvider
+            url={url}
+            apiKey={apiKey}
+            useQueryParamsFromUrl={useQueryParamsFromUrl}
+            compressQueryParams={compressQueryParams}
+          >
             <SearchSearchProvider url={url} apiKey={apiKey}>
               <Theme>
                 <Root>{children}</Root>
