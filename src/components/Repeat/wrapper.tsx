@@ -24,13 +24,13 @@ export const Wrapper = styled.div<WrapperProps>`
       }
     `}
 
-    ${({ small }) =>
-      small &&
-      css`
-        & + & {
-          margin-top: ${size(2)};
-        }
-      `}
+  ${({ small }) =>
+    small &&
+    css`
+      & + & {
+        margin-top: ${size(2)};
+      }
+    `}
 
   ${({ large }) =>
     large &&

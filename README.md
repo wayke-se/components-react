@@ -147,6 +147,7 @@ const App = ({}) => {
 * `displayBankIdAlert`: An *optional* flag. By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
 * `serviceLogotypeUrl`: An *optional* flag. Set the logo. By default the manufacturers logo will be used.
 
+> For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
 
 ### WaykeSearchSettings
 | Property                       | Type                | Required             | Values                                                                                                                                         |
@@ -278,7 +279,6 @@ WaykePubSub.unsubscribe(event);
 | All                | (eventName: string, data: any[]) => void         |
 
 * `All` - Subscribes to all events.
-
 
 ## Theme
 It is possible to apply a custom theme using *CSS*. The things that can be styled are:

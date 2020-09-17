@@ -1,0 +1,62 @@
+@import "@wayke-se/ecom-react/assets/styles/default.css";
+
+/* Custom Ecom CSS (Optional) */
+/* This file contains custom styling to overwrite wayke-ecom default styling */
+
+/* Timeline */
+.wayke-ecom [data-ecom-timeline] .timeline-indicator {
+  background-color: #ff5a1c;
+  border-color: #ff5a1c;
+}
+
+.wayke-ecom [data-ecom-timeline] .timeline-item.is-active:before {
+  background-color: #ff5a1c;
+}
+
+.wayke-ecom [data-ecom-timeline] .timeline-item.is-stepped+.timeline-item-step:before {
+  background-color: #ff5a1c;
+}
+
+.wayke-ecom [data-ecom-timeline] .timeline-item.is-stepped + .timeline-item-step .timeline-indicator {
+  border-color: #ff5a1c;
+}
+
+/* Link */
+
+.wayke-ecom [data-ecom-link] {
+  color: #ff5a1c;
+}
+
+.wayke-ecom button[data-ecom-link] {
+  color: #ff5a1c;
+}
+
+/* Button */
+
+.wayke-ecom [data-ecom-button] {
+  border-radius: 3px !important;
+  background-color: #ff5a1c !important;
+  color: #fff !important;
+}
+
+.wayke-ecom [data-ecom-button~=light] {
+  background-color: #ebebeb !important;
+  color: #ff5a1c !important;
+}
+
+/* Spinner */
+
+.wayke-ecom [data-ecom-spinner] .spinner {
+  border-color: #ff5a1c;
+  border-bottom-color: transparent;
+}
+
+/* Option List */
+.wayke-ecom [data-ecom-optionlist] .option-list-action-title {
+  color: #ff5a1c;
+}
+
+/* Cart */
+.wayke-ecom [data-ecom-cart] .cart-seller {
+  color: #ff5a1c;
+}

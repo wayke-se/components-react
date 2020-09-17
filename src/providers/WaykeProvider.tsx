@@ -5,7 +5,6 @@ import Theme from './themeProvider';
 import SearchProvider from './searchProvider';
 import Root from '../components/Root/index';
 
-import '@wayke-se/ecom-react/assets/styles/default.css';
 import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
 import SearchSearchProvider from './relatedSearchProvider';
