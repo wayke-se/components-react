@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 import { Facet, Document, Search } from '../@types/search';
 import { QueryFilter } from '../@types/queryFilter';
@@ -27,6 +27,10 @@ const SearchProvider = ({
   const [queryFilter, setQueryFilter] = useState<QueryFilter>({
     searchParams: initialSearchParams,
   });
+
+  const queryFilterRef = useRef(queryFilter);
+  queryFilterRef.current = queryFilter;
+
   const [initialFacets, setInitialFacets] = useState<Facet[]>();
   const [documents, setDocuments] = useState<Document[]>();
   const [initialize, setInitialize] = useState(false);
@@ -56,6 +60,33 @@ const SearchProvider = ({
     !initialize
   );
 
+  const popStateEvent = (event: PopStateEvent) => {
+    const { currentTarget } = event;
+    if (currentTarget) {
+      if (compressQueryParams) {
+        const f = atob(
+          new URLSearchParams((currentTarget as Window).location.search).get('f') || ''
+        );
+        setQueryFilter({
+          searchParams: new URLSearchParams(f),
+        });
+      } else {
+        setQueryFilter({
+          searchParams: new URLSearchParams((currentTarget as Window).location.search),
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (useQueryParamsFromUrl) {
+      window.addEventListener('popstate', popStateEvent);
+    }
+    return () => {
+      window.removeEventListener('popstate', popStateEvent);
+    };
+  }, []);
+
   useEffect(() => {
     if (initialDataRepsonse) {
       setInitialFacets(initialDataRepsonse.facets);
@@ -67,13 +98,15 @@ const SearchProvider = ({
       const nextSearchParams = new URLSearchParams(queryFilter.searchParams);
       nextSearchParams.delete('hits');
       nextSearchParams.delete('offset');
-
       const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
       if (initialize) {
         if (compressQueryParams) {
           const searchParamsFromUrl = getUrlSearchParamsFromUrl();
           const currentFilterCompressed = searchParamsFromUrl.get('f');
-          const nextFilterCompressed = btoa(nextSearch);
+
+          const currentFQuery = new URLSearchParams(nextSearch).get('f') || '';
+
+          const nextFilterCompressed = currentFQuery ? currentFQuery : btoa(nextSearch);
           if (currentFilterCompressed?.localeCompare(nextFilterCompressed) !== 0) {
             if (nextFilterCompressed) {
               searchParamsFromUrl.set('f', nextFilterCompressed);
@@ -81,14 +114,15 @@ const SearchProvider = ({
               searchParamsFromUrl.delete('f');
             }
 
-            const nextUrl = searchParamsFromUrl.toString()
-              ? `${window.location.pathname}?${searchParamsFromUrl}`
-              : window.location.pathname;
+            const nextUrlParams = decodeURIComponent(searchParamsFromUrl.toString());
 
-            window.history.replaceState(undefined, '', nextUrl);
+            const nextUrl = nextUrlParams
+              ? `${window.location.pathname}?${nextUrlParams}`
+              : window.location.pathname;
+            window.history.pushState(undefined, '', nextUrl);
           }
         } else if (window.location.search.localeCompare(nextSearch) !== 0) {
-          window.history.replaceState(undefined, '', `${window.location.pathname}${nextSearch}`);
+          window.history.pushState(undefined, '', `${window.location.pathname}${nextSearch}`);
         }
       }
     }
