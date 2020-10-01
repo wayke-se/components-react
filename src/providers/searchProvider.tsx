@@ -16,6 +16,7 @@ interface SearchProviderProps {
 
 const initialSearchParams = new URLSearchParams();
 initialSearchParams.set('hits', '30');
+initialSearchParams.set('sort', 'published-desc');
 
 const SearchProvider = ({
   url,
@@ -174,6 +175,10 @@ const SearchProvider = ({
           if (!initialQueryParams.has('hits')) {
             initialQueryParams.set('hits', '30');
           }
+          if (!initialQueryParams.has('sort')) {
+            initialQueryParams.set('sort', 'published-desc');
+          }
+
           setQueryFilter({
             searchParams: initialQueryParams,
           });

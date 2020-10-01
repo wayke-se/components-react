@@ -36,12 +36,14 @@ const Result = ({ children }: Props) => {
   const useSkeletons = !!queryFilter?.concatResult;
 
   const selectedSortOption = response?.documentList.sortOptions.find((x) => x.selected)?.query;
-  const sortOptions = response?.documentList.sortOptions.map(
-    (so): OptionProps => ({
-      value: so.query,
-      displayName: getTranslatedSortOptionDisplayName(so.displayName),
-    })
-  );
+  const sortOptions = response?.documentList.sortOptions
+    .filter((x) => x.displayName !== 'relevance')
+    .map(
+      (so): OptionProps => ({
+        value: so.query,
+        displayName: getTranslatedSortOptionDisplayName(so.displayName),
+      })
+    );
 
   if (loading && !useSkeletons) {
     return <Loader />;

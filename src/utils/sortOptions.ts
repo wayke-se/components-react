@@ -1,5 +1,4 @@
 const SortOptionDisplayName = {
-  Relevance: 'relevance',
   PublishedAsc: 'published-asc',
   PublishedDesc: 'published-desc',
   PriceAsc: 'price-asc',
@@ -19,8 +18,6 @@ type SortOptionDisplayName =
 
 export const getTranslatedSortOptionDisplayName = (str: string | SortOptionDisplayName): string => {
   switch (str) {
-    case SortOptionDisplayName.Relevance:
-      return 'Relevans';
     case SortOptionDisplayName.PublishedAsc:
       return 'Publicerad äldst';
     case SortOptionDisplayName.PublishedDesc:

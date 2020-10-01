@@ -16,6 +16,7 @@ import PubSub from '../../utils/pubsub/pubsub';
 export interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams;
+  removeSearchBar?: boolean;
 }
 
 export type WaykeSearchProps = WaykeSearchSettings & {
@@ -27,6 +28,7 @@ const WaykeSearch = ({
   filterList,
   initialQueryParams,
   hashRoute,
+  removeSearchBar,
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onInitialize } = useSearch();
@@ -47,11 +49,13 @@ const WaykeSearch = ({
   return (
     <>
       <Page>
-        <PageSection>
-          <Container>
-            <SearchFilter />
-          </Container>
-        </PageSection>
+        {!removeSearchBar && (
+          <PageSection>
+            <Container>
+              <SearchFilter />
+            </Container>
+          </PageSection>
+        )}
         {searchQuery && (
           <PageSection>
             <Container>

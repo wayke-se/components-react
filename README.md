@@ -154,6 +154,7 @@ const App = ({}) => {
 |--------------------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList                     | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
 | initialQueryParams             | URLSearchParams     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| removeSearchBar                | boolean             | false                |
 
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
