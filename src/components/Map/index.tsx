@@ -35,9 +35,7 @@ const StaticMap = ({ position }: StaticMapProps) => {
         rel="nofollow noopener noreferrer"
       >
         <Image
-          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=640x280&maptype=roadmap&markers=icon:${encodeURIComponent(
-            `${location.protocol}//${location.hostname}/images/map/marker.png`
-          )}%7C${latitude},${longitude}&key=${googleMapsApiKey}`}
+          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=640x280&maptype=roadmap&markers=%7C${latitude},${longitude}&key=${googleMapsApiKey}`}
           alt="Karta"
         />
       </Wrapper>
