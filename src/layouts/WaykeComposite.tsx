@@ -8,7 +8,7 @@ import WaykeSearchItem from './searchItem/index';
 
 export interface WaykeCompositeProps {
   filterList?: SearchFilterTypes[];
-  initialQueryParams?: URLSearchParams;
+  initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
   disableResetScrollOnInit?: boolean;
 }

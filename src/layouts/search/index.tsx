@@ -15,7 +15,7 @@ import PubSub from '../../utils/pubsub/pubsub';
 
 export interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
-  initialQueryParams?: URLSearchParams;
+  initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
 }
 
@@ -34,7 +34,11 @@ const WaykeSearch = ({
   const { error, documents, queryFilter, onInitialize } = useSearch();
 
   useEffect(() => {
-    onInitialize(initialQueryParams);
+    onInitialize(
+      typeof initialQueryParams === 'string'
+        ? new URLSearchParams(initialQueryParams)
+        : initialQueryParams
+    );
   }, []);
 
   const onItemClicked = useCallback((id: string) => {

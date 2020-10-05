@@ -171,6 +171,15 @@ const SearchProvider = ({
         const initialQueryParams = useQueryParamsFromUrl
           ? searchParamsFromUrlDecompressed
           : _initialQueryParams;
+
+        if (useQueryParamsFromUrl && _initialQueryParams) {
+          _initialQueryParams.forEach((value, key) => {
+            if (!initialQueryParams?.has(key)) {
+              initialQueryParams?.append(key, value);
+            }
+          });
+        }
+
         if (initialQueryParams) {
           if (!initialQueryParams.has('hits')) {
             initialQueryParams.set('hits', '30');
