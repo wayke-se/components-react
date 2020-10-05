@@ -124,6 +124,7 @@ const App = ({}) => {
 | graphQlUrl            | String       | true     |
 | apiKey                | String       | false    |
 | googleMapsApiKey      | String       | false    |
+| googleMapsMarker      | String       | false    |
 | ecomSettings          | EcomSettings | false    |
 | useQueryParamsFromUrl | boolean      | false    |
 | compressQueryParams   | boolean      | false    |
@@ -132,6 +133,7 @@ const App = ({}) => {
 * `graphQlUrl` - Url to the GraphQl endpoint.
 * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
 * `googleMapsApiKey` - An *optional* flag. Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
+* `googleMapsMarker` - An *optional* flag. Provide a custom marker, url.
 * `ecomSettings` - An *optional* flag. Allow the use of ecom.
 * `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and then `initialQueryParams` is ignored.
 * `compressQueryParams` - An *optional* flag. Instead of using several query strings that are human readable, all query string will be encoded to base64 into a single value and only allocate query string `f`. `useQueryParamsFromUrl` must be set to true in order to apply this option.

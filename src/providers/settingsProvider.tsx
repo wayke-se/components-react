@@ -5,11 +5,17 @@ import { EcomSettings } from './WaykeProvider';
 interface SettingsProps {
   ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;
+  googleMapsMarker?: string;
   children: React.ReactNode;
 }
 
-const SettingsProvider = ({ googleMapsApiKey, ecomSettings, children }: SettingsProps) => (
-  <SettingsContext.Provider value={{ ecomSettings, googleMapsApiKey }}>
+const SettingsProvider = ({
+  googleMapsApiKey,
+  googleMapsMarker,
+  ecomSettings,
+  children,
+}: SettingsProps) => (
+  <SettingsContext.Provider value={{ ecomSettings, googleMapsApiKey, googleMapsMarker }}>
     {children}
   </SettingsContext.Provider>
 );

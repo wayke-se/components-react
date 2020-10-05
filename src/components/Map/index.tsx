@@ -10,7 +10,7 @@ interface StaticMapProps {
 }
 
 const StaticMap = ({ position }: StaticMapProps) => {
-  const { googleMapsApiKey } = useSettings();
+  const { googleMapsApiKey, googleMapsMarker } = useSettings();
   const [visible, setVisible] = useState(false);
 
   const onShowMap = useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -35,7 +35,9 @@ const StaticMap = ({ position }: StaticMapProps) => {
         rel="nofollow noopener noreferrer"
       >
         <Image
-          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=640x280&maptype=roadmap&markers=%7C${latitude},${longitude}&key=${googleMapsApiKey}`}
+          src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=640x280&maptype=roadmap&markers=${
+            googleMapsMarker ? `icon:${encodeURIComponent(googleMapsMarker)}` : ''
+          }%7C${latitude},${longitude}&key=${googleMapsApiKey}`}
           alt="Karta"
         />
       </Wrapper>
