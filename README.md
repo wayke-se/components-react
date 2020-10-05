@@ -90,15 +90,17 @@ const App = ({}) => {
 | composite         | WaykeSearchSettings    | false    |
 
 ### WaykeSearchItem
-| Property           | Type     | Required | Value                |
-|--------------------|----------|----------|----------------------|
-| id                 | String   | true     |                      |
-| hashRoute          | boolean  | false    |                      |
-| onClickSearchItem  | Function | false    | (id: string) => void |
+| Property                 | Type     | Required | Value                |
+|--------------------------|----------|----------|----------------------|
+| id                       | String   | true     |                      |
+| hashRoute                | boolean  | false    |                      |
+| onClickSearchItem        | Function | false    | (id: string) => void |
+| disableResetScrollOnInit | boolean  | false    |                      |
 
 * `id` - Guid that represents a vehicle.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
+* `disableResetScrollOnInit` - An *optional* flag. Loading the item page resets the scroll, here it's possible to disable it.
 
 ### WaykeSearch
 | Property                       | Type              | Default                  | Values                                                                                                                                         |

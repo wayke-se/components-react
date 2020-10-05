@@ -10,12 +10,14 @@ export interface WaykeCompositeProps {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams;
   removeSearchBar?: boolean;
+  disableResetScrollOnInit?: boolean;
 }
 
 const WaykeComposite = ({
   filterList,
   initialQueryParams,
   removeSearchBar,
+  disableResetScrollOnInit,
 }: WaykeCompositeProps) => {
   const id = useHashGuid();
 
@@ -28,7 +30,7 @@ const WaykeComposite = ({
   return (
     <>
       {id ? (
-        <WaykeSearchItem id={id} hashRoute />
+        <WaykeSearchItem id={id} hashRoute disableResetScrollOnInit={disableResetScrollOnInit} />
       ) : (
         <WaykeSearch
           filterList={filterList}

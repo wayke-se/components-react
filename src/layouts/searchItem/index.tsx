@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 
 import Container from '../../components/Container/index';
 import UspList from '../../components/UspList/index';
@@ -43,10 +43,16 @@ import PubSub from '../../utils/pubsub/pubsub';
 export interface WaykeSearchItemProps {
   id: string;
   hashRoute?: boolean;
+  disableResetScrollOnInit?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemProps) => {
+const WaykeSearchItem = ({
+  id,
+  hashRoute,
+  disableResetScrollOnInit,
+  onClickSearchItem,
+}: WaykeSearchItemProps) => {
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
@@ -54,6 +60,12 @@ const WaykeSearchItem = ({ id, hashRoute, onClickSearchItem }: WaykeSearchItemPr
     vehicle: centralStorageVehicle,
     loading: loadingCentralStorageVehicle,
   } = useCentralStorage(result?.vehicle);
+
+  useEffect(() => {
+    if (!disableResetScrollOnInit) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   const options = useMemo(
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),

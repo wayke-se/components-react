@@ -50,7 +50,7 @@ const Grid = ({ documents, hashRoute, onClickItem }: GridProps) => {
               ]}
               price={`${numberSeparator(document.price)} kr`}
               oldPrice={
-                document.oldPrice !== undefined
+                document.oldPrice !== undefined && document.price < document.oldPrice
                   ? `${numberSeparator(document.oldPrice)} kr`
                   : undefined
               }
