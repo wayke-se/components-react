@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react';
 
-import Repeat from '../../components/Repeat/index';
+import { Repeat, RepeatTiny } from '../../components/Repeat/index';
 import InputSelect from '../../components/InputSelect/index';
 import { ButtonPrimary, ButtonContent } from '../../components/Button/index';
 import Modal from '../../components/Modal/index';
@@ -37,21 +37,23 @@ const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
   return (
     <Modal title="Byt anläggning" onClose={onClose}>
       <Repeat>
-        <Content>
-          <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>
-        </Content>
-      </Repeat>
-      <Repeat tiny>
-        <InputLabel>Välj anläggning</InputLabel>
-        <InputSelect
-          value={localValue}
-          onChange={onChange}
-          options={connections?.map((x) => ({
-            value: x.id,
-            displayName: x.name,
-          }))}
-          title="Välj anläggning"
-        />
+        <RepeatTiny>
+          <Content>
+            <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>
+          </Content>
+        </RepeatTiny>
+        <RepeatTiny>
+          <InputLabel>Välj anläggning</InputLabel>
+          <InputSelect
+            value={localValue}
+            onChange={onChange}
+            options={connections?.map((x) => ({
+              value: x.id,
+              displayName: x.name,
+            }))}
+            title="Välj anläggning"
+          />
+        </RepeatTiny>
       </Repeat>
       <Repeat>
         <ButtonPrimary disabled={loading} fullWidth onClick={() => onConfirm(localValue)}>

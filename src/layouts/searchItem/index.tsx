@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback, useEffect } from 'react';
 
 import Container from '../../components/Container/index';
 import UspList from '../../components/UspList/index';
-import Repeat from '../../components/Repeat/index';
+import { Repeat, RepeatSmall } from '../../components/Repeat/index';
 import DataGrid from '../../components/DataGrid/index';
 import PriceTable from '../../components/PriceTable/index';
 import LogoBox from '../../components/LogoBox/index';
@@ -143,16 +143,18 @@ const WaykeSearchItem = ({
                       <LogoBox logo={manufacturer.logotype} alt={manufacturer.name} />
                     </Repeat>
                   )}
-                  <Repeat small>
-                    <H1 noMargin>{title}</H1>
-                  </Repeat>
-                  {shortDescription && (
-                    <Repeat small>
-                      <div>{shortDescription}</div>
-                    </Repeat>
-                  )}
-                  <Repeat small>
-                    <UspList small items={uspList} />
+                  <Repeat>
+                    <RepeatSmall>
+                      <H1 noMargin>{title}</H1>
+                    </RepeatSmall>
+                    {shortDescription && (
+                      <RepeatSmall>
+                        <div>{shortDescription}</div>
+                      </RepeatSmall>
+                    )}
+                    <RepeatSmall>
+                      <UspList small items={uspList} />
+                    </RepeatSmall>
                   </Repeat>
                 </ProductPageAsideSection>
 

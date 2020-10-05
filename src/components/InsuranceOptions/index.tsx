@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import Repeat from '../Repeat/index';
+import { Repeat, RepeatTiny } from '../Repeat/index';
 import { VisualHeading } from '../Heading/index';
 import OptionBox from '../OptionBox/index';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
@@ -29,10 +29,10 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
         />
       )}
       <Repeat>
-        <Repeat tiny>
+        <RepeatTiny>
           <VisualHeading>Välj till försäkring</VisualHeading>
-        </Repeat>
-        <Repeat tiny>
+        </RepeatTiny>
+        <RepeatTiny>
           <>
             {insuranceOptions.map((insuranceOption, index) => (
               <OptionBox
@@ -49,7 +49,7 @@ const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
               </OptionBox>
             ))}
           </>
-        </Repeat>
+        </RepeatTiny>
       </Repeat>
     </>
   );

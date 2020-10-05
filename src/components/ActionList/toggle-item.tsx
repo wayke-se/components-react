@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
-import Repeat from '../Repeat/index';
+import { RepeatTiny } from '../Repeat/index';
 
 interface ToggleItemProps {
   title: string;
@@ -36,7 +36,7 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
   const visibleTitle = type === 'tel' ? 'Ring' : type === 'mailto' ? 'Skicka ett mail till' : '';
 
   return (
-    <Repeat tiny>
+    <RepeatTiny>
       {visible ? (
         <ButtonSecondary
           onClick={_onClickValue}
@@ -52,7 +52,7 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
           <ButtonContent>{title}</ButtonContent>
         </ButtonSecondary>
       )}
-    </Repeat>
+    </RepeatTiny>
   );
 };
 

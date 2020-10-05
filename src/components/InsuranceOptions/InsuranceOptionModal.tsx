@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import Modal from '../Modal/index';
 import Content from '../Content/index';
-import Repeat from '../Repeat/index';
+import { Repeat, RepeatTiny, RepeatSmall } from '../Repeat/index';
 import LogoBox from '../LogoBox/index';
 import DetailBox from '../DetailBox/index';
 import ExtendInfo from '../ExtendInfo/index';
@@ -106,57 +106,59 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
       )}
 
       <Repeat>
-        <Repeat tiny>
-          <InputGroup>
-            <InputGroupColumn>
-              <InputLabel htmlFor="input-insurance-personalnumber">Personnummer</InputLabel>
-              <InputText
-                placeholder="ÅÅÅÅMMDD-XXXX"
-                label="Personnummer"
-                value={form.ssn}
-                onChange={onChangeSsn}
-                onKeyDown={onKeyDown}
-                id="input-insurance-personalnumber"
-              />
-            </InputGroupColumn>
-            <InputGroupColumn>
-              <InputLabel htmlFor="input-insurance-mileage">
-                Uppskattad körsträcka per år
-              </InputLabel>
-              <InputSelect
-                value={form.drivingDistance}
-                onChange={onChangeDrivingDistance}
-                options={options}
-                unit="mil"
-                title="Uppskattad körsträcka per år"
-              />
-            </InputGroupColumn>
-          </InputGroup>
-        </Repeat>
-        <Repeat small>
-          <ButtonPrimary
-            fullWidth
-            disabled={!ssnIsValid(form.ssn) || loading}
-            onClick={onShowInsurances}
-          >
-            <ButtonContent>Visa försäkringar</ButtonContent>
-          </ButtonPrimary>
-        </Repeat>
+        <RepeatSmall>
+          <RepeatTiny>
+            <InputGroup>
+              <InputGroupColumn>
+                <InputLabel htmlFor="input-insurance-personalnumber">Personnummer</InputLabel>
+                <InputText
+                  placeholder="ÅÅÅÅMMDD-XXXX"
+                  label="Personnummer"
+                  value={form.ssn}
+                  onChange={onChangeSsn}
+                  onKeyDown={onKeyDown}
+                  id="input-insurance-personalnumber"
+                />
+              </InputGroupColumn>
+              <InputGroupColumn>
+                <InputLabel htmlFor="input-insurance-mileage">
+                  Uppskattad körsträcka per år
+                </InputLabel>
+                <InputSelect
+                  value={form.drivingDistance}
+                  onChange={onChangeDrivingDistance}
+                  options={options}
+                  unit="mil"
+                  title="Uppskattad körsträcka per år"
+                />
+              </InputGroupColumn>
+            </InputGroup>
+          </RepeatTiny>
+          <RepeatTiny>
+            <ButtonPrimary
+              fullWidth
+              disabled={!ssnIsValid(form.ssn) || loading}
+              onClick={onShowInsurances}
+            >
+              <ButtonContent>Visa försäkringar</ButtonContent>
+            </ButtonPrimary>
+          </RepeatTiny>
+        </RepeatSmall>
         {false && (
-          <Repeat small>
+          <RepeatSmall>
             <InputCheckbox id="input-insurance-save-personalnumber">
               Spara personnummer på denna enhet
             </InputCheckbox>
-          </Repeat>
+          </RepeatSmall>
         )}
-        <Repeat small>
+        <RepeatSmall>
           <Content small>
             <p>
               Spara personnummer på denna dator för att direkt visa försäkringskostnaderna i Wayke.
               Personnumret lagras inte hos Wayke utan finns bara sparad i din webbläsare.
             </p>
           </Content>
-        </Repeat>
+        </RepeatSmall>
       </Repeat>
 
       {loading && (
@@ -185,16 +187,16 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                   <Repeat>
                     <>
                       {insurance.description && (
-                        <Repeat tiny>
+                        <RepeatTiny>
                           <Content>
                             <p>{insurance.description}</p>
                           </Content>
-                        </Repeat>
+                        </RepeatTiny>
                       )}
                     </>
                     <>
                       {insurance.url && (
-                        <Repeat tiny>
+                        <RepeatTiny>
                           <ButtonInline
                             as="a"
                             href={insurance.url || ''}
@@ -203,7 +205,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                           >
                             Förköpsinformation och villkor (öppnas i ny flik)
                           </ButtonInline>
-                        </Repeat>
+                        </RepeatTiny>
                       )}
                     </>
                   </Repeat>
@@ -211,9 +213,9 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                     <Repeat>
                       <H4>Försäkringen innehåller</H4>
                       {insurance.items.map((item) => (
-                        <Repeat small key={item.name || ''}>
+                        <RepeatSmall key={item.name || ''}>
                           <ExtendInfo title={item.name || ''}>{item.description}</ExtendInfo>
-                        </Repeat>
+                        </RepeatSmall>
                       ))}
                     </Repeat>
                   )}
@@ -221,7 +223,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                     <Repeat>
                       <H4>Välj till</H4>
                       {insurance.addons.map((addon) => (
-                        <Repeat small key={addon.title || ''}>
+                        <RepeatSmall key={addon.title || ''}>
                           <ColumnRow>
                             <ColumnRowItem>
                               <ExtendInfo title={addon.title || ''}>{addon.description}</ExtendInfo>
@@ -232,7 +234,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
                               </UtilityTextBold>
                             </ColumnRowItem>
                           </ColumnRow>
-                        </Repeat>
+                        </RepeatSmall>
                       ))}
                     </Repeat>
                   )}

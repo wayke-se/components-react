@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import Container from '../../components/Container/index';
-import Repeat from '../../components/Repeat/index';
+import { Repeat } from '../../components/Repeat/index';
 
 import { PageSection } from '../../components/Page/index';
 import SectionHeader from '../../components/SectionHeader/index';

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-import Repeat from '../../components/Repeat/index';
+import { Repeat, RepeatTiny } from '../../components/Repeat/index';
 import ActionList from '../../components/ActionList/index';
 import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button/index';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList/index';
@@ -107,24 +107,24 @@ const CheckList = ({
       </Repeat>
       <Repeat>
         {ecommerce && ecommerce.enabled && (
-          <Repeat tiny>
+          <RepeatTiny>
             <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
               <ButtonContent>Köp bilen online</ButtonContent>
             </ButtonPrimary>
-          </Repeat>
+          </RepeatTiny>
         )}
         <ActionList branch={branch} contact={contact} />
         {ecommerce?.reserved && (
-          <Repeat tiny>
+          <RepeatTiny>
             <SwitchBar title="Reserverad">
               <Content>
                 <p>Denna bil är reserverad av en annan köpare.</p>
               </Content>
             </SwitchBar>
-          </Repeat>
+          </RepeatTiny>
         )}
         {(branch?.connections.length || 0) > 1 && (
-          <Repeat tiny>
+          <RepeatTiny>
             <SwitchBar
               title="Centrallagerbil"
               actionTitle="Byt anläggning"
@@ -137,7 +137,7 @@ const CheckList = ({
                 </p>
               </Content>
             </SwitchBar>
-          </Repeat>
+          </RepeatTiny>
         )}
       </Repeat>
     </>

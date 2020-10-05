@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import Repeat from '../Repeat/index';
+import { RepeatSmall } from '../Repeat/index';
 import Badge from '../Badge/index';
 import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn/index';
 import { UtilityTextBold } from '../Utility/index';
@@ -109,13 +109,13 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
 
   return (
     <>
-      <Repeat small>
+      <RepeatSmall>
         <Badge
           label={currentlyOpen ? 'Öppet' : 'Stängt'}
           severity={currentlyOpen ? 'positive' : 'negative'}
         />
-      </Repeat>
-      <Repeat small>
+      </RepeatSmall>
+      <RepeatSmall>
         <TableColumn>
           <TableColumnRow>
             <TableColumnCell>
@@ -136,7 +136,7 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
             </TableColumnRow>
           ))}
         </TableColumn>
-      </Repeat>
+      </RepeatSmall>
     </>
   );
 };

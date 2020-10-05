@@ -5,7 +5,7 @@ import Panel from '../Panel/index';
 import { FooterAction, FooterActionItem } from '../Panel/wrapper';
 import { ButtonSecondary, ButtonContent, ButtonPrimary } from '../Button/index';
 import Accordion, { AccordionItem } from '../Accordion/index';
-import Repeat from '../Repeat/index';
+import { Repeat } from '../Repeat/index';
 import FacetSelector from './faceSelector';
 import { SearchFilterTypes } from '../../@types/filter';
 

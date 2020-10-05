@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import Repeat from '../../components/Repeat/index';
 
+import { Repeat } from '../../components/Repeat/index';
 import Content from '../../components/Content/index';
 import { ProductPageContentLimit } from '../../components/ProductPage/index';
 import { H2 } from '../../components/Heading/index';

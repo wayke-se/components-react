@@ -1,18 +1,21 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import { Wrapper } from './wrapper';
+import { size } from '../../layout/helpers';
 
-interface IProps {
-  children?: React.ReactNode;
-  tiny?: boolean;
-  small?: boolean;
-  large?: boolean;
-}
+export const Repeat = styled.div`
+  & + & {
+    margin-top: ${size(3)};
+  }
+`;
 
-const Repeat = ({ children, tiny, small, large }: IProps) => (
-  <Wrapper tiny={tiny} small={small} large={large}>
-    {children}
-  </Wrapper>
-);
+export const RepeatTiny = styled.div`
+  & + & {
+    margin-top: ${size(1)};
+  }
+`;
 
-export default Repeat;
+export const RepeatSmall = styled.div`
+  & + & {
+    margin-top: ${size(2)};
+  }
+`;

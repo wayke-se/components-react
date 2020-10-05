@@ -5,7 +5,7 @@ import Modal from '../Modal/index';
 import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content/index';
 import LogoBox from '../LogoBox/index';
-import Repeat from '../Repeat/index';
+import { Repeat, RepeatSmall, RepeatTiny } from '../Repeat/index';
 import RangeSliderSimple from '../RangeSlider/RangeSliderSimple';
 import RangeSliderLabel from '../RangeSliderLabel/index';
 import { numberSeparator } from '../../utils/formats';
@@ -111,14 +111,14 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
         </ContentLogo>
       </Repeat>
       <Repeat>
-        <Repeat small>
-          <Repeat tiny>
+        <RepeatSmall>
+          <RepeatTiny>
             <RangeSliderLabel
               label="Kontantinsatts"
               value={`${numberSeparator(downPaymentCurrent)} kr`}
             />
-          </Repeat>
-          <Repeat tiny>
+          </RepeatTiny>
+          <RepeatTiny>
             <RangeSliderSimple
               loading={loading}
               values={[downPaymentCurrent]}
@@ -128,13 +128,13 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
               unit="kr"
               formatValues
             />
-          </Repeat>
-        </Repeat>
-        <Repeat small>
-          <Repeat tiny>
+          </RepeatTiny>
+        </RepeatSmall>
+        <RepeatSmall>
+          <RepeatTiny>
             <RangeSliderLabel label="Avbetalning" value={`${durationCurrent} mån`} />
-          </Repeat>
-          <Repeat tiny>
+          </RepeatTiny>
+          <RepeatTiny>
             <RangeSliderSimple
               loading={loading}
               values={[durationCurrent]}
@@ -143,33 +143,33 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
               onChange={onDurationChange}
               unit="mån"
             />
-          </Repeat>
-        </Repeat>
-        <Repeat small>
+          </RepeatTiny>
+        </RepeatSmall>
+        <RepeatSmall>
           <RangeSliderLabel label="Restskuld" value={`${residualText} %`} />
-        </Repeat>
-        <Repeat small>
-          <Repeat tiny>
+        </RepeatSmall>
+        <RepeatSmall>
+          <RepeatTiny>
             <RangeSliderLabel
               label="Din kostnad"
               value={`${numberSeparator(loan?.monthlyCost || 0)} kr/mån*`}
               highlight
             />
-          </Repeat>
-          <Repeat tiny>
+          </RepeatTiny>
+          <RepeatTiny>
             <Content small>
               <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %) och en årlig körsträcka om ${loan?.mileage} mil.`}</p>
             </Content>
-          </Repeat>
-        </Repeat>
-        <Repeat small>
+          </RepeatTiny>
+        </RepeatSmall>
+        <RepeatSmall>
           <ButtonClear
             onClick={onToggleExtend}
             title={extend ? 'Visa mindre information' : 'Visa mer information'}
           >
             <ButtonContent>{extend ? 'Mindre information' : 'Mer information'}</ButtonContent>
           </ButtonClear>
-        </Repeat>
+        </RepeatSmall>
         <>
           {extend && (
             <ModalFoldout>

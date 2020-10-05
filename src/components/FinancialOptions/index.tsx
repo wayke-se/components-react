@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Repeat from '../Repeat/index';
+import { Repeat, RepeatTiny } from '../Repeat/index';
 import { VisualHeading } from '../Heading/index';
 import Leasing from './leasing';
 import Loan from './loan';
@@ -12,18 +12,17 @@ interface FinancialOptionsProps {
 
 const FinancialOptions = ({ id, financialOptions }: FinancialOptionsProps) => (
   <Repeat>
-    <Repeat tiny>
+    <RepeatTiny>
       <VisualHeading>Andra finansieringsalternativ</VisualHeading>
-    </Repeat>
-
-    <Repeat tiny>
+    </RepeatTiny>
+    <RepeatTiny>
       {financialOptions.map((financialOption, index) => (
         <Fragment key={index}>
           {financialOption.type === 'leasing' && <Leasing financialOption={financialOption} />}
           {financialOption.type === 'loan' && <Loan id={id} financialOption={financialOption} />}
         </Fragment>
       ))}
-    </Repeat>
+    </RepeatTiny>
   </Repeat>
 );
 

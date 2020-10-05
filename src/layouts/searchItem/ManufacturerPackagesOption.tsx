@@ -1,7 +1,7 @@
 import React from 'react';
 import marked from 'marked';
 
-import Repeat from '../../components/Repeat/index';
+import { Repeat } from '../../components/Repeat/index';
 import { ProductPageMainSection } from '../../components/ProductPage/index';
 import Content from '../../components/Content/index';
 import { H2 } from '../../components/Heading/index';
