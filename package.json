@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -111,9 +111,7 @@
         }
       ],
       [
-        "@pika/plugin-copy-assets", {
-          "files": [ "./src/assets/"]
-        }
+        "@pika/plugin-copy-assets"
       ],
       [
         "@pika/plugin-build-node"
