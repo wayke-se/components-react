@@ -13,9 +13,9 @@ const useLoanCalculation = (
       id,
       duration: duration as number,
       downPayment: downPayment as number,
-      residual: residual as number,
+      residual: (residual as number) || 0,
     },
-    skip: duration === undefined || downPayment === undefined || residual === undefined,
+    skip: duration === undefined || downPayment === undefined,
   });
 
 export default useLoanCalculation;

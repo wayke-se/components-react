@@ -145,23 +145,27 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
             />
           </RepeatTiny>
         </RepeatSmall>
-        <RepeatSmall>
-          <RangeSliderLabel label="Restskuld" value={`${residualText} %`} />
-        </RepeatSmall>
-        <RepeatSmall>
-          <RepeatTiny>
-            <RangeSliderLabel
-              label="Din kostnad"
-              value={`${numberSeparator(loan?.monthlyCost || 0)} kr/mån*`}
-              highlight
-            />
-          </RepeatTiny>
-          <RepeatTiny>
-            <Content small>
-              <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %) och en årlig körsträcka om ${loan?.mileage} mil.`}</p>
-            </Content>
-          </RepeatTiny>
-        </RepeatSmall>
+        {residual !== undefined && (
+          <>
+            <RepeatSmall>
+              <RangeSliderLabel label="Restskuld" value={`${residualText} %`} />
+            </RepeatSmall>
+            <RepeatSmall>
+              <RepeatTiny>
+                <RangeSliderLabel
+                  label="Din kostnad"
+                  value={`${numberSeparator(loan?.monthlyCost || 0)} kr/mån*`}
+                  highlight
+                />
+              </RepeatTiny>
+              <RepeatTiny>
+                <Content small>
+                  <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %) och en årlig körsträcka om ${loan?.mileage} mil.`}</p>
+                </Content>
+              </RepeatTiny>
+            </RepeatSmall>
+          </>
+        )}
         <RepeatSmall>
           <ButtonClear
             onClick={onToggleExtend}

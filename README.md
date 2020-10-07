@@ -376,6 +376,9 @@ To style the components, copy the following snippet into your *CSS* file and mod
 }
 ```
 
+### Ecom theme
+The default ecom css can be found and imported `node_module/@wayke-se/ecom-react/assets/styles/default.css`.
+
 > **It is highly recommended to *NOT* add or remove any properties defined above in the color selectors**. However, since fonts usually requires more configuration we encourage you to add the necessary font styling required to match your current profile. If you add new properties to the font selectors, please be careful and ensure everything looks as intended before going into production.
 
 ## Run example from repo
