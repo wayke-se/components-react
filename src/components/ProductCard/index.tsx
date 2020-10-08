@@ -19,12 +19,14 @@ import {
   OldPrice,
 } from './wrapper';
 import UspList, { ItemProps } from '../UspList/index';
+import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 
 interface Props {
   id: string;
   title: string;
   href?: string;
   image?: string;
+  placeholderImage?: string;
   description?: string;
   uspList?: ItemProps[];
   price: string;
@@ -37,6 +39,7 @@ const ProductCard = ({
   title,
   href,
   image,
+  placeholderImage,
   description,
   uspList,
   price,
@@ -48,11 +51,15 @@ const ProductCard = ({
     <Wrapper onClick={_onClick}>
       <Image>
         <LazyLoad>
-          {image && (
+          {image ? (
             <Picture>
               <Source media="(min-width: 900px)" srcSet={`${image}?w=411&q=72`} />
               <Source media="(min-width: 600px)" srcSet={`${image}?w=418&q=72`} />
               <Img src={`${image}?w=567&q=72`} alt={title} />
+            </Picture>
+          ) : (
+            <Picture>
+              <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />
             </Picture>
           )}
         </LazyLoad>

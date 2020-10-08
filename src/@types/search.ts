@@ -99,9 +99,16 @@ export interface Facet {
   filters: FacetFilter[];
 }
 
+export interface Query {
+  displayName: string;
+  id: string;
+  parameters: string | null;
+  queryString: string | null;
+}
+
 export interface Search {
   stats: Stats;
-  query: string | null;
+  query: Query | null;
   documentList: DocumentList;
   facets: Facet[];
   spell: null;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Facet, Document, Search } from '../@types/search';
 import { QueryFilter } from '../@types/queryFilter';
@@ -29,9 +29,6 @@ const SearchProvider = ({
     searchParams: initialSearchParams,
   });
 
-  const queryFilterRef = useRef(queryFilter);
-  queryFilterRef.current = queryFilter;
-
   const [initialFacets, setInitialFacets] = useState<Facet[]>();
   const [documents, setDocuments] = useState<Document[]>();
   const [initialize, setInitialize] = useState(false);
@@ -58,7 +55,7 @@ const SearchProvider = ({
           }
         : {},
     },
-    !initialize
+    !initialize || !!queryFilter?.block
   );
 
   const popStateEvent = (event: PopStateEvent) => {
@@ -133,6 +130,45 @@ const SearchProvider = ({
     if (response) {
       if (!initialFacets && !useQueryParamsFromUrl) {
         setInitialFacets(response.facets);
+      }
+
+      if (useQueryParamsFromUrl && response.query?.parameters) {
+        const nextSearchParams = new URLSearchParams(response.query.parameters);
+        nextSearchParams.delete('hits');
+        nextSearchParams.delete('offset');
+        const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
+        if (compressQueryParams) {
+          const searchParamsFromUrl = getUrlSearchParamsFromUrl();
+          const currentFilterCompressed = searchParamsFromUrl.get('f');
+
+          const currentFQuery = new URLSearchParams(nextSearch).get('f') || '';
+
+          const nextFilterCompressed = currentFQuery ? currentFQuery : btoa(nextSearch);
+          if (currentFilterCompressed?.localeCompare(nextFilterCompressed) !== 0) {
+            if (nextFilterCompressed) {
+              searchParamsFromUrl.set('f', nextFilterCompressed);
+            } else {
+              searchParamsFromUrl.delete('f');
+            }
+
+            const nextUrlParams = decodeURIComponent(searchParamsFromUrl.toString());
+
+            const nextUrl = nextUrlParams
+              ? `${window.location.pathname}?${nextUrlParams}`
+              : window.location.pathname;
+            window.history.replaceState(undefined, '', nextUrl);
+            setQueryFilter({
+              searchParams: new URLSearchParams(nextSearch),
+              block: true,
+            });
+          }
+        } else if (window.location.search.localeCompare(nextSearch) !== 0) {
+          window.history.replaceState(undefined, '', `${window.location.pathname}${nextSearch}`);
+          setQueryFilter({
+            searchParams: new URLSearchParams(nextSearch),
+            block: true,
+          });
+        }
       }
 
       if (queryFilter?.concatResult) {

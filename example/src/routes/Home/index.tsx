@@ -9,7 +9,7 @@ const Home = () => (
   <WaykeComposite
     composite={{
       initialQueryParams,
-      removeSearchBar: true,
+      removeSearchBar: false,
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

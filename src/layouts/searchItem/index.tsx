@@ -44,6 +44,7 @@ export interface WaykeSearchItemProps {
   id: string;
   hashRoute?: boolean;
   disableResetScrollOnInit?: boolean;
+  placeholderImage?: string;
   onClickSearchItem?: (id: string) => void;
 }
 
@@ -51,6 +52,7 @@ const WaykeSearchItem = ({
   id,
   hashRoute,
   disableResetScrollOnInit,
+  placeholderImage,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
   const [ecomModal, setEcomModal] = useState(false);
@@ -186,11 +188,9 @@ const WaykeSearchItem = ({
                 </ProductPageAsideSection>
               </ProductPageAside>
               <ProductPageMain>
-                {media && media.length > 0 && (
-                  <ProductPageAsideSection mobileOrder={3}>
-                    <Gallery media={media} />
-                  </ProductPageAsideSection>
-                )}
+                <ProductPageAsideSection mobileOrder={3}>
+                  <Gallery media={media} placeholderImage={placeholderImage} />
+                </ProductPageAsideSection>
 
                 <ProductPageMainSection>
                   <Repeat>
