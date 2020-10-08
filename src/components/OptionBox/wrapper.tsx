@@ -4,7 +4,7 @@ import { size } from '../../layout/helpers';
 
 export const Wrapper = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: ${size(1)};
   border: 1px solid ${(props) => props.theme.color.border};
   border-radius: 3px;
@@ -27,7 +27,7 @@ export const LogoImg = styled.img`
   position: absolute;
   left: 0;
   top: 0;
-  right: 0;
+  right: auto;
   bottom: 0;
   margin: auto;
   max-width: 100%;

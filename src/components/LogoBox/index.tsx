@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Logo, Wrapper } from './wrapper';
+import { Logo } from './wrapper';
 
 interface ILogoBox {
   logo: string;
@@ -16,11 +16,7 @@ const LogoBox = ({ logo, logo2x, alt, wide }: ILogoBox) => {
     logoRetina = `${logo2x} 2x`;
   }
 
-  return (
-    <Wrapper wide={wide}>
-      <Logo src={logo} srcSet={logoRetina} alt={alt} />
-    </Wrapper>
-  );
+  return <Logo src={logo} srcSet={logoRetina} alt={alt} wide={wide} />;
 };
 
 export default LogoBox;
