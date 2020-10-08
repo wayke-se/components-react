@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 import Container from '../../components/Container/index';
 import { Page, PageSection } from '../../components/Page/index';
@@ -50,7 +50,7 @@ const WaykeSearch = ({
     }
   }, []);
 
-  const searchQuery = queryFilter.searchParams.get('q');
+  const searchQuery = useMemo(() => queryFilter.searchParams.get('q'), [documents]);
 
   return (
     <>
