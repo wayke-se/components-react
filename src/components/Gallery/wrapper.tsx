@@ -89,8 +89,6 @@ export const Item = styled.div`
 
   ${(props) => props.theme.breakpoint.LtMd} {
     background-color: ${(props) => props.theme.color.textDark};
-    border-radius: 3px;
-    overflow: hidden;
     transition: border-radius 150ms ease;
   }
 `;
@@ -147,6 +145,7 @@ export const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 export const ImageFull = styled.img`
