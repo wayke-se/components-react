@@ -96,11 +96,13 @@ const App = ({}) => {
 | hashRoute                | boolean  | false    |                      |
 | onClickSearchItem        | Function | false    | (id: string) => void |
 | disableResetScrollOnInit | boolean  | false    |                      |
+| placeholderImage         | String   | false    |                      |
 
 * `id` - Guid that represents a vehicle.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `disableResetScrollOnInit` - An *optional* flag. Loading the item page resets the scroll, here it's possible to disable it.
+* `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
 
 ### WaykeSearch
 | Property                       | Type              | Default                  | Values                                                                                                                                         |
@@ -109,11 +111,13 @@ const App = ({}) => {
 | hashRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 | filterList                     | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams             | URLSearchParams or string  | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| placeholderImage               | string            | undefined                | String                                                                                                                                         |
 
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
+* `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
 
 ## Types
 
@@ -158,10 +162,11 @@ const App = ({}) => {
 |--------------------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | filterList                     | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
 | initialQueryParams             | URLSearchParams or string     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-| removeSearchBar                | boolean             | false                |
-
+| removeSearchBar                | boolean             | false                | Boolean                                                                                                                                        |
+| placeholderImage               | string              | false                | String                                                                                                                                         |
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
+* `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |

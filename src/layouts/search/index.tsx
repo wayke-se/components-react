@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 import Container from '../../components/Container/index';
 import { Page, PageSection } from '../../components/Page/index';
@@ -17,6 +17,7 @@ export interface WaykeSearchSettings {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
+  placeholderImage?: string;
 }
 
 export type WaykeSearchProps = WaykeSearchSettings & {
@@ -29,6 +30,7 @@ const WaykeSearch = ({
   initialQueryParams,
   hashRoute,
   removeSearchBar,
+  placeholderImage,
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onInitialize } = useSearch();
@@ -48,7 +50,7 @@ const WaykeSearch = ({
     }
   }, []);
 
-  const searchQuery = queryFilter.searchParams.get('query');
+  const searchQuery = useMemo(() => queryFilter.searchParams.get('q'), [documents]);
 
   return (
     <>
@@ -82,7 +84,12 @@ const WaykeSearch = ({
                   </Snackbar>
                 )}
                 {!error && documents && documents.length > 0 && (
-                  <Grid hashRoute={hashRoute} onClickItem={onItemClicked} documents={documents} />
+                  <Grid
+                    hashRoute={hashRoute}
+                    onClickItem={onItemClicked}
+                    documents={documents}
+                    placeholderImage={placeholderImage}
+                  />
                 )}
                 {!error && documents && documents.length === 0 && (
                   <Snackbar severity="warning" icon heading="Inga resultat">

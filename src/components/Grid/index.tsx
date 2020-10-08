@@ -5,13 +5,22 @@ import ProductCard from '../ProductCard/index';
 import { Document } from '../../@types/search';
 import { numberSeparator } from '../../utils/formats';
 
+const resolveImage = (document: Document) => {
+  const img = document.featuredImage?.files?.[0]?.url;
+  if (img) {
+    return `${img}?w=567&q=72`;
+  }
+  return undefined;
+};
+
 interface GridProps {
   documents?: Document[];
   hashRoute?: boolean;
+  placeholderImage?: string;
   onClickItem?: (id: string) => void;
 }
 
-const Grid = ({ documents, hashRoute, onClickItem }: GridProps) => {
+const Grid = ({ documents, placeholderImage, hashRoute, onClickItem }: GridProps) => {
   if (!documents) {
     return null;
   }
@@ -26,10 +35,8 @@ const Grid = ({ documents, hashRoute, onClickItem }: GridProps) => {
               onClick={onClickItem}
               title={document.title}
               href={hashRoute ? `#${document._id}` : undefined}
-              image={
-                `${document.featuredImage?.files?.[0]?.url}?w=567&q=72` ||
-                'http://placehold.it/600x400'
-              }
+              image={resolveImage(document)}
+              placeholderImage={placeholderImage}
               description={document.shortDescription}
               uspList={[
                 {
