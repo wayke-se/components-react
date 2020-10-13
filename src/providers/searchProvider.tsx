@@ -5,6 +5,8 @@ import { QueryFilter } from '../@types/queryFilter';
 import useFetch from '../hooks/useFetch';
 import { SearchContext } from '../context/search-context';
 import { getUrlSearchParamsFromUrl } from '../utils/url';
+import { WaykePubSub } from '..';
+import { ActionOnFilterUpdate } from '../utils/pubsub/Actions';
 
 interface SearchProviderProps {
   url: string;
@@ -80,8 +82,16 @@ const SearchProvider = ({
     if (useQueryParamsFromUrl) {
       window.addEventListener('popstate', popStateEvent);
     }
+
+    const onFilterUpdateEvent: ActionOnFilterUpdate = {
+      actionName: 'onFilterUpdate',
+      callback: onFilterUpdate,
+    };
+
+    WaykePubSub.subscribeAction(onFilterUpdateEvent);
     return () => {
       window.removeEventListener('popstate', popStateEvent);
+      WaykePubSub.unsubscribeAction(onFilterUpdateEvent);
     };
   }, []);
 

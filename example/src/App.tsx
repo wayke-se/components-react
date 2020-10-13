@@ -72,6 +72,8 @@ WaykePubSub.subscribe({
   callback: (eventName, data) => console.log('subscribed All:', eventName, data),
 });
 
+window.WaykePubSub = WaykePubSub;
+
 const App = () => (
   <BrowserRouter>
     <Routes />

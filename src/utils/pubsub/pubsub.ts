@@ -1,4 +1,11 @@
 import {
+  ActionAll,
+  ActionNames,
+  ActionOnFilterUpdate,
+  ActionTypes,
+  CallbackOnFilterUpdate,
+} from './Actions';
+import {
   EventHashRouteChange,
   EventItemClicked,
   EventEcomOnInit,
@@ -38,6 +45,11 @@ export type EventSubscriptions = {
   All: EventAll[];
 };
 
+export type ActionSubscriptions = {
+  onFilterUpdate: ActionOnFilterUpdate[];
+  All: ActionAll[];
+};
+
 class PubSub {
   private static events: EventSubscriptions = {
     HashRouteChange: [],
@@ -54,6 +66,42 @@ class PubSub {
     InsuranceInterest: [],
     FinanceInterest: [],
     All: [],
+  };
+
+  private static actions: ActionSubscriptions = {
+    onFilterUpdate: [],
+    All: [],
+  };
+
+  public static subscribeAction = (event: ActionTypes) =>
+    PubSub.actions[event.actionName].push(event as any);
+
+  public static unsubscribeAction = (event: ActionTypes) => {
+    if (PubSub.actions[event.actionName]) {
+      for (let i = 0; i < PubSub.actions[event.actionName].length; i++) {
+        if (PubSub.actions[event.actionName][i] === event) {
+          PubSub.actions[event.actionName].splice(i, 1);
+          break;
+        }
+      }
+    }
+  };
+
+  public static publishAction = (eventName: ActionNames, ...args: any) => {
+    if (PubSub.actions.All) {
+      PubSub.events.All.forEach((event) => event.callback(eventName, args));
+    }
+    if (PubSub.actions[eventName]) {
+      PubSub.actions[eventName].forEach((event: ActionTypes) => {
+        switch (eventName) {
+          case 'onFilterUpdate':
+            (event.callback as CallbackOnFilterUpdate)(args[0]);
+            break;
+          default:
+            break;
+        }
+      });
+    }
   };
 
   public static subscribe = (event: EventType) => PubSub.events[event.eventName].push(event as any);
