@@ -96,6 +96,10 @@ const SearchProvider = ({
       const nextSearchParams = new URLSearchParams(queryFilter.searchParams);
       nextSearchParams.delete('hits');
       nextSearchParams.delete('offset');
+      if (nextSearchParams.get('sort') === 'published-desc') {
+        nextSearchParams.delete('sort');
+      }
+
       const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
       if (initialize) {
         if (compressQueryParams) {

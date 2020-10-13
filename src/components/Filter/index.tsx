@@ -38,6 +38,7 @@ const Filter = ({ filterList }: FilterProps) => {
   const filterNames = filterList ? filterList.map((x) => x.filterName) : undefined;
 
   const filteredFacets = facets
+    ?.filter((x) => x.id !== 'segment')
     ?.filter((f) => (filterNames ? filterNames.includes(f.id as SearchFilterNameTypes) : true))
     .sort((a, b) =>
       filterNames
