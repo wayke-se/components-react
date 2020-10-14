@@ -14,6 +14,6 @@ export const Logo = styled.img<LogoProps>`
   ${({ wide }) =>
     wide &&
     css`
-      width: ${size(24)};
+      max-width: ${size(20)};
     `}
 `;

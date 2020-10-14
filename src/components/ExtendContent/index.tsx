@@ -18,8 +18,16 @@ const ExtendContent = ({ children, actionTitle, onClick }: Props) => {
     }
   }, []);
 
+  const onRef = (ref: HTMLDivElement | null) => {
+    const refHeight = ref?.clientHeight || 0;
+
+    if (refHeight < 207) {
+      onExtend();
+    }
+  };
+
   return (
-    <Wrapper>
+    <Wrapper ref={onRef}>
       <Extend extended={extend}>{children}</Extend>
       {!extend && (
         <Action>
