@@ -21,7 +21,7 @@ const ProviderSettings: WaykeProviderSettings = {
   ecomSettings: {
     url: "OPTIONAL_ECOM_URL",
   },
-  googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_API_KEY",
+  googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_STATIC_API_KEY",
 }
 ```
 
@@ -136,7 +136,7 @@ const App = ({}) => {
 * `url` - Url to Wayke ext-api.
 * `graphQlUrl` - Url to the GraphQl endpoint.
 * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
-* `googleMapsApiKey` - An *optional* flag. Google maps will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (google maps)
+* `googleMapsApiKey` - An *optional* flag. Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
 * `googleMapsMarker` - An *optional* flag. Provide a custom marker, url.
 * `ecomSettings` - An *optional* flag. Allow the use of ecom.
 * `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
@@ -398,7 +398,7 @@ WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
 WAYKE_ECOM_URL=https://ecom.wayketech.se
-GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
+GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_STATIC_API_KEY
 ```
 
 Then run the following:
