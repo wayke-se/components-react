@@ -33,7 +33,7 @@ export const Main = styled.div`
   padding-bottom: 66.66666667%;
 
   ${(props) => props.theme.breakpoint.Md} {
-    background-color: ${(props) => props.theme.color.accent};
+    //background-color: ${(props) => props.theme.color.accent};
   }
 
   .slick-slider,
@@ -88,7 +88,7 @@ export const Item = styled.div`
   }
 
   ${(props) => props.theme.breakpoint.LtMd} {
-    background-color: ${(props) => props.theme.color.textDark};
+    //background-color: ${(props) => props.theme.color.textDark};
     transition: border-radius 150ms ease;
   }
 `;
