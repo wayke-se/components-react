@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 
-import { List, Item, Label, Heading, Info, Value } from './wrapper';
-import { IconInfo } from '../Icon/index';
+import { List, Item, Label, Heading, HeadingAction, HeadingContent, Value } from './wrapper';
 import { ItemPropertyType, ItemPropertModalType } from '../../utils/specification';
 import Modal from '../Modal/index';
+import { IconInfo } from '../Icon/index';
 import Content from '../Content/index';
 
 export interface Props {
@@ -31,11 +31,18 @@ const DataGrid = ({ specificationList }: Props) => {
         {specificationList.map((item) => (
           <Item key={item.label}>
             <Label>
-              <Heading>{item.label}</Heading>
-              {item.modal && (
-                <Info onClick={() => onOpen(item.modal)} title="Mer info">
-                  <IconInfo block />
-                </Info>
+              {item.modal ? (
+                <HeadingAction
+                  onClick={() => onOpen(item.modal)}
+                  title={`Mer information om ${item.label}`}
+                >
+                  <HeadingContent>{item.label}</HeadingContent>
+                  <HeadingContent>
+                    <IconInfo block />
+                  </HeadingContent>
+                </HeadingAction>
+              ) : (
+                <Heading>{item.label}</Heading>
               )}
             </Label>
             <Value>{item.value}</Value>

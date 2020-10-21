@@ -74,7 +74,6 @@ const WaykeSearchItem = ({
     [result?.vehicle?.data?.options]
   );
 
-  const onShowMoreSpecificationClick = useCallback(() => PubSub.publish('InformationClick'), []);
   const onShowMoreOptionsClick = useCallback(() => PubSub.publish('OptionsClick'), []);
 
   if (loading) {
@@ -196,10 +195,9 @@ const WaykeSearchItem = ({
                   <Repeat>
                     <H2 noMargin>Biluppgifter</H2>
                   </Repeat>
+                  <Repeat>TABS</Repeat>
                   <Repeat>
-                    <ExtendContent actionTitle="Visa mer" onClick={onShowMoreSpecificationClick}>
-                      <DataGrid specificationList={specificationList} />
-                    </ExtendContent>
+                    <DataGrid specificationList={specificationList} />
                   </Repeat>
                 </ProductPageMainSection>
 

@@ -27,8 +27,10 @@ const ExtendContent = ({ children, actionTitle, onClick }: Props) => {
   };
 
   return (
-    <Wrapper ref={onRef}>
-      <Extend extended={extend}>{children}</Extend>
+    <Wrapper>
+      <Extend extended={extend}>
+        <div ref={onRef}>{children}</div>
+      </Extend>
       {!extend && (
         <Action>
           <ButtonClear onClick={onExtend} title={actionTitle}>
