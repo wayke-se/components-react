@@ -10,6 +10,7 @@ import Content from '../../components/Content/index';
 import Blockquote from '../../components/Blockquote/index';
 import ExtendContent from '../../components/ExtendContent/index';
 import Gallery from '../../components/Gallery/index';
+import Tabs from '../../components/Tabs/index';
 import { Page, PageSection } from '../../components/Page/index';
 import {
   ProductPage,
@@ -195,7 +196,41 @@ const WaykeSearchItem = ({
                   <Repeat>
                     <H2 noMargin>Biluppgifter</H2>
                   </Repeat>
-                  <Repeat>TABS</Repeat>
+                  <Repeat>
+                    <Tabs
+                      active="tab-1"
+                      tabs={[
+                        {
+                          name: 'tab-1',
+                          displayName: 'Basuppgifter',
+                        },
+                        {
+                          name: 'tab-2',
+                          displayName: 'Funktioner',
+                        },
+                        {
+                          name: 'tab-3',
+                          displayName: 'Interiör',
+                        },
+                        {
+                          name: 'tab-4',
+                          displayName: 'Exteriör',
+                        },
+                        {
+                          name: 'tab-5',
+                          displayName: 'Säkerhet',
+                        },
+                        {
+                          name: 'tab-6',
+                          displayName: 'Motor & Prestanda',
+                        },
+                        {
+                          name: 'tab-7',
+                          displayName: 'Dimensioner & Vikt',
+                        },
+                      ]}
+                    />
+                  </Repeat>
                   <Repeat>
                     <DataGrid specificationList={specificationList} />
                   </Repeat>
