@@ -7,6 +7,7 @@ export interface SettingsContextProps {
     useBankId?: boolean;
     displayBankIdAlert?: boolean;
     serviceLogotypeUrl?: string;
+    bankIdThumbprint?: string;
   };
 }
 

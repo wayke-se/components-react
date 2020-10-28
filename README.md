@@ -149,11 +149,13 @@ const App = ({}) => {
 | useBankId          | boolean      | false    |
 | displayBankIdAlert | boolean      | false    |
 | serviceLogotypeUrl | string       | false    |
+| bankIdThumbprint   | string       | false    |
 
 * `url` - Wayke ecom url.
 * `useBankId`: An *optional* flag. If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
 * `displayBankIdAlert`: An *optional* flag. By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
 * `serviceLogotypeUrl`: An *optional* flag. Set the logo. By default the manufacturers logo will be used.
+* `bankIdThumbprint`: An *optional* flag. Custom bank id certificate thumbprint .
 
 > For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
 

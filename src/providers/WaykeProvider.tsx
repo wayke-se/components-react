@@ -7,7 +7,7 @@ import Root from '../components/Root/index';
 
 import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
-import SearchSearchProvider from './relatedSearchProvider';
+import RelatedSearchProvider from './relatedSearchProvider';
 import CentralStorageProvider from './centralStorageProvider';
 
 export interface EcomSettings {
@@ -15,6 +15,7 @@ export interface EcomSettings {
   useBankId?: boolean;
   displayBankIdAlert?: boolean;
   serviceLogotypeUrl?: string;
+  bankIdThumbprint?: string;
 }
 
 export interface WaykeProviderSettings {
@@ -43,7 +44,7 @@ const WaykeProvider = ({
   compressQueryParams,
   children,
 }: WaykeProviderProps) => {
-  useEcom(ecomSettings?.url);
+  useEcom(ecomSettings);
 
   return (
     <SettingsProvider
@@ -59,11 +60,11 @@ const WaykeProvider = ({
             useQueryParamsFromUrl={useQueryParamsFromUrl}
             compressQueryParams={compressQueryParams}
           >
-            <SearchSearchProvider url={url} apiKey={apiKey}>
+            <RelatedSearchProvider url={url} apiKey={apiKey}>
               <Theme>
                 <Root>{children}</Root>
               </Theme>
-            </SearchSearchProvider>
+            </RelatedSearchProvider>
           </SearchProvider>
         </GraphqlProvider>
       </CentralStorageProvider>
