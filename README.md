@@ -404,6 +404,9 @@ WAYKE_ECOM_URL=https://ecom.wayketech.se
 GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_STATIC_API_KEY
 ```
 
+* `WAYKE_SEARCH_MLT_URL` - An *optional* flag. Will fetch related vehicles to current vehicle. If not provided 
+`WAYKE_SEARCH_URL` will be used instead, but will fetch latest vehicles.
+
 Then run the following:
 ```bash
 npm install

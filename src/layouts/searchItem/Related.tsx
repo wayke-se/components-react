@@ -24,7 +24,7 @@ interface RelatedProps {
 }
 
 const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
-  const { loading, response } = useRelatedSearch(id);
+  const { loading, response, moreLikeThisUrl } = useRelatedSearch(id);
 
   const onItemClicked = useCallback((id: string) => {
     PubSub.publish('ItemClicked', id);
@@ -44,11 +44,20 @@ const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
   return (
     <PageSection accent large>
       <Container>
-        <Repeat>
-          <SectionHeader onClick={() => {}} actionTitle="Visa alla">
-            <H2 noMargin>Senast inkomna</H2>
-          </SectionHeader>
-        </Repeat>
+        {moreLikeThisUrl ? (
+          <Repeat>
+            <SectionHeader onClick={() => {}}>
+              <H2 noMargin>Relaterad</H2>
+            </SectionHeader>
+          </Repeat>
+        ) : (
+          <Repeat>
+            <SectionHeader onClick={() => {}} actionTitle="Visa alla">
+              <H2 noMargin>Senast inkomna</H2>
+            </SectionHeader>
+          </Repeat>
+        )}
+
         <Repeat>
           <OverflowGrid>
             <OverflowGridList>
