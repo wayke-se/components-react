@@ -7,16 +7,17 @@ import { RelatedSearchContext } from '../context/related-context';
 
 interface RelatedSearchProviderProps {
   url: string;
+  urlMlt?: string;
   apiKey?: string;
   children: React.ReactNode;
 }
 
-const RelatedSearchProvider = ({ url, apiKey, children }: RelatedSearchProviderProps) => {
+const RelatedSearchProvider = ({ url, urlMlt, apiKey, children }: RelatedSearchProviderProps) => {
   const [queryFilter, setQueryFilter] = useState<QueryFilter>();
 
   const query = queryFilter?.searchParams.toString();
   const { loading, data: response, error } = useFetch<Search>(
-    `${url}${query ? `?${query}` : ''}`,
+    `${urlMlt || url}${query ? `?${query}` : ''}`,
     {
       headers: apiKey
         ? {
@@ -36,6 +37,7 @@ const RelatedSearchProvider = ({ url, apiKey, children }: RelatedSearchProviderP
   );
 
   const value = {
+    moreLikeThisUrl: !!urlMlt,
     loading,
     error,
     response,

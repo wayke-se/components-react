@@ -20,6 +20,7 @@ export interface EcomSettings {
 
 export interface WaykeProviderSettings {
   url: string;
+  urlMlt?: string;
   apiKey?: string;
   graphQlUrl: string;
   ecomSettings?: EcomSettings;
@@ -35,6 +36,7 @@ export type WaykeProviderProps = WaykeProviderSettings & {
 
 const WaykeProvider = ({
   url,
+  urlMlt,
   apiKey,
   ecomSettings,
   graphQlUrl,
@@ -60,7 +62,7 @@ const WaykeProvider = ({
             useQueryParamsFromUrl={useQueryParamsFromUrl}
             compressQueryParams={compressQueryParams}
           >
-            <RelatedSearchProvider url={url} apiKey={apiKey}>
+            <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
               <Theme>
                 <Root>{children}</Root>
               </Theme>

@@ -18,12 +18,13 @@ import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 
 interface RelatedProps {
+  id: string;
   hashRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({ hashRoute, onClickSearchItem }: RelatedProps) => {
-  const { loading, response } = useRelatedSearch();
+const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
+  const { loading, response } = useRelatedSearch(id);
 
   const onItemClicked = useCallback((id: string) => {
     PubSub.publish('ItemClicked', id);

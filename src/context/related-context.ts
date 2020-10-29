@@ -2,6 +2,7 @@ import { createContext } from 'react';
 import { Search } from '../@types/search';
 
 export interface RelatedSearchContextProps {
+  moreLikeThisUrl: boolean;
   loading: boolean;
   response?: Search;
   error: boolean;
@@ -9,6 +10,7 @@ export interface RelatedSearchContextProps {
 }
 
 export const RelatedSearchContext = createContext<RelatedSearchContextProps>({
+  moreLikeThisUrl: false,
   loading: false,
   error: false,
   response: undefined,
