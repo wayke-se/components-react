@@ -125,6 +125,7 @@ const App = ({}) => {
 | Property              | Type         | Required |
 |-----------------------|--------------|----------|
 | url                   | String       | true     |
+| urlMlt                | String       | false    |
 | graphQlUrl            | String       | true     |
 | apiKey                | String       | false    |
 | googleMapsApiKey      | String       | false    |
@@ -134,6 +135,7 @@ const App = ({}) => {
 | compressQueryParams   | boolean      | false    |
 
 * `url` - Url to Wayke ext-api.
+* `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
 * `graphQlUrl` - Url to the GraphQl endpoint.
 * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
 * `googleMapsApiKey` - An *optional* flag. Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
