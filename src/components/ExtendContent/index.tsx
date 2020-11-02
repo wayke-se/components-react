@@ -22,7 +22,7 @@ const ExtendContent = ({ children, actionTitle, onClick }: Props) => {
     const refHeight = ref?.clientHeight || 0;
 
     if (refHeight < 207) {
-      onExtend();
+      setExtend(true);
     }
   };
 
