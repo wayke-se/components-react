@@ -125,6 +125,7 @@ const App = ({}) => {
 | Property              | Type         | Required |
 |-----------------------|--------------|----------|
 | url                   | String       | true     |
+| urlMlt                | String       | false    |
 | graphQlUrl            | String       | true     |
 | apiKey                | String       | false    |
 | googleMapsApiKey      | String       | false    |
@@ -134,6 +135,7 @@ const App = ({}) => {
 | compressQueryParams   | boolean      | false    |
 
 * `url` - Url to Wayke ext-api.
+* `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
 * `graphQlUrl` - Url to the GraphQl endpoint.
 * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
 * `googleMapsApiKey` - An *optional* flag. Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
@@ -149,11 +151,13 @@ const App = ({}) => {
 | useBankId          | boolean      | false    |
 | displayBankIdAlert | boolean      | false    |
 | serviceLogotypeUrl | string       | false    |
+| bankIdThumbprint   | string       | false    |
 
 * `url` - Wayke ecom url.
 * `useBankId`: An *optional* flag. If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
 * `displayBankIdAlert`: An *optional* flag. By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
 * `serviceLogotypeUrl`: An *optional* flag. Set the logo. By default the manufacturers logo will be used.
+* `bankIdThumbprint`: An *optional* flag. Custom bank id certificate thumbprint .
 
 > For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
 
@@ -416,11 +420,15 @@ To start the example create an `.env` file in root.
 ```
 WAYKE_HOST=YOUR_HOST_1,YOUR_HOST_2
 WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
+WAYKE_SEARCH_MLT_URL=https://test-ext-api.wayketech.se/vehicles-mlt
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
 WAYKE_ECOM_URL=https://ecom.wayketech.se
 GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_STATIC_API_KEY
 ```
+
+* `WAYKE_SEARCH_MLT_URL` - An *optional* flag. Will fetch related vehicles to current vehicle. If not provided 
+`WAYKE_SEARCH_URL` will be used instead, but will fetch latest vehicles.
 
 Then run the following:
 ```bash

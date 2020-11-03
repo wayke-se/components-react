@@ -12,6 +12,7 @@ const Search = () => {
     <WaykeProvider
       graphQlUrl={process.env.WAYKE_GRAPH_QL_URL as string}
       url={process.env.WAYKE_SEARCH_URL as string}
+      urlMlt={process.env.WAYKE_SEARCH_MLT_URL as string}
       ecomSettings={{
         url: process.env.WAYKE_ECOM_URL as string,
         useBankId: true,

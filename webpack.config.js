@@ -25,6 +25,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         WAYKE_SEARCH_URL: `"${process.env.WAYKE_SEARCH_URL}"`,
+        WAYKE_SEARCH_MLT_URL: `"${process.env.WAYKE_SEARCH_MLT_URL}"`,
         WAYKE_SEARCH_X_API_KEY: `"${process.env.WAYKE_SEARCH_X_API_KEY}"`,
         WAYKE_GRAPH_QL_URL: `"${process.env.WAYKE_GRAPH_QL_URL}"`,
         WAYKE_ECOM_URL: `"${process.env.WAYKE_ECOM_URL}"`,

@@ -252,7 +252,7 @@ const WaykeSearchItem = ({
             </ProductPage>
           </Container>
         </PageSection>
-        <Related hashRoute={hashRoute} onClickSearchItem={onClickSearchItem} />
+        <Related id={id} hashRoute={hashRoute} onClickSearchItem={onClickSearchItem} />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>
