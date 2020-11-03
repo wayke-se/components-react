@@ -74,7 +74,7 @@ const WaykeSearch = ({
             <Filter filterList={filterList} />
           </Container>
         </PageSection>
-        <PageSection accent fillSpace>
+        <PageSection accent fillSpace className="wayke__theme wayke__color--accent-bg">
           <Container>
             <Result>
               <>

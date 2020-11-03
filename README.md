@@ -292,7 +292,8 @@ WaykePubSub.unsubscribe(event);
 
 ## Theme
 It is possible to apply a custom theme using *CSS*. The things that can be styled are:
-- Brand color
+- Primary brand color
+- Secondary brand color
 - Font (regular)
 - Font (bold)
 
@@ -318,6 +319,26 @@ To style the components, copy the following snippet into your *CSS* file and mod
 */
 .wayke__theme.wayke__color--primary-text {
   color: #ff5a1c;
+}
+
+/*
+  Secondary (background-color)
+  Used to add secondary background-color to elements. Should also include
+  a color for text placed on top of the primary color.
+*/
+.wayke__theme.wayke__color--secondary-bg {
+  background-color: #ebebeb;
+  color: #ff5a1c;
+}
+
+/*
+  Accent (background-color)
+  Used to add accent background-color to elements. Should also include
+  a color for text placed on top of the primary color.
+*/
+.wayke__theme.wayke__color--accent-bg {
+  background-color: #f8f8f8;
+  color: #000;
 }
 
 /* === Font === */

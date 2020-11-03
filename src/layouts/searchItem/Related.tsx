@@ -41,7 +41,7 @@ const Related = ({ hashRoute, onClickSearchItem }: RelatedProps) => {
   }
 
   return (
-    <PageSection accent large>
+    <PageSection accent large className="wayke__theme wayke__color--accent-bg">
       <Container>
         <Repeat>
           <SectionHeader onClick={() => {}} actionTitle="Visa alla">
