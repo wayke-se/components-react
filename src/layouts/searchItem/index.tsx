@@ -126,9 +126,9 @@ const WaykeSearchItem = ({
   }
 
   const historyBack = !!previousPath;
-  const back = window.location.pathname.split('/').slice(0);
-  back.pop();
-  const backUrl = back.join('/');
+  const index = window.location.pathname.indexOf(`/${id}`);
+  const back = window.location.pathname.substr(0, index);
+  const backUrl = previousPath ? previousPath : back || '/';
   const onGoBack = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     if (historyBack) {

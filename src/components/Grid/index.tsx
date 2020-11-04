@@ -29,49 +29,49 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
   return (
     <Wrapper>
       <List>
-        {documents.map((document) => (
-          <Item key={document._id}>
-            <ProductCard
-              id={document._id}
-              onClick={onClickItem}
-              title={document.title}
-              pathRoute={pathRoute}
-              href={
-                pathRoute
-                  ? `${window.location.pathname}/${document._id}`
-                  : hashRoute
-                  ? `#${document._id}`
-                  : undefined
-              }
-              image={resolveImage(document)}
-              placeholderImage={placeholderImage}
-              description={document.shortDescription}
-              uspList={[
-                {
-                  title: document.modelYear,
-                },
-                {
-                  title: document.modelSeries,
-                },
-                {
-                  title: `${numberSeparator(document.mileage)} mil`,
-                },
-                {
-                  title: document.gearboxType,
-                },
-                {
-                  title: document.fuelType,
-                },
-              ]}
-              price={`${numberSeparator(document.price)} kr`}
-              oldPrice={
-                document.oldPrice !== undefined && document.price < document.oldPrice
-                  ? `${numberSeparator(document.oldPrice)} kr`
-                  : undefined
-              }
-            />
-          </Item>
-        ))}
+        {documents.map((document) => {
+          const pathRouteUrl =
+            window.location.pathname === '/'
+              ? `/${document._id}`
+              : `${window.location.pathname}/${document._id}`;
+          return (
+            <Item key={document._id}>
+              <ProductCard
+                id={document._id}
+                onClick={onClickItem}
+                title={document.title}
+                pathRoute={pathRoute}
+                href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
+                image={resolveImage(document)}
+                placeholderImage={placeholderImage}
+                description={document.shortDescription}
+                uspList={[
+                  {
+                    title: document.modelYear,
+                  },
+                  {
+                    title: document.modelSeries,
+                  },
+                  {
+                    title: `${numberSeparator(document.mileage)} mil`,
+                  },
+                  {
+                    title: document.gearboxType,
+                  },
+                  {
+                    title: document.fuelType,
+                  },
+                ]}
+                price={`${numberSeparator(document.price)} kr`}
+                oldPrice={
+                  document.oldPrice !== undefined && document.price < document.oldPrice
+                    ? `${numberSeparator(document.oldPrice)} kr`
+                    : undefined
+                }
+              />
+            </Item>
+          );
+        })}
       </List>
     </Wrapper>
   );

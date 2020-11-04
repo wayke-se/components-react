@@ -7,6 +7,7 @@ import { SearchContext } from '../context/search-context';
 import { getUrlSearchParamsFromUrl } from '../utils/url';
 import { WaykePubSub } from '..';
 import { ActionOnFilterUpdate } from '../utils/pubsub/Actions';
+import usePath from '../State/Path/usePath';
 
 interface SearchProviderProps {
   url: string;
@@ -27,6 +28,7 @@ const SearchProvider = ({
   compressQueryParams,
   children,
 }: SearchProviderProps) => {
+  const { replaceState, pushState } = usePath();
   const [queryFilter, setQueryFilter] = useState<QueryFilter>({
     searchParams: initialSearchParams,
   });
@@ -131,10 +133,12 @@ const SearchProvider = ({
             const nextUrl = nextUrlParams
               ? `${window.location.pathname}?${nextUrlParams}`
               : window.location.pathname;
-            window.history.pushState(undefined, '', nextUrl);
+            pushState(nextUrl);
+            //window.history.pushState(undefined, '', nextUrl);
           }
         } else if (window.location.search.localeCompare(nextSearch) !== 0) {
-          window.history.pushState(undefined, '', `${window.location.pathname}${nextSearch}`);
+          pushState(`${window.location.pathname}${nextSearch}`);
+          // window.history.pushState(undefined, '', `${window.location.pathname}${nextSearch}`);
         }
       }
     }
@@ -170,14 +174,16 @@ const SearchProvider = ({
             const nextUrl = nextUrlParams
               ? `${window.location.pathname}?${nextUrlParams}`
               : window.location.pathname;
-            window.history.replaceState(undefined, '', nextUrl);
+            replaceState(nextUrl);
+            // window.history.replaceState(undefined, '', nextUrl);
             setQueryFilter({
               searchParams: new URLSearchParams(nextSearch),
               block: true,
             });
           }
         } else if (window.location.search.localeCompare(nextSearch) !== 0) {
-          window.history.replaceState(undefined, '', `${window.location.pathname}${nextSearch}`);
+          // window.history.replaceState(undefined, '', `${window.location.pathname}${nextSearch}`);
+          replaceState(`${window.location.pathname}${nextSearch}`);
           setQueryFilter({
             searchParams: new URLSearchParams(nextSearch),
             block: true,

@@ -4,7 +4,7 @@ import usePrevious from '../../hooks/usePrevious';
 import { PathContext, PathContextProps } from './PathContext';
 import reducer, { initialState, SET_PATH } from './reducer';
 
-const regexGuid = /[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/gi;
+const regexGuidAnyWhere = /(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}/g;
 const POP_STATE = 'popstate';
 
 interface PathProviderProps {
@@ -31,7 +31,12 @@ const PathProvider = ({ children }: PathProviderProps) => {
     dispatch({ type: SET_PATH, path });
   }, []);
 
-  const id = useMemo(() => state.path.match(regexGuid)?.pop(), [state.path]);
+  const replaceState = useCallback((path: string) => {
+    history.replaceState(null, '', path);
+    dispatch({ type: SET_PATH, path });
+  }, []);
+
+  const id = useMemo(() => state.path.match(regexGuidAnyWhere)?.pop(), [state.path]);
 
   const value: PathContextProps = useMemo(
     () => ({
@@ -39,6 +44,7 @@ const PathProvider = ({ children }: PathProviderProps) => {
       previousPath,
       id,
       pushState,
+      replaceState,
     }),
     [state]
   );
