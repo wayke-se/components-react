@@ -33,7 +33,7 @@ const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
     }
   }, []);
 
-  if (response?.documentList.documents.length === 0) {
+  if (!response?.documentList.documents.length || response?.documentList.documents.length === 0) {
     return null;
   }
 
@@ -47,7 +47,7 @@ const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
         {moreLikeThisUrl ? (
           <Repeat>
             <SectionHeader onClick={() => {}}>
-              <H2 noMargin>Relaterad</H2>
+              <H2 noMargin>Relaterade fordon</H2>
             </SectionHeader>
           </Repeat>
         ) : (
