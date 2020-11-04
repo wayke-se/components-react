@@ -39,10 +39,12 @@ import useCentralStorage from '../../hooks/useCentralStorage';
 import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
+import usePath from '../../State/Path/usePath';
 
 export interface WaykeSearchItemProps {
   id: string;
   hashRoute?: boolean;
+  pathRoute?: boolean;
   disableResetScrollOnInit?: boolean;
   placeholderImage?: string;
   onClickSearchItem?: (id: string) => void;
@@ -51,10 +53,12 @@ export interface WaykeSearchItemProps {
 const WaykeSearchItem = ({
   id,
   hashRoute,
+  pathRoute,
   disableResetScrollOnInit,
   placeholderImage,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
+  const { previousPath, pushState } = usePath();
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
@@ -121,6 +125,19 @@ const WaykeSearchItem = ({
     uspList.push({ title: fuelType });
   }
 
+  const historyBack = !!previousPath;
+  const back = window.location.pathname.split('/').slice(0);
+  back.pop();
+  const backUrl = back.join('/');
+  const onGoBack = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    if (historyBack) {
+      window.history.back();
+    } else {
+      pushState(backUrl);
+    }
+  };
+
   return (
     <>
       {ecomModal && <Ecom vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />}
@@ -131,14 +148,30 @@ const WaykeSearchItem = ({
               <ProductPageAside>
                 <ProductPageAsideSection mobileOrder={1}>
                   <Repeat>
-                    <UtilityFontSizeSmall>
-                      <ButtonInlineLight as="a" href="#" title="Tillbaka till bilsök">
-                        <ButtonContent>
-                          <IconChevronLeft block />
-                        </ButtonContent>
-                        <ButtonContent>Tillbaka till bilsök</ButtonContent>
-                      </ButtonInlineLight>
-                    </UtilityFontSizeSmall>
+                    {pathRoute ? (
+                      <UtilityFontSizeSmall>
+                        <ButtonInlineLight
+                          onClick={onGoBack}
+                          as="a"
+                          href={backUrl}
+                          title="Tillbaka till bilsök"
+                        >
+                          <ButtonContent>
+                            <IconChevronLeft block />
+                          </ButtonContent>
+                          <ButtonContent>Tillbaka till bilsök</ButtonContent>
+                        </ButtonInlineLight>
+                      </UtilityFontSizeSmall>
+                    ) : hashRoute ? (
+                      <UtilityFontSizeSmall>
+                        <ButtonInlineLight as="a" href="#" title="Tillbaka till bilsök">
+                          <ButtonContent>
+                            <IconChevronLeft block />
+                          </ButtonContent>
+                          <ButtonContent>Tillbaka till bilsök</ButtonContent>
+                        </ButtonInlineLight>
+                      </UtilityFontSizeSmall>
+                    ) : null}
                   </Repeat>
                   {manufacturer?.logotype && (
                     <Repeat>
@@ -252,7 +285,12 @@ const WaykeSearchItem = ({
             </ProductPage>
           </Container>
         </PageSection>
-        <Related id={id} hashRoute={hashRoute} onClickSearchItem={onClickSearchItem} />
+        <Related
+          id={id}
+          hashRoute={hashRoute}
+          pathRoute={pathRoute}
+          onClickSearchItem={onClickSearchItem}
+        />
       </Page>
       {false && (
         <Modal title="Modal" onClose={() => {}}>

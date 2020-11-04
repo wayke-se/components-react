@@ -20,10 +20,11 @@ import PubSub from '../../utils/pubsub/pubsub';
 interface RelatedProps {
   id: string;
   hashRoute?: boolean;
+  pathRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
+const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) => {
   const { loading, response, moreLikeThisUrl } = useRelatedSearch(id);
 
   const onItemClicked = useCallback((id: string) => {
@@ -67,7 +68,9 @@ const Related = ({ id, hashRoute, onClickSearchItem }: RelatedProps) => {
                     id={document._id}
                     onClick={onItemClicked}
                     title={document.title}
-                    href={hashRoute ? `#${document._id}` : undefined}
+                    href={
+                      pathRoute ? `/${document._id}` : hashRoute ? `#${document._id}` : undefined
+                    }
                     image={document.featuredImage?.files?.[0]?.url}
                     description={document.shortDescription}
                     uspList={[

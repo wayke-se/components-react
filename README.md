@@ -36,6 +36,22 @@ const App = () => (
 );
 ```
 
+### WaykeComposite uses hash-route, i want to use path-route
+
+In this case you need to make sure that you are in control of the routing where same html file is 
+served for `/your/path/to/this/component` and `/your/path/to/this/component/00000000-0000-0000-0000-000000000000`.
+
+```javascript
+import React from 'react';
+import { WaykeCompositePath } from '@wayke-se/components-react'
+
+const App = () => (
+  <WaykeCompositePath
+    provider={ProviderSettings}
+  />
+);
+```
+
 ### I only want to use the search component
 
 It's recomended to place WaykeProvider close to app-root in order to keep the cache
@@ -93,13 +109,15 @@ const App = ({}) => {
 | Property                 | Type     | Required | Value                |
 |--------------------------|----------|----------|----------------------|
 | id                       | String   | true     |                      |
+| pathRoute                | boolean  | false    |                      |
 | hashRoute                | boolean  | false    |                      |
 | onClickSearchItem        | Function | false    | (id: string) => void |
 | disableResetScrollOnInit | boolean  | false    |                      |
 | placeholderImage         | String   | false    |                      |
 
 * `id` - Guid that represents a vehicle.
-* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
+* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /guid to the url.
+* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `disableResetScrollOnInit` - An *optional* flag. Loading the item page resets the scroll, here it's possible to disable it.
 * `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
@@ -108,13 +126,15 @@ const App = ({}) => {
 | Property                       | Type              | Default                  | Values                                                                                                                                         |
 |--------------------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | onClickSearchItem              | Function          | undefined                | (id: string) => void                                                                                                                           |
+| pathRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 | hashRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 | filterList                     | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams             | URLSearchParams or string  | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 | placeholderImage               | string            | undefined                | String                                                                                                                                         |
 
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
-* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url.
+* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /guid to the url.
+* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
 * `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.

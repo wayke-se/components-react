@@ -9,6 +9,7 @@ import useEcom from '../hooks/useEcom';
 import SettingsProvider from './settingsProvider';
 import RelatedSearchProvider from './relatedSearchProvider';
 import CentralStorageProvider from './centralStorageProvider';
+import PathProvider from '../State/Path/PathProvider';
 
 export interface EcomSettings {
   url: string;
@@ -49,28 +50,30 @@ const WaykeProvider = ({
   useEcom(ecomSettings);
 
   return (
-    <SettingsProvider
-      googleMapsApiKey={googleMapsApiKey}
-      googleMapsMarker={googleMapsMarker}
-      ecomSettings={ecomSettings}
-    >
-      <CentralStorageProvider>
-        <GraphqlProvider uri={graphQlUrl}>
-          <SearchProvider
-            url={url}
-            apiKey={apiKey}
-            useQueryParamsFromUrl={useQueryParamsFromUrl}
-            compressQueryParams={compressQueryParams}
-          >
-            <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
-              <Theme>
-                <Root>{children}</Root>
-              </Theme>
-            </RelatedSearchProvider>
-          </SearchProvider>
-        </GraphqlProvider>
-      </CentralStorageProvider>
-    </SettingsProvider>
+    <PathProvider>
+      <SettingsProvider
+        googleMapsApiKey={googleMapsApiKey}
+        googleMapsMarker={googleMapsMarker}
+        ecomSettings={ecomSettings}
+      >
+        <CentralStorageProvider>
+          <GraphqlProvider uri={graphQlUrl}>
+            <SearchProvider
+              url={url}
+              apiKey={apiKey}
+              useQueryParamsFromUrl={useQueryParamsFromUrl}
+              compressQueryParams={compressQueryParams}
+            >
+              <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
+                <Theme>
+                  <Root>{children}</Root>
+                </Theme>
+              </RelatedSearchProvider>
+            </SearchProvider>
+          </GraphqlProvider>
+        </CentralStorageProvider>
+      </SettingsProvider>
+    </PathProvider>
   );
 };
 

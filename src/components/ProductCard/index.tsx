@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import LazyLoad from 'react-lazyload';
 
 import {
@@ -20,12 +20,14 @@ import {
 } from './wrapper';
 import UspList, { ItemProps } from '../UspList/index';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
+import usePath from '../../State/Path/usePath';
 
 interface Props {
   id: string;
   title: string;
   href?: string;
   image?: string;
+  pathRoute?: boolean;
   placeholderImage?: string;
   description?: string;
   uspList?: ItemProps[];
@@ -39,6 +41,7 @@ const ProductCard = ({
   title,
   href,
   image,
+  pathRoute,
   placeholderImage,
   description,
   uspList,
@@ -46,7 +49,19 @@ const ProductCard = ({
   oldPrice,
   onClick,
 }: Props) => {
+  const { pushState } = usePath();
   const _onClick = useMemo(() => (onClick ? () => onClick(id) : undefined), [id]);
+
+  const onHrefClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      if (pathRoute && href) {
+        e.preventDefault();
+        pushState(href);
+      }
+    },
+    [id, pathRoute, href]
+  );
+
   return (
     <Wrapper onClick={_onClick}>
       <Image>
@@ -68,7 +83,7 @@ const ProductCard = ({
         <ContentBody>
           <Heading>
             {href ? (
-              <Link href={href} title={title} aria-label={title}>
+              <Link onClick={onHrefClick} href={href} title={title} aria-label={title}>
                 {title}
               </Link>
             ) : (

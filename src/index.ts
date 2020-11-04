@@ -5,6 +5,10 @@ import WaykeComposite, {
   WaykeCompositeWithProviderProps,
 } from './layouts/WaykeCompositeWithProvider';
 
+import WaykeCompositePath, {
+  WaykeCompositePathWithProviderProps,
+} from './layouts/WaykeCompositePathWithProvider';
+
 import SearchBar from './components/SearchBar/index';
 import WaykeThemeProvider from './providers/themeProvider';
 
@@ -39,6 +43,8 @@ export {
   WaykeSearchItem,
   SearchBar,
   WaykeThemeProvider,
+  WaykeCompositePath,
+  WaykeCompositePathWithProviderProps,
   WaykePubSub,
   WaykeCompositeWithProviderProps,
   WaykeProviderSettings,

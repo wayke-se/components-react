@@ -22,6 +22,7 @@ export interface WaykeSearchSettings {
 
 export type WaykeSearchProps = WaykeSearchSettings & {
   hashRoute?: boolean;
+  pathRoute?: boolean;
   onClickSearchItem?: (id: string) => void;
 };
 
@@ -29,6 +30,7 @@ const WaykeSearch = ({
   filterList,
   initialQueryParams,
   hashRoute,
+  pathRoute,
   removeSearchBar,
   placeholderImage,
   onClickSearchItem,
@@ -86,6 +88,7 @@ const WaykeSearch = ({
                 {!error && documents && documents.length > 0 && (
                   <Grid
                     hashRoute={hashRoute}
+                    pathRoute={pathRoute}
                     onClickItem={onItemClicked}
                     documents={documents}
                     placeholderImage={placeholderImage}

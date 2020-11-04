@@ -16,11 +16,12 @@ const resolveImage = (document: Document) => {
 interface GridProps {
   documents?: Document[];
   hashRoute?: boolean;
+  pathRoute?: boolean;
   placeholderImage?: string;
   onClickItem?: (id: string) => void;
 }
 
-const Grid = ({ documents, placeholderImage, hashRoute, onClickItem }: GridProps) => {
+const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }: GridProps) => {
   if (!documents) {
     return null;
   }
@@ -34,7 +35,14 @@ const Grid = ({ documents, placeholderImage, hashRoute, onClickItem }: GridProps
               id={document._id}
               onClick={onClickItem}
               title={document.title}
-              href={hashRoute ? `#${document._id}` : undefined}
+              pathRoute={pathRoute}
+              href={
+                pathRoute
+                  ? `${window.location.pathname}/${document._id}`
+                  : hashRoute
+                  ? `#${document._id}`
+                  : undefined
+              }
               image={resolveImage(document)}
               placeholderImage={placeholderImage}
               description={document.shortDescription}
