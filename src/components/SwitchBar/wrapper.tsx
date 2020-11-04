@@ -4,12 +4,20 @@ import { size } from '../../layout/helpers';
 import { ButtonReset } from '../Button/index';
 
 export const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: ${size(1.5)};
-  background-color: ${(props) => props.theme.color.accent};
+  padding: ${size(1.5)} ${size(2)};
+  background-color: ${(props) => props.theme.color.accentDark};
   border-radius: 3px;
   font-size: 0.875rem;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Body = styled.div`
+  font-size: 0.875rem;
+  margin-top: ${size(1)};
 `;
 
 export const Info = styled.div`
@@ -21,6 +29,7 @@ export const Info = styled.div`
 export const Action = styled.div`
   flex-shrink: 0;
   padding-left: ${size(1.5)};
+  font-size: 0.875rem;
 `;
 
 export const InfoContent = styled.div`
@@ -66,4 +75,6 @@ export const InfoBtn = styled(ButtonReset).attrs(() => ({
 
 export const Title = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__font--bold',
-}))``;
+}))`
+  font-size: 1rem;
+`;

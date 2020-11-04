@@ -1,11 +1,23 @@
 import React from 'react';
 
-import { Wrapper } from './wrapper';
+import { Wrapper, Query, Clear } from './wrapper';
+import { IconCancel } from '../Icon/index';
 
 interface Props {
   children: string;
+  onClear?: () => void;
+  clearTitle?: string;
 }
 
-const SearchTerm = ({ children }: Props) => <Wrapper>{children}</Wrapper>;
+const SearchTerm = ({ children, onClear, clearTitle }: Props) => (
+  <Wrapper>
+    <Query>{children}</Query>
+    {onClear && (
+      <Clear onClick={onClear} title={clearTitle ? clearTitle : 'Rensa fritext'}>
+        <IconCancel block />
+      </Clear>
+    )}
+  </Wrapper>
+);
 
 export default SearchTerm;

@@ -17,12 +17,13 @@ export const Item = styled.li`
   }
 `;
 
-export const Icon = styled.div`
+export const Icon = styled.div.attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-text',
+}))`
   position: absolute;
   left: 0;
   top: 4px; // Magic number
   font-size: 0.875em;
-  color: ${(props) => props.theme.color.ui.positive};
 `;
 
 export const Label = styled.div`

@@ -31,6 +31,28 @@
   color: #ff5a1c;
 }
 
+/*
+  - Secondary (background-color)
+  Used to add secondary background-color to elements. Should also include
+  a color for text placed on top of the primary color. Be sure to pick
+  a text color with good contrast.
+*/
+.wayke__theme.wayke__color--secondary-bg {
+  background-color: #ebebeb;
+  color: #ff5a1c;
+}
+
+/*
+  - Accent (background-color)
+  Used to add accent background-color to elements. Should also include
+  a color for text placed on top of the primary color. Be sure to pick
+  a text color with good contrast.
+*/
+.wayke__theme.wayke__color--accent-bg {
+  background-color: #f8f8f8;
+  color: #000;
+}
+
 /*** Font ***/
 
 /*

@@ -107,9 +107,10 @@ export const ButtonPrimary = styled(ButtonBase).attrs(() => ({
 }))``;
 
 export const ButtonSecondary = styled(ButtonBase).attrs(() => ({
-  className: 'wayke__theme wayke__color--primary-text wayke__font--bold',
+  className: 'wayke__theme wayke__color--secondary-bg wayke__font--bold',
 }))`
   background-color: ${(props) => props.theme.color.accentDark};
+  color: ${(props) => props.theme.color.textDark};
 `;
 
 export const ButtonContent = styled.div`

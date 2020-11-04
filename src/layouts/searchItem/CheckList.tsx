@@ -113,33 +113,32 @@ const CheckList = ({
             </ButtonPrimary>
           </RepeatTiny>
         )}
-        <ActionList branch={branch} contact={contact} />
         {ecommerce?.reserved && (
           <RepeatTiny>
-            <SwitchBar title="Reserverad">
+            <SwitchBar
+              title="Bilen är reserverad"
+              body="Denna bil är reserverad av en annan köpare."
+            >
               <Content>
                 <p>Denna bil är reserverad av en annan köpare.</p>
               </Content>
             </SwitchBar>
           </RepeatTiny>
         )}
-        {(branch?.connections.length || 0) > 1 && (
-          <RepeatTiny>
-            <SwitchBar
-              title="Centrallagerbil"
-              actionTitle="Byt anläggning"
-              onClick={openModalBranch}
-            >
-              <Content>
-                <p>
-                  Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
-                  anläggning för att visa kontaktuppgifter till just den anläggningen.
-                </p>
-              </Content>
-            </SwitchBar>
-          </RepeatTiny>
-        )}
+        <ActionList branch={branch} contact={contact} />
       </Repeat>
+      {(branch?.connections.length || 0) > 1 && (
+        <Repeat>
+          <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>
+            <Content>
+              <p>
+                Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
+                anläggning för att visa kontaktuppgifter till just den anläggningen.
+              </p>
+            </Content>
+          </SwitchBar>
+        </Repeat>
+      )}
     </>
   );
 };

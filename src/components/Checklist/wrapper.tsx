@@ -33,6 +33,10 @@ export const Action = styled(ButtonReset)`
     position: absolute;
     left: 0;
     width: ${size(2)};
+    height: ${size(2)};
+    border-radius: 3px;
+    background-color: ${(props) => props.theme.color.accentDark};
+    margin-top: 2px; // Magic number
   }
 `;
 
@@ -40,10 +44,15 @@ export const ActionIcon = styled.div.attrs(() => ({
   className: 'wayke__theme wayke__color--primary-text',
 }))`
   position: absolute;
-  top: 50%;
+  top: ${size(1)};
   left: 0;
-  font-size: 1em;
-  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${size(2)};
+  height: ${size(2)};
+  margin-top: 2px; // Magic number
+  font-size: ${size(1.5)};
 `;
 
 export const ActionLabel = styled.div`

@@ -34,7 +34,7 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
     }
   }, []);
 
-  if (response?.documentList.documents.length === 0) {
+  if (!response?.documentList.documents.length || response?.documentList.documents.length === 0) {
     return null;
   }
 
@@ -43,12 +43,12 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
   }
 
   return (
-    <PageSection accent large>
+    <PageSection accent large className="wayke__theme wayke__color--accent-bg">
       <Container>
         {moreLikeThisUrl ? (
           <Repeat>
             <SectionHeader onClick={() => {}}>
-              <H2 noMargin>Relaterad</H2>
+              <H2 noMargin>Relaterade fordon</H2>
             </SectionHeader>
           </Repeat>
         ) : (
