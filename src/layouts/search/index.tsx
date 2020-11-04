@@ -35,7 +35,7 @@ const WaykeSearch = ({
   placeholderImage,
   onClickSearchItem,
 }: WaykeSearchProps) => {
-  const { error, documents, queryFilter, onInitialize } = useSearch();
+  const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
 
   useEffect(() => {
     onInitialize(
@@ -52,6 +52,12 @@ const WaykeSearch = ({
     }
   }, []);
 
+  const onClearQuery = useCallback(() => {
+    const nextQuery = new URLSearchParams(queryFilter.searchParams);
+    nextQuery.delete('q');
+    onFilterUpdate(nextQuery.toString());
+  }, [queryFilter.searchParams]);
+
   const searchQuery = useMemo(() => queryFilter.searchParams.get('q'), [documents]);
 
   return (
@@ -67,7 +73,7 @@ const WaykeSearch = ({
         {searchQuery && (
           <PageSection>
             <Container>
-              <SearchTerm>{searchQuery}</SearchTerm>
+              <SearchTerm onClear={onClearQuery}>{searchQuery}</SearchTerm>
             </Container>
           </PageSection>
         )}
