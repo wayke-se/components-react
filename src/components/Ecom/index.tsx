@@ -3,7 +3,7 @@ import EcomBase from '@wayke-se/ecom-react';
 
 import { IEcomExternalProps } from '@wayke-se/ecom-react/dist-types/types';
 import { Vehicle, Maybe, Manufacturer } from '../../@types/codegen/types';
-import useSettings from '../../hooks/useSettings';
+import useSettings from '../../State/Settings/useSettings';
 import PubSub from '../../utils/pubsub/pubsub';
 
 interface EcomProps {

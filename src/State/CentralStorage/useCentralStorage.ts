@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
-import { CentralStorageContext } from '../context/central-storage-context';
-import { Vehicle } from '../@types/codegen/types';
-import useSearchItemBranch from './useSearchItemBranch';
+import { CentralStorageContext } from './CentralStorageContext';
+import { Vehicle } from '../../@types/codegen/types';
+import useSearchItemBranch from '../../hooks/useSearchItemBranch';
 
 const useCentralStorage = (vehicle?: Vehicle | null) => {
   const { centralStorageId, setCentralStorageId } = useContext(CentralStorageContext);

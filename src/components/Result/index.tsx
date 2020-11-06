@@ -15,7 +15,7 @@ import ProgressBar from '../ProgressBar/index';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
 import Loader from '../Loader/index';
 import { numberSeparator } from '../../utils/formats';
-import useSearch from '../../hooks/useSearch';
+import useSearch from '../../State/Search/useSearch';
 import SortSelect, { OptionProps } from '../SortSelect/index';
 import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
 

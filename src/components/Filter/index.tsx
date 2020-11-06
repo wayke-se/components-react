@@ -4,7 +4,7 @@ import { List, Item, Action, Label, Indicator, IndicatorValue } from './wrapper'
 import { Facet } from '../../@types/search';
 import { FacetIdToTitle } from '../../utils/formats';
 import { PRICE, MILEAGE, MODEL_YEAR } from '../../utils/constants';
-import useSearch from '../../hooks/useSearch';
+import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
 import FilterPanel from '../FilterPanel/index';
 

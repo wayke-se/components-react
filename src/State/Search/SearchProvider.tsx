@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Facet, Document, Search } from '../@types/search';
-import { QueryFilter } from '../@types/queryFilter';
-import useFetch from '../hooks/useFetch';
-import { SearchContext } from '../context/search-context';
-import { getUrlSearchParamsFromUrl } from '../utils/url';
-import { WaykePubSub } from '..';
-import { ActionOnFilterUpdate } from '../utils/pubsub/Actions';
-import usePath from '../State/Path/usePath';
+import { Facet, Document, Search } from '../../@types/search';
+import { QueryFilter } from '../../@types/queryFilter';
+import useFetch from '../../hooks/useFetch';
+import { SearchContext } from './SearchContext';
+import { getUrlSearchParamsFromUrl } from '../../utils/url';
+import { WaykePubSub } from '../..';
+import { ActionOnFilterUpdate } from '../../utils/pubsub/Actions';
+import usePath from '../Path/usePath';
 
 interface SearchProviderProps {
   url: string;

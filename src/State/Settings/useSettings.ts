@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { SettingsContext } from '../context/settings-context';
+import { SettingsContext } from './SettingsContext';
 
 const useSettings = () => useContext(SettingsContext);
 

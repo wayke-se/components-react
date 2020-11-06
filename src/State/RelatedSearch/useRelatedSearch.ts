@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import { RelatedSearchContext } from '../context/related-context';
+import { RelatedSearchContext } from './RelatedSearchContext';
 
 const useRelatedSearch = (id: string) => {
   const data = useContext(RelatedSearchContext);

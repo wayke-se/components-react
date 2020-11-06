@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import useSettings from '../../hooks/useSettings';
+import useSettings from '../../State/Settings/useSettings';
 
 import { Wrapper, Image, Placeholder, PlaceholderAction } from './wrapper';
 import { ButtonSecondary, ButtonContent } from '../Button/index';

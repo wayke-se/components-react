@@ -7,7 +7,7 @@ import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 import InputLabel from '../../components/InputLabel/index';
 import { BranchConnection } from '../../@types/codegen/types';
-import { CentralStorageContext } from '../../context/central-storage-context';
+import { CentralStorageContext } from '../../State/CentralStorage/CentralStorageContext';
 
 interface BranchModalProps {
   loading: boolean;

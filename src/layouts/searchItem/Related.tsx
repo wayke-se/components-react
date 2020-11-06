@@ -12,7 +12,7 @@ import {
 } from '../../components/OverflowGrid/index';
 import ProductCard from '../../components/ProductCard/index';
 import { H2 } from '../../components/Heading/index';
-import useRelatedSearch from '../../hooks/useRelatedSearch';
+import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
 import Loader from '../../components/Loader/index';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';

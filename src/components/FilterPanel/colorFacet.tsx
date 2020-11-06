@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 import { Facet, FacetFilter } from '../../@types/search';
 import ColorSelect from '../ColorSelect/index';
-import useSearch from '../../hooks/useSearch';
+import useSearch from '../../State/Search/useSearch';
 import { getHexColorFromDisplayName } from '../../utils/converters';
 
 interface ColorSelectFacetProps {

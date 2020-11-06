@@ -1,6 +1,6 @@
 import React from 'react';
-import { SettingsContext } from '../context/settings-context';
-import { EcomSettings } from './WaykeProvider';
+import { SettingsContext } from './SettingsContext';
+import { EcomSettings } from '../../providers/WaykeProvider';
 
 interface SettingsProps {
   ecomSettings?: EcomSettings;

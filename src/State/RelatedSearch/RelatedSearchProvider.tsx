@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 
-import { Search } from '../@types/search';
-import { QueryFilter } from '../@types/queryFilter';
-import useFetch from '../hooks/useFetch';
-import { RelatedSearchContext } from '../context/related-context';
+import { Search } from '../../@types/search';
+import { QueryFilter } from '../../@types/queryFilter';
+import useFetch from '../../hooks/useFetch';
+import { RelatedSearchContext } from './RelatedSearchContext';
 
 interface RelatedSearchProviderProps {
   url: string;

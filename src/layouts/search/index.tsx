@@ -9,7 +9,7 @@ import SearchTerm from '../../components/SearchTerm/index';
 import { PortalElement, PortalNamespace } from '../../components/Portal/index';
 import SearchFilter from '../../components/SearchFilter/index';
 import Snackbar from '../../components/Snackbar/index';
-import useSearch from '../../hooks/useSearch';
+import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
 

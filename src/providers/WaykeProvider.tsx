@@ -2,13 +2,13 @@ import React from 'react';
 
 import GraphqlProvider from './graphqlProvider';
 import Theme from './themeProvider';
-import SearchProvider from './searchProvider';
+import SearchProvider from '../State/Search/SearchProvider';
 import Root from '../components/Root/index';
 
 import useEcom from '../hooks/useEcom';
-import SettingsProvider from './settingsProvider';
-import RelatedSearchProvider from './relatedSearchProvider';
-import CentralStorageProvider from './centralStorageProvider';
+import SettingsProvider from '../State/Settings/SettingsProvider';
+import RelatedSearchProvider from '../State/RelatedSearch/RelatedSearchProvider';
+import CentralStorageProvider from '../State/CentralStorage/CentralStorageProvider';
 import PathProvider from '../State/Path/PathProvider';
 
 export interface EcomSettings {

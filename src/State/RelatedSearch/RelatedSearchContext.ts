@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Search } from '../@types/search';
+import { Search } from '../../@types/search';
 
 export interface RelatedSearchContextProps {
   moreLikeThisUrl: boolean;

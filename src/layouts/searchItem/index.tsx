@@ -35,7 +35,7 @@ import CheckList from './CheckList';
 import Related from './Related';
 import PackageOptions from './PackageOptions';
 import Branch from './Branch';
-import useCentralStorage from '../../hooks/useCentralStorage';
+import useCentralStorage from '../../State/CentralStorage/useCentralStorage';
 import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';

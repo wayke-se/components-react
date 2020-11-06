@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import useSearch from '../../hooks/useSearch';
+import useSearch from '../../State/Search/useSearch';
 import SearchBar from '../SearchBar/index';
 
 const SearchFilter = () => {

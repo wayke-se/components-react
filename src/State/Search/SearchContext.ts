@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { Facet, Document, Search } from '../@types/search';
-import { QueryFilter } from '../@types/queryFilter';
+import { Facet, Document, Search } from '../../@types/search';
+import { QueryFilter } from '../../@types/queryFilter';
 
 export interface SearchContextProps {
   loading: boolean;
