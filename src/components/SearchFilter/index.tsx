@@ -9,14 +9,14 @@ const SearchFilter = () => {
   const onSearch = useCallback(
     (value: string) => {
       const nextQuery = new URLSearchParams(queryFilter.searchParams);
-      if (value === nextQuery.get('q')) {
+      if (value === nextQuery.get('query')) {
         return;
       }
 
       if (value) {
-        nextQuery.set('q', value);
+        nextQuery.set('query', value);
       } else {
-        nextQuery.delete('q');
+        nextQuery.delete('qquery');
       }
 
       onFilterUpdate(nextQuery.toString());

@@ -54,11 +54,11 @@ const WaykeSearch = ({
 
   const onClearQuery = useCallback(() => {
     const nextQuery = new URLSearchParams(queryFilter.searchParams);
-    nextQuery.delete('q');
+    nextQuery.delete('query');
     onFilterUpdate(nextQuery.toString());
   }, [queryFilter.searchParams]);
 
-  const searchQuery = useMemo(() => queryFilter.searchParams.get('q'), [documents]);
+  const searchQuery = useMemo(() => queryFilter.searchParams.get('query'), [documents]);
 
   return (
     <>

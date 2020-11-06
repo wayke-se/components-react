@@ -27,12 +27,22 @@ const PathProvider = ({ children }: PathProviderProps) => {
   }, []);
 
   const pushState = useCallback((path: string) => {
-    history.pushState(null, '', path);
+    const h1 = window.location.hash;
+    history.pushState(null, '', `${path}`);
+    const h2 = window.location.hash;
+    if (h1.localeCompare(h2) !== 0) {
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }
     dispatch({ type: SET_PATH, path });
   }, []);
 
   const replaceState = useCallback((path: string) => {
+    const h1 = window.location.hash;
     history.replaceState(null, '', path);
+    const h2 = window.location.hash;
+    if (h1.localeCompare(h2) !== 0) {
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }
     dispatch({ type: SET_PATH, path });
   }, []);
 

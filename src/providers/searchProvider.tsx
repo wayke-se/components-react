@@ -134,11 +134,9 @@ const SearchProvider = ({
               ? `${window.location.pathname}?${nextUrlParams}`
               : window.location.pathname;
             pushState(nextUrl);
-            //window.history.pushState(undefined, '', nextUrl);
           }
         } else if (window.location.search.localeCompare(nextSearch) !== 0) {
           pushState(`${window.location.pathname}${nextSearch}`);
-          // window.history.pushState(undefined, '', `${window.location.pathname}${nextSearch}`);
         }
       }
     }
@@ -175,14 +173,12 @@ const SearchProvider = ({
               ? `${window.location.pathname}?${nextUrlParams}`
               : window.location.pathname;
             replaceState(nextUrl);
-            // window.history.replaceState(undefined, '', nextUrl);
             setQueryFilter({
               searchParams: new URLSearchParams(nextSearch),
               block: true,
             });
           }
         } else if (window.location.search.localeCompare(nextSearch) !== 0) {
-          // window.history.replaceState(undefined, '', `${window.location.pathname}${nextSearch}`);
           replaceState(`${window.location.pathname}${nextSearch}`);
           setQueryFilter({
             searchParams: new URLSearchParams(nextSearch),
@@ -199,13 +195,20 @@ const SearchProvider = ({
     }
   }, [response, useQueryParamsFromUrl]);
 
-  const onFilterUpdate = useCallback((nextQuery: string) => {
-    {
-      setQueryFilter({
-        searchParams: new URLSearchParams(nextQuery),
-      });
-    }
-  }, []);
+  const onFilterUpdate = useCallback(
+    (nextQuery: string) => {
+      {
+        if (!initialize) {
+          setInitialize(true);
+        }
+
+        setQueryFilter({
+          searchParams: new URLSearchParams(nextQuery),
+        });
+      }
+    },
+    [initialize]
+  );
 
   const onLoadMore = useCallback(() => {
     if (response) {
