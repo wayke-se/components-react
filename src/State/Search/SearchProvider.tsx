@@ -5,7 +5,7 @@ import { QueryFilter } from '../../@types/queryFilter';
 import useFetch from '../../hooks/useFetch';
 import { SearchContext } from './SearchContext';
 import { getUrlSearchParamsFromUrl } from '../../utils/url';
-import { WaykePubSub } from '../..';
+import { WaykePubSub } from '../../index';
 import { ActionOnFilterUpdate } from '../../utils/pubsub/Actions';
 import usePath from '../Path/usePath';
 
