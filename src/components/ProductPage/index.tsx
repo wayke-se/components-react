@@ -78,6 +78,15 @@ export const ProductPageMainSection = styled.div`
     border-top: ${size(1)} solid ${(props) => props.theme.color.accent};
 
     ${Container} & {
+      margin-left: ${size(-3)};
+      margin-right: ${size(-3)};
+      padding-left: ${size(3)};
+      padding-right: ${size(3)};
+    }
+  }
+
+  ${(props) => props.theme.breakpoint.LtSm} {
+    ${Container} & {
       margin-left: ${size(-2)};
       margin-right: ${size(-2)};
       padding-left: ${size(2)};

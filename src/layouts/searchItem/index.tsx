@@ -10,6 +10,7 @@ import Content from '../../components/Content/index';
 import Blockquote from '../../components/Blockquote/index';
 import ExtendContent from '../../components/ExtendContent/index';
 import Gallery from '../../components/Gallery/index';
+import Document from '../../components/Document/index';
 import { Page, PageSection } from '../../components/Page/index';
 import {
   ProductPage,
@@ -255,7 +256,14 @@ const WaykeSearchItem = ({
                 {(options?.length || 0) > 0 && (
                   <ProductPageMainSection>
                     <Repeat>
-                      <H2 noMargin>Utrustning</H2>
+                      <RepeatSmall>
+                        <H2 noMargin>Utrustning</H2>
+                      </RepeatSmall>
+                      <RepeatSmall>
+                        <Content>
+                          <p>Uppgifter om bilen som handlaren kompletterat med.</p>
+                        </Content>
+                      </RepeatSmall>
                     </Repeat>
                     <Repeat>
                       <ExtendContent actionTitle="Visa mer" onClick={onShowMoreOptionsClick}>
@@ -264,6 +272,45 @@ const WaykeSearchItem = ({
                     </Repeat>
                   </ProductPageMainSection>
                 )}
+
+                <ProductPageMainSection>
+                  <Repeat>
+                    <RepeatSmall>
+                      <H2 noMargin>Dokument</H2>
+                    </RepeatSmall>
+                    <RepeatSmall>
+                      <Content>
+                        <p>Mer information om denna bil.</p>
+                      </Content>
+                    </RepeatSmall>
+                  </Repeat>
+                  <Repeat>
+                    <Document
+                      documents={[
+                        {
+                          title: 'Varudeklaration 1',
+                          format: 'PDF',
+                          url: 'https://wayke.se',
+                        },
+                        {
+                          title: 'Varudeklaration 2',
+                          format: 'DOC',
+                          url: 'https://wayke.se',
+                        },
+                        {
+                          title: 'Bilens historik',
+                          format: 'xls',
+                          url: 'https://wayke.se',
+                        },
+                        {
+                          title: 'Okänt dokument',
+                          format: 'Abc',
+                          url: 'https://wayke.se',
+                        },
+                      ]}
+                    />
+                  </Repeat>
+                </ProductPageMainSection>
 
                 <ProductPageMainSection>
                   <Branch branch={branch} loading={loadingCentralStorageVehicle} />
