@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'example/build'),
-    publicPath: '/example/build/',
+    publicPath: '/',
     filename: 'default.bundle.js',
   },
   target: 'web',
@@ -43,11 +43,11 @@ module.exports = {
     rules: [
       {
         test: /\.js(x?)$/,
+        loader: 'babel-loader',
         exclude: {
-          test: /node_modules/,
+          // test: /node_modules/,
           not: [/(([^\/]+?\/){1,2}(src|es6|dist\-web))/],
         },
-        loader: 'babel-loader',
       },
       {
         test: /\.ts(x?)$/,
@@ -66,7 +66,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        loader: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         enforce: 'pre',
