@@ -44,10 +44,6 @@ module.exports = {
       {
         test: /\.js(x?)$/,
         loader: 'babel-loader',
-        exclude: {
-          // test: /node_modules/,
-          not: [/(([^\/]+?\/){1,2}(src|es6|dist\-web))/],
-        },
       },
       {
         test: /\.ts(x?)$/,
