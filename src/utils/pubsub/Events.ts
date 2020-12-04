@@ -5,7 +5,7 @@ interface EventBase<Callback> {
 
 export type CallbackEmpty = () => void;
 
-export type CallbackHashRouteChange = (id: string) => void;
+export type CallbackHashRouteChange = (id?: string) => void;
 export interface EventHashRouteChange extends EventBase<CallbackHashRouteChange> {
   eventName: 'HashRouteChange';
 }

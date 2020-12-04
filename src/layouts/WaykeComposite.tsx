@@ -26,6 +26,8 @@ const WaykeComposite = ({
   useEffect(() => {
     if (id) {
       PubSub.publish('HashRouteChange', id);
+    } else {
+      PubSub.publish('HashRouteChange');
     }
   }, [id]);
 

@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
