@@ -17,7 +17,7 @@ const PathProvider = ({ children }: PathProviderProps) => {
 
   useEffect(() => {
     const onPopState = () => {
-      dispatch({ type: SET_PATH, path: window.location.href });
+      dispatch({ type: SET_PATH, path: window.location.pathname });
     };
 
     window.addEventListener(POP_STATE, onPopState);

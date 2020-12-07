@@ -10,7 +10,7 @@ const PathRoute = () => (
     composite={{
       // initialQueryParams,
       removeSearchBar: false,
-      pathRoute: '/',
+      pathRoute: '/id/',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
