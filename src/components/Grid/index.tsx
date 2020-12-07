@@ -16,7 +16,7 @@ const resolveImage = (document: Document) => {
 interface GridProps {
   documents?: Document[];
   hashRoute?: boolean;
-  pathRoute?: boolean;
+  pathRoute?: string;
   placeholderImage?: string;
   onClickItem?: (id: string) => void;
 }
@@ -30,10 +30,15 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
     <Wrapper>
       <List>
         {documents.map((document) => {
+          const _path = pathRoute?.replace(/^\/|\/$/g, '');
+
+          const prefix = _path ? `/${_path}/` : '/';
+
           const pathRouteUrl =
             window.location.pathname === '/'
-              ? `/${document._id}`
-              : `${window.location.pathname}/${document._id}`;
+              ? `${prefix}${document._id}`
+              : `${window.location.pathname}${prefix}${document._id}`;
+
           return (
             <Item key={document._id}>
               <ProductCard

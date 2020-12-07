@@ -44,7 +44,7 @@ import usePath from '../../State/Path/usePath';
 export interface WaykeSearchItemProps {
   id: string;
   hashRoute?: boolean;
-  pathRoute?: boolean;
+  pathRoute?: string;
   disableResetScrollOnInit?: boolean;
   placeholderImage?: string;
   onClickSearchItem?: (id: string) => void;

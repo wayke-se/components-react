@@ -5,6 +5,7 @@ import PubSub from '../utils/pubsub/pubsub';
 
 import WaykeSearch from './search/index';
 import WaykeSearchItem from './searchItem/index';
+import usePath from '../State/Path/usePath';
 
 export interface WaykeCompositeProps {
   filterList?: SearchFilterTypes[];
@@ -12,6 +13,7 @@ export interface WaykeCompositeProps {
   removeSearchBar?: boolean;
   disableResetScrollOnInit?: boolean;
   placeholderImage?: string;
+  pathRoute?: string;
 }
 
 const WaykeComposite = ({
@@ -20,33 +22,41 @@ const WaykeComposite = ({
   removeSearchBar,
   disableResetScrollOnInit,
   placeholderImage,
+  pathRoute,
 }: WaykeCompositeProps) => {
-  const id = useHashGuid();
+  const hashId = useHashGuid();
+  const { id: pathId } = usePath();
 
   useEffect(() => {
-    if (id) {
-      PubSub.publish('HashRouteChange', id);
-    } else {
-      PubSub.publish('HashRouteChange');
+    if (!pathRoute) {
+      if (hashId) {
+        PubSub.publish('HashRouteChange', hashId);
+      } else {
+        PubSub.publish('HashRouteChange');
+      }
     }
-  }, [id]);
+  }, [hashId]);
+
+  const id = pathId || hashId;
 
   return (
     <>
       {id ? (
         <WaykeSearchItem
           id={id}
-          hashRoute
+          hashRoute={!pathRoute}
           disableResetScrollOnInit={disableResetScrollOnInit}
           placeholderImage={placeholderImage}
+          pathRoute={pathRoute}
         />
       ) : (
         <WaykeSearch
           filterList={filterList}
           initialQueryParams={initialQueryParams}
           removeSearchBar={removeSearchBar}
-          hashRoute
+          hashRoute={!pathRoute}
           placeholderImage={placeholderImage}
+          pathRoute={pathRoute}
         />
       )}
     </>

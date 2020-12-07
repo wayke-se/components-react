@@ -27,7 +27,7 @@ interface Props {
   title: string;
   href?: string;
   image?: string;
-  pathRoute?: boolean;
+  pathRoute?: string;
   placeholderImage?: string;
   description?: string;
   uspList?: ItemProps[];
@@ -54,7 +54,7 @@ const ProductCard = ({
 
   const onHrefClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      if (pathRoute && href) {
+      if (!!pathRoute && href) {
         e.preventDefault();
         pushState(href);
       }

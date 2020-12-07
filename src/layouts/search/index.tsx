@@ -22,7 +22,7 @@ export interface WaykeSearchSettings {
 
 export type WaykeSearchProps = WaykeSearchSettings & {
   hashRoute?: boolean;
-  pathRoute?: boolean;
+  pathRoute?: string;
   onClickSearchItem?: (id: string) => void;
 };
 

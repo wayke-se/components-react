@@ -1,15 +1,16 @@
 import React from 'react';
 
-import { WaykeCompositePath } from '../../../../src/index';
+import WaykeComposite from '../../../../src/index';
 
 const initialQueryParams = new URLSearchParams();
 initialQueryParams.set('modelYear.min', '2018');
 
 const PathRoute = () => (
-  <WaykeCompositePath
+  <WaykeComposite
     composite={{
       // initialQueryParams,
       removeSearchBar: false,
+      pathRoute: '/',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
@@ -23,7 +24,6 @@ const PathRoute = () => (
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
       googleMapsMarker: 'https://www.wayke.se/images/map/marker.png',
       useQueryParamsFromUrl: true,
-      compressQueryParams: false,
     }}
   />
 );

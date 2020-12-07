@@ -47,6 +47,10 @@ import { WaykeCompositePath } from '@wayke-se/components-react'
 
 const App = () => (
   <WaykeCompositePath
+    composite={{
+      ...,
+      itemPath: "your/path/to/this/component/"
+    }}
     provider={ProviderSettings}
   />
 );
@@ -109,14 +113,14 @@ const App = ({}) => {
 | Property                 | Type     | Required | Value                |
 |--------------------------|----------|----------|----------------------|
 | id                       | String   | true     |                      |
-| pathRoute                | boolean  | false    |                      |
+| pathRoute                | string   | false    |                      |
 | hashRoute                | boolean  | false    |                      |
 | onClickSearchItem        | Function | false    | (id: string) => void |
 | disableResetScrollOnInit | boolean  | false    |                      |
 | placeholderImage         | String   | false    |                      |
 
 * `id` - Guid that represents a vehicle.
-* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /guid to the url.
+* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /{pathRoute}/guid to the url.
 * `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
 * `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
 * `disableResetScrollOnInit` - An *optional* flag. Loading the item page resets the scroll, here it's possible to disable it.
@@ -126,7 +130,7 @@ const App = ({}) => {
 | Property                       | Type              | Default                  | Values                                                                                                                                         |
 |--------------------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | onClickSearchItem              | Function          | undefined                | (id: string) => void                                                                                                                           |
-| pathRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
+| pathRoute                      | string            | undefined                | String                                                                                                                                         |
 | hashRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
 | filterList                     | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
 | initialQueryParams             | URLSearchParams or string  | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
@@ -152,7 +156,6 @@ const App = ({}) => {
 | googleMapsMarker      | String       | false    |
 | ecomSettings          | EcomSettings | false    |
 | useQueryParamsFromUrl | boolean      | false    |
-| compressQueryParams   | boolean      | false    |
 
 * `url` - Url to Wayke ext-api.
 * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
@@ -162,7 +165,6 @@ const App = ({}) => {
 * `googleMapsMarker` - An *optional* flag. Provide a custom marker, url.
 * `ecomSettings` - An *optional* flag. Allow the use of ecom.
 * `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
-* `compressQueryParams` - An *optional* flag. Instead of using several query strings that are human readable, all query string will be encoded to base64 into a single value and only allocate query string `f`. `useQueryParamsFromUrl` must be set to true in order to apply this option.
 
 ### EcomSettings
 | Property           | Type         | Required |
@@ -223,7 +225,6 @@ const App = () => (
     provider={
       ...ProviderSettings,
       useQueryParamsFromUrl: true,
-      compressQueryParams: true,
     }
   />
 )

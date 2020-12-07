@@ -13,7 +13,6 @@ interface SearchProviderProps {
   url: string;
   apiKey?: string;
   useQueryParamsFromUrl?: boolean;
-  compressQueryParams?: boolean;
   children: React.ReactNode;
 }
 
@@ -21,13 +20,7 @@ const initialSearchParams = new URLSearchParams();
 initialSearchParams.set('hits', '30');
 initialSearchParams.set('sort', 'published-desc');
 
-const SearchProvider = ({
-  url,
-  apiKey,
-  useQueryParamsFromUrl,
-  compressQueryParams,
-  children,
-}: SearchProviderProps) => {
+const SearchProvider = ({ url, apiKey, useQueryParamsFromUrl, children }: SearchProviderProps) => {
   const { replaceState, pushState } = usePath();
   const [queryFilter, setQueryFilter] = useState<QueryFilter>({
     searchParams: initialSearchParams,
@@ -65,18 +58,9 @@ const SearchProvider = ({
   const popStateEvent = (event: PopStateEvent) => {
     const { currentTarget } = event;
     if (currentTarget) {
-      if (compressQueryParams) {
-        const f = atob(
-          new URLSearchParams((currentTarget as Window).location.search).get('f') || ''
-        );
-        setQueryFilter({
-          searchParams: new URLSearchParams(f),
-        });
-      } else {
-        setQueryFilter({
-          searchParams: new URLSearchParams((currentTarget as Window).location.search),
-        });
-      }
+      setQueryFilter({
+        searchParams: new URLSearchParams((currentTarget as Window).location.search),
+      });
     }
   };
 
@@ -114,28 +98,7 @@ const SearchProvider = ({
 
       const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
       if (initialize) {
-        if (compressQueryParams) {
-          const searchParamsFromUrl = getUrlSearchParamsFromUrl();
-          const currentFilterCompressed = searchParamsFromUrl.get('f');
-
-          const currentFQuery = new URLSearchParams(nextSearch).get('f') || '';
-
-          const nextFilterCompressed = currentFQuery ? currentFQuery : btoa(nextSearch);
-          if (currentFilterCompressed?.localeCompare(nextFilterCompressed) !== 0) {
-            if (nextFilterCompressed) {
-              searchParamsFromUrl.set('f', nextFilterCompressed);
-            } else {
-              searchParamsFromUrl.delete('f');
-            }
-
-            const nextUrlParams = decodeURIComponent(searchParamsFromUrl.toString());
-
-            const nextUrl = nextUrlParams
-              ? `${window.location.pathname}?${nextUrlParams}`
-              : window.location.pathname;
-            pushState(nextUrl);
-          }
-        } else if (window.location.search.localeCompare(nextSearch) !== 0) {
+        if (window.location.search.localeCompare(nextSearch) !== 0) {
           pushState(`${window.location.pathname}${nextSearch}`);
         }
       }
@@ -153,32 +116,7 @@ const SearchProvider = ({
         nextSearchParams.delete('hits');
         nextSearchParams.delete('offset');
         const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
-        if (compressQueryParams) {
-          const searchParamsFromUrl = getUrlSearchParamsFromUrl();
-          const currentFilterCompressed = searchParamsFromUrl.get('f');
-
-          const currentFQuery = new URLSearchParams(nextSearch).get('f') || '';
-
-          const nextFilterCompressed = currentFQuery ? currentFQuery : btoa(nextSearch);
-          if (currentFilterCompressed?.localeCompare(nextFilterCompressed) !== 0) {
-            if (nextFilterCompressed) {
-              searchParamsFromUrl.set('f', nextFilterCompressed);
-            } else {
-              searchParamsFromUrl.delete('f');
-            }
-
-            const nextUrlParams = decodeURIComponent(searchParamsFromUrl.toString());
-
-            const nextUrl = nextUrlParams
-              ? `${window.location.pathname}?${nextUrlParams}`
-              : window.location.pathname;
-            replaceState(nextUrl);
-            setQueryFilter({
-              searchParams: new URLSearchParams(nextSearch),
-              block: true,
-            });
-          }
-        } else if (window.location.search.localeCompare(nextSearch) !== 0) {
+        if (window.location.search.localeCompare(nextSearch) !== 0) {
           replaceState(`${window.location.pathname}${nextSearch}`);
           setQueryFilter({
             searchParams: new URLSearchParams(nextSearch),
@@ -223,12 +161,9 @@ const SearchProvider = ({
     (_initialQueryParams?: URLSearchParams) => {
       if (!initialize) {
         const searchParamsFromUrl = getUrlSearchParamsFromUrl();
-        const searchParamsFromUrlDecompressed = compressQueryParams
-          ? new URLSearchParams(atob(searchParamsFromUrl.get('f') || ''))
-          : searchParamsFromUrl;
 
         const initialQueryParams = useQueryParamsFromUrl
-          ? searchParamsFromUrlDecompressed
+          ? searchParamsFromUrl
           : _initialQueryParams;
 
         if (useQueryParamsFromUrl && _initialQueryParams) {
