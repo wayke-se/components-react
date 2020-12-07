@@ -190,9 +190,11 @@ const App = ({}) => {
 | initialQueryParams             | URLSearchParams or string     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
 | removeSearchBar                | boolean             | false                | Boolean                                                                                                                                        |
 | placeholderImage               | string              | false                | String                                                                                                                                         |
+| pathRoute                      | string              | false                |                                                                                                                                                |
 * `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
 * `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
 * `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
+* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /guid to the url.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
@@ -210,7 +212,7 @@ const App = () => (
   <WaykeComposite
     provider={ProviderSettings}
     composite={{,
-      intialQueryParams,
+      initialQueryParams,
     }}
   />
 )

@@ -12,7 +12,7 @@ interface PathState {
 }
 
 export const initialState: PathState = {
-  path: window.location.href,
+  path: window.location.pathname,
 };
 
 const pathReducer = (state: PathState, action: PathAction) => {
