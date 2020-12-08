@@ -13,6 +13,7 @@ interface SearchProviderProps {
   url: string;
   apiKey?: string;
   useQueryParamsFromUrl?: boolean;
+  pathRoute?: string;
   children: React.ReactNode;
 }
 
@@ -20,7 +21,13 @@ const initialSearchParams = new URLSearchParams();
 initialSearchParams.set('hits', '30');
 initialSearchParams.set('sort', 'published-desc');
 
-const SearchProvider = ({ url, apiKey, useQueryParamsFromUrl, children }: SearchProviderProps) => {
+const SearchProvider = ({
+  url,
+  apiKey,
+  useQueryParamsFromUrl,
+  pathRoute,
+  children,
+}: SearchProviderProps) => {
   const { replaceState, pushState } = usePath();
   const [queryFilter, setQueryFilter] = useState<QueryFilter>({
     searchParams: initialSearchParams,
@@ -99,7 +106,16 @@ const SearchProvider = ({ url, apiKey, useQueryParamsFromUrl, children }: Search
       const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
       if (initialize) {
         if (window.location.search.localeCompare(nextSearch) !== 0) {
-          pushState(`${window.location.pathname}${nextSearch}`);
+          const _path = pathRoute?.replace(/^\/|\/$/g, '');
+          const prefix = _path ? `/${_path}/` : '/';
+
+          const index = _path ? window.location.pathname.indexOf(prefix) : -1;
+          let pathname = window.location.pathname;
+          if (index > -1) {
+            pathname = pathname.substr(0, index);
+          }
+
+          pushState(`${pathname}${nextSearch}`);
         }
       }
     }

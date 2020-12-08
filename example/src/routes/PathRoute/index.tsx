@@ -24,6 +24,7 @@ const PathRoute = () => (
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
       googleMapsMarker: 'https://www.wayke.se/images/map/marker.png',
       useQueryParamsFromUrl: true,
+      pathRoute: '/id/',
     }}
   />
 );
