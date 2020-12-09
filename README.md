@@ -119,13 +119,13 @@ const App = ({}) => {
 | onClickSearchItem        | function | false    | (id: string) => void |
 
 * Required
- * `id` - Guid that represents a vehicle.
+  * `id` - Guid that represents a vehicle.
 * Optional
- * `pathRoute` - If set to true, then if a item is clicked it will append /{pathRoute}/guid to the url.
- * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
- * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
- * `placeholderImage` - Provide custom placeholder image when image is missing.
- * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
+  * `pathRoute` - If set to true, then if a item is clicked it will append /{pathRoute}/guid to the url.
+  * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
+  * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
+  * `placeholderImage` - Provide custom placeholder image when image is missing.
+  * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
 
 ### WaykeSearch
 | Property             | Type                      | Values                    |
@@ -140,14 +140,14 @@ const App = ({}) => {
 | onClickSearchItem    | function                  | (id: string) => void      |
 
 * Optional
- * `pathRoute` - If set to true, then if a item is clicked it will append /guid to the url.
- * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
- * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear
- * `initialQueryParams` - Set the default filter that should be applid upon init.
- * `removeSearchBar` - Removes search bar.
- * `removeFilterOptions` - Removes filter options.
- * `placeholderImage` - Provide custom placeholder image when image is missing.
- * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
+  * `pathRoute` - If set to true, then if a item is clicked it will append /guid to the url.
+  * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
+  * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear
+  * `initialQueryParams` - Set the default filter that should be applid upon init.
+  * `removeSearchBar` - Removes search bar.
+  * `removeFilterOptions` - Removes filter options.
+  * `placeholderImage` - Provide custom placeholder image when image is missing.
+  * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
 
 ## Types
 
@@ -167,15 +167,15 @@ WaykeSearchItem & WaykeSearch combined without `id`
 | useQueryParamsFromUrl | boolean      | false    |
 
 * Required
- * `url` - Url to Wayke ext-api.
- * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
- * `graphQlUrl` - Url to the GraphQl endpoint.
+  * `url` - Url to Wayke ext-api.
+  * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
+  * `graphQlUrl` - Url to the GraphQl endpoint.
 * Optional
- * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
- * `googleMapsApiKey` - An *optional* flag. Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
- * `googleMapsMarker` - An *optional* flag. Provide a custom marker, url.
- * `ecomSettings` - An *optional* flag. Allow the use of ecom.
- * `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
+  * `apiKey` - To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
+  * `googleMapsApiKey` - Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
+  * `googleMapsMarker` - Provide a custom marker, url.
+  * `ecomSettings` - Allow the use of ecom.
+  * `useQueryParamsFromUrl` - Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
 
 ### EcomSettings
 | Property           | Type         | Required |
@@ -186,13 +186,13 @@ WaykeSearchItem & WaykeSearch combined without `id`
 | serviceLogotypeUrl | string       | false    |
 | bankIdThumbprint   | string       | false    |
 
-#### Required
-
-* `url` - Wayke ecom url.
-* `useBankId`: An *optional* flag. If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
-* `displayBankIdAlert`: An *optional* flag. By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
-* `serviceLogotypeUrl`: An *optional* flag. Set the logo. By default the manufacturers logo will be used.
-* `bankIdThumbprint`: An *optional* flag. Custom bank id certificate thumbprint .
+* Required
+  * `url` - Wayke ecom url.
+* Optional
+  * `useBankId`: If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
+  * `displayBankIdAlert`: By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
+  * `serviceLogotypeUrl`: Set the logo. By default the manufacturers logo will be used.
+  * `bankIdThumbprint`: Custom bank id certificate thumbprint .
 
 > For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
 
