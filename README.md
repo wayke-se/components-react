@@ -15,19 +15,18 @@ npm install react react-dom styled-components
 ```
 
 ```javascript
+import React from 'react';
+import WaykeComposite from '@wayke-se/components-react'
+
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
   url: "https://test-ext-api.wayketech.se/vehicles",
+  urlMlt: "https://test-ext-api.wayketech.se/vehicles-mlt",
   ecomSettings: {
     url: "OPTIONAL_ECOM_URL",
   },
   googleMapsApiKey: "OPTIONAL_GOOGLE_MAPS_STATIC_API_KEY",
 }
-```
-
-```javascript
-import React from 'react';
-import WaykeComposite from '@wayke-se/components-react'
 
 const App = () => (
   <WaykeComposite
@@ -49,7 +48,7 @@ const App = () => (
   <WaykeCompositePath
     composite={{
       ...,
-      itemPath: "your/path/to/this/component/"
+      pathRoute: "your/path/to/this/component/"
     }}
     provider={ProviderSettings}
   />
@@ -107,64 +106,76 @@ const App = ({}) => {
 | Property          | Type                   | Required |
 |-------------------|------------------------|----------|
 | provider          | WaykeProviderSettings  | true     |
-| composite         | WaykeSearchSettings    | false    |
+| composite         | WaykeCompositeProps    | false    |
 
 ### WaykeSearchItem
 | Property                 | Type     | Required | Value                |
 |--------------------------|----------|----------|----------------------|
-| id                       | String   | true     |                      |
+| id                       | string   | true     |                      |
 | pathRoute                | string   | false    |                      |
 | hashRoute                | boolean  | false    |                      |
-| onClickSearchItem        | Function | false    | (id: string) => void |
 | disableResetScrollOnInit | boolean  | false    |                      |
-| placeholderImage         | String   | false    |                      |
+| placeholderImage         | string   | false    |                      |
+| onClickSearchItem        | function | false    | (id: string) => void |
 
-* `id` - Guid that represents a vehicle.
-* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /{pathRoute}/guid to the url.
-* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
-* `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
-* `disableResetScrollOnInit` - An *optional* flag. Loading the item page resets the scroll, here it's possible to disable it.
-* `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
+* Required
+ * `id` - Guid that represents a vehicle.
+* Optional
+ * `pathRoute` - If set to true, then if a item is clicked it will append /{pathRoute}/guid to the url.
+ * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
+ * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
+ * `placeholderImage` - Provide custom placeholder image when image is missing.
+ * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
 
 ### WaykeSearch
-| Property                       | Type              | Default                  | Values                                                                                                                                         |
-|--------------------------------|-------------------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| onClickSearchItem              | Function          | undefined                | (id: string) => void                                                                                                                           |
-| pathRoute                      | string            | undefined                | String                                                                                                                                         |
-| hashRoute                      | Boolean           | undefined (false)        | Boolean                                                                                                                                        |
-| filterList                     | String[]          | undefined (all included) | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
-| initialQueryParams             | URLSearchParams or string  | undefined                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-| placeholderImage               | string            | undefined                | String                                                                                                                                         |
+| Property             | Type                      | Values                    |
+|----------------------|---------------------------|---------------------------|
+| pathRoute            | string                    |                           |
+| hashRoute            | boolean                   |                           |
+| filterList           | SearchFilterTypes[]       |                           |
+| initialQueryParams   | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| removeSearchBar      | boolean                   |                           |
+| removeFilterOptions  | boolean                   |                           |
+| placeholderImage     | string                    |                           |
+| onClickSearchItem    | function                  | (id: string) => void      |
 
-* `onClickSearchItem` - An *optional* flag. Function that can be provided that will be triggered once a item is clicked.
-* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /guid to the url.
-* `hashRoute` - An *optional* flag. If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
-* `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
-* `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
-* `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
+* Optional
+ * `pathRoute` - If set to true, then if a item is clicked it will append /guid to the url.
+ * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
+ * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear
+ * `initialQueryParams` - Set the default filter that should be applid upon init.
+ * `removeSearchBar` - Removes search bar.
+ * `removeFilterOptions` - Removes filter options.
+ * `placeholderImage` - Provide custom placeholder image when image is missing.
+ * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
 
 ## Types
+
+### WaykeCompositeProps
+WaykeSearchItem & WaykeSearch combined without `id`
 
 ### WaykeProviderSettings
 | Property              | Type         | Required |
 |-----------------------|--------------|----------|
-| url                   | String       | true     |
-| urlMlt                | String       | false    |
-| graphQlUrl            | String       | true     |
-| apiKey                | String       | false    |
-| googleMapsApiKey      | String       | false    |
-| googleMapsMarker      | String       | false    |
+| url                   | string       | true     |
+| urlMlt                | string       | true     |
+| graphQlUrl            | string       | true     |
+| apiKey                | string       | false    |
+| googleMapsApiKey      | string       | false    |
+| googleMapsMarker      | string       | false    |
 | ecomSettings          | EcomSettings | false    |
 | useQueryParamsFromUrl | boolean      | false    |
 
-* `url` - Url to Wayke ext-api.
-* `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
-* `graphQlUrl` - Url to the GraphQl endpoint.
-* `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
-* `googleMapsApiKey` - An *optional* flag. Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
-* `googleMapsMarker` - An *optional* flag. Provide a custom marker, url.
-* `ecomSettings` - An *optional* flag. Allow the use of ecom.
-* `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
+* Required
+ * `url` - Url to Wayke ext-api.
+ * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
+ * `graphQlUrl` - Url to the GraphQl endpoint.
+* Optional
+ * `apiKey` -An *optional* flag. To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
+ * `googleMapsApiKey` - An *optional* flag. Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
+ * `googleMapsMarker` - An *optional* flag. Provide a custom marker, url.
+ * `ecomSettings` - An *optional* flag. Allow the use of ecom.
+ * `useQueryParamsFromUrl` - An *optional* flag. Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
 
 ### EcomSettings
 | Property           | Type         | Required |
@@ -175,6 +186,8 @@ const App = ({}) => {
 | serviceLogotypeUrl | string       | false    |
 | bankIdThumbprint   | string       | false    |
 
+#### Required
+
 * `url` - Wayke ecom url.
 * `useBankId`: An *optional* flag. If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
 * `displayBankIdAlert`: An *optional* flag. By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
@@ -182,19 +195,6 @@ const App = ({}) => {
 * `bankIdThumbprint`: An *optional* flag. Custom bank id certificate thumbprint .
 
 > For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
-
-### WaykeSearchSettings
-| Property                       | Type                | Required             | Values                                                                                                                                         |
-|--------------------------------|---------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterList                     | SearchFilterTypes[] | false (all included) |                                                                                                                                                |
-| initialQueryParams             | URLSearchParams or string     | false                | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-| removeSearchBar                | boolean             | false                | Boolean                                                                                                                                        |
-| placeholderImage               | string              | false                | String                                                                                                                                         |
-| pathRoute                      | string              | false                |                                                                                                                                                |
-* `filterList` - An *optional* flag. Select what filters that should be visible and in whiched order.
-* `initialQueryParams` - An *optional* flag. Set the default filter that should be applid upon init.
-* `placeholderImage` - An *optional* flag. Provide custom placeholder image when image is missing.
-* `pathRoute` - An *optional* flag. If set to true, then if a item is clicked it will append /guid to the url.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
@@ -218,37 +218,7 @@ const App = () => (
 )
 ```
 
-### Read/write query strings from/to url
-```javascript
-import WaykeComposite from '@wayke-se/components-react'
-
-const App = () => (
-  <WaykeComposite
-    provider={
-      ...ProviderSettings,
-      useQueryParamsFromUrl: true,
-    }
-  />
-)
-```
-
-### Read/write compressed query string from/to url
-```javascript
-import WaykeComposite from '@wayke-se/components-react'
-
-const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('price.min', '2000');
-
-const App = () => (
-  <WaykeComposite
-    provider={
-      ...ProviderSettings,
-      useQueryParamsFromUrl: true,
-
-    }
-  />
-)
-```
+## Custom usage examples
 
 ### Select only some of the filters
 Order will have effect

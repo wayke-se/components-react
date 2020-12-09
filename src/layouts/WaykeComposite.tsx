@@ -1,25 +1,18 @@
 import React, { useEffect } from 'react';
 import useHashGuid from '../hooks/useHashGuid';
-import { SearchFilterTypes } from '../@types/filter';
 import PubSub from '../utils/pubsub/pubsub';
 
-import WaykeSearch from './search/index';
-import WaykeSearchItem from './searchItem/index';
+import WaykeSearch, { WaykeSearchProps } from './search/index';
+import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem/index';
 import usePath from '../State/Path/usePath';
 
-export interface WaykeCompositeProps {
-  filterList?: SearchFilterTypes[];
-  initialQueryParams?: URLSearchParams | string;
-  removeSearchBar?: boolean;
-  disableResetScrollOnInit?: boolean;
-  placeholderImage?: string;
-  pathRoute?: string;
-}
+export type WaykeCompositeProps = Omit<WaykeSearchProps & WaykeSearchItemProps, 'id'>;
 
 const WaykeComposite = ({
   filterList,
   initialQueryParams,
   removeSearchBar,
+  removeFilterOptions,
   disableResetScrollOnInit,
   placeholderImage,
   pathRoute,
@@ -57,6 +50,7 @@ const WaykeComposite = ({
           hashRoute={!pathRoute}
           placeholderImage={placeholderImage}
           pathRoute={pathRoute}
+          removeFilterOptions={removeFilterOptions}
         />
       )}
     </>

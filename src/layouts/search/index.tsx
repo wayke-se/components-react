@@ -13,18 +13,16 @@ import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
 
-export interface WaykeSearchSettings {
+export interface WaykeSearchProps {
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
+  removeFilterOptions?: boolean;
   placeholderImage?: string;
-}
-
-export type WaykeSearchProps = WaykeSearchSettings & {
   hashRoute?: boolean;
   pathRoute?: string;
   onClickSearchItem?: (id: string) => void;
-};
+}
 
 const WaykeSearch = ({
   filterList,
@@ -33,6 +31,7 @@ const WaykeSearch = ({
   pathRoute,
   removeSearchBar,
   placeholderImage,
+  removeFilterOptions,
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
@@ -77,11 +76,13 @@ const WaykeSearch = ({
             </Container>
           </PageSection>
         )}
-        <PageSection>
-          <Container>
-            <Filter filterList={filterList} />
-          </Container>
-        </PageSection>
+        {!removeFilterOptions && (
+          <PageSection>
+            <Container>
+              <Filter filterList={filterList} />
+            </Container>
+          </PageSection>
+        )}
         <PageSection accent fillSpace className="wayke__theme wayke__color--accent-bg">
           <Container>
             <Result>

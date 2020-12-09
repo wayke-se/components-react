@@ -1,4 +1,4 @@
-import WaykeSearch, { WaykeSearchSettings, WaykeSearchProps } from './layouts/search/index';
+import WaykeSearch, { WaykeSearchProps } from './layouts/search/index';
 import WaykeSearchItem, { WaykeSearchItemProps } from './layouts/searchItem/index';
 import WaykeProvider, { WaykeProviderSettings } from './providers/WaykeProvider';
 import WaykeComposite, {
@@ -42,7 +42,6 @@ export {
   WaykePubSub,
   WaykeCompositeWithProviderProps,
   WaykeProviderSettings,
-  WaykeSearchSettings,
   WaykeSearchProps,
   WaykeSearchItemProps,
   SearchFilterTypes,
