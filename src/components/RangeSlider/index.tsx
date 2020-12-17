@@ -57,7 +57,9 @@ const RangeSlider = ({
   return (
     <>
       {equal ? (
-        <p>Insert</p>
+        <OwnSlider>
+          <p>Insert</p>
+        </OwnSlider>
       ) : (
         <OwnSlider>
           <Slider
