@@ -1,7 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { Slider, Rail, Handles, Tracks } from 'react-compound-slider';
 
-import { Bar, RangeSpan, RangeSpanItem, Slider as OwnSlider } from './wrapper';
+import {
+  Bar,
+  RangeSpan,
+  RangeSpanItem,
+  Slider as OwnSlider,
+  Track as OwnTrack,
+  Handle as OwnHandle,
+} from './wrapper';
 import { Handle } from './handle';
 import { Track } from './track';
 import { numberSeparator } from '../../utils/formats';
@@ -58,7 +65,11 @@ const RangeSlider = ({
     <>
       {equal ? (
         <OwnSlider>
-          <p>Insert</p>
+          <Bar>
+            <OwnTrack style={{ left: '0', width: '100%' }} />
+            <OwnHandle role="slider" aria-disabled style={{ left: '0' }} />
+            <OwnHandle role="slider" aria-disabled style={{ left: '100%' }} />
+          </Bar>
         </OwnSlider>
       ) : (
         <OwnSlider>
