@@ -55,9 +55,6 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
                     title: document.modelYear,
                   },
                   {
-                    title: document.modelSeries,
-                  },
-                  {
                     title: `${numberSeparator(document.mileage)} mil`,
                   },
                   {
