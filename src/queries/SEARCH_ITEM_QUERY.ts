@@ -146,6 +146,7 @@ const SEARCH_ITEM_QUERY = gql`
         modelSeries
         modelYear
         properties
+        propertySet
         options
         registrationNumber
         salesName

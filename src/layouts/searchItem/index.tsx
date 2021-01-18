@@ -39,6 +39,7 @@ import useCentralStorage from '../../State/CentralStorage/useCentralStorage';
 import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
+import Property from './Property';
 
 export interface WaykeSearchItemProps {
   id: string;
@@ -104,7 +105,7 @@ const WaykeSearchItem = ({
     packageOptions,
     publishedAt,
   } = vehicle;
-  const { fuelType, mileage, gearbox, manufactureYear } = vehicle.data;
+  const { fuelType, mileage, gearbox, manufactureYear, propertySet } = vehicle.data;
   const specificationList = getSpecificationList(data);
 
   const uspList = [
@@ -204,6 +205,15 @@ const WaykeSearchItem = ({
                     <ExtendContent actionTitle="Visa mer" onClick={onShowMoreSpecificationClick}>
                       <DataGrid specificationList={specificationList} />
                     </ExtendContent>
+                  </Repeat>
+                </ProductPageMainSection>
+
+                <ProductPageMainSection>
+                  <Repeat>
+                    <H2 noMargin>Property</H2>
+                  </Repeat>
+                  <Repeat>
+                    <Property propertySet={propertySet} />
                   </Repeat>
                 </ProductPageMainSection>
 
