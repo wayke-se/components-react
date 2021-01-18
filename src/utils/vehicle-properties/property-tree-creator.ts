@@ -1,9 +1,4 @@
-import {
-  EnhancedProperty,
-  Category,
-  Tree,
-  Category as TreeCategory,
-} from '../../@types/vehicle-properties';
+import { EnhancedProperty, Tree, Category, ItemCategory } from '../../@types/vehicle-properties';
 
 class PropertyTreeCreator {
   private properties: { [key: string]: EnhancedProperty };
@@ -59,12 +54,12 @@ class PropertyTreeCreator {
   private getCategories() {
     const categories = Object.keys(this.properties)
       .filter(this.propertiesWithCategory)
-      .map((key) => this.properties[key].category as Category)
+      .map((key) => (this.properties[key].category as unknown) as ItemCategory)
       .filter(PropertyTreeCreator.distinctCategories);
     return categories;
   }
 
-  private convertToTreeCategories(categories: Category[]) {
+  private convertToTreeCategories(categories: ItemCategory[]) {
     return categories.map((category) => {
       const properties = Object.keys(this.properties)
         .filter((key) => this.hasCategoryWithId(key, category.id))
@@ -106,13 +101,13 @@ class PropertyTreeCreator {
     const categories = Object.keys(this.properties)
       .filter((key) => this.hasCategoryWithId(key, id))
       .filter(this.propertiesWithSubCategory)
-      .map((key) => this.properties[key].category?.subCategory as Category)
+      .map((key) => this.properties[key].category?.subCategory as ItemCategory)
       .filter(PropertyTreeCreator.distinctCategories);
 
     return categories;
   }
 
-  private convertSubCategory(subCategory: Category): TreeCategory {
+  private convertSubCategory(subCategory: ItemCategory): Category {
     const properties = Object.keys(this.properties)
       .filter((key) => this.hasSubCategoryWithId(key, subCategory.id))
       .map((key) => this.properties[key])
@@ -121,7 +116,7 @@ class PropertyTreeCreator {
     return {
       id: subCategory.id,
       name: subCategory.name,
-      properties: properties,
+      properties,
       subCategories: [],
     };
   }
@@ -129,12 +124,16 @@ class PropertyTreeCreator {
   private hasSubCategoryWithId = (propertyKey: string, categoryId: number) =>
     this.properties[propertyKey].category?.subCategory?.id === categoryId;
 
-  private static distinctCategories = (category: Category, index: number, self: Category[]) => {
+  private static distinctCategories = (
+    category: ItemCategory,
+    index: number,
+    self: ItemCategory[]
+  ) => {
     const firstOccuranceOfId = self.find((value) => value.id === category.id);
     return !!firstOccuranceOfId && self.indexOf(firstOccuranceOfId) === index;
   };
 
-  private createListSubCategories(categoryId: number): TreeCategory[] {
+  private createListSubCategories(categoryId: number): Category[] {
     const listProperties = Object.keys(this.properties)
       .filter((key) => this.hasCategoryWithId(key, categoryId))
       .map((key) => this.properties[key])

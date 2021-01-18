@@ -1,14 +1,15 @@
-import { EnhancedProperty, Category } from '../../@types/item';
+import { VehicleData } from '../../@types/codegen/types';
+import { EnhancedProperty, ItemCategory } from '../../@types/vehicle-properties';
 import deepCopy from '../deep-copy';
 
 export const TEXT_TYPE = 'text';
 export const NUMBER_TYPE = 'number';
-export const BASIC_CATEGORY = Object.freeze({
+export const BASIC_CATEGORY: ItemCategory = Object.freeze({
   id: 1000,
   name: 'Basuppgifter',
   subCategory: null,
 });
-export const ENGINE_SUBCATEGORY = Object.freeze({
+export const ENGINE_SUBCATEGORY: ItemCategory = Object.freeze({
   id: 6,
   name: 'Motor & Prestanda',
   subCategory: {
@@ -20,18 +21,18 @@ export const ENGINE_SUBCATEGORY = Object.freeze({
 
 class PropertyBuilder {
   name: string = '';
-  value: any = '';
+  value: string | number = '';
   type: string = 'unknown';
   unit: string | null = null;
   hint: string | null = null;
-  category: Category | null = null;
+  category: ItemCategory | null = null;
 
   withName(name: string) {
     this.name = name;
     return this;
   }
 
-  withValue(value) {
+  withValue(value: string | number) {
     this.value = value;
     return this;
   }
@@ -41,7 +42,7 @@ class PropertyBuilder {
     return this;
   }
 
-  withCategory(category: Category) {
+  withCategory(category: ItemCategory) {
     this.category = category;
     return this;
   }
@@ -63,7 +64,7 @@ class PropertyBuilder {
   }
 }
 
-export default (item, properties: { [key: string]: EnhancedProperty }) => {
+export default (item: VehicleData, properties: { [key: string]: EnhancedProperty }) => {
   const newProperties = deepCopy(properties);
 
   if (!!item.manufacturer) {

@@ -22,12 +22,12 @@ export interface EnhancedProperty {
   name: string;
   type: string;
   unit: string | undefined | null;
-  category: Category | undefined | null;
+  category: ItemCategory | undefined | null;
   hint: string | undefined | null;
 }
 
-export interface Category {
+export interface ItemCategory {
   name: string;
   id: number;
-  subCategory: Category | undefined | null;
+  subCategory: ItemCategory | undefined | null;
 }

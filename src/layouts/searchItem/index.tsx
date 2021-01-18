@@ -218,7 +218,7 @@ const WaykeSearchItem = ({
                     </Content>
                   </Repeat>
                   <Repeat>
-                    <Property propertySet={propertySet} />
+                    <Property propertySet={propertySet} vehicleData={vehicle.data} />
                   </Repeat>
                 </ProductPageMainSection>
 

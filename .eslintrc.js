@@ -21,7 +21,6 @@ module.exports = {
     'no-duplicate-imports': 'error',
     'no-empty': 'error',
     'no-eval': 'error',
-    'no-invalid-this': 'error',
     'no-irregular-whitespace': 'error',
     'no-multiple-empty-lines': 'error',
     'no-var': 'error',
