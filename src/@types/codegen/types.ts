@@ -58,13 +58,12 @@ export type ContactOptions = {
   avatar?: Maybe<Scalars['URL']>;
 };
 
-
 export enum DrivingDistance {
   Between0And1000 = 'BETWEEN0AND1000',
   Between1000And1500 = 'BETWEEN1000AND1500',
   Between1500And2000 = 'BETWEEN1500AND2000',
   Between2000And2500 = 'BETWEEN2000AND2500',
-  Over2500 = 'OVER2500'
+  Over2500 = 'OVER2500',
 }
 
 export type Ecommerce = {
@@ -74,7 +73,6 @@ export type Ecommerce = {
   withTradeIn?: Maybe<Scalars['Boolean']>;
   withHomeDelivery?: Maybe<Scalars['Boolean']>;
 };
-
 
 export type FinancialOption = {
   __typename?: 'FinancialOption';
@@ -114,7 +112,7 @@ export type FinancialOptionDetail = {
 export enum FinancialOptionInclusion {
   IncludesInsurance = 'INCLUDES_INSURANCE',
   IncludesService = 'INCLUDES_SERVICE',
-  IncludesWintertires = 'INCLUDES_WINTERTIRES'
+  IncludesWintertires = 'INCLUDES_WINTERTIRES',
 }
 
 export type HoursOpen = {
@@ -234,8 +232,6 @@ export type PackageOption = {
   title?: Maybe<Scalars['String']>;
 };
 
-
-
 export type Position = {
   __typename?: 'Position';
   latitude?: Maybe<Scalars['Float']>;
@@ -258,17 +254,14 @@ export type Query = {
   insurances: Array<Insurance>;
 };
 
-
 export type QueryVehicleArgs = {
   id: Scalars['ID'];
   branch?: Maybe<Scalars['ID']>;
 };
 
-
 export type QueryBranchArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryLoanArgs = {
   id: Scalars['ID'];
@@ -276,7 +269,6 @@ export type QueryLoanArgs = {
   downPayment: Scalars['Int'];
   residual: Scalars['Float'];
 };
-
 
 export type QueryInsurancesArgs = {
   id: Scalars['ID'];
@@ -297,8 +289,6 @@ export type Service = {
   markdown?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
-
-
 
 export type Vehicle = {
   __typename?: 'Vehicle';
@@ -344,13 +334,10 @@ export type VehicleData = {
   vin?: Maybe<Scalars['String']>;
 };
 
-
 export type VehicleDataPropertySetArgs = {
   properties?: Maybe<Array<Scalars['String']>>;
   category?: Maybe<Scalars['String']>;
 };
-
-
 
 export type VehicleFlags = {
   __typename?: 'VehicleFlags';

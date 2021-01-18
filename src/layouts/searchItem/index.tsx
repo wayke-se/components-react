@@ -199,7 +199,7 @@ const WaykeSearchItem = ({
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2 noMargin>Biluppgifter</H2>
+                    <H2 noMargin>Biluppgifter (OLD)</H2>
                   </Repeat>
                   <Repeat>
                     <ExtendContent actionTitle="Visa mer" onClick={onShowMoreSpecificationClick}>
@@ -210,7 +210,12 @@ const WaykeSearchItem = ({
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2 noMargin>Property</H2>
+                    <H2 noMargin>Biluppgifter</H2>
+                  </Repeat>
+                  <Repeat>
+                    <Content>
+                      <p>Information direkt från Transportstyrelsen och tillverkaren.</p>
+                    </Content>
                   </Repeat>
                   <Repeat>
                     <Property propertySet={propertySet} />
@@ -237,6 +242,11 @@ const WaykeSearchItem = ({
                   <ProductPageMainSection>
                     <Repeat>
                       <H2 noMargin>Utrustning</H2>
+                    </Repeat>
+                    <Repeat>
+                      <Content>
+                        <p>Uppgifter om bilen som handlaren kompletterat med.</p>
+                      </Content>
                     </Repeat>
                     <Repeat>
                       <ExtendContent actionTitle="Visa mer" onClick={onShowMoreOptionsClick}>

@@ -212,3 +212,15 @@ export const ButtonInlineLight = styled(ButtonReset).attrs(() => ({
     color: ${(props) => props.theme.color.textDarkLighten};
   }
 `;
+
+export const ButtonInlinePrimary = styled(ButtonReset).attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-text wayke__font--regular',
+}))<ButtonInlineProps>`
+  display: inline-flex;
+  vertical-align: baseline;
+  text-align: left;
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
