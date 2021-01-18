@@ -3,7 +3,6 @@ import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import Container from '../../components/Container/index';
 import UspList from '../../components/UspList/index';
 import { Repeat, RepeatSmall } from '../../components/Repeat/index';
-import DataGrid from '../../components/DataGrid/index';
 import PriceTable from '../../components/PriceTable/index';
 import LogoBox from '../../components/LogoBox/index';
 import Content from '../../components/Content/index';
@@ -26,7 +25,6 @@ import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
 import { PortalNamespace, PortalElement } from '../../components/Portal/index';
 import Modal from '../../components/Modal/index';
-import { getSpecificationList } from '../../utils/specification';
 import FinancialOptions from '../../components/FinancialOptions/index';
 import InsuranceOptions from '../../components/InsuranceOptions/index';
 import Ecom from '../../components/Ecom/index';
@@ -77,7 +75,6 @@ const WaykeSearchItem = ({
     [result?.vehicle?.data?.options]
   );
 
-  const onShowMoreSpecificationClick = useCallback(() => PubSub.publish('InformationClick'), []);
   const onShowMoreOptionsClick = useCallback(() => PubSub.publish('OptionsClick'), []);
 
   if (loading) {
@@ -106,7 +103,6 @@ const WaykeSearchItem = ({
     publishedAt,
   } = vehicle;
   const { fuelType, mileage, gearbox, manufactureYear, propertySet } = vehicle.data;
-  const specificationList = getSpecificationList(data);
 
   const uspList = [
     {
@@ -196,17 +192,6 @@ const WaykeSearchItem = ({
                 <ProductPageAsideSection mobileOrder={3}>
                   <Gallery media={media} placeholderImage={placeholderImage} />
                 </ProductPageAsideSection>
-
-                <ProductPageMainSection>
-                  <Repeat>
-                    <H2 noMargin>Biluppgifter (OLD)</H2>
-                  </Repeat>
-                  <Repeat>
-                    <ExtendContent actionTitle="Visa mer" onClick={onShowMoreSpecificationClick}>
-                      <DataGrid specificationList={specificationList} />
-                    </ExtendContent>
-                  </Repeat>
-                </ProductPageMainSection>
 
                 <ProductPageMainSection>
                   <Repeat>
