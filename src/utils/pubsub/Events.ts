@@ -32,10 +32,6 @@ export interface EventImagesClick extends EventBase<CallbackEmpty> {
   eventName: 'ImagesClick';
 }
 
-export interface EventInformationClick extends EventBase<CallbackEmpty> {
-  eventName: 'InformationClick';
-}
-
 export interface EventOptionsClick extends EventBase<CallbackEmpty> {
   eventName: 'OptionsClick';
 }
@@ -72,7 +68,6 @@ export type EventType =
   | EventEcomOnUser
   | EventEcomOnExit
   | EventImagesClick
-  | EventInformationClick
   | EventOptionsClick
   | EventPhonenumberVisible
   | EventPhonenumberCall

@@ -94,7 +94,6 @@ const WaykeSearchItem = ({
     media,
     description,
     price,
-    data,
     financialOptions,
     insuranceOptions,
     manufacturer,

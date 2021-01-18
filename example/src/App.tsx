@@ -37,12 +37,6 @@ WaykePubSub.subscribe({
 });
 
 WaykePubSub.subscribe({
-  eventName: 'InformationClick',
-  // eslint-disable-next-line
-  callback: () => console.log('subscribed InformationClick:'),
-});
-
-WaykePubSub.subscribe({
   eventName: 'OptionsClick',
   // eslint-disable-next-line
   callback: () => console.log('subscribed OptionsClick:'),

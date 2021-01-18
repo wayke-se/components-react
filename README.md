@@ -276,7 +276,6 @@ WaykePubSub.unsubscribe(event);
 | EcomOnUserEvent    | (userEvent: string, currentStep: string) => void |
 | EcomOnExit         | () => void                                       |
 | ImagesClick        | () => void                                       |
-| InformationClick   | () => void                                       |
 | OptionsClick       | () => void                                       |
 | PhonenumberVisible | () => void                                       |
 | PhonenumberCall    | () => void                                       |

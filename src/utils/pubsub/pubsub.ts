@@ -12,7 +12,6 @@ import {
   EventEcomOnUser,
   EventEcomOnExit,
   EventImagesClick,
-  EventInformationClick,
   EventOptionsClick,
   EventPhonenumberVisible,
   EventPhonenumberCall,
@@ -35,7 +34,6 @@ export type EventSubscriptions = {
   EcomOnUserEvent: EventEcomOnUser[];
   EcomOnExit: EventEcomOnExit[];
   ImagesClick: EventImagesClick[];
-  InformationClick: EventInformationClick[];
   OptionsClick: EventOptionsClick[];
   PhonenumberVisible: EventPhonenumberVisible[];
   PhonenumberCall: EventPhonenumberCall[];
@@ -58,7 +56,6 @@ class PubSub {
     EcomOnUserEvent: [],
     EcomOnExit: [],
     ImagesClick: [],
-    InformationClick: [],
     OptionsClick: [],
     PhonenumberVisible: [],
     PhonenumberCall: [],
@@ -136,7 +133,6 @@ class PubSub {
           case 'EcomOnInit':
           case 'EcomOnExit':
           case 'ImagesClick':
-          case 'InformationClick':
           case 'OptionsClick':
           case 'PhonenumberVisible':
           case 'PhonenumberCall':
