@@ -16,6 +16,8 @@ const WaykeComposite = ({
   disableResetScrollOnInit,
   placeholderImage,
   pathRoute,
+  modifyDocumentTitleItem,
+  modifyDocumentTitleSearch,
 }: WaykeCompositeProps) => {
   const hashId = useHashGuid();
   const { id: pathId } = usePath();
@@ -41,6 +43,7 @@ const WaykeComposite = ({
           disableResetScrollOnInit={disableResetScrollOnInit}
           placeholderImage={placeholderImage}
           pathRoute={pathRoute}
+          modifyDocumentTitleItem={modifyDocumentTitleItem}
         />
       ) : (
         <WaykeSearch
@@ -51,6 +54,7 @@ const WaykeComposite = ({
           placeholderImage={placeholderImage}
           pathRoute={pathRoute}
           removeFilterOptions={removeFilterOptions}
+          modifyDocumentTitleSearch={modifyDocumentTitleSearch}
         />
       )}
     </>

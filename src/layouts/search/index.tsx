@@ -21,6 +21,7 @@ export interface WaykeSearchProps {
   placeholderImage?: string;
   hashRoute?: boolean;
   pathRoute?: string;
+  modifyDocumentTitleSearch?: string;
   onClickSearchItem?: (id: string) => void;
 }
 
@@ -32,11 +33,15 @@ const WaykeSearch = ({
   removeSearchBar,
   placeholderImage,
   removeFilterOptions,
+  modifyDocumentTitleSearch,
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
 
   useEffect(() => {
+    if (modifyDocumentTitleSearch) {
+      document.title = modifyDocumentTitleSearch;
+    }
     onInitialize(
       typeof initialQueryParams === 'string'
         ? new URLSearchParams(initialQueryParams)

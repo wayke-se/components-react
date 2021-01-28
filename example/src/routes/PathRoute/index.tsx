@@ -11,6 +11,8 @@ const PathRoute = () => (
       // initialQueryParams,
       removeSearchBar: false,
       pathRoute: '/id/',
+      modifyDocumentTitleItem: true,
+      modifyDocumentTitleSearch: 'Wayke',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

@@ -11,6 +11,8 @@ const Home = () => (
       // initialQueryParams,
       removeSearchBar: false,
       removeFilterOptions: false,
+      modifyDocumentTitleItem: true,
+      modifyDocumentTitleSearch: 'Wayke',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

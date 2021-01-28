@@ -117,6 +117,7 @@ const App = ({}) => {
 | disableResetScrollOnInit | boolean  | false    |                      |
 | placeholderImage         | string   | false    |                      |
 | onClickSearchItem        | function | false    | (id: string) => void |
+| modifyDocumentTitleItem  | boolean  | false    |                      | 
 
 * Required
   * `id` - Guid that represents a vehicle.
@@ -126,18 +127,20 @@ const App = ({}) => {
   * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
   * `placeholderImage` - Provide custom placeholder image when image is missing.
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
+  * `modifyDocumentTitleItem` - Update document title with vehicle data
 
 ### WaykeSearch
-| Property             | Type                      | Values                    |
-|----------------------|---------------------------|---------------------------|
-| pathRoute            | string                    |                           |
-| hashRoute            | boolean                   |                           |
-| filterList           | SearchFilterTypes[]       |                           |
-| initialQueryParams   | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
-| removeSearchBar      | boolean                   |                           |
-| removeFilterOptions  | boolean                   |                           |
-| placeholderImage     | string                    |                           |
-| onClickSearchItem    | function                  | (id: string) => void      |
+| Property                  | Type                      | Values                    |
+|---------------------------|---------------------------|---------------------------|
+| pathRoute                 | string                    |                           |
+| hashRoute                 | boolean                   |                           |
+| filterList                | SearchFilterTypes[]       |                           |
+| initialQueryParams        | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| removeSearchBar           | boolean                   |                           |
+| removeFilterOptions       | boolean                   |                           |
+| placeholderImage          | string                    |                           |
+| onClickSearchItem         | function                  | (id: string) => void      |
+| modifyDocumentTitleSearch | string                    |                           |
 
 * Optional
   * `pathRoute` - If set to true, then if a item is clicked it will append /guid to the url.
@@ -148,6 +151,7 @@ const App = ({}) => {
   * `removeFilterOptions` - Removes filter options.
   * `placeholderImage` - Provide custom placeholder image when image is missing.
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
+  * `modifyDocumentTitleSearch` - Set custom document title
 
 ## Types
 

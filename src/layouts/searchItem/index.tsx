@@ -45,6 +45,7 @@ export interface WaykeSearchItemProps {
   pathRoute?: string;
   disableResetScrollOnInit?: boolean;
   placeholderImage?: string;
+  modifyDocumentTitleItem?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
@@ -54,6 +55,7 @@ const WaykeSearchItem = ({
   pathRoute,
   disableResetScrollOnInit,
   placeholderImage,
+  modifyDocumentTitleItem,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
   const [ecomModal, setEcomModal] = useState(false);
@@ -69,6 +71,14 @@ const WaykeSearchItem = ({
       window.scrollTo(0, 0);
     }
   }, []);
+
+  useEffect(() => {
+    if (result?.vehicle?.data && modifyDocumentTitleItem) {
+      const { vehicle } = result;
+      const { registrationNumber } = vehicle.data;
+      document.title = `${registrationNumber} | ${vehicle.title} | ${vehicle.shortDescription}`;
+    }
+  }, [result]);
 
   const options = useMemo(
     () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
