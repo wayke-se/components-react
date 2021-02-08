@@ -67,11 +67,21 @@ const ProductCard = ({
       <Image>
         <LazyLoad>
           {image ? (
-            <Picture>
-              <Source media="(min-width: 900px)" srcSet={`${image}?w=411&q=72`} />
-              <Source media="(min-width: 600px)" srcSet={`${image}?w=418&q=72`} />
-              <Img src={`${image}?w=567&q=72`} alt={title} />
-            </Picture>
+            <>
+              <Picture>
+                <Source
+                  type="image/webp"
+                  srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411x274&format=webp 411w`}
+                  sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                />
+                <Img
+                  srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
+                  sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                  src={`${image}?spec=411x274`}
+                  alt={title}
+                />
+              </Picture>
+            </>
           ) : (
             <Picture>
               <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />
