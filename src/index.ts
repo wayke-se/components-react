@@ -10,6 +10,7 @@ import WaykeThemeProvider from './providers/themeProvider';
 
 import WaykePubSub, { EventSubscriptions } from './utils/pubsub/pubsub';
 import { SearchFilterTypes, SearchFilterNameTypes } from './@types/filter';
+
 import {
   EventHashRouteChange,
   EventItemClicked,

@@ -1,8 +1,6 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react';
 import Slider from 'react-slick';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import 'slick-carousel/slick/slick-theme.css';
-import 'slick-carousel/slick/slick.css';
 
 import {
   Wrapper,
