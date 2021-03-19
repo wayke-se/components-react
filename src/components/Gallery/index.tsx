@@ -24,7 +24,9 @@ import { ButtonSecondary, ButtonContent } from '../Button/index';
 import Lightbox from '../Lightbox/index';
 import EmbededVideo from '../Video/EmbededVideo';
 import QuickNavEmbeded from '../Video/QuickNavEmbeded';
+import QuickNavVideo from '../Video/QuickNavVideo';
 import Sphere from '../Sphere/Sphere';
+import GalleryVideo from '../Video/GalleryVideo';
 import { notEmpty } from '../../utils/formats';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import { Media } from '../../@types/codegen/types';
@@ -152,6 +154,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                       />
                     )}
                     {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
+                    {m.type === 'video' && <GalleryVideo src={m.files[0].url} index={i + 1} />}
                     {m.type === 'sphere' && (
                       <Sphere
                         visible={i === index}
@@ -204,6 +207,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                       {m.type === 'sphere' && (
                         <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
                       )}
+                      {m.type === 'video' && <QuickNavVideo src={src} index={i} />}
                     </QuickNavBtn>
                   </QuickNavItem>
                 );
