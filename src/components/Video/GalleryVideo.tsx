@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import MediaButton from '../Gallery/MediaButton';
 import Modal from '../Modal/index';
 import CustomPlayer from './CustomPlayer';
@@ -34,4 +34,4 @@ const GalleryVideo = ({ src, index }: GalleryVideo) => {
   );
 };
 
-export default GalleryVideo;
+export default memo(GalleryVideo);
