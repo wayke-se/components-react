@@ -6,7 +6,7 @@ import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
 import SphereLightbox from '../Sphere/SphereLightbox';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
 import { Media } from '../../@types/codegen/types';
-import  CustomPlayer from '../Video/CustomPlayer';
+import CustomPlayer from '../Video/CustomPlayer';
 
 interface LightboxProps {
   index: number;
