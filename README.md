@@ -2,6 +2,10 @@
 
 > This repository contains components for search and items to use on external websites.
 
+## Notes
+
+* Starting from version `2.0.0` and above will require import of `@wayke.se/components-react/assets/default.css` in order to apply basic styling to the gallery.
+
 ## Usage
 
 Install
@@ -17,6 +21,7 @@ npm install react react-dom styled-components
 ```javascript
 import React from 'react';
 import WaykeComposite from '@wayke-se/components-react'
+import '@wayke.se/components-react/assets/default.css';
 
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
@@ -43,6 +48,7 @@ served for `/your/path/to/this/component` and `/your/path/to/this/component/0000
 ```javascript
 import React from 'react';
 import { WaykeCompositePath } from '@wayke-se/components-react'
+import '@wayke.se/components-react/assets/default.css';
 
 const App = () => (
   <WaykeCompositePath
@@ -83,6 +89,7 @@ It's recomended to place WaykeProvider close to app-root in order to keep the ca
 ```javascript
 import React, { useCallback } from 'react';
 import { WaykeProvider, WaykeSearchItem } from '@wayke-se/components-react'
+import '@wayke.se/components-react/assets/default.css';
 
 const App = ({}) => {
   const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';

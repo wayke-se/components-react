@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/style/theme.css';
 import './assets/style/ecom.css';
+import '../../assets/default.css';
 
 import App from './App';
 
