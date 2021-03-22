@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+type WrapperProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> & {
+  ratio?: string;
+};
+
+export const Wrapper = styled.div<WrapperProps>`
   position: relative;
   width: 100%;
   height: 0;
