@@ -26,7 +26,7 @@ interface ModalProps {
 const Modal = ({ id, title, onClose, children }: ModalProps) => {
   return (
     <Portal id={id || PortalNamespace.DefaultPortal}>
-      <Wrapper onClick={(e => e.stopPropagation())}>
+      <Wrapper onClick={(e) => e.stopPropagation()}>
         <UiBlock onClick={onClose} title="Stäng modal" />
         <Dialog>
           <Content>

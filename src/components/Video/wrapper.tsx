@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: ${(props): string => props.ratio ? props.ratio : '56.25%'};
+  padding-bottom: ${(props): string => (props.ratio ? props.ratio : '56.25%')};
 `;
 
 export const Iframe = styled.iframe.attrs(() => ({
