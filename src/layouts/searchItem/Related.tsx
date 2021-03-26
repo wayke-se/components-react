@@ -102,7 +102,11 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
                         },
                       ]}
                       price={`${numberSeparator(document.price)} kr`}
-                      oldPrice={`${numberSeparator(document.price)} kr`}
+                      oldPrice={
+                        document.oldPrice !== undefined && document.price < document.oldPrice
+                          ? `${numberSeparator(document.oldPrice)} kr`
+                          : undefined
+                      }
                       pathRoute={pathRoute}
                     />
                   </OverflowGridItem>
