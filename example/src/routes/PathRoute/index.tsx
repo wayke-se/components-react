@@ -13,6 +13,7 @@ const PathRoute = () => (
       pathRoute: '/id/',
       modifyDocumentTitleItem: true,
       modifyDocumentTitleSearch: 'Wayke',
+      initialQueryParams: 'modelSeries=A5&modelSeries=A3',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

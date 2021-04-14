@@ -65,8 +65,14 @@ const SearchProvider = ({
   const popStateEvent = (event: PopStateEvent) => {
     const { currentTarget } = event;
     if (currentTarget) {
+      const nextSearchParams = new URLSearchParams((currentTarget as Window).location.search);
+
+      if (!nextSearchParams.has('sort')) {
+        nextSearchParams.set('sort', 'published-desc');
+      }
+
       setQueryFilter({
-        searchParams: new URLSearchParams((currentTarget as Window).location.search),
+        searchParams: nextSearchParams,
       });
     }
   };
@@ -184,13 +190,17 @@ const SearchProvider = ({
 
         if (useQueryParamsFromUrl && _initialQueryParams) {
           _initialQueryParams.forEach((value, key) => {
-            if (!initialQueryParams?.has(key)) {
+            if (!initialQueryParams?.getAll(key)?.some((v) => v === value)) {
               initialQueryParams?.append(key, value);
             }
           });
         }
 
         if (initialQueryParams) {
+          const nextSearchParams = new URLSearchParams(initialQueryParams);
+          nextSearchParams.delete('hits');
+          nextSearchParams.delete('offset');
+
           if (!initialQueryParams.has('hits')) {
             initialQueryParams.set('hits', '30');
           }
@@ -198,9 +208,12 @@ const SearchProvider = ({
             initialQueryParams.set('sort', 'published-desc');
           }
 
+          const nextSearch = nextSearchParams.toString() ? `?${nextSearchParams}` : '';
+
           setQueryFilter({
             searchParams: initialQueryParams,
           });
+          replaceState(`${window.location.pathname}${nextSearch}`);
         }
         setInitialize(true);
       }
