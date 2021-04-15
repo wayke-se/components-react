@@ -7,7 +7,6 @@ import Modal from '../Modal/index';
 import VideoPlayer from './EmbeddedVideoLightbox';
 import { onImageLoad, onImageError } from './utils';
 import CustomPlayer from '../Video/CustomPlayer';
-import ColorSelect from '../ColorSelect';
 
 interface GalleryEmbed {
   src: string;
@@ -52,7 +51,7 @@ const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
           </Modal>
         )}
       </>
-    )
+    );
   }
 
   if (customVideo)
@@ -66,7 +65,7 @@ const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
           </Modal>
         )}
       </>
-    )
+    );
   return null;
 };
 
