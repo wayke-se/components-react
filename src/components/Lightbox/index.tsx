@@ -6,7 +6,6 @@ import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
 import SphereLightbox from '../Sphere/SphereLightbox';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
 import { Media } from '../../@types/codegen/types';
-import CustomPlayer from '../Video/CustomPlayer';
 
 interface LightboxProps {
   index: number;
@@ -19,7 +18,7 @@ const Lightbox = ({ index, media, onClose }: LightboxProps) => {
     if (ref) {
       setTimeout(() => {
         ref.scrollIntoView();
-      }, 100);
+      }, 300);
     }
   };
 
@@ -40,7 +39,6 @@ const Lightbox = ({ index, media, onClose }: LightboxProps) => {
           {m.type === 'threesixty' && <ThreeSixtyLightbox urls={m.files.map((x) => x.url)} />}
           {m.type === 'sphere' && <SphereLightbox url={m.files[0].url} />}
           {m.type === 'embedded' && <EmbeddedVideoLightbox url={m.files[0].url} />}
-          {m.type === 'video' && <CustomPlayer controls url={m.files[0].url} />}
         </Item>
       ))}
       <CloseBtn onClick={onClose} title="Stäng">

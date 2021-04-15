@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import useThumbnail from './useThumbnail';
 import { QuickNavImg } from '../Gallery/wrapper';
 import { onImageLoad, onImageError } from './utils';
+import CustomPlayer from '../Video/CustomPlayer';
 
 interface QuickNavEmbededProps {
   src?: string;
@@ -21,8 +22,11 @@ const QuickNavEmbeded = ({ src, index }: QuickNavEmbededProps) => {
     [thumbnail]
   );
 
+  const customVideo = src?.toLowerCase().endsWith('.mp4');
+
   return thumbnail?.length ? (
-    <QuickNavImg onLoad={onLoad} src={thumbnail[0]} onError={onError} alt={`Bild ${index + 1}`} />
+    customVideo ? <CustomPlayer key={index} url={src} ratio="66.66%" />
+      : <QuickNavImg onLoad={onLoad} src={thumbnail[0]} onError={onError} alt={`Bild ${index + 1}`} />
   ) : null;
 };
 

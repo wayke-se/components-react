@@ -5,12 +5,13 @@ type WrapperProps = React.DetailedHTMLProps<
   HTMLDivElement
 > & {
   ratio?: string;
+  isPreview?: boolean;
 };
 
 export const Wrapper = styled.div<WrapperProps>`
   position: relative;
   width: 100%;
-  height: 0;
+  height: ${(props) => (props.isPreview ? '100%' : 0)};
   padding-bottom: ${(props): string => (props.ratio ? props.ratio : '56.25%')};
 `;
 
