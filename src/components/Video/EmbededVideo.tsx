@@ -7,6 +7,7 @@ import Modal from '../Modal/index';
 import VideoPlayer from './EmbeddedVideoLightbox';
 import { onImageLoad, onImageError } from './utils';
 import CustomPlayer from '../Video/CustomPlayer';
+import ColorSelect from '../ColorSelect';
 
 interface GalleryEmbed {
   src: string;
@@ -40,27 +41,32 @@ const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
 
   const customVideo = src.toLowerCase().endsWith('.mp4');
 
-  if (thumbnail?.length) {
-    if (modal) return (
-      <Modal title="Video" onClose={onCloseModal}>
-        <VideoPlayer url={modal} />
-      </Modal>
-    );
-
-    if (customVideo) return (
-      <>
-        <CustomPlayer ratio="66.66%" isPreview controls={false} url={src} />
-        <MediaButton text="Spela video" onClick={onClick} />
-      </>
-    );
-
+  if (thumbnail?.length && !customVideo) {
     return (
       <>
         <ImageFull onLoad={onLoad} src={thumbnail[0]} onError={onError} alt={`Bild ${index + 1}`} />
         <MediaButton text="Spela video" onClick={onClick} />
+        {modal && (
+          <Modal title="Video" onClose={onCloseModal}>
+            <VideoPlayer url={modal} />
+          </Modal>
+        )}
       </>
-    );
+    )
   }
+
+  if (customVideo)
+    return (
+      <>
+        <CustomPlayer ratio="66.66%" isPreview controls={false} url={src} />
+        <MediaButton text="Spela video" onClick={onClick} />
+        {modal && (
+          <Modal title="Video" onClose={onCloseModal}>
+            <VideoPlayer url={modal} />
+          </Modal>
+        )}
+      </>
+    )
   return null;
 };
 
