@@ -8,14 +8,15 @@ type PropsType = {
   modal?: boolean;
   controls?: boolean;
   ratio?: string;
+  isPreview?: boolean;
 };
 
-const CustomPlayer = ({ url, controls, modal, ratio = '56.25%' }: PropsType) => {
+const CustomPlayer = ({ url, controls, modal, ratio = '56.25%', isPreview }: PropsType) => {
   const ref = useRef<HTMLVideoElement | null>(null);
   const isVisible = useHasBeenVisible(ref);
 
   return (
-    <Wrapper ratio={ratio}>
+    <Wrapper ratio={ratio} isPreview={isPreview}>
       <Video
         key={url}
         ref={ref}

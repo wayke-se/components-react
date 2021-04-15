@@ -2,6 +2,7 @@ import React from 'react';
 
 import YouTubePlayer from './YoutubePlayer';
 import VimeoPlayer from './VimeoPlayer';
+import CustomPlayer from '../Video/CustomPlayer';
 
 const ytNames = ['youtube.com', 'youtu.be'];
 const isYouTubeVideo = (url: string): boolean =>
@@ -14,16 +15,17 @@ const isVimeoVideo = (url: string): boolean =>
 type PropsType = {
   url: string;
   autoplay?: boolean;
+  controls?: boolean;
 };
 
-const VideoPlayer = ({ url, autoplay = false }: PropsType) => {
+const VideoPlayer = ({ url, autoplay = false, controls = true }: PropsType) => {
   if (!url) return null;
 
   if (isYouTubeVideo(url)) return <YouTubePlayer url={url} autoplay={autoplay} />;
 
   if (isVimeoVideo(url)) return <VimeoPlayer url={url} autoplay={autoplay} />;
 
-  return null;
+  return <CustomPlayer ratio="56.25%" controls={controls} url={url} />
 };
 
 export default VideoPlayer;
