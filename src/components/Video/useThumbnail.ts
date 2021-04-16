@@ -3,6 +3,8 @@ import { getVimeoId, getYoutubeThumbnail } from './utils';
 import useVimeoThumbnail from '../../hooks/useVimeoThumbnail';
 
 const useThumbnail = (url?: string | null, small?: boolean) => {
+  if(url?.toLowerCase().endsWith('.mp4')) return;
+  
   const [thumbnail, setThumbnail] = useState<string[]>();
   const vimeoId = url ? getVimeoId(url) : undefined;
   const vimeoThumbnail = useVimeoThumbnail(vimeoId, small);
