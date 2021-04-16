@@ -25,7 +25,7 @@ const VideoPlayer = ({ url, autoplay = false, controls = true }: PropsType) => {
 
   if (isVimeoVideo(url)) return <VimeoPlayer url={url} autoplay={autoplay} />;
 
-  return <CustomPlayer ratio="56.25%" controls={controls} url={url} />
+  return <CustomPlayer ratio="56.25%" controls={controls} url={url} />;
 };
 
 export default VideoPlayer;

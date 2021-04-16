@@ -24,10 +24,12 @@ const QuickNavEmbeded = ({ src, index }: QuickNavEmbededProps) => {
 
   const customVideo = src?.toLowerCase().endsWith('.mp4');
 
-  return thumbnail?.length ? (
-    customVideo ? <CustomPlayer key={index} url={src} ratio="66.66%" />
-      : <QuickNavImg onLoad={onLoad} src={thumbnail[0]} onError={onError} alt={`Bild ${index + 1}`} />
-  ) : null;
+  if (thumbnail?.length && !customVideo)
+    return (
+      <QuickNavImg onLoad={onLoad} src={thumbnail[0]} onError={onError} alt={`Bild ${index + 1}`} />
+    );
+  if (customVideo) return <CustomPlayer key={index} url={src} ratio="66.66%" />;
+  return null;
 };
 
 export default QuickNavEmbeded;
