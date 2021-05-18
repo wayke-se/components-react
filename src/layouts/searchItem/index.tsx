@@ -239,7 +239,7 @@ const WaykeSearchItem = ({
                     </Repeat>
                     <Repeat>
                       <Content>
-                        <p>Uppgifter om bilen som handlaren kompletterat med.</p>
+                        <p>Kompletterande uppgifter om bilen.</p>
                       </Content>
                     </Repeat>
                     <Repeat>
