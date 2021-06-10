@@ -71,16 +71,18 @@ const Result = ({ children }: Props) => {
         <FooterProgress>
           <ProgressBar unit="bilar" valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
         </FooterProgress>
-        <FooterAction>
-          <ButtonSecondary
-            disabled={loading || numberOfDocuments === numberOfHits}
-            onClick={onLoadMore}
-            title="Visa fler"
-            aria-label="Visa fler"
-          >
-            <ButtonContent>Visa fler</ButtonContent>
-          </ButtonSecondary>
-        </FooterAction>
+        {numberOfDocuments !== numberOfHits && (
+          <FooterAction>
+            <ButtonSecondary
+              disabled={loading}
+              onClick={onLoadMore}
+              title="Visa fler"
+              aria-label="Visa fler"
+            >
+              <ButtonContent>Visa fler</ButtonContent>
+            </ButtonSecondary>
+          </FooterAction>
+        )}
       </Footer>
     </Wrapper>
   );
