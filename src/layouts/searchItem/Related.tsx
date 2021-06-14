@@ -89,9 +89,6 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
                           title: document.modelYear,
                         },
                         {
-                          title: document.modelSeries,
-                        },
-                        {
                           title: `${numberSeparator(document.mileage)} mil`,
                         },
                         {
