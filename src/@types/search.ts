@@ -81,6 +81,7 @@ export interface Document {
   salesName: string;
   shortDescription: string;
   title: string;
+  leasingPrice?: number;
 }
 
 export interface FacetFilter {
