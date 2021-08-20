@@ -17,6 +17,8 @@ import {
   Price,
   CurrentPrice,
   OldPrice,
+  PriceCell,
+  Label,
 } from './wrapper';
 import UspList, { ItemProps } from '../UspList/index';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
@@ -32,6 +34,7 @@ interface Props {
   description?: string;
   uspList?: ItemProps[];
   price: string;
+  leasingPrice?: string;
   oldPrice?: string;
   onClick?: (id: string) => void;
 }
@@ -47,6 +50,7 @@ const ProductCard = ({
   uspList,
   price,
   oldPrice,
+  leasingPrice,
   onClick,
 }: Props) => {
   const { pushState } = usePath();
@@ -109,8 +113,16 @@ const ProductCard = ({
         </ContentBody>
         <ContentFooter>
           <Price>
-            <CurrentPrice>{price}</CurrentPrice>
-            {oldPrice && <OldPrice>{oldPrice}</OldPrice>}
+            <PriceCell>
+              {oldPrice ? <OldPrice>{oldPrice}</OldPrice> : <Label>Pris</Label>}
+              <CurrentPrice>{price}</CurrentPrice>
+            </PriceCell>
+            {leasingPrice && (
+              <PriceCell>
+                <Label>Leasingpris</Label>
+                <CurrentPrice>{leasingPrice}</CurrentPrice>
+              </PriceCell>
+            )}
           </Price>
         </ContentFooter>
       </Content>

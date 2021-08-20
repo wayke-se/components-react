@@ -120,6 +120,7 @@ export const Price = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 export const CurrentPrice = styled.div.attrs(() => ({
@@ -129,8 +130,18 @@ export const CurrentPrice = styled.div.attrs(() => ({
   margin-right: ${size(1)};
 `;
 
+export const PriceCell = styled.div`
+  flex: 1 1 auto;
+  padding-right: ${size(1)};
+`;
+
 export const OldPrice = styled.div`
   text-decoration: line-through;
   color: ${(props) => props.theme.color.textDarkLighten};
+  font-size: 0.875rem;
+`;
+
+export const Label = styled.label`
+  color: ${(props) => props.theme.color.disabledText};
   font-size: 0.875rem;
 `;
