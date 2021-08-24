@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { WaykeProvider, WaykeSearchItem } from '../../../../src/index';
+import { WaykeItemProvider, WaykeSearchItem } from '../../../../src/index';
 import { RouteComponentProps } from 'react-router-dom';
 
 type SearchItemProps = RouteComponentProps<{ id?: string }>;
@@ -11,7 +11,7 @@ const SearchItem = ({ match }: SearchItemProps) => {
     return <p>No id</p>;
   }
   return (
-    <WaykeProvider
+    <WaykeItemProvider
       graphQlUrl={process.env.WAYKE_GRAPH_QL_URL as string}
       url={process.env.WAYKE_SEARCH_URL as string}
       urlMlt={process.env.WAYKE_SEARCH_MLT_URL as string}
@@ -23,7 +23,7 @@ const SearchItem = ({ match }: SearchItemProps) => {
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
     >
       <WaykeSearchItem id={id} />
-    </WaykeProvider>
+    </WaykeItemProvider>
   );
 };
 

@@ -84,11 +84,11 @@ const App = () => {
 
 ### I only want to use the Search Item component
 
-It's recomended to place WaykeProvider close to app-root in order to keep the cache
+It's recomended to place WaykeItemProvider close to app-root in order to keep the cache
 
 ```javascript
 import React, { useCallback } from 'react';
-import { WaykeProvider, WaykeSearchItem } from '@wayke-se/components-react'
+import { WaykeItemProvider, WaykeSearchItem } from '@wayke-se/components-react'
 import '@wayke.se/components-react/assets/default.css';
 
 const App = ({}) => {
@@ -100,9 +100,9 @@ const App = ({}) => {
   }, []);
 
   return (
-    <WaykeProvider {...ProviderSettings}>
+    <WaykeItemProvider {...ProviderSettings}>
       <WaykeSearchItem id={id} onClickSearchItem={onClickSearchItem} />
-    </WaykeProvider>
+    </WaykeItemProvider>
   );
 };
 ```
@@ -206,6 +206,27 @@ WaykeSearchItem & WaykeSearch combined without `id`
   * `bankIdThumbprint`: Custom bank id certificate thumbprint .
 
 > For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
+
+### WaykeItemProviderSettings
+| Property              | Type         | Required |
+|-----------------------|--------------|----------|
+| url                   | string       | true     |
+| urlMlt                | string       | true     |
+| graphQlUrl            | string       | true     |
+| apiKey                | string       | false    |
+| googleMapsApiKey      | string       | false    |
+| googleMapsMarker      | string       | false    |
+| ecomSettings          | EcomSettings | false    |
+
+* Required
+  * `url` - Url to Wayke ext-api.
+  * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
+  * `graphQlUrl` - Url to the GraphQl endpoint.
+* Optional
+  * `apiKey` - To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
+  * `googleMapsApiKey` - Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
+  * `googleMapsMarker` - Provide a custom marker, url.
+  * `ecomSettings` - Allow the use of ecom.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
