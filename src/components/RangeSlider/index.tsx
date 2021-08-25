@@ -33,6 +33,7 @@ interface RangeSliderProps {
   steps: number[];
   unit?: string;
   formatValues?: boolean;
+  maxPrefix?: string;
   onChange: (values: readonly number[]) => void;
 }
 
@@ -43,12 +44,13 @@ const RangeSlider = ({
   steps,
   unit,
   formatValues,
+  maxPrefix,
   onChange,
 }: RangeSliderProps) => {
   const [current, setCurrent] = useState<number[]>(values);
   const onUpdate = useCallback(
     (nextValues: readonly number[]) => {
-      if (!isNaN(nextValues[0]) && isNaN(nextValues[1])) {
+      if (!isNaN(nextValues[0]) && !isNaN(nextValues[1])) {
         setCurrent(nextValues.slice());
       }
     },
@@ -60,6 +62,7 @@ const RangeSlider = ({
   const currentMin = formatValues ? numberSeparator(current[0]) : current[0];
   const currentMax = formatValues ? numberSeparator(current[1]) : current[1];
   const equal = domain[0] === domain[1];
+  const _maxPrefix = maxPrefix && domain[1] === current[1] ? maxPrefix : undefined;
 
   return (
     <>
@@ -112,7 +115,9 @@ const RangeSlider = ({
       )}
       <RangeSpan>
         <RangeSpanItem>{`${currentMin}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
-        <RangeSpanItem>{`${currentMax}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
+        <RangeSpanItem>{`${currentMax}${_maxPrefix ? _maxPrefix : ''}${
+          unit ? ` ${unit}` : ''
+        }`}</RangeSpanItem>
       </RangeSpan>
     </>
   );

@@ -26,6 +26,8 @@ const getInitialValues = (domain: number[], facet: Facet, searchParams: URLSearc
 const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
   const { loading, queryFilter, initialFacets, onFilterUpdate } = useSearch();
   const initialFacet = initialFacets?.find((x) => x.id === facet.id);
+  const maxPrefix =
+    initialFacet?.filters[initialFacet?.filters.length - 1].displayName.includes('+');
 
   const initialAllValues = initialFacet?.filters.map((f) =>
     parseInt(f.displayName.replace('+', ''), 10)
@@ -65,6 +67,7 @@ const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
       loading={loading}
       domain={domain}
       values={values}
+      maxPrefix={maxPrefix ? '+' : undefined}
       steps={initialAllValues}
       unit={unit}
       onChange={onChange}
