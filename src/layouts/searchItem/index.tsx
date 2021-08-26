@@ -109,11 +109,11 @@ const WaykeSearchItem = ({
     packageOptions,
     publishedAt,
   } = vehicle;
-  const { fuelType, mileage, gearbox, manufactureYear, propertySet } = vehicle.data;
+  const { fuelType, mileage, gearbox, modelYear, propertySet } = vehicle.data;
 
   const uspList = [
     {
-      title: manufactureYear,
+      title: modelYear,
     },
     {
       title: `${numberSeparator(mileage)} mil`,
