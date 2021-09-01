@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.20",
-    "@wayke-se/ecom-react": "^3.5.1",
+    "@wayke-se/ecom-react": "^3.5.2",
     "date-fns": "^2.22.1",
     "graphql": "^15.5.0",
     "libphonenumber-js": "^1.9.19",
