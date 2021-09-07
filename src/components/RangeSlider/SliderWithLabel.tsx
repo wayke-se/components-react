@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { numberSeparator } from '../../utils/formats';
-import RangeSliderLabel from '../RangeSliderLabel';
-import { RepeatTiny } from '../Repeat';
+import RangeSliderLabel from '../RangeSliderLabel/index';
+import { RepeatTiny } from '../Repeat/index';
 import RangeSliderSimple from './RangeSliderSimple';
 
 interface SliderWithLabelProps {
