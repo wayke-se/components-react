@@ -14,6 +14,7 @@ interface RangeSliderProps {
   unit?: string;
   formatValues?: boolean;
   onChange: (values: readonly number[]) => void;
+  onUpdate?: (values: readonly number[]) => void;
 }
 
 const RangeSliderSimple = ({
@@ -24,6 +25,7 @@ const RangeSliderSimple = ({
   unit,
   formatValues,
   onChange,
+  onUpdate,
 }: RangeSliderProps) => {
   const first = steps[0];
   const second = steps[1];
@@ -45,6 +47,7 @@ const RangeSliderSimple = ({
           step={step}
           domain={domain}
           onChange={onChange}
+          onUpdate={onUpdate}
           values={values}
           rootStyle={{ position: 'relative' }}
         >

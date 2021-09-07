@@ -4,7 +4,7 @@ import { Wrapper, Label, Value } from './wrapper';
 
 interface Props {
   label: string;
-  value?: string;
+  value?: React.ReactNode;
   highlight?: boolean;
 }
 

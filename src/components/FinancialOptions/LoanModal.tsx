@@ -6,14 +6,13 @@ import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content/index';
 import LogoBox from '../LogoBox/index';
 import { Repeat, RepeatSmall, RepeatTiny } from '../Repeat/index';
-import RangeSliderSimple from '../RangeSlider/RangeSliderSimple';
-import RangeSliderLabel from '../RangeSliderLabel/index';
 import { numberSeparator } from '../../utils/formats';
 import { ButtonClear, ButtonContent } from '../Button/index';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/index';
 import DataList from '../DataList/index';
 import { FinancialOption, Query } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
+import SliderWithLabel from '../RangeSlider/SliderWithLabel';
 
 const stepGenerator = (
   step: number,
@@ -21,7 +20,9 @@ const stepGenerator = (
   steps: number[] = [],
   current?: number
 ): number[] => {
-  if (current !== undefined && current >= max) {
+  if (step === 0 && current === undefined) return steps;
+
+  if (current !== undefined && current >= max && step !== 0) {
     return steps;
   }
 
@@ -57,6 +58,11 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   useEffect(() => {
     if (data) {
       setTmp(data);
+      setVariables({
+        duration: data?.loan?.duration?.current || 0,
+        downPayment: data?.loan?.downPayment?.current || 0,
+        residual: data?.loan?.residual?.current || 0,
+      });
     }
   }, [data]);
 
@@ -88,7 +94,19 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
     [variables]
   );
 
-  const residualText = ((loan?.residual?.current || 0) * 100).toFixed(2);
+  const residualCurrent = (loan?.residual?.current || 0) * 100 || 0;
+  const residualMin = (loan?.residual?.min || 0) * 100 || 0;
+  const residualMax = (loan?.residual?.max || 0) * 100 || 0;
+  const residualStep = (loan?.residual?.step || 0) * 100 || 0;
+  const residualSteps = stepGenerator(residualStep, residualMax);
+  const onResidualChange = useCallback(
+    (values: readonly number[]) => {
+      PubSub.publish('FinanceInterest');
+      setVariables({ ...variables, residual: values[0] / 100 });
+    },
+    [variables]
+  );
+
   const interestText = ((loan?.interest || 0) * 100).toFixed(2);
   const effectiveInterestText = ((loan?.effectiveInterest || 0) * 100).toFixed(2);
 
@@ -112,60 +130,51 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
       </Repeat>
       <Repeat>
         <RepeatSmall>
-          <RepeatTiny>
-            <RangeSliderLabel
-              label="Kontantinsatts"
-              value={`${numberSeparator(downPaymentCurrent)} kr`}
-            />
-          </RepeatTiny>
-          <RepeatTiny>
-            <RangeSliderSimple
-              loading={loading}
-              values={[downPaymentCurrent]}
-              domain={[downPaymentMin, downPaymentMax]}
-              steps={downPaymentSteps}
-              onChange={onDownPaymentChange}
-              unit="kr"
-              formatValues
-            />
-          </RepeatTiny>
+          <SliderWithLabel
+            label="Kontantinsatts"
+            values={[downPaymentCurrent]}
+            domain={[downPaymentMin, downPaymentMax]}
+            steps={downPaymentSteps}
+            unit="kr"
+            formatValues
+            loading={loading}
+            onChange={onDownPaymentChange}
+          />
         </RepeatSmall>
         <RepeatSmall>
-          <RepeatTiny>
-            <RangeSliderLabel label="Avbetalning" value={`${durationCurrent} mån`} />
-          </RepeatTiny>
-          <RepeatTiny>
-            <RangeSliderSimple
+          <SliderWithLabel
+            label="Avbetalning"
+            values={[durationCurrent]}
+            domain={[durationMin, durationMax]}
+            steps={durationSteps}
+            unit="mån"
+            loading={loading}
+            onChange={onDurationChange}
+          />
+        </RepeatSmall>
+        {residual !== undefined && residualMax !== 0 && (
+          <RepeatSmall>
+            <SliderWithLabel
+              label="Restskuld"
+              values={[residualCurrent]}
+              domain={[residualMin, residualMax]}
+              steps={residualSteps}
+              unit="%"
               loading={loading}
-              values={[durationCurrent]}
-              domain={[durationMin, durationMax]}
-              steps={durationSteps}
-              onChange={onDurationChange}
-              unit="mån"
+              onChange={onResidualChange}
             />
+          </RepeatSmall>
+        )}
+        <RepeatSmall>
+          <RepeatTiny>
+            <Content small>
+              <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %)${
+                loan?.mileage !== null ? `och en årlig körsträcka om ${loan?.mileage} mil.` : ''
+              }`}</p>
+            </Content>
           </RepeatTiny>
         </RepeatSmall>
-        {residual !== undefined && (
-          <>
-            <RepeatSmall>
-              <RangeSliderLabel label="Restskuld" value={`${residualText} %`} />
-            </RepeatSmall>
-            <RepeatSmall>
-              <RepeatTiny>
-                <RangeSliderLabel
-                  label="Din kostnad"
-                  value={`${numberSeparator(loan?.monthlyCost || 0)} kr/mån*`}
-                  highlight
-                />
-              </RepeatTiny>
-              <RepeatTiny>
-                <Content small>
-                  <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %) och en årlig körsträcka om ${loan?.mileage} mil.`}</p>
-                </Content>
-              </RepeatTiny>
-            </RepeatSmall>
-          </>
-        )}
+
         <RepeatSmall>
           <ButtonClear
             onClick={onToggleExtend}
