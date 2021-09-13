@@ -76,27 +76,28 @@ const Filter = ({ filterList }: FilterProps) => {
       <List>
         {filteredFacets.map((f) => {
           const selected = isSelected(f, queryFilter.searchParams);
-          return (
-            <Item key={f.id}>
-              <Action
-                onClick={() => onSelectFacet(f)}
-                title={f.displayName}
-                aria-label={f.displayName}
-                className={
-                  selected > 0
-                    ? 'wayke__theme wayke__color--primary-bg wayke__font--bold'
-                    : 'wayke__theme wayke__font--regular'
-                }
-              >
-                <Label>{f.displayName}</Label>
-                {selected > 0 && (
-                  <Indicator>
-                    <IndicatorValue>{selected}</IndicatorValue>
-                  </Indicator>
-                )}
-              </Action>
-            </Item>
-          );
+          if (f.filters.length)
+            return (
+              <Item key={f.id}>
+                <Action
+                  onClick={() => onSelectFacet(f)}
+                  title={f.displayName}
+                  aria-label={f.displayName}
+                  className={
+                    selected > 0
+                      ? 'wayke__theme wayke__color--primary-bg wayke__font--bold'
+                      : 'wayke__theme wayke__font--regular'
+                  }
+                >
+                  <Label>{f.displayName}</Label>
+                  {selected > 0 && (
+                    <Indicator>
+                      <IndicatorValue>{selected}</IndicatorValue>
+                    </Indicator>
+                  )}
+                </Action>
+              </Item>
+            );
         })}
       </List>
     </>
