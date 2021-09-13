@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Slider, Rail, Handles, Tracks } from 'react-compound-slider';
 
 import {
@@ -63,6 +63,12 @@ const RangeSlider = ({
   const currentMax = formatValues ? numberSeparator(current[1]) : current[1];
   const equal = domain[0] === domain[1];
   const _maxPrefix = maxPrefix && domain[1] === current[1] ? maxPrefix : undefined;
+
+  useEffect(() => {
+    if (values[0] !== current[0] || values[1] !== current[1]) {
+      setCurrent(values);
+    }
+  }, [values]);
 
   return (
     <>
