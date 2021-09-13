@@ -74,9 +74,10 @@ const Filter = ({ filterList }: FilterProps) => {
         />
       )}
       <List>
-        {filteredFacets.map((f) => {
-          const selected = isSelected(f, queryFilter.searchParams);
-          if (f.filters.length)
+        {filteredFacets
+          .filter((x) => x.filters.length)
+          .map((f) => {
+            const selected = isSelected(f, queryFilter.searchParams);
             return (
               <Item key={f.id}>
                 <Action
@@ -98,7 +99,7 @@ const Filter = ({ filterList }: FilterProps) => {
                 </Action>
               </Item>
             );
-        })}
+          })}
       </List>
     </>
   );

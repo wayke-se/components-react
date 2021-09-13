@@ -58,20 +58,19 @@ const FilterPanel = ({
       }
     >
       <Accordion>
-        {filteredFacets.map((f) => {
-          if (f.filters.length)
-            return (
-              <AccordionItem
-                key={f.displayName}
-                heading={f.displayName}
-                isActive={f.id === facet?.id}
-              >
-                <Repeat>
-                  <FacetSelector facet={f} />
-                </Repeat>
-              </AccordionItem>
-            );
-        })}
+        {filteredFacets
+          .filter((x) => x.filters.length)
+          .map((f) => (
+            <AccordionItem
+              key={f.displayName}
+              heading={f.displayName}
+              isActive={f.id === facet?.id}
+            >
+              <Repeat>
+                <FacetSelector facet={f} />
+              </Repeat>
+            </AccordionItem>
+          ))}
       </Accordion>
     </Panel>
   );
