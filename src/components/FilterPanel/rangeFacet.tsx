@@ -41,9 +41,8 @@ const getSteps = (initialAllValues: number[]) => {
 const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
   const { loading, queryFilter, initialFacets, onFilterUpdate } = useSearch();
   const initialFacet = initialFacets?.find((x) => x.id === facet.id);
-  const maxPrefix = initialFacet?.filters[initialFacet?.filters.length - 1]?.displayName?.includes(
-    '+'
-  );
+  const maxPrefix =
+    initialFacet?.filters[initialFacet?.filters.length - 1]?.displayName?.includes('+');
   const [state, setValues] = useState<
     { id: string | undefined; steps: number[]; domain: number[]; values: number[] } | undefined
   >(undefined);

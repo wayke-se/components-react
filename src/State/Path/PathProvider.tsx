@@ -4,7 +4,8 @@ import usePrevious from '../../hooks/usePrevious';
 import { PathContext, PathContextProps } from './PathContext';
 import reducer, { initialState, SET_PATH } from './reducer';
 
-const regexGuidAnyWhere = /(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}/g;
+const regexGuidAnyWhere =
+  /(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}/g;
 const POP_STATE = 'popstate';
 
 interface PathProviderProps {

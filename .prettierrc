@@ -5,7 +5,6 @@
   "bracketSpacing": true,
   "singleQuote": true,
   "jsxSingleQuote": false,
-  "jsxBracketSameLine": false,
   "trailingComma": "es5",
   "parser": "typescript",
   "endOfLine": "lf",

@@ -113,9 +113,10 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   const onToggleLightbox = useCallback(() => setLightbox(!lightbox), [lightbox]);
 
   const mediaLength = media?.length || 0;
-  const placeholder = useMemo(() => placeholderImage || DEFAULT_PLACEHOLDER_IMAGE, [
-    placeholderImage,
-  ]);
+  const placeholder = useMemo(
+    () => placeholderImage || DEFAULT_PLACEHOLDER_IMAGE,
+    [placeholderImage]
+  );
 
   return (
     <>
