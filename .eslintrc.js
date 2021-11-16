@@ -18,7 +18,7 @@ module.exports = {
     'no-console': 'error',
     'no-debugger': 'error',
     'no-duplicate-case': 'error',
-    'no-duplicate-imports': 'error',
+    'no-duplicate-imports': 'off',
     'no-empty': 'error',
     'no-eval': 'error',
     'no-irregular-whitespace': 'error',
