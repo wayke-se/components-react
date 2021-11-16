@@ -1,5 +1,5 @@
 import React from 'react';
-import marked from 'marked';
+import { marked } from 'marked';
 
 import { Repeat } from '../../components/Repeat/index';
 import { ProductPageMainSection } from '../../components/ProductPage/index';

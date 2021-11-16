@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes as ReactRouterDomRoutes } from 'react-router-dom';
 import Loader from '../../../src/components/Loader';
 
 const Search = lazy(() => import('./Search'));
@@ -11,14 +11,14 @@ const NotFound = lazy(() => import('./NotFound/index'));
 
 const Routes = () => (
   <Suspense fallback={<Loader />}>
-    <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/a/b/:id?" component={PathRoute} />
-      <Route path="/hash" component={HashRoute} />
-      <Route path="/search" exact component={Search} />
-      <Route path="/search-item/:id" exact component={SearchItem} />
-      <Route component={NotFound} />
-    </Switch>
+    <ReactRouterDomRoutes>
+      <Route path="/" element={<Home />} />
+      <Route path="/a/b/:id?" element={<PathRoute />} />
+      <Route path="/hash" element={<HashRoute />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/search-item/:id" element={<SearchItem />} />
+      <Route element={<NotFound />} />
+    </ReactRouterDomRoutes>
   </Suspense>
 );
 

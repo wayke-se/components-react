@@ -1,12 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { WaykeItemProvider, WaykeSearchItem } from '../../../../src/index';
-import { RouteComponentProps } from 'react-router-dom';
 
-type SearchItemProps = RouteComponentProps<{ id?: string }>;
-
-const SearchItem = ({ match }: SearchItemProps) => {
-  const id = match.params.id;
+const SearchItem = () => {
+  const { id } = useParams();
   if (!id) {
     return <p>No id</p>;
   }
