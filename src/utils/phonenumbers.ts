@@ -2,7 +2,7 @@ import { Metadata, parsePhoneNumberFromString } from 'libphonenumber-js/custom';
 
 import metadata from './metadata.min';
 
-const typedMetadata = metadata as unknown as Metadata;
+const typedMetadata = (metadata as unknown) as Metadata;
 
 export const formatPhonenumber = (text: string) => {
   try {

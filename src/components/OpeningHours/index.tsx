@@ -85,10 +85,9 @@ interface OpeningHoursProps {
 }
 
 const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
-  const today = useMemo(
-    () => (openingHours ? GetOpeningHoursToday(openingHours) : null),
-    [openingHours]
-  );
+  const today = useMemo(() => (openingHours ? GetOpeningHoursToday(openingHours) : null), [
+    openingHours,
+  ]);
 
   const currentlyOpen = useMemo(() => {
     try {

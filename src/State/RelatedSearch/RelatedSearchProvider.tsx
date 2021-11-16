@@ -16,11 +16,7 @@ const RelatedSearchProvider = ({ url, urlMlt, apiKey, children }: RelatedSearchP
   const [queryFilter, setQueryFilter] = useState<QueryFilter>();
 
   const query = queryFilter?.searchParams.toString();
-  const {
-    loading,
-    data: response,
-    error,
-  } = useFetch<Search>(
+  const { loading, data: response, error } = useFetch<Search>(
     `${urlMlt || url}${query ? `?${query}` : ''}`,
     {
       headers: apiKey

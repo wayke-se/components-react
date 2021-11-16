@@ -6,7 +6,8 @@ export const HINTS = Object.freeze<{ [key: string]: string }>({
   acceleration: 'Antal sekunder som bilen behöver för att ta sig till 100 km/h.',
   adultOccupantNCAP:
     'Poängen för skydd av vuxna bestäms genom tester av frontalkrockar, sidokrockar och whiplash som utförs för att bedöma det skydd som bilen erbjuder för vuxna förare och passagerare samt bedöma tillgängliga åtgärder för snabb och säker räddning.',
-  aeb: 'Bilen är utrustad med ett bromssystem som hjälper dig att undvika olyckor. Beroende på vilken nivå av AEB bilen är utrustad med kan de upptäcka även cyklister och fotgängare, främst i lägre hastigheter i stadsmiljö men även vid högre hastigheter och landsvägskörning. Bilen förvarnar föraren om potentiell fara och hjälper även till att bromsa för att säkerställa att olyckor undviks så långt det går.',
+  aeb:
+    'Bilen är utrustad med ett bromssystem som hjälper dig att undvika olyckor. Beroende på vilken nivå av AEB bilen är utrustad med kan de upptäcka även cyklister och fotgängare, främst i lägre hastigheter i stadsmiljö men även vid högre hastigheter och landsvägskörning. Bilen förvarnar föraren om potentiell fara och hjälper även till att bromsa för att säkerställa att olyckor undviks så långt det går.',
   airbagCutOffSwitch:
     'Det går att koppla ur krockkudden på passagerarsidan för att kunna sätta dit en barnstol.',
   airbagDriver: 'Krockkudde för föraren.',
@@ -53,7 +54,8 @@ export const HINTS = Object.freeze<{ [key: string]: string }>({
     'Dörrarna låses automatiskt när man kör iväg, så att de inte ska öppnas under körning.',
   childSeatBeltPassenger: 'Passagerarsätet har utfällbar sittkudde för barn.',
   childSeatBeltRear: 'Baksätet har utfällbar sittkudde för barn.',
-  co2: 'Anger hur mycket koldioxid fordonet släpper ut enligt mätmetoden NEDC baserat på teoretisk körning.',
+  co2:
+    'Anger hur mycket koldioxid fordonet släpper ut enligt mätmetoden NEDC baserat på teoretisk körning.',
   colorName: '',
   combinedEmissionsWLTP:
     'Anger hur mycket koldioxid fordonet släpper ut enligt mätmetoden WLTP baserat på verklig körning.',
