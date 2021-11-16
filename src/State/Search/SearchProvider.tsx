@@ -50,11 +50,7 @@ const SearchProvider = ({
   );
 
   const query = queryFilter.searchParams.toString();
-  const {
-    loading,
-    data: response,
-    error,
-  } = useFetch<Search>(
+  const { loading, data: response, error } = useFetch<Search>(
     `${url}${query ? `?${query}` : ''}`,
     {
       headers: apiKey

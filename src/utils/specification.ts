@@ -64,7 +64,8 @@ const specLabels: { [key: string]: SpecPropertyType } = {
     label: 'Modellår',
     modal: {
       title: 'Modellår',
-      text: 'Modellår sätts av tillverkaren. Handlaren ändrar ibland modellåret för att matcha transportstyrelsens definition för <i>årsmodell</i>. Definitionen för årsmodell innebär att bilar tillverkade andra halvan av året får nästa års modellår.',
+      text:
+        'Modellår sätts av tillverkaren. Handlaren ändrar ibland modellåret för att matcha transportstyrelsens definition för <i>årsmodell</i>. Definitionen för årsmodell innebär att bilar tillverkade andra halvan av året får nästa års modellår.',
     },
   },
   mileage: {
@@ -131,7 +132,8 @@ const specLabels: { [key: string]: SpecPropertyType } = {
       value ? `${value} Nm` : null,
     modal: {
       title: 'Vridmoment',
-      text: 'Bilens vridkraft. Hög siffra möjliggör att t.ex. dra tunga släp. Dieselmotorer har generellt mer vridmoment.',
+      text:
+        'Bilens vridkraft. Hög siffra möjliggör att t.ex. dra tunga släp. Dieselmotorer har generellt mer vridmoment.',
     },
   },
   acceleration: {
@@ -306,7 +308,8 @@ const specLabels: { [key: string]: SpecPropertyType } = {
     formatData: getFuelConsumption,
     modal: {
       title: 'Bränsleförbrukning, blandad',
-      text: 'Bränsleförbrukning vid blandad körning. Dvs. stadskörning och landsvägskörning under en och samma färd.',
+      text:
+        'Bränsleförbrukning vid blandad körning. Dvs. stadskörning och landsvägskörning under en och samma färd.',
     },
   },
   fuelConsumptionCityDriving: {
@@ -417,7 +420,8 @@ const specLabels: { [key: string]: SpecPropertyType } = {
       value ? `${value} kr/år` : null,
     modal: {
       title: 'Malus - förhöjd fordonsskatt',
-      text: 'Bilen har en förhöjd skatt de tre första åren och därefter gäller ordinarie skatt på {insertValue}.',
+      text:
+        'Bilen har en förhöjd skatt de tre första åren och därefter gäller ordinarie skatt på {insertValue}.',
       nonConcatablePropValue:
         'Bilen har en förhöjd skatt de tre första åren och därefter gäller ordinarie skatt.',
       concatPropValue: 'annualTax',
@@ -429,7 +433,8 @@ const specLabels: { [key: string]: SpecPropertyType } = {
       value ? `${value} kr` : null,
     modal: {
       title: 'Bonus - för nya bilar med låga utsläpp',
-      text: 'Det här fordonet är berättigat till klimatbonus. Bonusen för denna bil är {annualBonus} och delas ut till den första registrerade ägaren efter 6 månader. Klicka <a target="_blank" rel="noopener noreferrer" title="Läs mer om bonus/malus" href="https://www.transportstyrelsen.se/bonusmalus">här</a> för att läsa mer.',
+      text:
+        'Det här fordonet är berättigat till klimatbonus. Bonusen för denna bil är {annualBonus} och delas ut till den första registrerade ägaren efter 6 månader. Klicka <a target="_blank" rel="noopener noreferrer" title="Läs mer om bonus/malus" href="https://www.transportstyrelsen.se/bonusmalus">här</a> för att läsa mer.',
       concatPropValue: 'annualBonus',
     },
   },

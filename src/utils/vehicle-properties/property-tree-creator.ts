@@ -54,7 +54,7 @@ class PropertyTreeCreator {
   private getCategories() {
     const categories = Object.keys(this.properties)
       .filter(this.propertiesWithCategory)
-      .map((key) => this.properties[key].category as unknown as ItemCategory)
+      .map((key) => (this.properties[key].category as unknown) as ItemCategory)
       .filter(PropertyTreeCreator.distinctCategories);
     return categories;
   }

@@ -61,8 +61,10 @@ const WaykeSearchItem = ({
   const [ecomModal, setEcomModal] = useState(false);
   const { loading, data: result } = useSearchItem(id);
   const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
-  const { vehicle: centralStorageVehicle, loading: loadingCentralStorageVehicle } =
-    useCentralStorage(result?.vehicle);
+  const {
+    vehicle: centralStorageVehicle,
+    loading: loadingCentralStorageVehicle,
+  } = useCentralStorage(result?.vehicle);
 
   useEffect(() => {
     if (!disableResetScrollOnInit) {

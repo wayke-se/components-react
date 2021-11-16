@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -8,6 +8,7 @@
     "build": "pika build",
     "prebuild": "npm run clean",
     "lint": "eslint --ext .tsx,.ts 'src' 'example'",
+    "lint:fix": "eslint --ext .tsx,.ts 'src' 'example' --fix",
     "start": "webpack serve --mode development --progress",
     "clean": "rimraf ./pkg",
     "type-check": "tsc --noEmit --skipLibCheck",
