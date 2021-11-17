@@ -10,7 +10,7 @@ import {
 } from '../../components/TableList/index';
 import { IconCheck, IconCancel } from '../../components/Icon/index';
 import { SrOnly } from '../../components/SrOnly/index';
-import { ButtonInlinePrimary } from '../../components/Button/index';
+import { ButtonInline } from '../../components/Button/index';
 import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
 
@@ -54,9 +54,9 @@ const MetadataItem = ({ name, hint, value, unit }: MetadataItemProps) => {
     <TableListItem>
       <TableListKey>
         {hint ? (
-          <ButtonInlinePrimary onClick={onToggleFoldout} title={`Mer information om ${name}`}>
+          <ButtonInline onClick={onToggleFoldout} title={`Mer information om ${name}`}>
             {name}
-          </ButtonInlinePrimary>
+          </ButtonInline>
         ) : (
           name
         )}
