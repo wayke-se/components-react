@@ -1,12 +1,12 @@
+overwrite: true
 schema:
-  - "https://gql.wayketech.se/query":
-      # headers:
-        # origin: "http://***localhost:5000"
-        # referer: "http://***localhost:5000/"
+  - https://gql.wayketech.se/query:
+      headers:
+        origin: http://localhost:5000
 generates:
   ./src/@types/codegen/types.ts:
     plugins:
-      - typescript
+      - "@graphql-codegen/typescript"
     config:
       scalars:
         VehicleDataPropertyMap: "{ [key: string]: string | number | boolean }"
@@ -16,3 +16,4 @@ generates:
         PhoneNumber: string
         Time: string
         URL: string
+        FileDocument: "{contentType: string, name: string, url: string}"

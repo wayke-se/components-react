@@ -38,6 +38,7 @@ import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
 import Property from './Property';
+import PdfDownloadContainer from '../../components/Pdf/index';
 
 export interface WaykeSearchItemProps {
   id: string;
@@ -108,6 +109,7 @@ const WaykeSearchItem = ({
     ecommerce,
     packageOptions,
     publishedAt,
+    documents,
   } = vehicle;
   const { fuelType, mileage, gearbox, modelYear, propertySet } = vehicle.data;
 
@@ -244,6 +246,22 @@ const WaykeSearchItem = ({
                       <ExtendContent actionTitle="Visa mer" onClick={onShowMoreOptionsClick}>
                         <UspList items={options} />
                       </ExtendContent>
+                    </Repeat>
+                  </ProductPageMainSection>
+                )}
+
+                {(documents.length || 0) > 0 && (
+                  <ProductPageMainSection>
+                    <Repeat>
+                      <H2 noMargin>Dokument</H2>
+                    </Repeat>
+                    <Repeat>
+                      <Content>
+                        <p>Tillhörande dokument för bilen.</p>
+                      </Content>
+                    </Repeat>
+                    <Repeat>
+                      <PdfDownloadContainer documents={documents} />
                     </Repeat>
                   </ProductPageMainSection>
                 )}

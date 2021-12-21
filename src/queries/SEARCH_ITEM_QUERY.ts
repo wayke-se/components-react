@@ -21,6 +21,7 @@ const SEARCH_ITEM_QUERY = gql`
   query SearchItem($id: ID!) {
     vehicle(id: $id) {
       id
+      documents
       contact {
         name
         email
