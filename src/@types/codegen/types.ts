@@ -162,8 +162,15 @@ export type InsuranceLegality = {
 export type InsuranceOption = {
   __typename?: 'InsuranceOption';
   description?: Maybe<Scalars['String']>;
+  identifier?: Maybe<Scalars['String']>;
+  institute?: Maybe<Scalars['String']>;
+  insuranceText?: Maybe<Scalars['String']>;
   logotype?: Maybe<Scalars['URL']>;
+  longDescription?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  requiresDistance?: Maybe<Scalars['Boolean']>;
+  requiresPersonalNumber?: Maybe<Scalars['Boolean']>;
+  /** @deprecated No longer supported */
   terms?: Maybe<Scalars['URL']>;
   url?: Maybe<Scalars['URL']>;
 };
@@ -270,6 +277,7 @@ export type QueryBranchArgs = {
 
 
 export type QueryInsurancesArgs = {
+  branch?: InputMaybe<Scalars['ID']>;
   drivingDistance: DrivingDistance;
   id: Scalars['ID'];
   personalNumber: Scalars['PersonalNumber'];

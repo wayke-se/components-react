@@ -3,10 +3,16 @@ import { gql } from '@apollo/client';
 const INSURANCE_CALCULATION = gql`
   query InsuranceCalculation(
     $id: ID!
+    $branch: ID
     $personalNumber: PersonalNumber!
     $drivingDistance: DrivingDistance!
   ) {
-    insurances(id: $id, personalNumber: $personalNumber, drivingDistance: $drivingDistance) {
+    insurances(
+      id: $id
+      branch: $branch
+      personalNumber: $personalNumber
+      drivingDistance: $drivingDistance
+    ) {
       name
       price
       unit

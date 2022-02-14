@@ -1,58 +1,27 @@
-import React, { useState, useCallback } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat/index';
-import { VisualHeading } from '../Heading/index';
-import OptionBox from '../OptionBox/index';
-import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { ButtonInline } from '../Button/index';
-import { InsuranceOption } from '../../@types/codegen/types';
-import InsuranceOptionModal from './InsuranceOptionModal';
+import React from 'react';
+import { InsuranceOption, Branch } from '../../@types/codegen/types';
+import Insurance from './Insurance';
+import InsuranceFree from './InsuranceFree';
 
 interface InsuranceOptions {
   id: string;
+  branch?: Branch | null;
   insuranceOptions: InsuranceOption[];
 }
 
-const InsuranceOptions = ({ id, insuranceOptions }: InsuranceOptions) => {
-  const [modal, setModal] = useState(false);
-  const toggleModal = useCallback(() => setModal(!modal), [modal]);
+const InsuranceOptions = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
   if (!insuranceOptions.length) {
     return null;
   }
 
-  return (
-    <>
-      {modal && (
-        <InsuranceOptionModal
-          id={id}
-          onClose={toggleModal}
-          insuranceOptions={insuranceOptions[0]}
-        />
-      )}
-      <Repeat>
-        <RepeatTiny>
-          <VisualHeading>Välj till försäkring</VisualHeading>
-        </RepeatTiny>
-        <RepeatTiny>
-          <>
-            {insuranceOptions.map((insuranceOption, index) => (
-              <OptionBox
-                key={`${insuranceOption.url}-${index}`}
-                logo={insuranceOption.logotype || undefined}
-                logoAlt={insuranceOption.name || 'Logotyp'}
-              >
-                <OptionBoxHeading>Få prisförslag</OptionBoxHeading>
-                <OptionBoxContent>
-                  <p>
-                    <ButtonInline onClick={toggleModal}>Mer information</ButtonInline>
-                  </p>
-                </OptionBoxContent>
-              </OptionBox>
-            ))}
-          </>
-        </RepeatTiny>
-      </Repeat>
-    </>
-  );
+  if (insuranceOptions.length > 0) {
+    if (insuranceOptions[0].requiresDistance && insuranceOptions[0].requiresPersonalNumber)
+      return <Insurance id={id} branch={branch} insuranceOptions={insuranceOptions} />;
+
+    return <InsuranceFree insuranceOptions={insuranceOptions} />;
+  }
+
+  return null;
 };
 
 export default InsuranceOptions;

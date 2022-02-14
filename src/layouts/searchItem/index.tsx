@@ -104,13 +104,15 @@ const WaykeSearchItem = ({
     description,
     price,
     financialOptions,
-    insuranceOptions,
     manufacturer,
     ecommerce,
     packageOptions,
     publishedAt,
     documents,
   } = vehicle;
+  const insuranceOptions = centralStorageVehicle?.insuranceOptions
+    ? centralStorageVehicle.insuranceOptions
+    : vehicle.insuranceOptions;
   const { fuelType, mileage, gearbox, modelYear, propertySet } = vehicle.data;
 
   const uspList = [
@@ -180,7 +182,11 @@ const WaykeSearchItem = ({
                       <FinancialOptions id={id} financialOptions={financialOptions} />
                     )}
                     {insuranceOptions.length > 0 && (
-                      <InsuranceOptions id={id} insuranceOptions={insuranceOptions} />
+                      <InsuranceOptions
+                        id={id}
+                        branch={centralStorageVehicle?.branch}
+                        insuranceOptions={insuranceOptions}
+                      />
                     )}
                   </ProductPageAsideSection>
                 )}
