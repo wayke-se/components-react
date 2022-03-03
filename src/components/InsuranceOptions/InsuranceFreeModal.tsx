@@ -15,7 +15,7 @@ interface InsuranceFreeModal {
 
 const InsuranceFreeModal = ({ onClose, insuranceOptions }: InsuranceFreeModal) => {
   return (
-    <Modal title="Kostnadsfri försäkring" onClose={onClose}>
+    <Modal title={insuranceOptions?.insuranceHeader ?? 'Försäkring'} onClose={onClose}>
       {insuranceOptions?.longDescription && (
         <Repeat>
           <Content

@@ -25,7 +25,7 @@ const Insurance = ({ insuranceOptions }: InsuranceOptions) => {
       {modal && <InsuranceFreeModal onClose={toggleModal} insuranceOptions={insuranceOptions[0]} />}
       <Repeat>
         <RepeatTiny>
-          <VisualHeading>Kostnadsfri försäkring*</VisualHeading>
+          <VisualHeading>{insuranceOptions[0]?.insuranceHeader ?? 'Försäkring'}</VisualHeading>
         </RepeatTiny>
         <RepeatTiny>
           <>
@@ -38,7 +38,7 @@ const Insurance = ({ insuranceOptions }: InsuranceOptions) => {
                 {insuranceOption.description && (
                   <Content
                     dangerouslySetInnerHTML={{
-                      __html: marked(`*${insuranceOption.description}`),
+                      __html: marked(insuranceOption.description),
                     }}
                   />
                 )}

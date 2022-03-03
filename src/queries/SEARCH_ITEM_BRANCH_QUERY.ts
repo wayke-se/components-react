@@ -99,6 +99,7 @@ const SEARCH_ITEM_BRANCH_QUERY = gql`
         }
       }
       insuranceOptions {
+        insuranceHeader
         institute
         identifier
         logotype

@@ -161,6 +161,7 @@ const SEARCH_ITEM_QUERY = gql`
         withHomeDelivery
       }
       insuranceOptions {
+        insuranceHeader
         institute
         identifier
         logotype
