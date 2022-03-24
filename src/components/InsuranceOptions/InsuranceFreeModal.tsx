@@ -2,7 +2,7 @@ import React from 'react';
 
 import Modal from '../Modal';
 import Content from '../Content';
-import { Repeat } from '../Repeat';
+import { Repeat } from '../Repeat/index';
 import { ButtonInline } from '../Button';
 import LogoBox from '../LogoBox';
 import { InsuranceOption } from '../../@types/codegen/types';

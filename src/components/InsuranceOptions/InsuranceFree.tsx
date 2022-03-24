@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat';
+import { Repeat, RepeatTiny } from '../Repeat/index';
 import { VisualHeading } from '../Heading';
 import OptionBox from '../OptionBox';
 import { OptionBoxContent } from '../OptionBox/wrapper';
