@@ -48,6 +48,11 @@ export const Wrapper = styled.div<WrapperProps>`
     }
   }
 
+  img {
+    display: block;
+    width: 100%;
+  }
+
   ${({ small }) =>
     small &&
     css`

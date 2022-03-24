@@ -161,10 +161,17 @@ const SEARCH_ITEM_QUERY = gql`
         withHomeDelivery
       }
       insuranceOptions {
-        description
+        insuranceHeader
+        institute
+        identifier
         logotype
-        url
         name
+        description
+        longDescription
+        url
+        insuranceText
+        requiresPersonalNumber
+        requiresDistance
         terms
       }
       financialOptions {

@@ -98,6 +98,20 @@ const SEARCH_ITEM_BRANCH_QUERY = gql`
           title
         }
       }
+      insuranceOptions {
+        insuranceHeader
+        institute
+        identifier
+        logotype
+        name
+        description
+        longDescription
+        url
+        insuranceText
+        requiresPersonalNumber
+        requiresDistance
+        terms
+      }
     }
   }
   ${HoursOpen}

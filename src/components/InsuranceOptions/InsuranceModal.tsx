@@ -21,7 +21,7 @@ import useInsuranceCalculation from '../../hooks/useInsurance';
 import { ssnIsValid } from '../../utils/ssn';
 import Loader from '../Loader/index';
 import { numberSeparator } from '../../utils/formats';
-import { DrivingDistance, InsuranceOption } from '../../@types/codegen/types';
+import { DrivingDistance, InsuranceOption, Branch } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 
 interface FormData {
@@ -29,13 +29,14 @@ interface FormData {
   drivingDistance: DrivingDistance;
 }
 
-interface InsuranceOptionModal {
+interface InsuranceModal {
   id: string;
+  branch?: Branch | null;
   onClose: () => void;
   insuranceOptions: InsuranceOption;
 }
 
-const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOptionModal) => {
+const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModal) => {
   const [form, setForm] = useState<FormData>({
     ssn: '',
     drivingDistance: DrivingDistance.Between0And1000,
@@ -43,6 +44,7 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
   const [payload, setPayload] = useState<FormData>();
   const { loading, data, error } = useInsuranceCalculation(
     id,
+    branch?.id ? branch?.id : undefined,
     ssnIsValid(payload?.ssn) ? payload?.ssn : undefined,
     payload?.drivingDistance
   );
@@ -248,4 +250,4 @@ const InsuranceOptionModal = ({ id, onClose, insuranceOptions }: InsuranceOption
   );
 };
 
-export default InsuranceOptionModal;
+export default InsuranceModal;

@@ -12,7 +12,7 @@ export type Scalars = {
   Float: number;
   DateTime: Date;
   Email: string;
-  FileDocument: {contentType: string, name: string, url: string};
+  FileDocument: { contentType: string; name: string; url: string };
   PersonalNumber: string;
   PhoneNumber: string;
   Time: string;
@@ -65,7 +65,7 @@ export enum DrivingDistance {
   Between1000And1500 = 'BETWEEN1000AND1500',
   Between1500And2000 = 'BETWEEN1500AND2000',
   Between2000And2500 = 'BETWEEN2000AND2500',
-  Over2500 = 'OVER2500'
+  Over2500 = 'OVER2500',
 }
 
 export type Ecommerce = {
@@ -114,7 +114,7 @@ export type FinancialOptionDetail = {
 export enum FinancialOptionInclusion {
   IncludesInsurance = 'INCLUDES_INSURANCE',
   IncludesService = 'INCLUDES_SERVICE',
-  IncludesWintertires = 'INCLUDES_WINTERTIRES'
+  IncludesWintertires = 'INCLUDES_WINTERTIRES',
 }
 
 export type HoursOpen = {
@@ -162,8 +162,16 @@ export type InsuranceLegality = {
 export type InsuranceOption = {
   __typename?: 'InsuranceOption';
   description?: Maybe<Scalars['String']>;
+  identifier?: Maybe<Scalars['String']>;
+  institute?: Maybe<Scalars['String']>;
+  insuranceHeader?: Maybe<Scalars['String']>;
+  insuranceText?: Maybe<Scalars['String']>;
   logotype?: Maybe<Scalars['URL']>;
+  longDescription?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  requiresDistance?: Maybe<Scalars['Boolean']>;
+  requiresPersonalNumber?: Maybe<Scalars['Boolean']>;
+  /** @deprecated No longer supported */
   terms?: Maybe<Scalars['URL']>;
   url?: Maybe<Scalars['URL']>;
 };
@@ -263,18 +271,16 @@ export type Query = {
   vehicle?: Maybe<Vehicle>;
 };
 
-
 export type QueryBranchArgs = {
   id: Scalars['ID'];
 };
 
-
 export type QueryInsurancesArgs = {
+  branch?: InputMaybe<Scalars['ID']>;
   drivingDistance: DrivingDistance;
   id: Scalars['ID'];
   personalNumber: Scalars['PersonalNumber'];
 };
-
 
 export type QueryLoanArgs = {
   branch?: InputMaybe<Scalars['ID']>;
@@ -283,7 +289,6 @@ export type QueryLoanArgs = {
   id: Scalars['ID'];
   residual: Scalars['Float'];
 };
-
 
 export type QueryVehicleArgs = {
   branch?: InputMaybe<Scalars['ID']>;
@@ -348,7 +353,6 @@ export type VehicleData = {
   salesName?: Maybe<Scalars['String']>;
   vin?: Maybe<Scalars['String']>;
 };
-
 
 export type VehicleDataPropertySetArgs = {
   category?: InputMaybe<Scalars['String']>;
