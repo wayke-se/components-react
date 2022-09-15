@@ -77,6 +77,7 @@ const WaykeSearchItem = ({
           bankIdThumbprint: ecomSettings?.bankIdThumbprint,
         },
         logo: ecomSettings.serviceLogotypeUrl,
+        logoX2: ecomSettings.serviceLogotypeUrl,
         onEvent(view, event, currentStep?, data?) {
           PubSub.publish('EcomOnUserEvent', view, event, currentStep, data);
         },

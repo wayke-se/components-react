@@ -92,8 +92,7 @@
     "react-lazyload": "^3.2.0",
     "react-pannellum": "^0.1.15",
     "react-slick": "^0.28.1",
-    "scroll-into-view-if-needed": "^2.2.28",
-    "slick-carousel": "^1.8.1"
+    "scroll-into-view-if-needed": "^2.2.28"
   },
   "@pika/pack": {
     "pipeline": [
