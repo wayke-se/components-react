@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "2.16.0",
+  "version": "3.0.0-beta.8",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -83,6 +83,7 @@
   "dependencies": {
     "@apollo/client": "^3.4.17",
     "@wayke-se/ecom-react": "^3.5.2",
+    "@wayke-se/ecom-web": "^1.4.1",
     "date-fns": "^2.25.0",
     "graphql": "^16.0.1",
     "libphonenumber-js": "^1.9.42",
@@ -93,11 +94,6 @@
     "react-slick": "^0.28.1",
     "scroll-into-view-if-needed": "^2.2.28",
     "slick-carousel": "^1.8.1"
-  },
-  "workspaces": {
-    "nohoist": [
-      "react"
-    ]
   },
   "@pika/pack": {
     "pipeline": [

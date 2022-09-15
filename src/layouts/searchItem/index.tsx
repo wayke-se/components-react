@@ -1,4 +1,5 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import React, { useMemo, useRef, useCallback, useEffect } from 'react';
+import WaykeEcomWeb from '@wayke-se/ecom-web';
 
 import Container from '../../components/Container/index';
 import UspList from '../../components/UspList/index';
@@ -27,7 +28,6 @@ import { PortalNamespace, PortalElement } from '../../components/Portal/index';
 import Modal from '../../components/Modal/index';
 import FinancialOptions from '../../components/FinancialOptions/index';
 import InsuranceOptions from '../../components/InsuranceOptions/index';
-import Ecom from '../../components/Ecom/index';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
 import CheckList from './CheckList';
 import Related from './Related';
@@ -39,6 +39,7 @@ import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
 import Property from './Property';
 import PdfDownloadContainer from '../../components/Pdf/index';
+import useSettings from '../../State/Settings/useSettings';
 
 export interface WaykeSearchItemProps {
   id: string;
@@ -59,11 +60,34 @@ const WaykeSearchItem = ({
   modifyDocumentTitleItem,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
-  const [ecomModal, setEcomModal] = useState(false);
+  const { ecomSettings } = useSettings();
+  const ecomContext = useRef<WaykeEcomWeb | undefined>();
   const { loading, data: result } = useSearchItem(id);
-  const toggleEcomModal = useCallback(() => setEcomModal(!ecomModal), [ecomModal]);
   const { vehicle: centralStorageVehicle, loading: loadingCentralStorageVehicle } =
     useCentralStorage(result?.vehicle);
+
+  useEffect(() => {
+    if (ecomSettings) {
+      ecomContext.current = new WaykeEcomWeb({
+        id,
+        ecomSdkConfig: {
+          api: {
+            address: ecomSettings.url,
+          },
+          bankIdThumbprint: ecomSettings?.bankIdThumbprint,
+        },
+        logo: ecomSettings.serviceLogotypeUrl,
+        onEvent(view, event, currentStep?, data?) {
+          PubSub.publish('EcomOnUserEvent', view, event, currentStep, data);
+        },
+      });
+    }
+    return () => {
+      if (ecomContext.current) {
+        ecomContext.current.destroy();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!disableResetScrollOnInit) {
@@ -133,7 +157,6 @@ const WaykeSearchItem = ({
 
   return (
     <>
-      {ecomModal && <Ecom vehicle={vehicle} manufacturer={manufacturer} onExit={toggleEcomModal} />}
       <Page>
         <PageSection large>
           <Container>
@@ -199,7 +222,7 @@ const WaykeSearchItem = ({
                     branch={branch}
                     contact={centralStorageVehicle?.contact}
                     loadingCentralStorageVehicle={loadingCentralStorageVehicle}
-                    toggleEcomModal={toggleEcomModal}
+                    toggleEcomModal={() => ecomContext.current?.start()}
                   />
                 </ProductPageAsideSection>
               </ProductPageAside>
@@ -279,7 +302,7 @@ const WaykeSearchItem = ({
                       <ButtonPrimary
                         disabled={!!ecommerce.reserved}
                         title="Köp bilen online"
-                        onClick={toggleEcomModal}
+                        onClick={() => ecomContext.current?.start()}
                       >
                         Köp bilen online
                       </ButtonPrimary>

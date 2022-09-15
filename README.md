@@ -21,7 +21,9 @@ npm install react react-dom styled-components
 ```javascript
 import React from 'react';
 import WaykeComposite from '@wayke-se/components-react'
-import '@wayke.se/components-react/assets/default.css';
+import '@wayke-se/components-react/assets/default.css';
+// Optional
+import '@wayke-se/ecom-web/dist/index.css';
 
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
@@ -40,6 +42,31 @@ const App = () => (
 );
 ```
 
+### Environments for test
+```javascript
+const ProviderSettings: WaykeProviderSettings = {
+  graphQlUrl: "https://gql.wayketech.se/query",
+  url: "https://test-ext-api.wayketech.se/vehicles",
+  urlMlt: "https://test-ext-api.wayketech.se/vehicles-mlt-ext",
+  ecomSettings: {
+    url: "https://ecom.wayketech.se",
+  },
+}
+```
+
+### Environments for production
+```javascript
+const ProviderSettings: WaykeProviderSettings = {
+  graphQlUrl: "https://gql.wayke.se/query",
+  url: "https://api.wayke.se/vehicles",
+  urlMlt: "https://api.wayke.se/vehicles-mlt-ext",
+  ecomSettings: {
+    url: "https://ecom.wayke.se",
+  },
+}
+```
+
+
 ### WaykeComposite uses hash-route, i want to use path-route
 
 In this case you need to make sure that you are in control of the routing where same html file is 
@@ -49,6 +76,8 @@ served for `/your/path/to/this/component` and `/your/path/to/this/component/0000
 import React from 'react';
 import { WaykeCompositePath } from '@wayke-se/components-react'
 import '@wayke.se/components-react/assets/default.css';
+// Optional
+import '@wayke-se/ecom-web/dist/index.css';
 
 const App = () => (
   <WaykeCompositePath
@@ -90,6 +119,8 @@ It's recomended to place WaykeItemProvider close to app-root in order to keep th
 import React, { useCallback } from 'react';
 import { WaykeItemProvider, WaykeSearchItem } from '@wayke-se/components-react'
 import '@wayke.se/components-react/assets/default.css';
+// Optional
+import '@wayke-se/ecom-web/dist/index.css';
 
 const App = ({}) => {
   const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';
@@ -431,7 +462,7 @@ To style the components, copy the following snippet into your *CSS* file and mod
 ```
 
 ### Ecom theme
-The default ecom css can be found and imported `node_module/@wayke-se/ecom-react/assets/styles/default.css`.
+The default ecom css can be found and imported `node_module/@wayke-se/ecom-web/dist/index.css`.
 
 > **It is highly recommended to *NOT* add or remove any properties defined above in the color selectors**. However, since fonts usually requires more configuration we encourage you to add the necessary font styling required to match your current profile. If you add new properties to the font selectors, please be careful and ensure everything looks as intended before going into production.
 
