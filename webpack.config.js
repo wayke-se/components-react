@@ -6,9 +6,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: {
-    app: ['whatwg-fetch', './example/src/index'],
-  },
+  entry: './example/src/index',
   output: {
     path: path.resolve(__dirname, 'example/build'),
     publicPath: '/',
