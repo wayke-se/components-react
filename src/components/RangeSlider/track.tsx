@@ -8,7 +8,7 @@ interface ITrackProps {
   getTrackProps: GetTrackProps;
 }
 
-export const Track: React.SFC<ITrackProps> = ({ source, target, getTrackProps }: ITrackProps) => (
+export const Track = ({ source, target, getTrackProps }: ITrackProps) => (
   <OwnTrack
     style={{
       left: `${source.percent}%`,

@@ -8,7 +8,7 @@ interface IHandleProps {
   getHandleProps: GetHandleProps;
 }
 
-export const Handle: React.SFC<IHandleProps> = ({
+export const Handle = ({
   domain: [min, max],
   handle: { id, value, percent },
   getHandleProps,

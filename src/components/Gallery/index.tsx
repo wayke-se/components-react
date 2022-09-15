@@ -51,7 +51,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   const [lightbox, setLightbox] = useState(false);
   const [navigationDisabled, setNavigationDisabled] = useState(false);
 
-  const beforeChange = useCallback((_, newIndex) => {
+  const beforeChange = useCallback((_: number, newIndex: number) => {
     const element = quickNavRef.current?.querySelectorAll('li')?.[newIndex];
     if (element) {
       scrollIntoView(element, { scrollMode: 'if-needed', block: 'nearest', inline: 'nearest' });
