@@ -1,12 +1,11 @@
-import 'core-js';
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './assets/style/theme.css';
 import './assets/style/ecom.css';
 import '../../assets/default.css';
 
 import App from './App';
 
-ReactDOM.render(<App />, document.querySelector('#root'));
+const container = document.getElementById('root');
+const root = createRoot(container!); // createRoot(container!) if you use TypeScript
+root.render(<App />);

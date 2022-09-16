@@ -6,9 +6,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: {
-    app: ['whatwg-fetch', './example/src/index'],
-  },
+  entry: './example/src/index',
   output: {
     path: path.resolve(__dirname, 'example/build'),
     publicPath: '/',
@@ -32,12 +30,7 @@ module.exports = {
         GOOGLE_MAPS_API_KEY: `"${process.env.GOOGLE_MAPS_API_KEY}"`,
       },
     }),
-    new ForkTsCheckerWebpackPlugin({
-      async: false,
-      eslint: {
-        files: ['./src/**/*.{ts,tsx,js,jsx}', './example/src/**/*.{ts,tsx,js,jsx}'],
-      },
-    }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   module: {
     rules: [
@@ -72,7 +65,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|woff|woff2|svg|eot|ttf|gif|svg)$/,
-        loader: 'file-loader',
+        type: 'asset/resource',
       },
     ],
   },

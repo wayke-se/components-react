@@ -5,7 +5,6 @@ import Theme from './themeProvider';
 import SearchProvider from '../State/Search/SearchProvider';
 import Root from '../components/Root/index';
 
-import useEcom from '../hooks/useEcom';
 import SettingsProvider from '../State/Settings/SettingsProvider';
 import RelatedSearchProvider from '../State/RelatedSearch/RelatedSearchProvider';
 import CentralStorageProvider from '../State/CentralStorage/CentralStorageProvider';
@@ -46,35 +45,31 @@ const WaykeProvider = ({
   useQueryParamsFromUrl,
   pathRoute,
   children,
-}: WaykeProviderProps) => {
-  useEcom(ecomSettings);
-
-  return (
-    <PathProvider>
-      <SettingsProvider
-        googleMapsApiKey={googleMapsApiKey}
-        googleMapsMarker={googleMapsMarker}
-        ecomSettings={ecomSettings}
-      >
-        <CentralStorageProvider>
-          <GraphqlProvider uri={graphQlUrl}>
-            <SearchProvider
-              url={url}
-              apiKey={apiKey}
-              useQueryParamsFromUrl={useQueryParamsFromUrl}
-              pathRoute={pathRoute}
-            >
-              <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
-                <Theme>
-                  <Root>{children}</Root>
-                </Theme>
-              </RelatedSearchProvider>
-            </SearchProvider>
-          </GraphqlProvider>
-        </CentralStorageProvider>
-      </SettingsProvider>
-    </PathProvider>
-  );
-};
+}: WaykeProviderProps) => (
+  <PathProvider>
+    <SettingsProvider
+      googleMapsApiKey={googleMapsApiKey}
+      googleMapsMarker={googleMapsMarker}
+      ecomSettings={ecomSettings}
+    >
+      <CentralStorageProvider>
+        <GraphqlProvider uri={graphQlUrl}>
+          <SearchProvider
+            url={url}
+            apiKey={apiKey}
+            useQueryParamsFromUrl={useQueryParamsFromUrl}
+            pathRoute={pathRoute}
+          >
+            <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
+              <Theme>
+                <Root>{children}</Root>
+              </Theme>
+            </RelatedSearchProvider>
+          </SearchProvider>
+        </GraphqlProvider>
+      </CentralStorageProvider>
+    </SettingsProvider>
+  </PathProvider>
+);
 
 export default WaykeProvider;
