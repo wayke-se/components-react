@@ -7,6 +7,7 @@
     "analyze": "webpack --config webpack.analyze.js --mode production",
     "build": "pika build",
     "prebuild": "npm run clean",
+    "test": "npm run lint",
     "lint": "eslint --ext .tsx,.ts 'src' 'example'",
     "lint:fix": "eslint --ext .tsx,.ts 'src' 'example' --fix",
     "start": "webpack serve --mode development --progress",
