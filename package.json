@@ -15,7 +15,8 @@
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
     "gen": "graphql-codegen --config ./codegen.yml",
-    "libphonenumber-metadata": "libphonenumber-generate-metadata src/utils/metadata.min.json --countries SE --extended"
+    "libphonenumber-metadata": "libphonenumber-generate-metadata src/utils/metadata.min.json --countries SE --extended",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
