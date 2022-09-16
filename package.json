@@ -13,7 +13,6 @@
     "clean": "rimraf ./pkg",
     "type-check": "tsc --noEmit --skipLibCheck",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
-    "prepare": "npm run prettify && npm run type-check && npm run lint",
     "gen": "graphql-codegen --config ./codegen.yml",
     "libphonenumber-metadata": "libphonenumber-generate-metadata src/utils/metadata.min.json --countries SE --extended"
   },
@@ -58,6 +57,7 @@
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "prettier": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
