@@ -30,12 +30,7 @@ module.exports = {
         GOOGLE_MAPS_API_KEY: `"${process.env.GOOGLE_MAPS_API_KEY}"`,
       },
     }),
-    new ForkTsCheckerWebpackPlugin({
-      async: false,
-      eslint: {
-        files: ['./src/**/*.{ts,tsx,js,jsx}', './example/src/**/*.{ts,tsx,js,jsx}'],
-      },
-    }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   module: {
     rules: [
