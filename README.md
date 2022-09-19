@@ -69,8 +69,17 @@ const ProviderSettings: WaykeProviderSettings = {
 
 ### WaykeComposite uses hash-route, i want to use path-route
 
-In this case you need to make sure that you are in control of the routing where same html file is 
+In this case you need to make sure that you are in control of the routing, if the user reloads the page, where same html file is 
 served for `/your/path/to/this/component` and `/your/path/to/this/component/00000000-0000-0000-0000-000000000000`.
+
+Examples given the application is located in `/search/vehicles`:
+
+1) pathRoute is `/search/vehicles` => `//yoursite.com/search/vehicles/00000000-0000-0000-0000-000000000000`
+2) pathRoute is `/item` => `//yoursite.com/item/00000000-0000-0000-0000-000000000000`
+3) pathRoute is `/a/b` => `//yoursite.com/a/b/00000000-0000-0000-0000-000000000000`
+4) pathRoute is `item` => `//yoursite.com/search/item/00000000-0000-0000-0000-000000000000`
+5) pathRoute is `a/b` => `//yoursite.com/search/a/b/00000000-0000-0000-0000-000000000000`
+6) pathRoute is `https://www.wayke.se/objekt` => `https://www.wayke.se/objekt/00000000-0000-0000-0000-000000000000`
 
 ```javascript
 import React from 'react';
@@ -160,7 +169,7 @@ const App = ({}) => {
 * Required
   * `id` - Guid that represents a vehicle.
 * Optional
-  * `pathRoute` - If set to true, then if a item is clicked it will append /{pathRoute}/guid to the url.
+  * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
   * `placeholderImage` - Provide custom placeholder image when image is missing.
@@ -181,7 +190,7 @@ const App = ({}) => {
 | modifyDocumentTitleSearch | string                    |                           |
 
 * Optional
-  * `pathRoute` - If set to true, then if a item is clicked it will append /guid to the url.
+  * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear
   * `initialQueryParams` - Set the default filter that should be applid upon init.

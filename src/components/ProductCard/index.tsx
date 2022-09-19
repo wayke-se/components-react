@@ -58,9 +58,12 @@ const ProductCard = ({
 
   const onHrefClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      if (!!pathRoute && href) {
-        e.preventDefault();
-        pushState(href);
+      if (pathRoute && href) {
+        const reg = new RegExp('^((http|https)://)|//');
+        if (!pathRoute.match(reg) && !pathRoute.startsWith(location.origin)) {
+          e.preventDefault();
+          pushState(href);
+        }
       }
     },
     [id, pathRoute, href]

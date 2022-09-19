@@ -30,6 +30,7 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
     <Wrapper>
       <List>
         {documents.map((document) => {
+          /*
           const _path = pathRoute?.replace(/^\/|\/$/g, '');
 
           const prefix = _path ? `/${_path}/` : '/';
@@ -38,6 +39,19 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
             window.location.pathname === '/'
               ? `${prefix}${document._id}`
               : `${window.location.pathname}${prefix}${document._id}`;
+          */
+
+          /*
+          const _pathRoute = pathRoute
+            ? pathRoute.startsWith('/')
+              ? `${location.pathname}${pathRoute}/${document._id}`
+              : `${pathRoute}/${document._id}`
+            : undefined;
+
+          console.log(_pathRoute);
+          */
+
+          const _pathRoute = pathRoute ? `${pathRoute}/${document._id}` : undefined;
 
           return (
             <Item key={document._id}>
@@ -46,7 +60,7 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
                 onClick={onClickItem}
                 title={document.title}
                 pathRoute={pathRoute}
-                href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
+                href={_pathRoute ? _pathRoute : hashRoute ? `#${document._id}` : undefined}
                 image={resolveImage(document)}
                 placeholderImage={placeholderImage}
                 description={document.shortDescription}

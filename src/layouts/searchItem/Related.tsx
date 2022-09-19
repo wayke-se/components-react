@@ -66,13 +66,13 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
               {response?.documentList.documents.map((document) => {
                 const prefix = pathRoute ? `/${pathRoute}` : '/';
 
-                const r = regexPathGuid(pathRoute);
+                const r = regexPathGuid();
 
                 const pathRouteUrl =
                   window.location.pathname === '/'
                     ? `${prefix}${document._id}`
                     : r.test(`${pathRoute}${id}`)
-                    ? window.location.pathname.replace(r, `${pathRoute}${document._id}`)
+                    ? window.location.pathname.replace(r, document._id)
                     : `${window.location.pathname}${prefix}${document._id}`;
 
                 return (

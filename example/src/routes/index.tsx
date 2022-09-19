@@ -13,7 +13,8 @@ const Routes = () => (
   <Suspense fallback={<Loader />}>
     <ReactRouterDomRoutes>
       <Route path="/" element={<Home />} />
-      <Route path="/a/b/:id?" element={<PathRoute />} />
+      <Route path="/a/b/:id" element={<PathRoute />} />
+      <Route path="/a/b" element={<PathRoute />} />
       <Route path="/hash" element={<HashRoute />} />
       <Route path="/search" element={<Search />} />
       <Route path="/search-item/:id" element={<SearchItem />} />

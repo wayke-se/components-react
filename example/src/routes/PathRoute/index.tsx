@@ -10,10 +10,10 @@ const PathRoute = () => (
     composite={{
       // initialQueryParams,
       removeSearchBar: false,
-      pathRoute: '/id/',
+      pathRoute: 'https://www.wayke.se/objekt',
       modifyDocumentTitleItem: true,
       modifyDocumentTitleSearch: 'Wayke',
-      initialQueryParams: 'modelSeries=A5&modelSeries=A3',
+      //initialQueryParams: 'modelSeries=A5&modelSeries=A3',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
@@ -27,7 +27,7 @@ const PathRoute = () => (
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
       googleMapsMarker: 'https://www.wayke.se/images/map/marker.png',
       useQueryParamsFromUrl: true,
-      pathRoute: '/id/',
+      //pathRoute: '/begagnade-bilar/saljes',
     }}
   />
 );
