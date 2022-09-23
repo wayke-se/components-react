@@ -13,6 +13,7 @@ const _colors = {
     redLight: '#ffd0d0',
     red: '#c71f1f',
     yellowLight: '#fff4c7',
+    yellow: '#ffc700',
     blueLight: '#daf7fc',
   },
 };
@@ -36,6 +37,7 @@ const theme = {
       positiveLight: _colors.ui.greenLight,
       positive: _colors.ui.green,
       neutralLight: _colors.ui.yellowLight,
+      neutral: _colors.ui.yellow,
       negativeLight: _colors.ui.redLight,
       negative: _colors.ui.red,
       infoLight: _colors.ui.blueLight,

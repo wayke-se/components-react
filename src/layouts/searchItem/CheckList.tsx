@@ -3,6 +3,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Repeat, RepeatTiny } from '../../components/Repeat/index';
 import ActionList from '../../components/ActionList/index';
 import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button/index';
+import { Columns, Column } from '../../components/Columns/index';
+import { UtilityFontSizeSmall } from '../../components/Utility/index';
+import { StateIndicator } from '../../components/StateIndicator/index';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList/index';
 import Content from '../../components/Content/index';
 import SwitchBar from '../../components/SwitchBar/index';
@@ -62,50 +65,6 @@ const CheckList = ({
       )}
       {modal && <PackageOptionModal packageOption={modal} onClose={onClose} />}
       <Repeat>
-        <CheckMarkList>
-          {packageOption?.title && (
-            <CheckMarkListItem>
-              <>
-                Inkl.{' '}
-                <ButtonInline
-                  onClick={() =>
-                    onOpen({
-                      title: packageOption?.title,
-                      image: packageOption?.image,
-                      description: packageOption?.description,
-                      link: packageOption?.link,
-                    })
-                  }
-                >
-                  {packageOption.title}
-                </ButtonInline>{' '}
-                begagnatgaranti
-              </>
-            </CheckMarkListItem>
-          )}
-          {packageOptions?.map((packageOption, index) => (
-            <CheckMarkListItem key={packageOption.title || index}>
-              <>
-                Inkl.{' '}
-                <ButtonInline
-                  onClick={() =>
-                    onOpen({
-                      title: packageOption?.title,
-                      image: packageOption?.image,
-                      description: packageOption?.description,
-                      link: packageOption?.link,
-                    })
-                  }
-                >
-                  {packageOption.title}
-                </ButtonInline>
-              </>
-            </CheckMarkListItem>
-          ))}
-          {ecommerce?.withHomeDelivery && <CheckMarkListItem>Hemleverans</CheckMarkListItem>}
-        </CheckMarkList>
-      </Repeat>
-      <Repeat>
         {ecommerce && ecommerce.enabled && (
           <RepeatTiny>
             <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
@@ -126,6 +85,62 @@ const CheckList = ({
           </RepeatTiny>
         )}
         <ActionList branch={branch} contact={contact} />
+      </Repeat>
+      <Repeat>
+        <RepeatTiny>
+          <Columns $spacing={1} valign="center">
+            <Column noShrink>
+              <StateIndicator $tone="pending" />
+            </Column>
+            <Column>
+              <UtilityFontSizeSmall>Tillgänglig från 3 december 2022</UtilityFontSizeSmall>
+            </Column>
+          </Columns>
+        </RepeatTiny>
+        <RepeatTiny>
+          <CheckMarkList>
+            {packageOption?.title && (
+              <CheckMarkListItem>
+                <>
+                  Inkl.{' '}
+                  <ButtonInline
+                    onClick={() =>
+                      onOpen({
+                        title: packageOption?.title,
+                        image: packageOption?.image,
+                        description: packageOption?.description,
+                        link: packageOption?.link,
+                      })
+                    }
+                  >
+                    {packageOption.title}
+                  </ButtonInline>{' '}
+                  begagnatgaranti
+                </>
+              </CheckMarkListItem>
+            )}
+            {packageOptions?.map((packageOption, index) => (
+              <CheckMarkListItem key={packageOption.title || index}>
+                <>
+                  Inkl.{' '}
+                  <ButtonInline
+                    onClick={() =>
+                      onOpen({
+                        title: packageOption?.title,
+                        image: packageOption?.image,
+                        description: packageOption?.description,
+                        link: packageOption?.link,
+                      })
+                    }
+                  >
+                    {packageOption.title}
+                  </ButtonInline>
+                </>
+              </CheckMarkListItem>
+            ))}
+            {ecommerce?.withHomeDelivery && <CheckMarkListItem>Hemleverans</CheckMarkListItem>}
+          </CheckMarkList>
+        </RepeatTiny>
       </Repeat>
       {(branch?.connections.length || 0) > 1 && (
         <Repeat>

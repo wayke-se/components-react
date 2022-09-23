@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useCallback, useEffect } from 'react';
+import React, { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import WaykeEcomWeb from '@wayke-se/ecom-web';
 
 import Container from '../../components/Container/index';
@@ -38,6 +38,7 @@ import Page404 from './Page404';
 import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
 import Property from './Property';
+import DemoCarModal from './DemoCarModal';
 import PdfDownloadContainer from '../../components/Pdf/index';
 import useSettings from '../../State/Settings/useSettings';
 
@@ -65,6 +66,9 @@ const WaykeSearchItem = ({
   const { loading, data: result } = useSearchItem(id);
   const { vehicle: centralStorageVehicle, loading: loadingCentralStorageVehicle } =
     useCentralStorage(result?.vehicle);
+
+  const [demoCarModal, setDemoCarModal] = useState(false);
+  const onToggleDemoCarModal = useCallback(() => setDemoCarModal(!demoCarModal), [demoCarModal]);
 
   useEffect(() => {
     if (ecomSettings) {
@@ -143,6 +147,10 @@ const WaykeSearchItem = ({
   const uspList = [
     {
       title: modelYear,
+    },
+    {
+      title: 'Demobil',
+      onClick: onToggleDemoCarModal,
     },
     {
       title: `${numberSeparator(mileage)} mil`,
@@ -335,6 +343,7 @@ const WaykeSearchItem = ({
         </Modal>
       )}
       <PortalElement id={PortalNamespace.DefaultPortal} />
+      {demoCarModal && <DemoCarModal onClose={onToggleDemoCarModal} />}
     </>
   );
 };
