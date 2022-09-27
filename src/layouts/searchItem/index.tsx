@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useCallback, useState, useEffect } from 'react'
 import WaykeEcomWeb from '@wayke-se/ecom-web';
 
 import Container from '../../components/Container/index';
-import UspList from '../../components/UspList/index';
+import UspList, { ItemProps } from '../../components/UspList/index';
 import { Repeat, RepeatSmall } from '../../components/Repeat/index';
 import PriceTable from '../../components/PriceTable/index';
 import LogoBox from '../../components/LogoBox/index';
@@ -138,24 +138,31 @@ const WaykeSearchItem = ({
     packageOptions,
     publishedAt,
     documents,
+    availableFrom,
+    flags,
   } = vehicle;
   const insuranceOptions = centralStorageVehicle?.insuranceOptions
     ? centralStorageVehicle.insuranceOptions
     : vehicle.insuranceOptions;
   const { fuelType, mileage, gearbox, modelYear, propertySet } = vehicle.data;
 
-  const uspList = [
+  const uspList: ItemProps[] = [
     {
       title: modelYear,
     },
-    {
+  ];
+
+  if (flags?.demoVersion) {
+    uspList.push({
       title: 'Demobil',
       onClick: onToggleDemoCarModal,
-    },
-    {
-      title: `${numberSeparator(mileage)} mil`,
-    },
-  ];
+    });
+  }
+
+  uspList.push({
+    title: `${numberSeparator(mileage)} mil`,
+  });
+
   if (gearbox) {
     uspList.push({ title: gearbox });
   }
@@ -231,6 +238,7 @@ const WaykeSearchItem = ({
                     branch={branch}
                     contact={centralStorageVehicle?.contact}
                     loadingCentralStorageVehicle={loadingCentralStorageVehicle}
+                    availableFrom={availableFrom}
                     toggleEcomModal={() => ecomContext.current?.start()}
                   />
                 </ProductPageAsideSection>

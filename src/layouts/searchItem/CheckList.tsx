@@ -18,6 +18,8 @@ import {
 } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
+import { format } from 'date-fns/esm';
+import sv from 'date-fns/locale/sv';
 
 interface CheckList {
   manufacturer?: Manufacturer | null;
@@ -26,6 +28,7 @@ interface CheckList {
   branch?: Branch | null;
   contact?: ContactOptions | null;
   loadingCentralStorageVehicle: boolean;
+  availableFrom?: Date | null;
   toggleEcomModal: () => void;
 }
 
@@ -35,6 +38,7 @@ const CheckList = ({
   ecommerce,
   branch,
   contact,
+  availableFrom,
   toggleEcomModal,
   loadingCentralStorageVehicle,
 }: CheckList) => {
@@ -87,16 +91,20 @@ const CheckList = ({
         <ActionList branch={branch} contact={contact} />
       </Repeat>
       <Repeat>
-        <RepeatTiny>
-          <Columns $spacing={1} valign="center">
-            <Column noShrink>
-              <StateIndicator $tone="pending" />
-            </Column>
-            <Column>
-              <UtilityFontSizeSmall>Tillgänglig från 3 december 2022</UtilityFontSizeSmall>
-            </Column>
-          </Columns>
-        </RepeatTiny>
+        {availableFrom && new Date(availableFrom).valueOf() > new Date().valueOf() && (
+          <RepeatTiny>
+            <Columns $spacing={1} valign="center">
+              <Column noShrink>
+                <StateIndicator $tone="pending" />
+              </Column>
+              <Column>
+                <UtilityFontSizeSmall>
+                  Tillgänglig från {format(new Date(availableFrom), 'dd MMMM yyyy', { locale: sv })}
+                </UtilityFontSizeSmall>
+              </Column>
+            </Columns>
+          </RepeatTiny>
+        )}
         <RepeatTiny>
           <CheckMarkList>
             {packageOption?.title && (

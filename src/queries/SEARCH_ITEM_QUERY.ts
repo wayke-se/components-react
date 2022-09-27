@@ -228,6 +228,10 @@ const SEARCH_ITEM_QUERY = gql`
       price
       shortDescription
       title
+      availableFrom
+      flags {
+        demoVersion
+      }
     }
   }
   ${HoursOpen}

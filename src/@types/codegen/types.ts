@@ -12,7 +12,7 @@ export type Scalars = {
   Float: number;
   DateTime: Date;
   Email: string;
-  FileDocument: { contentType: string; name: string; url: string };
+  FileDocument: {contentType: string, name: string, url: string};
   PersonalNumber: string;
   PhoneNumber: string;
   Time: string;
@@ -65,7 +65,7 @@ export enum DrivingDistance {
   Between1000And1500 = 'BETWEEN1000AND1500',
   Between1500And2000 = 'BETWEEN1500AND2000',
   Between2000And2500 = 'BETWEEN2000AND2500',
-  Over2500 = 'OVER2500',
+  Over2500 = 'OVER2500'
 }
 
 export type Ecommerce = {
@@ -114,7 +114,7 @@ export type FinancialOptionDetail = {
 export enum FinancialOptionInclusion {
   IncludesInsurance = 'INCLUDES_INSURANCE',
   IncludesService = 'INCLUDES_SERVICE',
-  IncludesWintertires = 'INCLUDES_WINTERTIRES',
+  IncludesWintertires = 'INCLUDES_WINTERTIRES'
 }
 
 export type HoursOpen = {
@@ -271,9 +271,11 @@ export type Query = {
   vehicle?: Maybe<Vehicle>;
 };
 
+
 export type QueryBranchArgs = {
   id: Scalars['ID'];
 };
+
 
 export type QueryInsurancesArgs = {
   branch?: InputMaybe<Scalars['ID']>;
@@ -282,6 +284,7 @@ export type QueryInsurancesArgs = {
   personalNumber: Scalars['PersonalNumber'];
 };
 
+
 export type QueryLoanArgs = {
   branch?: InputMaybe<Scalars['ID']>;
   downPayment: Scalars['Int'];
@@ -289,6 +292,7 @@ export type QueryLoanArgs = {
   id: Scalars['ID'];
   residual: Scalars['Float'];
 };
+
 
 export type QueryVehicleArgs = {
   branch?: InputMaybe<Scalars['ID']>;
@@ -311,6 +315,7 @@ export type Service = {
 
 export type Vehicle = {
   __typename?: 'Vehicle';
+  availableFrom?: Maybe<Scalars['DateTime']>;
   branch?: Maybe<Branch>;
   contact?: Maybe<ContactOptions>;
   data: VehicleData;
@@ -354,6 +359,7 @@ export type VehicleData = {
   vin?: Maybe<Scalars['String']>;
 };
 
+
 export type VehicleDataPropertySetArgs = {
   category?: InputMaybe<Scalars['String']>;
   properties?: InputMaybe<Array<Scalars['String']>>;
@@ -362,5 +368,6 @@ export type VehicleDataPropertySetArgs = {
 export type VehicleFlags = {
   __typename?: 'VehicleFlags';
   auction?: Maybe<Scalars['Boolean']>;
+  demoVersion?: Maybe<Scalars['Boolean']>;
   testDrive?: Maybe<Scalars['Boolean']>;
 };
