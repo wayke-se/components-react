@@ -226,6 +226,7 @@ const SEARCH_ITEM_QUERY = gql`
         postalCode
       }
       price
+      discount
       shortDescription
       title
       availableFrom

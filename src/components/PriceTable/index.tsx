@@ -7,10 +7,10 @@ import { numberSeparator } from '../../utils/formats';
 
 interface PriceTableProps {
   price: number;
-  oldPrice?: number;
+  discount?: number;
 }
 
-const PriceTable = ({ price, oldPrice }: PriceTableProps) => (
+const PriceTable = ({ price, discount }: PriceTableProps) => (
   <List>
     <Item>
       <Label>
@@ -20,11 +20,11 @@ const PriceTable = ({ price, oldPrice }: PriceTableProps) => (
         <Price>{numberSeparator(price)} kr</Price>
       </Value>
     </Item>
-    {oldPrice !== undefined && (
+    {discount !== undefined && (
       <Item>
         <Label />
         <Value>
-          <OldPrice>{numberSeparator(oldPrice)} kr</OldPrice>
+          <OldPrice>{numberSeparator(price + discount)} kr</OldPrice>
         </Value>
       </Item>
     )}

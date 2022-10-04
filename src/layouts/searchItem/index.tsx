@@ -132,6 +132,7 @@ const WaykeSearchItem = ({
     media,
     description,
     price,
+    discount,
     financialOptions,
     manufacturer,
     ecommerce,
@@ -212,7 +213,7 @@ const WaykeSearchItem = ({
                 </ProductPageAsideSection>
 
                 <ProductPageAsideSection mobileOrder={2}>
-                  <PriceTable price={price} />
+                  <PriceTable price={price} discount={discount || undefined} />
                 </ProductPageAsideSection>
 
                 {(financialOptions.length > 0 || insuranceOptions.length > 0) && (
