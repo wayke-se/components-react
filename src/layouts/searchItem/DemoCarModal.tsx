@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Modal from '../../components/Modal';
-import Content from '../../components/Content';
+import Modal from '../../components/Modal/index';
+import Content from '../../components/Content/index';
 
 interface DemoCarModalProps {
   onClose: () => void;
