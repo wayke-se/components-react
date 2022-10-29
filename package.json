@@ -76,7 +76,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.17",
+    "@apollo/client": "^3.7.0",
     "@wayke-se/ecom-web": "^1.4.1",
     "date-fns": "^2.25.0",
     "graphql": "^16.0.1",
