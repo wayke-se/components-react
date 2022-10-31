@@ -217,7 +217,9 @@ const SearchProvider = ({
           setQueryFilter({
             searchParams: initialQueryParams,
           });
-          replaceState(`${window.location.pathname}${nextSearch}`);
+          if (useQueryParamsFromUrl) {
+            replaceState(`${window.location.pathname}${nextSearch}`);
+          }
         }
         setInitialize(true);
       }

@@ -8,7 +8,7 @@ initialQueryParams.set('modelYear.min', '2018');
 const Home = () => (
   <WaykeComposite
     composite={{
-      // initialQueryParams,
+      initialQueryParams,
       removeSearchBar: false,
       removeFilterOptions: false,
       modifyDocumentTitleItem: true,
