@@ -12,7 +12,7 @@ export type Scalars = {
   Float: number;
   DateTime: Date;
   Email: string;
-  FileDocument: {contentType: string, name: string, url: string};
+  FileDocument: { webp: string, category: string; contentType: string, name: string, url: string};
   PersonalNumber: string;
   PhoneNumber: string;
   Time: string;

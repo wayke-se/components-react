@@ -16,4 +16,4 @@ generates:
         PhoneNumber: string
         Time: string
         URL: string
-        FileDocument: "{contentType: string, name: string, url: string}"
+        FileDocument: "{webp: string, category: string, contentType: string, name: string, url: string}"

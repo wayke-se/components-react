@@ -12,7 +12,7 @@ export const PdfListItem = styled.li.attrs(() => ({
   }
 `;
 
-export const PdfContainer = styled.ul`
+export const List = styled.ul`
   list-style: none;
   padding: 0;
   display: flex;

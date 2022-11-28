@@ -37,13 +37,11 @@ export const H2 = styled(HeadingBase).attrs<{ as: string }>((props) => ({
   font-size: 1.5rem;
 `;
 
-/*
 export const H3 = styled(HeadingBase).attrs<{ as: string }>((props) => ({
   as: props.as || 'h3',
 }))`
   font-size: 1.125rem;
 `;
-*/
 
 export const H4 = styled(HeadingBase).attrs<{ as: string }>((props) => ({
   as: props.as || 'h4',

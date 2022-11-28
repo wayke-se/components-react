@@ -39,8 +39,9 @@ import PageLoading from './PageLoading';
 import PubSub from '../../utils/pubsub/pubsub';
 import Property from './Property';
 import DemoCarModal from './DemoCarModal';
-import PdfDownloadContainer from '../../components/Pdf/index';
+import PdfDownloadContainer from '../../components/DocumentList/index';
 import useSettings from '../../State/Settings/useSettings';
+import Documents from './Documents';
 
 export interface WaykeSearchItemProps {
   id: string;
@@ -297,21 +298,7 @@ const WaykeSearchItem = ({
                   </ProductPageMainSection>
                 )}
 
-                {(documents.length || 0) > 0 && (
-                  <ProductPageMainSection>
-                    <Repeat>
-                      <H2 noMargin>Dokument</H2>
-                    </Repeat>
-                    <Repeat>
-                      <Content>
-                        <p>Tillhörande dokument för bilen.</p>
-                      </Content>
-                    </Repeat>
-                    <Repeat>
-                      <PdfDownloadContainer documents={documents} />
-                    </Repeat>
-                  </ProductPageMainSection>
-                )}
+                <Documents documents={documents} />
 
                 <ProductPageMainSection>
                   <Branch branch={branch} loading={loadingCentralStorageVehicle} />
