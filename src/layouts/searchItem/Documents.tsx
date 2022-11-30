@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { H2, H3 } from '../../components/Heading';
-import { ProductPageMainSection } from '../../components/ProductPage';
+import { H2, H3 } from '../../components/Heading/index';
+import { ProductPageMainSection } from '../../components/ProductPage/index';
 import { Scalars } from '../../@types/codegen/types';
-import DocumentList from '../../components/DocumentList';
-import { Repeat } from '../../components/Repeat';
+import DocumentList from '../../components/DocumentList/index';
+import { Repeat } from '../../components/Repeat/index';
 
 const Translation = {
   'tyre-label': 'Energideklaration för däck',
