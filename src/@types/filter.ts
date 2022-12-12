@@ -10,7 +10,9 @@ export type SearchFilterNameTypes =
   | 'drivingWheel'
   | 'price'
   | 'mileage'
-  | 'modelYear';
+  | 'modelYear'
+  | 'leasingPrice'
+  | 'businessLeasingPrice';
 
 export type SearchFilterTypes = {
   filterName: SearchFilterNameTypes;

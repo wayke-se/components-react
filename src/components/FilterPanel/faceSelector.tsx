@@ -18,6 +18,7 @@ import {
   MILEAGE,
   MODEL_YEAR,
   LEASING_PRICE,
+  BUSINESS_LEASING_PRICE,
 } from '../../utils/constants';
 
 interface FacetSelectorProps {
@@ -39,6 +40,7 @@ const FacetSelector = ({ facet }: FacetSelectorProps) => {
       return <ColorSelectFacet facet={facet} />;
     case PRICE:
       return <RangeFacet facet={facet} unit="kr" formatValues />;
+    case BUSINESS_LEASING_PRICE:
     case LEASING_PRICE:
       return <RangeFacet facet={facet} unit="kr/mån" formatValues />;
     case MILEAGE:

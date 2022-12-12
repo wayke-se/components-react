@@ -4,6 +4,9 @@ import WaykeComposite from '../../../../src/index';
 
 const initialQueryParams = new URLSearchParams();
 initialQueryParams.set('modelYear.min', '2018');
+initialQueryParams.set('price.min', '1000');
+initialQueryParams.set('leasingPrice.min', '1000');
+initialQueryParams.set('businessLeasingPrice.min', '1000');
 
 const Home = () => (
   <WaykeComposite

@@ -182,7 +182,7 @@ const App = ({}) => {
 | pathRoute                 | string                    |                           |
 | hashRoute                 | boolean                   |                           |
 | filterList                | SearchFilterTypes[]       |                           |
-| initialQueryParams        | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max |
+| initialQueryParams        | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max, leasingPrice.min, leasingPrice.max, businessLeasingPrice.min, businessLeasingPrice.max |
 | removeSearchBar           | boolean                   |                           |
 | removeFilterOptions       | boolean                   |                           |
 | placeholderImage          | string                    |                           |
@@ -192,7 +192,7 @@ const App = ({}) => {
 * Optional
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
-  * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear
+  * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice
   * `initialQueryParams` - Set the default filter that should be applid upon init.
   * `removeSearchBar` - Removes search bar.
   * `removeFilterOptions` - Removes filter options.
@@ -271,7 +271,7 @@ WaykeSearchItem & WaykeSearch combined without `id`
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
 |-------------|-----------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear |
+| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice |
 | displayName | string                | false    |                                                                                                                                                |
 
 * `displayName` override default translation of title

@@ -79,14 +79,19 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
                   },
                 ]}
                 price={`${numberSeparator(document.price)} kr`}
-                leasingPrice={
-                  document.leasingPrice !== undefined
-                    ? `${numberSeparator(document.leasingPrice)} kr`
-                    : undefined
-                }
                 oldPrice={
                   document.oldPrice !== undefined && document.price < document.oldPrice
                     ? `${numberSeparator(document.oldPrice)} kr`
+                    : undefined
+                }
+                leasingPrice={
+                  document.leasingPrice !== undefined
+                    ? `${numberSeparator(document.leasingPrice)} kr/mån`
+                    : undefined
+                }
+                businessLeasingPrice={
+                  document.businessLeasingPrice !== undefined
+                    ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
                     : undefined
                 }
               />

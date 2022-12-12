@@ -104,6 +104,16 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
                           ? `${numberSeparator(document.oldPrice)} kr`
                           : undefined
                       }
+                      leasingPrice={
+                        document.leasingPrice !== undefined
+                          ? `${numberSeparator(document.leasingPrice)} kr/mån`
+                          : undefined
+                      }
+                      businessLeasingPrice={
+                        document.businessLeasingPrice !== undefined
+                          ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
+                          : undefined
+                      }
                       pathRoute={pathRoute}
                     />
                   </OverflowGridItem>

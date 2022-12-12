@@ -36,6 +36,7 @@ interface Props {
   price: string;
   leasingPrice?: string;
   oldPrice?: string;
+  businessLeasingPrice?: string;
   onClick?: (id: string) => void;
 }
 
@@ -51,6 +52,7 @@ const ProductCard = ({
   price,
   oldPrice,
   leasingPrice,
+  businessLeasingPrice,
   onClick,
 }: Props) => {
   const { pushState } = usePath();
@@ -122,8 +124,14 @@ const ProductCard = ({
             </PriceCell>
             {leasingPrice && (
               <PriceCell>
-                <Label>Leasingpris</Label>
+                <Label>Privatleasing</Label>
                 <CurrentPrice>{leasingPrice}</CurrentPrice>
+              </PriceCell>
+            )}
+            {businessLeasingPrice && (
+              <PriceCell>
+                <Label>Företagsleasing</Label>
+                <CurrentPrice>{businessLeasingPrice}</CurrentPrice>
               </PriceCell>
             )}
           </Price>

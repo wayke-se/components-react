@@ -3,7 +3,13 @@ import React, { useState, useCallback } from 'react';
 import { List, Item, Action, Label, Indicator, IndicatorValue } from './wrapper';
 import { Facet } from '../../@types/search';
 import { FacetIdToTitle } from '../../utils/formats';
-import { PRICE, MILEAGE, MODEL_YEAR } from '../../utils/constants';
+import {
+  PRICE,
+  MILEAGE,
+  MODEL_YEAR,
+  LEASING_PRICE,
+  BUSINESS_LEASING_PRICE,
+} from '../../utils/constants';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
 import FilterPanel from '../FilterPanel/index';
@@ -12,6 +18,8 @@ const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {
     case PRICE:
     case MILEAGE:
+    case LEASING_PRICE:
+    case BUSINESS_LEASING_PRICE:
     case MODEL_YEAR:
       return searchParams.has(`${f.id}.min`) || searchParams.has(`${f.id}.max`) ? 1 : 0;
     default:

@@ -30,6 +30,7 @@ import {
   MILEAGE,
   MODEL_YEAR,
   LEASING_PRICE,
+  BUSINESS_LEASING_PRICE,
 } from './constants';
 
 export const FacetIdToTitle = (f: string) => {
@@ -60,6 +61,8 @@ export const FacetIdToTitle = (f: string) => {
       return 'Modellår';
     case LEASING_PRICE:
       return 'Privatleasing';
+    case BUSINESS_LEASING_PRICE:
+      return 'Företagsleasing';
     default:
       return f;
   }
