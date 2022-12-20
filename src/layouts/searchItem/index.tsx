@@ -25,7 +25,6 @@ import { IconChevronLeft } from '../../components/Icon/index';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
 import { PortalNamespace, PortalElement } from '../../components/Portal/index';
-import Modal from '../../components/Modal/index';
 import FinancialOptions from '../../components/FinancialOptions/index';
 import InsuranceOptions from '../../components/InsuranceOptions/index';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
@@ -49,6 +48,7 @@ export interface WaykeSearchItemProps {
   disableResetScrollOnInit?: boolean;
   placeholderImage?: string;
   modifyDocumentTitleItem?: boolean;
+  displayBranchName?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
@@ -59,6 +59,7 @@ const WaykeSearchItem = ({
   disableResetScrollOnInit,
   placeholderImage,
   modifyDocumentTitleItem,
+  displayBranchName,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
   const { ecomSettings } = useSettings();
@@ -300,7 +301,11 @@ const WaykeSearchItem = ({
                 <Documents documents={documents} />
 
                 <ProductPageMainSection>
-                  <Branch branch={branch} loading={loadingCentralStorageVehicle} />
+                  <Branch
+                    branch={branch}
+                    displayBranchName={displayBranchName}
+                    loading={loadingCentralStorageVehicle}
+                  />
                   {ecommerce && ecommerce.enabled && (
                     <Repeat>
                       <ButtonPrimary
@@ -323,20 +328,11 @@ const WaykeSearchItem = ({
           id={id}
           hashRoute={hashRoute}
           pathRoute={pathRoute}
+          authorizedReseller={!!branch?.flags?.authorizedReseller}
+          displayBranchName={displayBranchName}
           onClickSearchItem={onClickSearchItem}
         />
       </Page>
-      {false && (
-        <Modal title="Modal" onClose={() => {}}>
-          <Content>
-            <p>
-              Priset är ett cirkapris och baserat på ditt avtals antal månader och din beräknade
-              årliga körsträcka. Kostnad för försäkring och serviceavtal tillkommer. Kontakta
-              säljare för komplett kostnadsförslag.{' '}
-            </p>
-          </Content>
-        </Modal>
-      )}
       <PortalElement id={PortalNamespace.DefaultPortal} />
       {demoCarModal && <DemoCarModal onClose={onToggleDemoCarModal} />}
     </>

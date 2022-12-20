@@ -16,6 +16,7 @@ const Home = () => (
       removeFilterOptions: false,
       modifyDocumentTitleItem: true,
       modifyDocumentTitleSearch: 'Wayke',
+      displayBranchName: true,
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

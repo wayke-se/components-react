@@ -10,12 +10,8 @@ interface ToggleItemProps {
   onClickValue?: () => void;
 }
 
-const initialValue: { [key: string]: boolean | undefined } = {};
-
-const getInitialValue = (title: string) => title && !!initialValue[title];
-
 const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: ToggleItemProps) => {
-  const [visible, setVisible] = useState(() => getInitialValue(type));
+  const [visible, setVisible] = useState(false);
 
   const _onClickValue = useCallback(() => {
     if (onClickValue) {
@@ -25,7 +21,6 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
 
   const onClick = useCallback(() => {
     if (!visible) {
-      initialValue[type] = true;
       setVisible(true);
       if (onClickVisible) {
         onClickVisible();

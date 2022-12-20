@@ -5,6 +5,8 @@ const SortOptionDisplayName = {
   Pricedesc: 'price-desc',
   ModelAsc: 'model-asc',
   Modeldesc: 'model-desc',
+  MileageAsc: 'mileage-asc',
+  Mileagedesc: 'mileage-desc',
 };
 
 type SortOptionDisplayName =
@@ -14,7 +16,9 @@ type SortOptionDisplayName =
   | 'price-asc'
   | 'price-desc'
   | 'model-asc'
-  | 'model-desc';
+  | 'model-desc'
+  | 'mileage-asc'
+  | 'mileage-desc';
 
 export const getTranslatedSortOptionDisplayName = (str: string | SortOptionDisplayName): string => {
   switch (str) {
@@ -30,6 +34,10 @@ export const getTranslatedSortOptionDisplayName = (str: string | SortOptionDispl
       return 'Årsmodell äldst';
     case SortOptionDisplayName.Modeldesc:
       return 'Årsmodell nyast';
+    case SortOptionDisplayName.MileageAsc:
+      return 'Miltal lägst';
+    case SortOptionDisplayName.Mileagedesc:
+      return 'Miltal högst';
     default:
       return str;
   }

@@ -19,6 +19,7 @@ import {
   OldPrice,
   PriceCell,
   Label,
+  PreHeading,
 } from './wrapper';
 import UspList, { ItemProps } from '../UspList/index';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
@@ -36,6 +37,7 @@ interface Props {
   price: string;
   leasingPrice?: string;
   oldPrice?: string;
+  branchName?: string;
   businessLeasingPrice?: string;
   onClick?: (id: string) => void;
 }
@@ -47,6 +49,7 @@ const ProductCard = ({
   image,
   pathRoute,
   placeholderImage,
+  branchName,
   description,
   uspList,
   price,
@@ -100,6 +103,7 @@ const ProductCard = ({
       </Image>
       <Content>
         <ContentBody>
+          {branchName && <PreHeading>{branchName}</PreHeading>}
           <Heading>
             {href ? (
               <Link onClick={onHrefClick} href={href} title={title} aria-label={title}>

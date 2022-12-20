@@ -18,9 +18,10 @@ import { formatPhonenumber } from '../../utils/phonenumbers';
 interface BranchProps {
   branch?: Maybe<Branch>;
   loading: boolean;
+  displayBranchName?: boolean;
 }
 
-const Branch = ({ branch, loading }: BranchProps) => {
+const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
   const [modal, setModal] = useState(false);
 
   const openModal = useCallback(() => setModal(true), []);
@@ -43,7 +44,9 @@ const Branch = ({ branch, loading }: BranchProps) => {
       )}
       <Repeat>
         <H2 noMargin>
-          {branch?.location?.city
+          {displayBranchName
+            ? `Den här bilen finns på ${branch.name}`
+            : branch?.location?.city
             ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
             : 'Kontakt'}
         </H2>

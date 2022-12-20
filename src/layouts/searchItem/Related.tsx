@@ -22,11 +22,20 @@ interface RelatedProps {
   id: string;
   hashRoute?: boolean;
   pathRoute?: string;
+  authorizedReseller?: boolean;
+  displayBranchName?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) => {
-  const { loading, response, moreLikeThisUrl } = useRelatedSearch(id);
+const Related = ({
+  id,
+  hashRoute,
+  pathRoute,
+  authorizedReseller,
+  displayBranchName,
+  onClickSearchItem,
+}: RelatedProps) => {
+  const { loading, response, moreLikeThisUrl } = useRelatedSearch(id, !!authorizedReseller);
 
   const onItemClicked = useCallback((id: string) => {
     PubSub.publish('ItemClicked', id);
@@ -84,6 +93,7 @@ const Related = ({ id, hashRoute, pathRoute, onClickSearchItem }: RelatedProps) 
                       href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
                       image={document.featuredImage?.files?.[0]?.url}
                       description={document.shortDescription}
+                      branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
                       uspList={[
                         {
                           title: document.modelYear,

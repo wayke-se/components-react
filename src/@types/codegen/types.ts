@@ -12,7 +12,7 @@ export type Scalars = {
   Float: number;
   DateTime: Date;
   Email: string;
-  FileDocument: { webp: string, category: string; contentType: string, name: string, url: string};
+  FileDocument: {webp: string, category: string, contentType: string, name: string, url: string};
   PersonalNumber: string;
   PhoneNumber: string;
   Time: string;
@@ -47,6 +47,7 @@ export type BranchConnection = {
 
 export type BranchFlags = {
   __typename?: 'BranchFlags';
+  authorizedReseller?: Maybe<Scalars['Boolean']>;
   centralStorage?: Maybe<Scalars['Boolean']>;
   ecommerce?: Maybe<Scalars['Boolean']>;
   mrf?: Maybe<Scalars['Boolean']>;
@@ -370,4 +371,9 @@ export type VehicleFlags = {
   auction?: Maybe<Scalars['Boolean']>;
   demoVersion?: Maybe<Scalars['Boolean']>;
   testDrive?: Maybe<Scalars['Boolean']>;
+};
+
+export type _Service = {
+  __typename?: '_Service';
+  sdl: Scalars['String'];
 };

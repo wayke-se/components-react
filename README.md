@@ -164,7 +164,8 @@ const App = ({}) => {
 | disableResetScrollOnInit | boolean  | false    |                      |
 | placeholderImage         | string   | false    |                      |
 | onClickSearchItem        | function | false    | (id: string) => void |
-| modifyDocumentTitleItem  | boolean  | false    |                      | 
+| modifyDocumentTitleItem  | boolean  | false    |                      |
+| displayBranchName        | boolean  | false    |                      |
 
 * Required
   * `id` - Guid that represents a vehicle.
@@ -175,6 +176,7 @@ const App = ({}) => {
   * `placeholderImage` - Provide custom placeholder image when image is missing.
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
   * `modifyDocumentTitleItem` - Update document title with vehicle data
+  * `displayBranchName` - Displays branch name on related product cards and using branch name in presentation of where the vehicle exist
 
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
@@ -188,6 +190,7 @@ const App = ({}) => {
 | placeholderImage          | string                    |                           |
 | onClickSearchItem         | function                  | (id: string) => void      |
 | modifyDocumentTitleSearch | string                    |                           |
+| displayBranchName         | string                    |                           |
 
 * Optional
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
@@ -199,6 +202,7 @@ const App = ({}) => {
   * `placeholderImage` - Provide custom placeholder image when image is missing.
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
   * `modifyDocumentTitleSearch` - Set custom document title
+  * `displayBranchName` - Displays branch name on product cards
 
 ## Types
 

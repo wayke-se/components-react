@@ -18,10 +18,18 @@ interface GridProps {
   hashRoute?: boolean;
   pathRoute?: string;
   placeholderImage?: string;
+  displayBranchName?: boolean;
   onClickItem?: (id: string) => void;
 }
 
-const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }: GridProps) => {
+const Grid = ({
+  documents,
+  placeholderImage,
+  hashRoute,
+  pathRoute,
+  displayBranchName,
+  onClickItem,
+}: GridProps) => {
   if (!documents) {
     return null;
   }
@@ -64,6 +72,7 @@ const Grid = ({ documents, placeholderImage, hashRoute, pathRoute, onClickItem }
                 image={resolveImage(document)}
                 placeholderImage={placeholderImage}
                 description={document.shortDescription}
+                branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
                 uspList={[
                   {
                     title: document.modelYear,

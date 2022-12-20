@@ -71,6 +71,12 @@ export const ContentFooter = styled.div`
   padding-top: ${size(1)};
 `;
 
+export const PreHeading = styled.div`
+  margin-bottom: ${size(0.25)};
+  color: ${(props) => props.theme.color.textDarkLighten};
+  font-size: 0.75rem;
+`;
+
 export const Heading = styled.h1.attrs(() => ({
   className: 'wayke__theme wayke__font--bold',
 }))`
@@ -143,5 +149,5 @@ export const OldPrice = styled.div`
 
 export const Label = styled.label`
   color: ${(props) => props.theme.color.disabledText};
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 `;

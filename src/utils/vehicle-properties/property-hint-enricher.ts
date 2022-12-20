@@ -87,6 +87,8 @@ export const HINTS = Object.freeze<{ [key: string]: string }>({
   finish: '',
   fuelConsumptionCityDriving: 'Bränsleförbrukning vid stadskörning.',
   fuelConsumptionCountryRoadDriving: 'Bränsleförbrukning vid landsvägskörning.',
+  fuelConsumptionMixedDrivingNEDC: 'Bränsleförbrukning vid blandad körning.',
+  fuelConsumptionMixedDrivingWLTP: 'Bränsleförbrukning vid blandad körning.',
   fuelConsumptionMixedDriving:
     'Bränsleförbrukning vid blandad körning. Dvs. stadskörning och landsvägskörning under en och samma färd.',
   fuelType: 'Vad bilen ska tankas med och drivs av.',

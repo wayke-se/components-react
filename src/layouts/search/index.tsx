@@ -22,6 +22,7 @@ export interface WaykeSearchProps {
   hashRoute?: boolean;
   pathRoute?: string;
   modifyDocumentTitleSearch?: string;
+  displayBranchName?: boolean;
   onClickSearchItem?: (id: string) => void;
 }
 
@@ -34,6 +35,7 @@ const WaykeSearch = ({
   placeholderImage,
   removeFilterOptions,
   modifyDocumentTitleSearch,
+  displayBranchName,
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
@@ -104,6 +106,7 @@ const WaykeSearch = ({
                     onClickItem={onItemClicked}
                     documents={documents}
                     placeholderImage={placeholderImage}
+                    displayBranchName={displayBranchName}
                   />
                 )}
                 {!error && documents && documents.length === 0 && (

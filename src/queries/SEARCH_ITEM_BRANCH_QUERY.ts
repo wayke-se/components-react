@@ -45,6 +45,7 @@ const SEARCH_ITEM_BRANCH_QUERY = gql`
           mrf
           centralStorage
           ecommerce
+          authorizedReseller
         }
         logotype
         openingHours {
