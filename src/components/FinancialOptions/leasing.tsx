@@ -19,13 +19,16 @@ const Leasing = ({ financialOption }: LeasingProps) => {
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => setModal(!modal), [modal]);
 
-  const { image, description, monthlyCost, duration, mileage } = financialOption;
+  const { image, description, monthlyCost, duration, mileage, type, name } = financialOption;
+
+  const title =
+    type === 'leasing' ? 'Privatleasa' : type === 'business-leasing' ? 'Företagsleasa' : type;
 
   return (
     <>
       {modal && (
-        <Modal title="Privatleasing" onClose={toggleModal}>
-          {image && <Image src={image} alt="Privatleasing" />}
+        <Modal title={title} onClose={toggleModal}>
+          {image && <Image src={image} alt={title} />}
           {description && <Content dangerouslySetInnerHTML={{ __html: description }} />}
           <ModalFoldout>
             <ModalFoldoutBody>
@@ -57,7 +60,7 @@ const Leasing = ({ financialOption }: LeasingProps) => {
         </>
         <OptionBoxContent>
           <p>
-            Privatleasing{' '}
+            {title}{' '}
             {mileage?.current && duration?.current && (
               <>
                 <UtilityTextPrimary>{numberSeparator(mileage?.current)} mil/år</UtilityTextPrimary>{' '}
@@ -65,9 +68,11 @@ const Leasing = ({ financialOption }: LeasingProps) => {
               </>
             )}
           </p>
-          <p>
-            <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
-          </p>
+          {name && (
+            <p>
+              <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
+            </p>
+          )}
         </OptionBoxContent>
       </OptionBox>
     </>

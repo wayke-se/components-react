@@ -18,7 +18,9 @@ const FinancialOptions = ({ id, financialOptions }: FinancialOptionsProps) => (
     <RepeatTiny>
       {financialOptions.map((financialOption, index) => (
         <Fragment key={index}>
-          {financialOption.type === 'leasing' && <Leasing financialOption={financialOption} />}
+          {(financialOption.type === 'leasing' || financialOption.type === 'business-leasing') && (
+            <Leasing financialOption={financialOption} />
+          )}
           {financialOption.type === 'loan' && <Loan id={id} financialOption={financialOption} />}
         </Fragment>
       ))}
