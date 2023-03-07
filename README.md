@@ -27,8 +27,8 @@ import '@wayke-se/ecom-web/dist/index.css';
 
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
-  url: "https://test-ext-api.wayketech.se/vehicles",
-  urlMlt: "https://test-ext-api.wayketech.se/vehicles-mlt-ext",
+  url: "https://api.wayketech.se/vehicles",
+  urlMlt: "https://api.wayketech.se/vehicles-mlt-ext",
   ecomSettings: {
     url: "OPTIONAL_ECOM_URL",
   },
@@ -46,8 +46,8 @@ const App = () => (
 ```javascript
 const ProviderSettings: WaykeProviderSettings = {
   graphQlUrl: "https://gql.wayketech.se/query",
-  url: "https://test-ext-api.wayketech.se/vehicles",
-  urlMlt: "https://test-ext-api.wayketech.se/vehicles-mlt-ext",
+  url: "https://api.wayketech.se/vehicles",
+  urlMlt: "https://api.wayketech.se/vehicles-mlt-ext",
   ecomSettings: {
     url: "https://ecom.wayketech.se",
   },
@@ -487,8 +487,8 @@ This repository contains a example app that uses [@wayke-se/components-react](ht
 To start the example create an `.env` file in root.
 ```
 WAYKE_HOST=YOUR_HOST_1,YOUR_HOST_2
-WAYKE_SEARCH_URL=https://test-ext-api.wayketech.se/vehicles
-WAYKE_SEARCH_MLT_URL=https://test-ext-api.wayketech.se/vehicles-mlt-ext
+WAYKE_SEARCH_URL=https://api.wayketech.se/vehicles
+WAYKE_SEARCH_MLT_URL=https://api.wayketech.se/vehicles-mlt-ext
 WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
 WAYKE_ECOM_URL=https://ecom.wayketech.se
