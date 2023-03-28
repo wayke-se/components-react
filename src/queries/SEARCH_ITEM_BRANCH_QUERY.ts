@@ -27,6 +27,12 @@ const SEARCH_ITEM_BRANCH_QUERY = gql`
         model
         name
         price
+        assemblyPrice
+        productPage {
+          title
+          url
+        }
+        salePrice
       }
       branch {
         connections {

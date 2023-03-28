@@ -24,6 +24,7 @@ export type Scalars = {
 export type Accessory = {
   __typename?: 'Accessory';
   articleNumber?: Maybe<Scalars['String']>;
+  assemblyPrice?: Maybe<Scalars['Float']>;
   description: Scalars['String'];
   excerpt: Scalars['String'];
   id: Scalars['ID'];
@@ -33,6 +34,8 @@ export type Accessory = {
   model?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   price: Scalars['Float'];
+  productPage?: Maybe<Link>;
+  salePrice?: Maybe<Scalars['Float']>;
 };
 
 export type Branch = {

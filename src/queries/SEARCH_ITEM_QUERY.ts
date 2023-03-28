@@ -39,6 +39,12 @@ const SEARCH_ITEM_QUERY = gql`
         model
         name
         price
+        assemblyPrice
+        productPage {
+          title
+          url
+        }
+        salePrice
       }
       manufacturer {
         description
