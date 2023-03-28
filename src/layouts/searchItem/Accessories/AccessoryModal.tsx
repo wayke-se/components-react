@@ -10,7 +10,7 @@ interface AccesoryModalProps {
 }
 
 const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => (
-  <div title={accessory.name} onClose={onClose}>
+  <div title={accessory.name} onClick={onClose}>
     {accessory.images?.[0] && (
       <div>
         <img src={`${accessory.images[0]}?w=570`} alt={`${accessory.name}`} />
