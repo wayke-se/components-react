@@ -21,6 +21,20 @@ export type Scalars = {
   VehicleDataPropertySet: any;
 };
 
+export type Accessory = {
+  __typename?: 'Accessory';
+  articleNumber?: Maybe<Scalars['String']>;
+  description: Scalars['String'];
+  excerpt: Scalars['String'];
+  id: Scalars['ID'];
+  images: Array<Scalars['String']>;
+  logotype?: Maybe<Scalars['String']>;
+  manufacturer?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
+};
+
 export type Branch = {
   __typename?: 'Branch';
   connections: Array<BranchConnection>;
@@ -316,6 +330,7 @@ export type Service = {
 
 export type Vehicle = {
   __typename?: 'Vehicle';
+  accessories: Array<Accessory>;
   availableFrom?: Maybe<Scalars['DateTime']>;
   branch?: Maybe<Branch>;
   contact?: Maybe<ContactOptions>;

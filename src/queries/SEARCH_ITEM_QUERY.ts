@@ -28,6 +28,18 @@ const SEARCH_ITEM_QUERY = gql`
         phonenumber
         avatar
       }
+      accessories {
+        articleNumber
+        description
+        excerpt
+        id
+        images
+        logotype
+        manufacturer
+        model
+        name
+        price
+      }
       manufacturer {
         description
         logotype

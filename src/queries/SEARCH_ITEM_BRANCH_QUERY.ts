@@ -16,6 +16,18 @@ const SEARCH_ITEM_BRANCH_QUERY = gql`
         phonenumber
         avatar
       }
+      accessories {
+        articleNumber
+        description
+        excerpt
+        id
+        images
+        logotype
+        manufacturer
+        model
+        name
+        price
+      }
       branch {
         connections {
           id
