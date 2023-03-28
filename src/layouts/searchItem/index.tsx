@@ -130,6 +130,7 @@ const WaykeSearchItem = ({
   const branch = centralStorageVehicle?.branch;
   const {
     title,
+    accessories,
     shortDescription,
     media,
     description,
