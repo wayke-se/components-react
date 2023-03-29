@@ -51,8 +51,8 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
       {accessory.logotype && (
         <Repeat>
           <LogoBox
-            logo={`${accessory.logotype}?w=160&h=48`}
-            logo2x={`${accessory.logotype}?w=320&h=96`}
+            logo={`${accessory.logotype}?w=160`}
+            logo2x={`${accessory.logotype}?w=320`}
             alt={accessory.manufacturer || 'Logotyp'}
             wide
           />

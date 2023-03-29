@@ -28,6 +28,13 @@ export const Item = styled.li`
   width: 100%;
   max-width: 100%;
   scroll-snap-align: start;
+
+  ${(props) => props.theme.breakpoint.LtSm} {
+    &:is(:only-child, #important) {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
 `;
 
 interface ListProps {
