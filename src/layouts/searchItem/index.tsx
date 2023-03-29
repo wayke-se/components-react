@@ -302,6 +302,8 @@ const WaykeSearchItem = ({
 
                 <Documents documents={documents} />
 
+                <AccessoriesSection accessories={accessories} />
+
                 <ProductPageMainSection>
                   <Branch
                     branch={branch}
@@ -320,8 +322,6 @@ const WaykeSearchItem = ({
                     </Repeat>
                   )}
                 </ProductPageMainSection>
-
-                <AccessoriesSection accessories={accessories} />
 
                 <PackageOptions packageOptions={packageOptions} />
                 <ManufacturerPackageOption packageOption={manufacturer?.packageOption} />
