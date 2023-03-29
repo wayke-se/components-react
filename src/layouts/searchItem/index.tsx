@@ -40,6 +40,7 @@ import Property from './Property';
 import DemoCarModal from './DemoCarModal';
 import useSettings from '../../State/Settings/useSettings';
 import Documents from './Documents';
+import AccessoriesSection from './Accessories';
 
 export interface WaykeSearchItemProps {
   id: string;
@@ -129,6 +130,7 @@ const WaykeSearchItem = ({
   const branch = centralStorageVehicle?.branch;
   const {
     title,
+    accessories,
     shortDescription,
     media,
     description,
@@ -318,6 +320,9 @@ const WaykeSearchItem = ({
                     </Repeat>
                   )}
                 </ProductPageMainSection>
+
+                <AccessoriesSection accessories={accessories} />
+
                 <PackageOptions packageOptions={packageOptions} />
                 <ManufacturerPackageOption packageOption={manufacturer?.packageOption} />
               </ProductPageMain>

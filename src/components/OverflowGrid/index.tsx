@@ -1,70 +1,109 @@
-import styled from 'styled-components';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 
-import { size } from '../../layout/helpers';
-import { Wrapper as Container } from '../Container/wrapper';
+import { Wrapper, ListWrapper, List, Item, PrevBtn, NextBtn } from './wrapper';
+import { IconChevronLeft, IconChevronRight } from '../Icon';
+import { NavButton } from '../NavButton';
 
-export const OverflowGrid = styled.div`
-  ${(props) => props.theme.breakpoint.LtMd} {
-    ${Container} & {
-      margin-left: ${size(-3)};
-      margin-right: ${size(-2)};
+export interface IOverflowGrid {
+  items: React.ReactNode[];
+  itemKeyBase?: string;
+  spacing?: number;
+  columns?: number;
+  columnsSm?: number;
+  columnsMd?: number;
+  accentBg?: boolean;
+}
+
+const OverflowGrid = ({
+  items,
+  itemKeyBase,
+  spacing,
+  columns,
+  columnsSm,
+  columnsMd,
+  accentBg,
+}: IOverflowGrid) => {
+  const overflowElement = useRef<HTMLUListElement | null>(null);
+
+  const onPrev = useCallback(() => {
+    const itemWidth = overflowElement.current?.children[0].clientWidth || 0;
+    const scrollLeft = overflowElement.current?.scrollLeft || 0;
+
+    if (scrollLeft > 0) {
+      overflowElement.current?.scroll({
+        left: scrollLeft - itemWidth,
+        behavior: 'smooth',
+      });
     }
-  }
+  }, []);
 
-  ${(props) => props.theme.breakpoint.LtSm} {
-    ${Container} & {
-      margin-left: ${size(-2)};
-      margin-right: ${size(-1)};
+  const onNext = useCallback(() => {
+    const itemWidth = overflowElement.current?.children[0].clientWidth || 0;
+    const scrollWidth = overflowElement.current?.scrollWidth || 0;
+    const scrollLeft = overflowElement.current?.scrollLeft || 0;
+    const overflowElementWidth = overflowElement.current?.offsetWidth || 0;
+    const overflowElementScrollWidth = scrollWidth - overflowElementWidth;
+
+    if (overflowElementScrollWidth !== scrollLeft) {
+      overflowElement.current?.scroll({
+        left: scrollLeft + itemWidth,
+        behavior: 'smooth',
+      });
     }
-  }
-`;
+  }, []);
 
-export const OverflowGridList = styled.ul`
-  display: flex;
-  align-items: flex-start;
-  list-style: none;
-  padding: 0;
-  margin: ${size(-1)};
+  // Hide navigation buttons depending on scroll position
+  const [hidePrevNav, setHidePrevNav] = useState(true);
+  const [hideNextNav, setHideNextNav] = useState(true);
 
-  ${(props) => props.theme.breakpoint.LtMd} {
-    ${Container} & {
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 ${size(3)};
+  const onScroll = () => {
+    const scrollLeft = overflowElement.current?.scrollLeft || 0;
+    const scrollWidth = overflowElement.current?.scrollWidth || 0;
+    const overflowElementWidth = overflowElement.current?.offsetWidth || 0;
+    const overflowElementScrollWidth = scrollWidth - overflowElementWidth;
 
-      :after {
-        content: '';
-        flex: 0 0 auto;
-        height: 1px;
-        width: ${size(2)};
-      }
-    }
-  }
+    setHidePrevNav(scrollLeft == 0 ? true : false);
+    setHideNextNav(overflowElementScrollWidth == scrollLeft ? true : false);
+  };
 
-  ${(props) => props.theme.breakpoint.LtSm} {
-    ${Container} & {
-      padding: 0 ${size(2)};
+  useEffect(() => {
+    onScroll();
+    overflowElement.current?.addEventListener('scroll', onScroll);
+    return () => overflowElement.current?.removeEventListener('scroll', onScroll);
+  }, []);
 
-      :after {
-        width: ${size(1)};
-      }
-    }
-  }
-`;
+  return (
+    <Wrapper $accentBg={accentBg}>
+      <ListWrapper $spacing={spacing}>
+        <List
+          ref={overflowElement}
+          $columns={columns}
+          $columnsSm={columnsSm}
+          $columnsMd={columnsMd}
+        >
+          {items.map((item, i) => (
+            <Item key={itemKeyBase ? `${itemKeyBase}-${i}` : `overflow-grid-item-${i}`}>
+              {item}
+            </Item>
+          ))}
+        </List>
+      </ListWrapper>
+      {!hidePrevNav && (
+        <PrevBtn>
+          <NavButton onClick={onPrev} title="Previous">
+            <IconChevronLeft />
+          </NavButton>
+        </PrevBtn>
+      )}
+      {!hideNextNav && (
+        <NextBtn>
+          <NavButton onClick={onNext} title="Next">
+            <IconChevronRight />
+          </NavButton>
+        </NextBtn>
+      )}
+    </Wrapper>
+  );
+};
 
-export const OverflowGridItem = styled.li`
-  flex: 1 0 auto;
-  width: calc(100% - ${size(2)});
-  max-width: calc(100% - ${size(2)});
-  padding: ${size(1)};
-
-  ${(props) => props.theme.breakpoint.Sm} {
-    width: calc(50% - ${size(3)});
-    max-width: calc(50% - ${size(3)});
-  }
-
-  ${(props) => props.theme.breakpoint.Md} {
-    width: 33.333%;
-    max-width: 33.333%;
-  }
-`;
+export default OverflowGrid;

@@ -43,7 +43,7 @@ export const PdfSubtitle = styled.div`
 `;
 
 export const PdfColumn = styled.div`
-  flex 0 0 auto;
+  flex: 0 0 auto;
   &:first-child {
     flex: 1 1 auto;
   }

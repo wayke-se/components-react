@@ -5,11 +5,7 @@ import { Repeat } from '../../components/Repeat/index';
 
 import { PageSection } from '../../components/Page/index';
 import SectionHeader from '../../components/SectionHeader/index';
-import {
-  OverflowGridList,
-  OverflowGrid,
-  OverflowGridItem,
-} from '../../components/OverflowGrid/index';
+import OverflowGrid from '../../components/OverflowGrid/index';
 import ProductCard from '../../components/ProductCard/index';
 import { H2 } from '../../components/Heading/index';
 import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
@@ -70,67 +66,69 @@ const Related = ({
         )}
 
         <Repeat>
-          <OverflowGrid>
-            <OverflowGridList>
-              {response?.documentList.documents.map((document) => {
-                const prefix = pathRoute ? `/${pathRoute}` : '/';
+          <OverflowGrid
+            accentBg
+            columns={1.05}
+            columnsSm={2.1}
+            columnsMd={3}
+            spacing={2}
+            items={response?.documentList.documents.map((document) => {
+              const prefix = pathRoute ? `/${pathRoute}` : '/';
 
-                const r = regexPathGuid();
+              const r = regexPathGuid();
 
-                const pathRouteUrl =
-                  window.location.pathname === '/'
-                    ? `${prefix}${document._id}`
-                    : r.test(`${pathRoute}${id}`)
-                    ? window.location.pathname.replace(r, document._id)
-                    : `${window.location.pathname}${prefix}${document._id}`;
+              const pathRouteUrl =
+                window.location.pathname === '/'
+                  ? `${prefix}${document._id}`
+                  : r.test(`${pathRoute}${id}`)
+                  ? window.location.pathname.replace(r, document._id)
+                  : `${window.location.pathname}${prefix}${document._id}`;
 
-                return (
-                  <OverflowGridItem key={document._id}>
-                    <ProductCard
-                      id={document._id}
-                      onClick={onItemClicked}
-                      title={document.title}
-                      href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
-                      image={document.featuredImage?.files?.[0]?.url}
-                      description={document.shortDescription}
-                      branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
-                      uspList={[
-                        {
-                          title: document.modelYear,
-                        },
-                        {
-                          title: `${numberSeparator(document.mileage)} mil`,
-                        },
-                        {
-                          title: document.gearboxType,
-                        },
-                        {
-                          title: document.fuelType,
-                        },
-                      ]}
-                      price={`${numberSeparator(document.price)} kr`}
-                      oldPrice={
-                        document.oldPrice !== undefined && document.price < document.oldPrice
-                          ? `${numberSeparator(document.oldPrice)} kr`
-                          : undefined
-                      }
-                      leasingPrice={
-                        document.leasingPrice !== undefined
-                          ? `${numberSeparator(document.leasingPrice)} kr/mån`
-                          : undefined
-                      }
-                      businessLeasingPrice={
-                        document.businessLeasingPrice !== undefined
-                          ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
-                          : undefined
-                      }
-                      pathRoute={pathRoute}
-                    />
-                  </OverflowGridItem>
-                );
-              })}
-            </OverflowGridList>
-          </OverflowGrid>
+              return (
+                <ProductCard
+                  key={document._id}
+                  id={document._id}
+                  onClick={onItemClicked}
+                  title={document.title}
+                  href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
+                  image={document.featuredImage?.files?.[0]?.url}
+                  description={document.shortDescription}
+                  branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
+                  uspList={[
+                    {
+                      title: document.modelYear,
+                    },
+                    {
+                      title: `${numberSeparator(document.mileage)} mil`,
+                    },
+                    {
+                      title: document.gearboxType,
+                    },
+                    {
+                      title: document.fuelType,
+                    },
+                  ]}
+                  price={`${numberSeparator(document.price)} kr`}
+                  oldPrice={
+                    document.oldPrice !== undefined && document.price < document.oldPrice
+                      ? `${numberSeparator(document.oldPrice)} kr`
+                      : undefined
+                  }
+                  leasingPrice={
+                    document.leasingPrice !== undefined
+                      ? `${numberSeparator(document.leasingPrice)} kr/mån`
+                      : undefined
+                  }
+                  businessLeasingPrice={
+                    document.businessLeasingPrice !== undefined
+                      ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
+                      : undefined
+                  }
+                  pathRoute={pathRoute}
+                />
+              );
+            })}
+          />
         </Repeat>
       </Container>
     </PageSection>
