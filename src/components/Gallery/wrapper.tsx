@@ -160,47 +160,10 @@ export const ImageFull = styled.img`
 
 // Arrow Nav
 
-const Arrow = styled(ButtonReset)`
+const Arrow = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: ${size(4)};
-  height: ${size(4)};
-  border-radius: 50%;
-  font-size: 1rem;
-  line-height: 1;
-  background-color: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: ${(props) => props.theme.color.textDark};
-  transform-origin: 50% 50%;
-  transition: transform 200ms ease;
-
-  :before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    opacity: 0;
-    transition: opacity 200ms ease;
-  }
-
-  :hover {
-    :before {
-      opacity: 1;
-    }
-  }
-
-  :active {
-    transform: translateY(-50%) scale(0.95);
-  }
 
   ${(props) => props.theme.breakpoint.LtSm} {
     display: none;

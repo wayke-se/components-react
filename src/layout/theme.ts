@@ -51,6 +51,14 @@ const theme = {
     Lg: '@media (min-width: 1200px)',
     LtLg: '@media (max-width: 1199px)',
   },
+  mask: {
+    gradient: {
+      toTop: 'linear-gradient(to top, #000, transparent)',
+      toBottom: 'linear-gradient(to bottom, #000, transparent)',
+      toLeft: 'linear-gradient(to left, #000, transparent)',
+      toRight: 'linear-gradient(to right, #000, transparent)',
+    },
+  },
   distances: {
     baseUnit: '8px',
     inputHeight: '48px',

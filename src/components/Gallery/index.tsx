@@ -19,6 +19,7 @@ import {
 } from './wrapper';
 import { IconChevronLeft, IconChevronRight } from '../Icon/index';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
+import { NavButton } from '../NavButton/index';
 import Lightbox from '../Lightbox/index';
 import EmbededVideo from '../Video/EmbededVideo';
 import QuickNavEmbeded from '../Video/QuickNavEmbeded';
@@ -178,11 +179,15 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
           </SliderWrapper>
           {!navigationDisabled && mediaLength > 1 && (
             <>
-              <ArrowLeft onClick={prevImage} title="Föregående bild">
-                <IconChevronLeft block />
+              <ArrowLeft>
+                <NavButton onClick={prevImage} title="Föregående bild">
+                  <IconChevronLeft block />
+                </NavButton>
               </ArrowLeft>
-              <ArrowRight onClick={nextImage} title="Nästa bild">
-                <IconChevronRight block />
+              <ArrowRight>
+                <NavButton onClick={nextImage} title="Nästa bild">
+                  <IconChevronRight block />
+                </NavButton>
               </ArrowRight>
             </>
           )}
