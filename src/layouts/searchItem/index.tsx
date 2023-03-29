@@ -40,7 +40,7 @@ import Property from './Property';
 import DemoCarModal from './DemoCarModal';
 import useSettings from '../../State/Settings/useSettings';
 import Documents from './Documents';
-import AccessoriesSection from './Accessories';
+import AccessoriesSection from './Accessories/index';
 
 export interface WaykeSearchItemProps {
   id: string;

@@ -12,7 +12,7 @@ import {
   Preamble,
   ReadMoreBtn,
 } from './wrapper';
-import { IconImage } from '../Icon';
+import { IconImage } from '../Icon/index';
 
 interface AccessoryCardImageProps {
   src: string;
