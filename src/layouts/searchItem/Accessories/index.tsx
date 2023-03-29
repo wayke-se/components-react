@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Accessory } from '../../../@types/codegen/types';
 import { numberSeparator } from '../../../utils/formats';
-import { ProductPageMainSection } from '../../../components/ProductPage';
+import { ProductPageMainSection } from '../../../components/ProductPage/index';
 import { Repeat } from '../../../components/Repeat/index';
 import { H2 } from '../../../components/Heading/index';
 import Content from '../../../components/Content/index';
