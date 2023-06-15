@@ -1,7 +1,14 @@
 import { EnhancedProperty } from '../../@types/vehicle-properties';
 import deepCopy from '../deep-copy';
 
-const PROPERTY_BLACK_LIST = Object.freeze(['towHitchFoldable']);
+const PROPERTY_BLACK_LIST = Object.freeze([
+  'towHitchFoldable',
+  'trailerTotalWeightB',
+  'gps',
+  'androidAuto',
+  'appleCarPlay',
+  'tintedWindows',
+]);
 
 const isForbiddenProperty = (key: string) => PROPERTY_BLACK_LIST.includes(key);
 
