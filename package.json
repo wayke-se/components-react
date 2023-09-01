@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
-    "@wayke-se/ecom-web": "^1.4.11",
+    "@wayke-se/ecom-web": "^1.5.0",
     "date-fns": "^2.25.0",
     "graphql": "^16.0.1",
     "libphonenumber-js": "^1.9.42",
