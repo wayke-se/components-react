@@ -80,7 +80,7 @@
     "@apollo/client": "^3.4.17",
     "@wayke-se/ecom-web": "^1.5.1",
     "date-fns": "^2.25.0",
-    "graphql": "^16.0.1",
+    "graphql": "^16.8.1",
     "libphonenumber-js": "^1.9.42",
     "marked": "^4.0.3",
     "react-compound-slider": "^3.3.1",
