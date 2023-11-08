@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 const SortOptionDisplayName = {
   PublishedAsc: 'published-asc',
   PublishedDesc: 'published-desc',
@@ -23,21 +25,21 @@ type SortOptionDisplayName =
 export const getTranslatedSortOptionDisplayName = (str: string | SortOptionDisplayName): string => {
   switch (str) {
     case SortOptionDisplayName.PublishedAsc:
-      return 'Publicerad äldst';
+      return i18next.t('search.sortOptions.publishedAsc');
     case SortOptionDisplayName.PublishedDesc:
-      return 'Publicerad senast';
+      return i18next.t('search.sortOptions.publishedDesc');
     case SortOptionDisplayName.PriceAsc:
-      return 'Pris lägst';
+      return i18next.t('search.sortOptions.priceAsc');
     case SortOptionDisplayName.Pricedesc:
-      return 'Pris högst';
+      return i18next.t('search.sortOptions.priceDesc');
     case SortOptionDisplayName.ModelAsc:
-      return 'Årsmodell äldst';
+      return i18next.t('search.sortOptions.modelAsc');
     case SortOptionDisplayName.Modeldesc:
-      return 'Årsmodell nyast';
+      return i18next.t('search.sortOptions.modelDesc');
     case SortOptionDisplayName.MileageAsc:
-      return 'Miltal lägst';
+      return i18next.t('search.sortOptions.mileageAsc');
     case SortOptionDisplayName.Mileagedesc:
-      return 'Miltal högst';
+      return i18next.t('search.sortOptions.mileageDesc');
     default:
       return str;
   }

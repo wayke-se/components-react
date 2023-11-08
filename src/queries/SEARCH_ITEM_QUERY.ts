@@ -161,6 +161,10 @@ const SEARCH_ITEM_QUERY = gql`
         manufactureYear
         manufacturer
         mileage
+        odometerReading {
+          value
+          unit
+        }
         modelName
         modelSeries
         modelYear

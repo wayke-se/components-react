@@ -7,6 +7,7 @@ import { ButtonInline } from '../Button/index';
 import LogoBox from '../LogoBox/index';
 import { InsuranceOption } from '../../@types/codegen/types';
 import { marked } from 'marked';
+import { useTranslation } from 'react-i18next';
 
 interface InsuranceFreeModal {
   onClose: () => void;
@@ -14,8 +15,9 @@ interface InsuranceFreeModal {
 }
 
 const InsuranceFreeModal = ({ onClose, insuranceOptions }: InsuranceFreeModal) => {
+  const { t } = useTranslation();
   return (
-    <Modal title={insuranceOptions?.insuranceHeader ?? 'Försäkring'} onClose={onClose}>
+    <Modal title={insuranceOptions?.insuranceHeader ?? t('item.insurance')} onClose={onClose}>
       {insuranceOptions?.longDescription && (
         <Repeat>
           <Content
@@ -30,16 +32,21 @@ const InsuranceFreeModal = ({ onClose, insuranceOptions }: InsuranceFreeModal) =
           <ButtonInline
             as="a"
             href={insuranceOptions.url}
+            title={t('item.readMoreAboutInsuranceInNewTab') || ''}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Läs mer om försäkringen (Öppnas i ett nytt fönster)
+            {t('item.readMoreAboutInsuranceInNewTab')}
           </ButtonInline>
         </Repeat>
       )}
       {insuranceOptions?.logotype && (
         <Repeat>
-          <LogoBox logo={insuranceOptions.logotype} alt={insuranceOptions.name || 'Logotyp'} wide />
+          <LogoBox
+            logo={insuranceOptions.logotype}
+            alt={insuranceOptions.name || t('common.logotype')}
+            wide
+          />
         </Repeat>
       )}
     </Modal>

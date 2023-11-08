@@ -4,6 +4,7 @@ import { Wrapper, Header, Body, Info, Action, InfoContent, InfoBtn, Title } from
 import Modal from '../Modal/index';
 import { ButtonInline } from '../Button/index';
 import { IconInfo } from '../Icon/index';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   title: string;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const SwitchBar = ({ title, body, actionTitle, children, onClick }: Props) => {
+  const { t } = useTranslation();
   const [info, setInfo] = useState(false);
   const onToggleInfo = useCallback(() => setInfo(!info), [info]);
 
@@ -27,7 +29,7 @@ const SwitchBar = ({ title, body, actionTitle, children, onClick }: Props) => {
             </InfoContent>
             {children && (
               <InfoContent>
-                <InfoBtn onClick={onToggleInfo} title="Mer information">
+                <InfoBtn onClick={onToggleInfo} title={t('common.moreInformation') || ''}>
                   <IconInfo block />
                 </InfoBtn>
               </InfoContent>

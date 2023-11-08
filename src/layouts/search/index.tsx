@@ -12,8 +12,12 @@ import Snackbar from '../../components/Snackbar/index';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
+import { MarketCode } from '../../@types/market';
+import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import i18next from 'i18next';
 
 export interface WaykeSearchProps {
+  marketCode?: MarketCode;
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
@@ -27,6 +31,7 @@ export interface WaykeSearchProps {
 }
 
 const WaykeSearch = ({
+  marketCode,
   filterList,
   initialQueryParams,
   hashRoute,
@@ -39,6 +44,7 @@ const WaykeSearch = ({
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
+  const initialized = useInitializeTranslation(marketCode);
 
   useEffect(() => {
     if (modifyDocumentTitleSearch) {
@@ -66,6 +72,8 @@ const WaykeSearch = ({
 
   const searchQuery = useMemo(() => queryFilter.searchParams.get('query'), [documents]);
 
+  if (!initialized) return null;
+
   return (
     <>
       <Page>
@@ -86,7 +94,7 @@ const WaykeSearch = ({
         {!removeFilterOptions && (
           <PageSection>
             <Container>
-              <Filter filterList={filterList} />
+              <Filter filterList={filterList} marketCode={marketCode} />
             </Container>
           </PageSection>
         )}
@@ -110,8 +118,12 @@ const WaykeSearch = ({
                   />
                 )}
                 {!error && documents && documents.length === 0 && (
-                  <Snackbar severity="warning" icon heading="Inga resultat">
-                    Det finns inga resultat som matchar din sökning.
+                  <Snackbar
+                    severity="warning"
+                    icon
+                    heading={i18next.t('search.snackbarNoSearchResults.heading') || undefined}
+                  >
+                    {i18next.t('search.snackbarNoSearchResults.body')}
                   </Snackbar>
                 )}
               </>

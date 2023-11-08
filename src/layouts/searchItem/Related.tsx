@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Container from '../../components/Container/index';
 import { Repeat } from '../../components/Repeat/index';
@@ -31,6 +32,7 @@ const Related = ({
   displayBranchName,
   onClickSearchItem,
 }: RelatedProps) => {
+  const { t } = useTranslation();
   const { loading, response, moreLikeThisUrl } = useRelatedSearch(id, !!authorizedReseller);
 
   const onItemClicked = useCallback((id: string) => {
@@ -54,13 +56,13 @@ const Related = ({
         {moreLikeThisUrl ? (
           <Repeat>
             <SectionHeader onClick={() => {}}>
-              <H2 noMargin>Relaterade fordon</H2>
+              <H2 noMargin>{t('item.relatedVehicles')}</H2>
             </SectionHeader>
           </Repeat>
         ) : (
           <Repeat>
             <SectionHeader onClick={() => {}} actionTitle="Visa alla">
-              <H2 noMargin>Senast inkomna</H2>
+              <H2 noMargin>{t('item.latestVehicles')}</H2>
             </SectionHeader>
           </Repeat>
         )}
@@ -99,7 +101,9 @@ const Related = ({
                       title: document.modelYear,
                     },
                     {
-                      title: `${numberSeparator(document.mileage)} mil`,
+                      title: `${numberSeparator(
+                        document.odometerReading?.value || document.mileage
+                      )} ${t(`odometer.${document.odometerReading?.unit || 'ScandinavianMile'}`)}`,
                     },
                     {
                       title: document.gearboxType,
@@ -108,20 +112,20 @@ const Related = ({
                       title: document.fuelType,
                     },
                   ]}
-                  price={`${numberSeparator(document.price)} kr`}
+                  price={`${numberSeparator(document.price)} ${t('currency.default')}`}
                   oldPrice={
                     document.oldPrice !== undefined && document.price < document.oldPrice
-                      ? `${numberSeparator(document.oldPrice)} kr`
+                      ? `${numberSeparator(document.oldPrice)} ${t('currency.default')}`
                       : undefined
                   }
                   leasingPrice={
                     document.leasingPrice !== undefined
-                      ? `${numberSeparator(document.leasingPrice)} kr/mån`
+                      ? `${numberSeparator(document.leasingPrice)} ${t('currency.monthly')}`
                       : undefined
                   }
                   businessLeasingPrice={
                     document.businessLeasingPrice !== undefined
-                      ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
+                      ? `${numberSeparator(document.businessLeasingPrice)} ${t('currency.monthly')}`
                       : undefined
                   }
                   pathRoute={pathRoute}

@@ -502,7 +502,7 @@ const All = [
   'annualBonus',
 ] as const;
 
-type KEYS = typeof All[number];
+type KEYS = (typeof All)[number];
 type ITEM_KEYS = keyof VehicleData;
 
 const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null => {

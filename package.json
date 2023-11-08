@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "3.8.2",
+  "version": "3.9.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -24,7 +24,9 @@
   },
   "author": "Ourstudio",
   "license": "MIT",
-  "optionalDependencies": { "fsevents": "*" },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18",
     "react-dom": "^16 || ^17 || ^18",
@@ -43,7 +45,6 @@
     "@types/marked": "^4.0.0",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
-    "@types/react-lazyload": "^3.1.1",
     "@types/react-router-dom": "^5.3.2",
     "@types/react-slick": "^0.23.7",
     "@types/styled-components": "^5.1.15",
@@ -79,13 +80,14 @@
   "dependencies": {
     "@apollo/client": "^3.4.17",
     "@wayke-se/ecom-web": "^1.5.1",
+    "@wayke-se/pannellum-react": "^1.0.0",
     "date-fns": "^2.25.0",
     "graphql": "^16.0.1",
+    "i18next": "^23.6.0",
     "libphonenumber-js": "^1.9.42",
     "marked": "^4.0.3",
     "react-compound-slider": "^3.3.1",
-    "react-lazyload": "^3.2.0",
-    "react-pannellum": "^0.2.13",
+    "react-i18next": "^13.3.1",
     "react-slick": "^0.29.0",
     "scroll-into-view-if-needed": "^2.2.28"
   },

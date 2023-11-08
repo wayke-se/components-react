@@ -23,6 +23,7 @@ import Loader from '../Loader/index';
 import { numberSeparator } from '../../utils/formats';
 import { DrivingDistance, InsuranceOption, Branch } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
+import { useTranslation } from 'react-i18next';
 
 interface FormData {
   ssn: string;
@@ -37,6 +38,7 @@ interface InsuranceModal {
 }
 
 const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModal) => {
+  const { t } = useTranslation();
   const [form, setForm] = useState<FormData>({
     ssn: '',
     drivingDistance: DrivingDistance.Between0And1000,
@@ -83,7 +85,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
   ];
 
   return (
-    <Modal title="Försäkring" onClose={onClose}>
+    <Modal title={t('item.insurance')} onClose={onClose}>
       {(insuranceOptions?.description || insuranceOptions?.logotype) && (
         <Repeat>
           <ContentLogo>
@@ -98,7 +100,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
               <ContentLogoMedia>
                 <LogoBox
                   logo={insuranceOptions.logotype}
-                  alt={insuranceOptions.name || 'Logotyp'}
+                  alt={insuranceOptions.name || t('common.logotype')}
                   wide
                 />
               </ContentLogoMedia>
@@ -112,10 +114,12 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
           <RepeatTiny>
             <InputGroup>
               <InputGroupColumn>
-                <InputLabel htmlFor="input-insurance-personalnumber">Personnummer</InputLabel>
+                <InputLabel htmlFor="input-insurance-personalnumber">
+                  {t('item.personalNumber')}
+                </InputLabel>
                 <InputText
                   placeholder="ÅÅÅÅMMDD-XXXX"
-                  label="Personnummer"
+                  label={t('item.personalNumber')}
                   value={form.ssn}
                   onChange={onChangeSsn}
                   onKeyDown={onKeyDown}
@@ -124,14 +128,14 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
               </InputGroupColumn>
               <InputGroupColumn>
                 <InputLabel htmlFor="input-insurance-mileage">
-                  Uppskattad körsträcka per år
+                  {t('item.estimatedAnualMileage')}
                 </InputLabel>
                 <InputSelect
                   value={form.drivingDistance}
                   onChange={onChangeDrivingDistance}
                   options={options}
                   unit="mil"
-                  title="Uppskattad körsträcka per år"
+                  title={t('item.estimatedAnualMileage')}
                 />
               </InputGroupColumn>
             </InputGroup>
@@ -142,23 +146,20 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
               disabled={!ssnIsValid(form.ssn) || loading}
               onClick={onShowInsurances}
             >
-              <ButtonContent>Visa försäkringar</ButtonContent>
+              <ButtonContent>{t('item.showInsurances')}</ButtonContent>
             </ButtonPrimary>
           </RepeatTiny>
         </RepeatSmall>
         {false && (
           <RepeatSmall>
             <InputCheckbox id="input-insurance-save-personalnumber">
-              Spara personnummer på denna enhet
+              {t('item.savePersonalNumberOnThisDevice')}
             </InputCheckbox>
           </RepeatSmall>
         )}
         <RepeatSmall>
           <Content small>
-            <p>
-              Spara personnummer på denna dator för att direkt visa försäkringskostnaderna i Wayke.
-              Personnumret lagras inte hos Wayke utan finns bara sparad i din webbläsare.
-            </p>
+            <p>{t('item.savePersonalNumberOnThisDeviceHelp')}</p>
           </Content>
         </RepeatSmall>
       </Repeat>
@@ -171,8 +172,8 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
 
       {error && (
         <Repeat>
-          <Snackbar severity="error" icon heading="Ett fel har inträffat">
-            Kunde inte hämta försäkringar. Vänligen försök igen.
+          <Snackbar severity="error" icon heading={t('common.anErrorHasOccured') || undefined}>
+            {t('item.couldNotfetchInsurances')}
           </Snackbar>
         </Repeat>
       )}
@@ -204,8 +205,9 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                             href={insurance.url || ''}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
+                            title={t('item.openPrePurchaseInformationInNewTab') || ''}
                           >
-                            Förköpsinformation och villkor (öppnas i ny flik)
+                            {t('item.openPrePurchaseInformationInNewTab')}
                           </ButtonInline>
                         </RepeatTiny>
                       )}
@@ -213,7 +215,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                   </Repeat>
                   {insurance.items && insurance.items.length > 0 && (
                     <Repeat>
-                      <H4>Försäkringen innehåller</H4>
+                      <H4>{t('item.insuranceIncludes')}</H4>
                       {insurance.items.map((item) => (
                         <RepeatSmall key={item.name || ''}>
                           <ExtendInfo title={item.name || ''}>{item.description}</ExtendInfo>
@@ -223,7 +225,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                   )}
                   {insurance.addons && insurance.addons.length > 0 && (
                     <Repeat>
-                      <H4>Välj till</H4>
+                      <H4>{t('item.addInsuranceHeading')}</H4>
                       {insurance.addons.map((addon) => (
                         <RepeatSmall key={addon.title || ''}>
                           <ColumnRow>

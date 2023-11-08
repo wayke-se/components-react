@@ -156,20 +156,22 @@ const App = ({}) => {
 | composite         | WaykeCompositeProps    | false    |
 
 ### WaykeSearchItem
-| Property                 | Type     | Required | Value                |
-|--------------------------|----------|----------|----------------------|
-| id                       | string   | true     |                      |
-| pathRoute                | string   | false    |                      |
-| hashRoute                | boolean  | false    |                      |
-| disableResetScrollOnInit | boolean  | false    |                      |
-| placeholderImage         | string   | false    |                      |
-| onClickSearchItem        | function | false    | (id: string) => void |
-| modifyDocumentTitleItem  | boolean  | false    |                      |
-| displayBranchName        | boolean  | false    |                      |
+| Property                 | Type       | Required | Value                |
+|--------------------------|------------|----------|----------------------|
+| id                       | string     | true     |                      |
+| marketCode               | MarketCode | false    |                      |
+| pathRoute                | string     | false    |                      |
+| hashRoute                | boolean    | false    |                      |
+| disableResetScrollOnInit | boolean    | false    |                      |
+| placeholderImage         | string     | false    |                      |
+| onClickSearchItem        | function   | false    | (id: string) => void |
+| modifyDocumentTitleItem  | boolean    | false    |                      |
+| displayBranchName        | boolean    | false    |                      |
 
 * Required
   * `id` - Guid that represents a vehicle.
 * Optional
+  * `marketCode` - Set the language, available options are SE and NO, default to SE.
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
@@ -181,6 +183,7 @@ const App = ({}) => {
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
 |---------------------------|---------------------------|---------------------------|
+| marketCode                | MarketCode                |                           |
 | pathRoute                 | string                    |                           |
 | hashRoute                 | boolean                   |                           |
 | filterList                | SearchFilterTypes[]       |                           |
@@ -193,6 +196,7 @@ const App = ({}) => {
 | displayBranchName         | string                    |                           |
 
 * Optional
+  * `marketCode` - Set the language, available options are SE and NO, default to SE.
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice
@@ -203,6 +207,11 @@ const App = ({}) => {
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
   * `modifyDocumentTitleSearch` - Set custom document title
   * `displayBranchName` - Displays branch name on product cards
+
+### Notes on MarketCode
+`marketCode` defines what langugage that will be used (defaults to `SE` - Swedish). Other things that `marketCode` will effect:
+- `SE` will exclude the filter `odometerReadingValueInKm` and instead use `mileage`, while `NO` will do the opposite. The difference between the two filters are the unit used. For `odometerReadingValueInKm` the unit is kilometer, while `mileage` is kilometer/10 (Scandinavian miles)
+
 
 ## Types
 
@@ -275,7 +284,7 @@ WaykeSearchItem & WaykeSearch combined without `id`
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
 |-------------|-----------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice |
+| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, odometerValueAsKm, modelYear, leasingPrice, businessLeasingPrice |
 | displayName | string                | false    |                                                                                                                                                |
 
 * `displayName` override default translation of title

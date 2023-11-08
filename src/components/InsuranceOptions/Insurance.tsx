@@ -6,6 +6,7 @@ import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { ButtonInline } from '../Button/index';
 import { InsuranceOption, Branch } from '../../@types/codegen/types';
 import InsuranceModal from './InsuranceModal';
+import { useTranslation } from 'react-i18next';
 
 interface InsuranceOptions {
   id: string;
@@ -14,6 +15,7 @@ interface InsuranceOptions {
 }
 
 const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => setModal(!modal), [modal]);
   if (!insuranceOptions.length) {
@@ -32,7 +34,7 @@ const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
       )}
       <Repeat>
         <RepeatTiny>
-          <VisualHeading>Välj till försäkring</VisualHeading>
+          <VisualHeading>{t('item.addInsurance')}</VisualHeading>
         </RepeatTiny>
         <RepeatTiny>
           <>
@@ -40,12 +42,12 @@ const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
               <OptionBox
                 key={`${insuranceOption.url}-${index}`}
                 logo={insuranceOption.logotype || undefined}
-                logoAlt={insuranceOption.name || 'Logotyp'}
+                logoAlt={insuranceOption.name || t('common.logotype')}
               >
-                <OptionBoxHeading>Få prisförslag</OptionBoxHeading>
+                <OptionBoxHeading>{t('item.getInsuranceQuote')}</OptionBoxHeading>
                 <OptionBoxContent>
                   <p>
-                    <ButtonInline onClick={toggleModal}>Mer information</ButtonInline>
+                    <ButtonInline onClick={toggleModal}>{t('common.moreInformation')}</ButtonInline>
                   </p>
                 </OptionBoxContent>
               </OptionBox>

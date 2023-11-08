@@ -41,8 +41,12 @@ import DemoCarModal from './DemoCarModal';
 import useSettings from '../../State/Settings/useSettings';
 import Documents from './Documents';
 import AccessoriesSection from './Accessories/index';
+import { MarketCode } from '../../@types/market';
+import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import i18next from 'i18next';
 
 export interface WaykeSearchItemProps {
+  marketCode?: MarketCode;
   id: string;
   hashRoute?: boolean;
   pathRoute?: string;
@@ -54,6 +58,7 @@ export interface WaykeSearchItemProps {
 }
 
 const WaykeSearchItem = ({
+  marketCode,
   id,
   hashRoute,
   pathRoute,
@@ -63,6 +68,7 @@ const WaykeSearchItem = ({
   displayBranchName,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
+  const initialized = useInitializeTranslation(marketCode);
   const { ecomSettings } = useSettings();
   const ecomContext = useRef<WaykeEcomWeb | undefined>();
   const { loading, data: result } = useSearchItem(id);
@@ -117,6 +123,8 @@ const WaykeSearchItem = ({
 
   const onShowMoreOptionsClick = useCallback(() => PubSub.publish('OptionsClick'), []);
 
+  if (!initialized) return null;
+
   if (loading) {
     return <PageLoading />;
   }
@@ -148,7 +156,7 @@ const WaykeSearchItem = ({
   const insuranceOptions = centralStorageVehicle?.insuranceOptions
     ? centralStorageVehicle.insuranceOptions
     : vehicle.insuranceOptions;
-  const { fuelType, mileage, gearboxType, modelYear, propertySet } = vehicle.data;
+  const { fuelType, mileage, gearboxType, odometerReading, modelYear, propertySet } = vehicle.data;
 
   const uspList: ItemProps[] = [
     {
@@ -158,13 +166,15 @@ const WaykeSearchItem = ({
 
   if (flags?.demoVersion) {
     uspList.push({
-      title: 'Demobil',
+      title: i18next.t('item.demoCar'),
       onClick: onToggleDemoCarModal,
     });
   }
 
   uspList.push({
-    title: `${numberSeparator(mileage)} mil`,
+    title: `${numberSeparator(odometerReading?.value || mileage)} ${i18next.t(
+      `odometer.${odometerReading?.unit || 'ScandinavianMile'}`
+    )}`,
   });
 
   if (gearboxType) {
@@ -186,11 +196,15 @@ const WaykeSearchItem = ({
                   {!pathRoute && hashRoute ? (
                     <Repeat>
                       <UtilityFontSizeSmall>
-                        <ButtonInlineLight as="a" href="#" title="Tillbaka till bilsök">
+                        <ButtonInlineLight
+                          as="a"
+                          href="#"
+                          title={i18next.t('navigation.backToSearch')}
+                        >
                           <ButtonContent>
                             <IconChevronLeft block />
                           </ButtonContent>
-                          <ButtonContent>Tillbaka till bilsök</ButtonContent>
+                          <ButtonContent>{i18next.t('navigation.backToSearch')}</ButtonContent>
                         </ButtonInlineLight>
                       </UtilityFontSizeSmall>
                     </Repeat>
@@ -254,11 +268,11 @@ const WaykeSearchItem = ({
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2 noMargin>Biluppgifter</H2>
+                    <H2 noMargin>{i18next.t('item.carData')}</H2>
                   </Repeat>
                   <Repeat>
                     <Content>
-                      <p>Information direkt från Transportstyrelsen och tillverkaren.</p>
+                      <p>{i18next.t('item.carDataDescription')}</p>
                     </Content>
                   </Repeat>
                   <Repeat>
@@ -285,15 +299,18 @@ const WaykeSearchItem = ({
                 {(options?.length || 0) > 0 && (
                   <ProductPageMainSection>
                     <Repeat>
-                      <H2 noMargin>Utrustning</H2>
+                      <H2 noMargin>{i18next.t('item.equipment')}</H2>
                     </Repeat>
                     <Repeat>
                       <Content>
-                        <p>Kompletterande uppgifter om bilen.</p>
+                        <p>{i18next.t('item.equipmentDescription')}</p>
                       </Content>
                     </Repeat>
                     <Repeat>
-                      <ExtendContent actionTitle="Visa mer" onClick={onShowMoreOptionsClick}>
+                      <ExtendContent
+                        actionTitle={i18next.t('common.showMore')}
+                        onClick={onShowMoreOptionsClick}
+                      >
                         <UspList items={options} />
                       </ExtendContent>
                     </Repeat>

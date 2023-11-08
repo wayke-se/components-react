@@ -5,6 +5,8 @@ import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn/ind
 import { UtilityTextBold } from '../Utility/index';
 
 import { OpeningHours, Maybe } from '../../@types/codegen/types';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 type Days = Omit<OpeningHours, '__typename'>;
 type KeyType = keyof Days;
@@ -21,19 +23,19 @@ const KeyOrder: KeyType[] = [
 const TranslateWeekDays = (d: KeyType) => {
   switch (d) {
     case 'monday':
-      return 'Mån';
+      return i18next.t('common.mondayShort');
     case 'tuesday':
-      return 'Tis';
+      return i18next.t('common.tuesdayShort');
     case 'wednesday':
-      return 'Ons';
+      return i18next.t('common.wednesdayShort');
     case 'thursday':
-      return 'Tor';
+      return i18next.t('common.thursdayShort');
     case 'friday':
-      return 'Fre';
+      return i18next.t('common.fridayShort');
     case 'saturday':
-      return 'Lör';
+      return i18next.t('common.saturdayShort');
     case 'sunday':
-      return 'Sön';
+      return i18next.t('common.sundayShort');
   }
 };
 
@@ -69,7 +71,7 @@ const GetOpeningHoursToday = (o: OpeningHours) => {
   const day = KeyOrder[dayNumber === 0 ? 6 : dayNumber - 1] as KeyType;
   const current = o[day];
   return {
-    title: current ? 'Öppetider idag' : 'Stängt idag',
+    title: current ? i18next.t('item.openingHoursToday') : i18next.t('item.closedToday'),
     from: current?.from,
     until: current?.until,
   };
@@ -85,6 +87,7 @@ interface OpeningHoursProps {
 }
 
 const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
+  const { t } = useTranslation();
   const today = useMemo(
     () => (openingHours ? GetOpeningHoursToday(openingHours) : null),
     [openingHours]
@@ -112,7 +115,7 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
     <>
       <RepeatSmall>
         <Badge
-          label={currentlyOpen ? 'Öppet' : 'Stängt'}
+          label={currentlyOpen ? t('item.open') : t('item.closed')}
           severity={currentlyOpen ? 'positive' : 'negative'}
         />
       </RepeatSmall>
@@ -124,7 +127,7 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
             </TableColumnCell>
             <TableColumnCell>
               <UtilityTextBold>
-                {today?.from ? `${today.from}-${today.until}` : 'Stängt'}
+                {today?.from ? `${today.from}-${today.until}` : t('item.closed')}
               </UtilityTextBold>
             </TableColumnCell>
           </TableColumnRow>
@@ -133,7 +136,9 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
               <TableColumnCell>
                 {o.titleTo ? `${o.titleFrom}-${o.titleTo}` : o.titleFrom}
               </TableColumnCell>
-              <TableColumnCell>{o.from ? `${o.from}-${o.until}` : 'Stängt'}</TableColumnCell>
+              <TableColumnCell>
+                {o.from ? `${o.from}-${o.until}` : t('item.closed')}
+              </TableColumnCell>
             </TableColumnRow>
           ))}
         </TableColumn>

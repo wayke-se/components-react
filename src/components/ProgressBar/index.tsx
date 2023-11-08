@@ -1,20 +1,21 @@
 import React from 'react';
 
 import { Wrapper, Description, Bar, BarActive } from './wrapper';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
-  unit: string;
   valueCurrent: number;
   valueMax: number;
 }
 
-const ProgressBar = ({ unit, valueCurrent, valueMax }: Props) => {
+const ProgressBar = ({ valueCurrent, valueMax }: Props) => {
+  const { t } = useTranslation();
   const barWidth = (valueCurrent / valueMax) * 100;
 
   return (
     <Wrapper>
       <Description>
-        Visar {valueCurrent.toString()} av {valueMax.toString()} {unit}
+        {t('other.showingNumberOfResults', { current: valueCurrent, count: valueMax })}
       </Description>
       <Bar>
         <BarActive

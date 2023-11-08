@@ -8,12 +8,14 @@ import { H2 } from '../../components/Heading/index';
 import { ButtonInline } from '../../components/Button/index';
 import LogoBox from '../../components/LogoBox/index';
 import { PackageOption } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
 
 interface PackageOptionsProps {
   packageOptions?: PackageOption[] | null;
 }
 
 const PackageOptions = ({ packageOptions }: PackageOptionsProps) => {
+  const { t } = useTranslation();
   if (!packageOptions) {
     return null;
   }
@@ -38,15 +40,13 @@ const PackageOptions = ({ packageOptions }: PackageOptionsProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {packageOption.link.title
-                  ? packageOption.link.title
-                  : 'Läs mer (Öppnas i ett nytt fönster)'}
+                {packageOption.link.title ? packageOption.link.title : t('item.readMoreInNewTab')}
               </ButtonInline>
             </Repeat>
           )}
           {packageOption.image && (
             <Repeat>
-              <LogoBox logo={packageOption.image} alt="Logotyp" wide />
+              <LogoBox logo={packageOption.image} alt={t('common.logotype') || ''} wide />
             </Repeat>
           )}
         </ProductPageMainSection>

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Category, Property } from '../../@types/vehicle-properties';
 import PropertyTreeCreator from '../../utils/vehicle-properties/property-tree-creator';
 import sortTree from '../../utils/vehicle-properties/property-tree-sorter';
-import enrichWithHint from '../../utils/vehicle-properties/property-hint-enricher';
 import addCustomProperties from '../../utils/vehicle-properties/custom-property-adder';
 import removeProperties from '../../utils/vehicle-properties/property-remover';
 import MetadataItem from './MetadataItem';
@@ -81,9 +80,8 @@ const PropertySet = ({ propertySet, vehicleData }: PropertySetProps) => {
       return undefined;
     }
 
-    let newProperties = removeProperties(propertySet);
-    newProperties = addCustomProperties(vehicleData, newProperties);
-    const enrichedProperties = enrichWithHint(newProperties);
+    const newProperties = removeProperties(propertySet);
+    const enrichedProperties = addCustomProperties(vehicleData, newProperties);
 
     const tree = new PropertyTreeCreator(enrichedProperties).create();
     sortTree(tree);

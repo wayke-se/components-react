@@ -29,6 +29,7 @@ import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import { Media } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 interface GalleryProps {
   media?: Media[];
@@ -45,6 +46,7 @@ const sliderSettings = {
 };
 
 const Gallery = ({ media, placeholderImage }: GalleryProps) => {
+  const { t } = useTranslation();
   const slider = useRef<Slider>(null);
   const quickNavRef = useRef<HTMLUListElement>(null);
   const isDragging = useRef(false);
@@ -140,7 +142,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                         src={
                           m.files[0].formats.filter(notEmpty).find((x) => x.format === '1170x')?.url
                         }
-                        alt={`Bild ${i + 1}`}
+                        alt={t('common.imageIndex', { index: i + 1 }) || ''}
                       />
                     )}
                     {m.type === 'threesixty' && (
@@ -165,14 +167,14 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                 ))
               ) : (
                 <Item key={placeholder}>
-                  <Image src={placeholder} alt={`Bild 1`} />
+                  <Image src={placeholder} alt={t('common.imageIndex', { index: 1 }) || ''} />
                 </Item>
               )}
             </Slider>
             {navigationDisabled && mediaLength > 1 && (
               <EnableNavigationButton>
-                <ButtonSecondary onClick={onEnableNavigation} title="Stäng">
-                  <ButtonContent>Stäng</ButtonContent>
+                <ButtonSecondary onClick={onEnableNavigation} title={t('common.close') || ''}>
+                  <ButtonContent>{t('common.close')}</ButtonContent>
                 </ButtonSecondary>
               </EnableNavigationButton>
             )}
@@ -180,12 +182,12 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
           {!navigationDisabled && mediaLength > 1 && (
             <>
               <ArrowLeft>
-                <NavButton onClick={prevImage} title="Föregående bild">
+                <NavButton onClick={prevImage} title={t('other.previousImage') || ''}>
                   <IconChevronLeft block />
                 </NavButton>
               </ArrowLeft>
               <ArrowRight>
-                <NavButton onClick={nextImage} title="Nästa bild">
+                <NavButton onClick={nextImage} title={t('other.nextImage') || ''}>
                   <IconChevronRight block />
                 </NavButton>
               </ArrowRight>
@@ -201,12 +203,28 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                   m.files[0].url;
                 return (
                   <QuickNavItem key={src || i} active={index === i}>
-                    <QuickNavBtn onClick={() => goTo(i)} title={`Gå till bild ${i + 1}`}>
-                      {m.type === 'image' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
-                      {m.type === 'threesixty' && <QuickNavImg src={src} alt={`Bild ${i + 1}`} />}
+                    <QuickNavBtn
+                      onClick={() => goTo(i)}
+                      title={t('other.goToImageIndex', { index: i + 1 }) || ''}
+                    >
+                      {m.type === 'image' && (
+                        <QuickNavImg
+                          src={src}
+                          alt={t('common.imageIndex', { index: i + 1 }) || ''}
+                        />
+                      )}
+                      {m.type === 'threesixty' && (
+                        <QuickNavImg
+                          src={src}
+                          alt={t('common.imageIndex', { index: i + 1 }) || ''}
+                        />
+                      )}
                       {m.type === 'embedded' && <QuickNavEmbeded src={src} index={i} />}
                       {m.type === 'sphere' && (
-                        <QuickNavImg src={m.files[0].url} alt={`Bild ${i + 1}`} />
+                        <QuickNavImg
+                          src={m.files[0].url}
+                          alt={t('common.imageIndex', { index: i + 1 }) || ''}
+                        />
                       )}
                     </QuickNavBtn>
                   </QuickNavItem>
@@ -214,8 +232,11 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
               })
             ) : (
               <QuickNavItem key={placeholder} active>
-                <QuickNavBtn onClick={() => goTo(0)} title={`Gå till bild 0`}>
-                  <QuickNavImg src={placeholder} alt={`Bild 1`} />
+                <QuickNavBtn
+                  onClick={() => goTo(0)}
+                  title={t('other.goToImageIndex', { index: 1 }) || ''}
+                >
+                  <QuickNavImg src={placeholder} alt={t('common.imageIndex', { index: 1 }) || ''} />
                 </QuickNavBtn>
               </QuickNavItem>
             )}

@@ -60,6 +60,13 @@ export interface DocumentList {
   sortOptions: SortOption[];
 }
 
+export type OdometerReadingUnit = 'Kilometer' | 'ScandinavianMile';
+
+export interface OdometerReading {
+  unit: OdometerReadingUnit;
+  value: number;
+}
+
 export interface Document {
   _id: string;
   _type: string;
@@ -72,6 +79,7 @@ export interface Document {
   itemUpdated: string;
   manufacturer: string;
   mileage: number;
+  odometerReading?: OdometerReading;
   modelSeries: string;
   modelYear: number;
   fuelType: string;

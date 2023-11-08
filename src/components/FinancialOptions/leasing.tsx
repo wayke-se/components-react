@@ -10,19 +10,25 @@ import { Image, ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
 import Content from '../Content/index';
 import DataList from '../DataList/index';
 import { FinancialOption } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
 
 interface LeasingProps {
   financialOption: FinancialOption;
 }
 
 const Leasing = ({ financialOption }: LeasingProps) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => setModal(!modal), [modal]);
 
   const { image, description, monthlyCost, duration, mileage, type, name } = financialOption;
 
   const title =
-    type === 'leasing' ? 'Privatleasa' : type === 'business-leasing' ? 'Företagsleasa' : type;
+    type === 'leasing'
+      ? t('item.financialOptions.privateLease')
+      : type === 'business-leasing'
+      ? t('item.financialOptions.businessLease')
+      : type;
 
   return (
     <>
@@ -35,16 +41,18 @@ const Leasing = ({ financialOption }: LeasingProps) => {
               <DataList
                 items={[
                   {
-                    label: 'Månadskostnad',
-                    value: `${numberSeparator(monthlyCost || 0)} kr/mån`,
+                    label: t('item.financialOptions.monthlyCost'),
+                    value: `${numberSeparator(monthlyCost || 0)} ${t('currency.monthly')}`,
                   },
                   {
-                    label: 'Bindningstid',
+                    label: t('item.financialOptions.bindingTime'),
                     value: `${duration?.current} månader`,
                   },
                   {
-                    label: 'Årlig körsträcka',
-                    value: `${numberSeparator(mileage?.current || 0)} mil/år`,
+                    label: t('item.financialOptions.annualMileage'),
+                    value: `${numberSeparator(mileage?.current || 0)} ${t(
+                      'item.financialOptions.mileagePeryear'
+                    )}`,
                   },
                 ]}
               />
@@ -55,7 +63,9 @@ const Leasing = ({ financialOption }: LeasingProps) => {
       <OptionBox>
         <>
           {monthlyCost !== null && monthlyCost !== undefined && (
-            <OptionBoxHeading>{`ca ${numberSeparator(monthlyCost)} kr/mån`}</OptionBoxHeading>
+            <OptionBoxHeading>{`ca ${numberSeparator(monthlyCost)} ${t(
+              'currency.monthly'
+            )}`}</OptionBoxHeading>
           )}
         </>
         <OptionBoxContent>
@@ -63,14 +73,20 @@ const Leasing = ({ financialOption }: LeasingProps) => {
             {title}{' '}
             {mileage?.current && duration?.current && (
               <>
-                <UtilityTextPrimary>{numberSeparator(mileage?.current)} mil/år</UtilityTextPrimary>{' '}
-                i <UtilityTextPrimary>{duration?.current} mån</UtilityTextPrimary>.{' '}
+                <UtilityTextPrimary>
+                  {numberSeparator(mileage?.current)} {t('item.financialOptions.mileagePeryear')}
+                </UtilityTextPrimary>{' '}
+                i{' '}
+                <UtilityTextPrimary>
+                  {duration?.current} {t('item.financialOptions.months')}
+                </UtilityTextPrimary>
+                .{' '}
               </>
             )}
           </p>
           {name && (
             <p>
-              <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
+              <ButtonInline onClick={toggleModal}>{t('common.readMore')}</ButtonInline>
             </p>
           )}
         </OptionBoxContent>

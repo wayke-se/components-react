@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { VehicleData } from '../../@types/codegen/types';
 import { EnhancedProperty, ItemCategory } from '../../@types/vehicle-properties';
 import deepCopy from '../deep-copy';
@@ -6,15 +7,15 @@ export const TEXT_TYPE = 'text';
 export const NUMBER_TYPE = 'number';
 export const BASIC_CATEGORY: ItemCategory = Object.freeze({
   id: 1000,
-  name: 'Basuppgifter',
+  name: i18next.t('category.basic'),
   subCategory: null,
 });
 export const ENGINE_SUBCATEGORY: ItemCategory = Object.freeze({
   id: 6,
-  name: 'Motor & Prestanda',
+  name: i18next.t('category.engineAndPerformance'),
   subCategory: {
     id: 54,
-    name: 'Motor',
+    name: i18next.t('subCategory.engine'),
     subCategory: null,
   },
 });
@@ -29,6 +30,13 @@ class PropertyBuilder {
 
   withName(name: string) {
     this.name = name;
+    return this;
+  }
+
+  withHint(hint: string) {
+    if (hint) {
+      this.hint = hint;
+    }
     return this;
   }
 
@@ -69,7 +77,7 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.manufacturer) {
     newProperties.manufacturer = new PropertyBuilder()
-      .withName('Varumärke')
+      .withName(i18next.t('customProperty.manufacturer.displayName'))
       .withValue(item.manufacturer)
       .withType(TEXT_TYPE)
       .withCategory(BASIC_CATEGORY)
@@ -78,7 +86,7 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.modelSeries) {
     newProperties.modelSeries = new PropertyBuilder()
-      .withName('Modell')
+      .withName(i18next.t('customProperty.modelSeries.displayName'))
       .withValue(item.modelSeries)
       .withType(TEXT_TYPE)
       .withCategory(BASIC_CATEGORY)
@@ -87,8 +95,9 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.modelName) {
     newProperties.modelName = new PropertyBuilder()
-      .withName('Version')
+      .withName(i18next.t('customProperty.modelName.displayName'))
       .withValue(item.modelName)
+      .withHint(i18next.t('customProperty.modelName.hint'))
       .withType(TEXT_TYPE)
       .withCategory(BASIC_CATEGORY)
       .build();
@@ -96,8 +105,9 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.modelYear) {
     newProperties.modelYear = new PropertyBuilder()
-      .withName('Modellår')
+      .withName(i18next.t('customProperty.modelYear.displayName'))
       .withValue(item.modelYear)
+      .withHint(i18next.t('customProperty.modelYear.hint'))
       .withType(NUMBER_TYPE)
       .withCategory(BASIC_CATEGORY)
       .build();
@@ -105,26 +115,37 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.manufactureYear) {
     newProperties.manufactureYear = new PropertyBuilder()
-      .withName('Tillverkningsår')
+      .withName(i18next.t('customProperty.manufactureYear.displayName'))
       .withValue(item.manufactureYear)
+      .withHint(i18next.t('customProperty.manufactureYear.hint'))
       .withType(NUMBER_TYPE)
       .withCategory(BASIC_CATEGORY)
       .build();
   }
 
-  if (!!item.mileage) {
+  if (item.odometerReading) {
     newProperties.mileage = new PropertyBuilder()
-      .withName('Mätarställning')
-      .withValue(item.mileage)
+      .withName(i18next.t('customProperty.odometer.displayName'))
+      .withValue(item.odometerReading.value)
+      .withHint(i18next.t('customProperty.odometer.hint'))
       .withType(NUMBER_TYPE)
       .withCategory(BASIC_CATEGORY)
-      .withUnit('mil')
+      .withUnit(i18next.t(`odometer.${item.odometerReading.unit}`))
+      .build();
+  } else if (!!item.mileage) {
+    newProperties.mileage = new PropertyBuilder()
+      .withName(i18next.t('customProperty.odometer.displayName'))
+      .withValue(item.mileage)
+      .withHint(i18next.t('customProperty.odometer.hint'))
+      .withType(NUMBER_TYPE)
+      .withCategory(BASIC_CATEGORY)
+      .withUnit(i18next.t('odometer.ScandinavianMile'))
       .build();
   }
 
   if (!!item.gearboxType) {
     newProperties.gearboxType = new PropertyBuilder()
-      .withName('Växellåda')
+      .withName(i18next.t('customProperty.gearboxType.displayName'))
       .withValue(item.gearboxType)
       .withType(TEXT_TYPE)
       .withCategory(BASIC_CATEGORY)
@@ -133,7 +154,7 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.registrationNumber) {
     newProperties.registrationNumber = new PropertyBuilder()
-      .withName('Registreringsnummer')
+      .withName(i18next.t('customProperty.registrationNumber.displayName'))
       .withValue(item.registrationNumber)
       .withType(TEXT_TYPE)
       .withCategory(BASIC_CATEGORY)
@@ -142,8 +163,9 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (!!item.fuelType) {
     newProperties.fuelType = new PropertyBuilder()
-      .withName('Bränslegrupp')
+      .withName(i18next.t('customProperty.fuelType.displayName'))
       .withValue(item.fuelType)
+      .withHint(i18next.t('customProperty.fuelType.hint'))
       .withType(TEXT_TYPE)
       .withCategory(BASIC_CATEGORY)
       .build();
@@ -151,9 +173,9 @@ export default (item: VehicleData, properties: { [key: string]: EnhancedProperty
 
   if (item.enginePower) {
     newProperties.enginePower = new PropertyBuilder()
-      .withName('Effekt')
+      .withName(i18next.t('customProperty.enginePower.displayName'))
       .withValue(item.enginePower)
-      .withUnit('hk')
+      .withUnit(i18next.t('customProperty.enginePower.unit'))
       .withType(NUMBER_TYPE)
       .withCategory(ENGINE_SUBCATEGORY)
       .build();

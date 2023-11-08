@@ -14,6 +14,7 @@ import {
 import { Portal, PortalNamespace } from '../Portal/index';
 import { H1 } from '../Heading/index';
 import { IconCancel } from '../Icon/index';
+import { useTranslation } from 'react-i18next';
 
 interface IPanelPortal {
   id?: string | null;
@@ -24,17 +25,18 @@ interface IPanelPortal {
 }
 
 const Panel = ({ id, title, footer, onClose, children }: IPanelPortal) => {
+  const { t } = useTranslation();
   return (
     <Portal id={id || PortalNamespace.DefaultPortal}>
       <Wrapper>
-        <UiBlock title="Stäng panel" onClick={onClose} />
+        <UiBlock title={t('other.closePanel') || ''} onClick={onClose} />
         <PanelWrapper>
           <Header>
             <Heading>
               <H1 noMargin>{title}</H1>
             </Heading>
             <Close>
-              <CloseBtn title="Stäng panel" aria-label="Stäng panel" onClick={onClose}>
+              <CloseBtn title={t('other.closePanel') || ''} onClick={onClose}>
                 <IconCancel block />
               </CloseBtn>
             </Close>

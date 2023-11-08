@@ -235,6 +235,12 @@ export type MediaFileFormat = {
   url: Scalars['URL'];
 };
 
+export type OdometerReading = {
+  __typename?: 'OdometerReading';
+  unit: Scalars['String'];
+  value: Scalars['Int'];
+};
+
 export type OpeningHours = {
   __typename?: 'OpeningHours';
   friday?: Maybe<HoursOpen>;
@@ -370,6 +376,7 @@ export type VehicleData = {
   modelName?: Maybe<Scalars['String']>;
   modelSeries?: Maybe<Scalars['String']>;
   modelYear: Scalars['Int'];
+  odometerReading?: Maybe<OdometerReading>;
   options: Array<Scalars['String']>;
   properties?: Maybe<Scalars['VehicleDataPropertyMap']>;
   propertySet?: Maybe<Scalars['VehicleDataPropertySet']>;
