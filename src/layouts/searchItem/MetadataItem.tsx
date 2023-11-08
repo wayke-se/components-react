@@ -13,17 +13,19 @@ import { SrOnly } from '../../components/SrOnly/index';
 import { ButtonInline } from '../../components/Button/index';
 import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const formatValue = (value: Property['value'], unit: Property['unit']) => {
   if (typeof value === 'boolean') {
     return value ? (
-      <TableListBooleanPos title="Ja">
-        <SrOnly>Ja</SrOnly>
+      <TableListBooleanPos title={i18next.t('common.yes') || ''}>
+        <SrOnly>{i18next.t('common.yes')}</SrOnly>
         <IconCheck block />
       </TableListBooleanPos>
     ) : (
-      <TableListBooleanNeg title="Nej">
-        <SrOnly>Nej</SrOnly>
+      <TableListBooleanNeg title={i18next.t('common.no') || ''}>
+        <SrOnly>{i18next.t('common.no')}</SrOnly>
         <IconCancel block />
       </TableListBooleanNeg>
     );
@@ -45,6 +47,7 @@ interface MetadataItemProps {
 }
 
 const MetadataItem = ({ name, hint, value, unit }: MetadataItemProps) => {
+  const { t } = useTranslation();
   const [foldout, setFoldout] = useState(false);
   const onToggleFoldout = useCallback(() => setFoldout(!foldout), [foldout]);
 
@@ -54,14 +57,19 @@ const MetadataItem = ({ name, hint, value, unit }: MetadataItemProps) => {
     <TableListItem>
       <TableListKey>
         {hint ? (
-          <ButtonInline onClick={onToggleFoldout} title={`Mer information om ${name}`}>
+          <ButtonInline
+            onClick={onToggleFoldout}
+            title={t('item.moreInfoAboutSubject', { subject: name }) || ''}
+          >
             {name}
           </ButtonInline>
         ) : (
           name
         )}
       </TableListKey>
-      <TableListValue>{value !== undefined ? presentedValue : 'Uppgift saknas'}</TableListValue>
+      <TableListValue>
+        {value !== undefined ? presentedValue : t('item.dataNotAvailable')}
+      </TableListValue>
       {hint && foldout && (
         <Modal title={name} onClose={onToggleFoldout}>
           <Content dangerouslySetInnerHTML={{ __html: hint }} />

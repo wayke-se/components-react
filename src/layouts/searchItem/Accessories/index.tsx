@@ -8,12 +8,14 @@ import Content from '../../../components/Content/index';
 import AccessoryCard from '../../../components/AccessoryCard/index';
 import OverflowGrid from '../../../components/OverflowGrid/index';
 import AccesoryModal from './AccessoryModal';
+import { useTranslation } from 'react-i18next';
 
 interface AccessoriesSectionProps {
   accessories?: Accessory[];
 }
 
 const AccessoriesSection = ({ accessories }: AccessoriesSectionProps) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState<Accessory | undefined>();
 
   const onOpenModal = (accessory: Accessory) => setModal(accessory);
@@ -26,11 +28,11 @@ const AccessoriesSection = ({ accessories }: AccessoriesSectionProps) => {
       {modal && <AccesoryModal accessory={modal} onClose={onCloseModal} />}
       <ProductPageMainSection>
         <Repeat>
-          <H2 noMargin>Tillbehör</H2>
+          <H2 noMargin>{t('item.accessories.accessories')}</H2>
         </Repeat>
         <Repeat>
           <Content>
-            <p>Tillbehör som passar till detta fordon.</p>
+            <p>{t('item.accessories.accessoriesDescription')}</p>
           </Content>
         </Repeat>
         <Repeat>
@@ -51,7 +53,7 @@ const AccessoriesSection = ({ accessories }: AccessoriesSectionProps) => {
                       }
                     : undefined
                 }
-                price={`${numberSeparator(accessory.price)} kr`}
+                price={`${numberSeparator(accessory.price)} ${t('currency.default')}`}
                 preamble={accessory.excerpt}
                 readMoreCta={() => onOpenModal(accessory)}
               />

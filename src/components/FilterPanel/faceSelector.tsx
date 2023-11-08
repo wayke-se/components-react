@@ -19,13 +19,16 @@ import {
   MODEL_YEAR,
   LEASING_PRICE,
   BUSINESS_LEASING_PRICE,
+  ODOMETER_VALUE_AS_KM,
 } from '../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 interface FacetSelectorProps {
   facet: Facet;
 }
 
 const FacetSelector = ({ facet }: FacetSelectorProps) => {
+  const { t } = useTranslation();
   switch (facet.id) {
     case MANUFACTURER:
     case MODEL_SERIES:
@@ -39,12 +42,14 @@ const FacetSelector = ({ facet }: FacetSelectorProps) => {
     case COLOR:
       return <ColorSelectFacet facet={facet} />;
     case PRICE:
-      return <RangeFacet facet={facet} unit="kr" formatValues />;
+      return <RangeFacet facet={facet} unit={t('currency.default')} formatValues />;
     case BUSINESS_LEASING_PRICE:
     case LEASING_PRICE:
-      return <RangeFacet facet={facet} unit="kr/mån" formatValues />;
+      return <RangeFacet facet={facet} unit={t('currency.monthly')} formatValues />;
+    case ODOMETER_VALUE_AS_KM:
+      return <RangeFacet facet={facet} unit={t('odometer.Kilometer')} formatValues />;
     case MILEAGE:
-      return <RangeFacet facet={facet} unit="mil" formatValues />;
+      return <RangeFacet facet={facet} unit={t('odometer.ScandinavianMile')} formatValues />;
     case MODEL_YEAR:
       return <RangeFacet facet={facet} unit="år" />;
     default:

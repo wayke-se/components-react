@@ -1,5 +1,6 @@
 import React from 'react';
 import { marked } from 'marked';
+import { useTranslation } from 'react-i18next';
 
 import { Repeat } from '../../components/Repeat/index';
 import { ProductPageMainSection } from '../../components/ProductPage/index';
@@ -14,6 +15,7 @@ interface ManufacturerPackageOption {
 }
 
 const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption) => {
+  const { t } = useTranslation();
   if (!packageOption) {
     return null;
   }
@@ -36,15 +38,13 @@ const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption)
             target="_blank"
             rel="noopener noreferrer"
           >
-            {packageOption.link.title
-              ? packageOption.link.title
-              : 'Läs mer (Öppnas i ett nytt fönster)'}
+            {packageOption.link.title ? packageOption.link.title : t('item.readMoreInNewTab')}
           </ButtonInline>
         </Repeat>
       )}
       {packageOption.image && (
         <Repeat>
-          <LogoBox logo={packageOption.image} alt="Logotyp" wide />
+          <LogoBox logo={packageOption.image} alt={t('common.logotype') || ''} wide />
         </Repeat>
       )}
     </ProductPageMainSection>

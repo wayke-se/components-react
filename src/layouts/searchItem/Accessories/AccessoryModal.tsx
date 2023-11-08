@@ -10,6 +10,7 @@ import Modal from '../../../components/Modal/index';
 import PriceBox from '../../../components/PriceBox/index';
 import LogoBox from '../../../components/LogoBox/index';
 import Content from '../../../components/Content/index';
+import { useTranslation } from 'react-i18next';
 
 interface AccesoryModalProps {
   accessory: Accessory;
@@ -17,26 +18,27 @@ interface AccesoryModalProps {
 }
 
 const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
+  const { t } = useTranslation();
   const priceList = [
     {
-      label: 'Kontantpris',
-      price: `${numberSeparator(accessory.price)} kr`,
+      label: t('item.accessories.price'),
+      price: `${numberSeparator(accessory.price)} ${t('currency.default')}`,
       oldPrice: false,
     },
   ];
 
   if (accessory.salePrice) {
     priceList.push({
-      label: 'Tidigare pris',
-      price: `${numberSeparator(accessory.salePrice)} kr`,
+      label: t('item.accessories.oldPrice'),
+      price: `${numberSeparator(accessory.salePrice)} ${t('currency.default')}`,
       oldPrice: true,
     });
   }
 
   if (accessory.assemblyPrice) {
     priceList.push({
-      label: 'Monteringskostnad',
-      price: `${numberSeparator(accessory.assemblyPrice)} kr`,
+      label: t('item.accessories.installationCost'),
+      price: `${numberSeparator(accessory.assemblyPrice)} ${t('currency.default')}`,
       oldPrice: false,
     });
   }
@@ -53,7 +55,7 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
           <LogoBox
             logo={`${accessory.logotype}?w=160`}
             logo2x={`${accessory.logotype}?w=320`}
-            alt={accessory.manufacturer || 'Logotyp'}
+            alt={accessory.manufacturer || t('common.logotype') || ''}
             wide
           />
         </Repeat>
@@ -67,7 +69,7 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
       </Repeat>
       {accessory.articleNumber && (
         <Repeat>
-          <UtilityTextBold as="div">Art. nr.</UtilityTextBold>
+          <UtilityTextBold as="div">{t('item.accessories.articleNumberShort')}</UtilityTextBold>
           <div>{accessory.articleNumber}</div>
         </Repeat>
       )}
@@ -75,11 +77,15 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
         <Repeat>
           <Link
             href={accessory.productPage.url}
-            title={`Mer information om ${accessory.name}`}
+            title={
+              t('item.accessories.moreInformationAboutAccessory', {
+                accessory: accessory.name,
+              }) || ''
+            }
             target="_blank"
             rel="noopener noreferrer nofollow"
           >
-            {accessory.productPage.title || 'Läs mer'} (öppnas i ny flik)
+            {accessory.productPage.title || t('common.readMore')} ({t('common.opensInNewTab')})
           </Link>
         </Repeat>
       )}

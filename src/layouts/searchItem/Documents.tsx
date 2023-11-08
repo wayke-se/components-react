@@ -5,11 +5,14 @@ import { ProductPageMainSection } from '../../components/ProductPage/index';
 import { Scalars } from '../../@types/codegen/types';
 import DocumentList from '../../components/DocumentList/index';
 import { Repeat } from '../../components/Repeat/index';
+import { useTranslation } from 'react-i18next';
+import ExtendContent from '../../components/ExtendContent';
+import i18next from 'i18next';
 
 const Translation = {
-  'tyre-label': 'Energideklaration för däck',
-  'content declaration': 'Varudeklaration',
-  other: 'Övriga dokument',
+  'tyre-label': i18next.t('item.documentTypes.tireEnergyDeclaration'),
+  'content declaration': i18next.t('item.documentTypes.goodsDeclaration'),
+  other: i18next.t('item.documentTypes.other'),
 };
 
 const SortOrder = {
@@ -31,6 +34,7 @@ interface DocumentsProps {
 }
 
 const Documents = ({ documents }: DocumentsProps) => {
+  const { t } = useTranslation();
   const categorised = documents
     .reduce((prev, curr) => {
       const index = prev.findIndex((x) => x.category === (curr.category || 'others'));
@@ -56,17 +60,20 @@ const Documents = ({ documents }: DocumentsProps) => {
   return (
     <ProductPageMainSection>
       <Repeat>
-        <H2 noMargin>Dokument</H2>
+        <H2 noMargin>{t('item.documents')}</H2>
       </Repeat>
-
-      {categorised.map((group) => (
-        <Repeat key={group.category}>
-          {manyCategories && (
-            <H3>{Translation?.[group.category as CategoryType] || Translation.other}</H3>
-          )}
-          <DocumentList documents={group.documents} />
-        </Repeat>
-      ))}
+      <Repeat>
+        <ExtendContent actionTitle={t('common.showMore')}>
+          {categorised.map((group) => (
+            <Repeat key={group.category}>
+              {manyCategories && (
+                <H3>{Translation?.[group.category as CategoryType] || Translation.other}</H3>
+              )}
+              <DocumentList documents={group.documents} />
+            </Repeat>
+          ))}
+        </ExtendContent>
+      </Repeat>
     </ProductPageMainSection>
   );
 };

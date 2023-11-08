@@ -20,6 +20,7 @@ import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 import { format } from 'date-fns/esm';
 import sv from 'date-fns/locale/sv';
+import { useTranslation } from 'react-i18next';
 
 interface CheckList {
   manufacturer?: Manufacturer | null;
@@ -42,6 +43,7 @@ const CheckList = ({
   toggleEcomModal,
   loadingCentralStorageVehicle,
 }: CheckList) => {
+  const { t } = useTranslation();
   const [modalBranch, setModalBranch] = useState(false);
   const openModalBranch = useCallback(() => setModalBranch(true), []);
   const closeModalBranch = useCallback(() => setModalBranch(false), []);
@@ -72,18 +74,18 @@ const CheckList = ({
         {ecommerce && ecommerce.enabled && (
           <RepeatTiny>
             <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
-              <ButtonContent>Köp bilen online</ButtonContent>
+              <ButtonContent>{t('item.actions.buyOnline')}</ButtonContent>
             </ButtonPrimary>
           </RepeatTiny>
         )}
         {ecommerce?.reserved && (
           <RepeatTiny>
             <SwitchBar
-              title="Bilen är reserverad"
-              body="Denna bil är reserverad av en annan köpare."
+              title={t('item.carIsReserved')}
+              body={t('item.carIsReservedDescription') || undefined}
             >
               <Content>
-                <p>Denna bil är reserverad av en annan köpare.</p>
+                <p>{t('item.carIsReservedModalBody')}</p>
               </Content>
             </SwitchBar>
           </RepeatTiny>
@@ -99,7 +101,9 @@ const CheckList = ({
               </Column>
               <Column>
                 <UtilityFontSizeSmall>
-                  Tillgänglig från {format(new Date(availableFrom), 'dd MMMM yyyy', { locale: sv })}
+                  {t('item.availableFromDate', {
+                    date: format(new Date(availableFrom), 'dd MMMM yyyy', { locale: sv }),
+                  })}
                 </UtilityFontSizeSmall>
               </Column>
             </Columns>
@@ -110,7 +114,7 @@ const CheckList = ({
             {packageOption?.title && (
               <CheckMarkListItem>
                 <>
-                  Inkl.{' '}
+                  {t('item.includingShort')}{' '}
                   <ButtonInline
                     onClick={() =>
                       onOpen({
@@ -123,14 +127,14 @@ const CheckList = ({
                   >
                     {packageOption.title}
                   </ButtonInline>{' '}
-                  begagnatgaranti
+                  {t('item.usedWarrany').toLowerCase()}
                 </>
               </CheckMarkListItem>
             )}
             {packageOptions?.map((packageOption, index) => (
               <CheckMarkListItem key={packageOption.title || index}>
                 <>
-                  Inkl.{' '}
+                  {t('item.includingShort')}{' '}
                   <ButtonInline
                     onClick={() =>
                       onOpen({
@@ -146,18 +150,21 @@ const CheckList = ({
                 </>
               </CheckMarkListItem>
             ))}
-            {ecommerce?.withHomeDelivery && <CheckMarkListItem>Hemleverans</CheckMarkListItem>}
+            {ecommerce?.withHomeDelivery && (
+              <CheckMarkListItem>{t('item.homeDelivery')}</CheckMarkListItem>
+            )}
           </CheckMarkList>
         </RepeatTiny>
       </Repeat>
       {(branch?.connections.length || 0) > 1 && (
         <Repeat>
-          <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>
+          <SwitchBar
+            title={t('item.centralWarehouseCar')}
+            actionTitle={t('item.switchBranch') || ''}
+            onClick={openModalBranch}
+          >
             <Content>
-              <p>
-                Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
-                anläggning för att visa kontaktuppgifter till just den anläggningen.
-              </p>
+              <p>{t('item.centralWarehouseCarDescription')}</p>
             </Content>
           </SwitchBar>
         </Repeat>

@@ -2,21 +2,21 @@ import React from 'react';
 
 import Modal from '../../components/Modal/index';
 import Content from '../../components/Content/index';
+import { useTranslation } from 'react-i18next';
 
 interface DemoCarModalProps {
   onClose: () => void;
 }
 
-const DemoCarModal = ({ onClose }: DemoCarModalProps) => (
-  <Modal title="Demobil" onClose={onClose}>
-    <Content>
-      <p>
-        En demobil är en bil som stått i utställning eller som på annat sätt använts för att visa
-        upp en viss modell. Bilarna är ofta välutrustade och har blivit väl omhändertagna. Dessutom
-        har de vanligtvis gått få mil och har fortfarande nybilsgarantierna kvar.
-      </p>
-    </Content>
-  </Modal>
-);
+const DemoCarModal = ({ onClose }: DemoCarModalProps) => {
+  const { t } = useTranslation();
+  return (
+    <Modal title={t('item.demoCar')} onClose={onClose}>
+      <Content>
+        <p>{t('item.demoCarDescription')}</p>
+      </Content>
+    </Modal>
+  );
+};
 
 export default DemoCarModal;

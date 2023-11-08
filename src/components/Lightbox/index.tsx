@@ -6,6 +6,7 @@ import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
 import SphereLightbox from '../Sphere/SphereLightbox';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
 import { Media } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
 
 interface LightboxProps {
   index: number;
@@ -14,6 +15,7 @@ interface LightboxProps {
 }
 
 const Lightbox = ({ index, media, onClose }: LightboxProps) => {
+  const { t } = useTranslation();
   const onRef = (ref: HTMLDivElement | null) => {
     if (ref) {
       setTimeout(() => {
@@ -34,14 +36,18 @@ const Lightbox = ({ index, media, onClose }: LightboxProps) => {
       {media.map((m, i) => (
         <Item key={i} ref={index === i ? onRef : undefined}>
           {m.type === 'image' && (
-            <Img id={`lightbox-image-${i}`} src={m.files[0].url} alt={`Bild ${i + 1}`} />
+            <Img
+              id={`lightbox-image-${i}`}
+              src={m.files[0].url}
+              alt={t('common.imageIndex', { index: i + 1 }) || ''}
+            />
           )}
           {m.type === 'threesixty' && <ThreeSixtyLightbox urls={m.files.map((x) => x.url)} />}
           {m.type === 'sphere' && <SphereLightbox url={m.files[0].url} />}
           {m.type === 'embedded' && <EmbeddedVideoLightbox url={m.files[0].url} />}
         </Item>
       ))}
-      <CloseBtn onClick={onClose} title="Stäng">
+      <CloseBtn onClick={onClose} title={t('common.close') || ''}>
         <IconCancel block />
       </CloseBtn>
     </Wrapper>

@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react';
-import LazyLoad from 'react-lazyload';
 
 import {
   Wrapper,
@@ -24,6 +23,8 @@ import {
 import UspList, { ItemProps } from '../UspList/index';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import usePath from '../../State/Path/usePath';
+import { useTranslation } from 'react-i18next';
+import useIsInViewport from '../../hooks/useIsInViewport';
 
 interface Props {
   id: string;
@@ -58,6 +59,12 @@ const ProductCard = ({
   businessLeasingPrice,
   onClick,
 }: Props) => {
+  const { t } = useTranslation();
+
+  const [containerRef, isVisible] = useIsInViewport<HTMLDivElement>({
+    persistVisibility: true,
+  });
+
   const { pushState } = usePath();
   const _onClick = useMemo(() => (onClick ? () => onClick(id) : undefined), [id]);
 
@@ -76,30 +83,28 @@ const ProductCard = ({
 
   return (
     <Wrapper onClick={_onClick}>
-      <Image>
-        <LazyLoad>
-          {image ? (
-            <>
-              <Picture>
-                <Source
-                  type="image/webp"
-                  srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411x274&format=webp 411w`}
-                  sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                />
-                <Img
-                  srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
-                  sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                  src={`${image}?spec=411x274`}
-                  alt={title}
-                />
-              </Picture>
-            </>
-          ) : (
+      <Image ref={containerRef}>
+        {isVisible && image ? (
+          <>
             <Picture>
-              <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />
+              <Source
+                type="image/webp"
+                srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411x274&format=webp 411w`}
+                sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+              />
+              <Img
+                srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
+                sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                src={`${image}?spec=411x274`}
+                alt={title}
+              />
             </Picture>
-          )}
-        </LazyLoad>
+          </>
+        ) : (
+          <Picture>
+            <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />
+          </Picture>
+        )}
       </Image>
       <Content>
         <ContentBody>
@@ -123,18 +128,18 @@ const ProductCard = ({
         <ContentFooter>
           <Price>
             <PriceCell>
-              {oldPrice ? <OldPrice>{oldPrice}</OldPrice> : <Label>Pris</Label>}
+              {oldPrice ? <OldPrice>{oldPrice}</OldPrice> : <Label>{t('productCard.price')}</Label>}
               <CurrentPrice>{price}</CurrentPrice>
             </PriceCell>
             {leasingPrice && (
               <PriceCell>
-                <Label>Privatleasing</Label>
+                <Label>{t('productCard.privateLeasing')}</Label>
                 <CurrentPrice>{leasingPrice}</CurrentPrice>
               </PriceCell>
             )}
             {businessLeasingPrice && (
               <PriceCell>
-                <Label>Företagsleasing</Label>
+                <Label>{t('productCard.businessLeasing')}</Label>
                 <CurrentPrice>{businessLeasingPrice}</CurrentPrice>
               </PriceCell>
             )}

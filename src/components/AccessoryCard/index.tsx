@@ -13,6 +13,7 @@ import {
   ReadMoreBtn,
 } from './wrapper';
 import { IconImage } from '../Icon/index';
+import { useTranslation } from 'react-i18next';
 
 interface AccessoryCardImageProps {
   src: string;
@@ -36,25 +37,32 @@ const AccessoryCard = ({
   price,
   preamble,
   readMoreCta,
-}: AccessoryCardProps) => (
-  <Wrapper>
-    {image ? (
-      <Image src={image.src} srcSet={image.srcSet} alt={image.alt} />
-    ) : (
-      <ImageaPlaceholder>
-        <IconImage />
-      </ImageaPlaceholder>
-    )}
-    <Body>
-      <Heading>
-        <Title>{title}</Title>
-        {branding && <Branding src={branding.src} srcSet={branding.srcSet} alt={branding.alt} />}
-      </Heading>
-      {price && <Price>{price}</Price>}
-      {preamble && <Preamble>{preamble}</Preamble>}
-      {readMoreCta && <ReadMoreBtn onClick={readMoreCta}>Läs mer</ReadMoreBtn>}
-    </Body>
-  </Wrapper>
-);
+}: AccessoryCardProps) => {
+  const { t } = useTranslation();
+  return (
+    <Wrapper>
+      {image ? (
+        <Image src={image.src} srcSet={image.srcSet} alt={image.alt} />
+      ) : (
+        <ImageaPlaceholder>
+          <IconImage />
+        </ImageaPlaceholder>
+      )}
+      <Body>
+        <Heading>
+          <Title>{title}</Title>
+          {branding && <Branding src={branding.src} srcSet={branding.srcSet} alt={branding.alt} />}
+        </Heading>
+        {price && <Price>{price}</Price>}
+        {preamble && <Preamble>{preamble}</Preamble>}
+        {readMoreCta && (
+          <ReadMoreBtn onClick={readMoreCta} title={t('common.readMore') || ''}>
+            {t('common.readMore')}
+          </ReadMoreBtn>
+        )}
+      </Body>
+    </Wrapper>
+  );
+};
 
 export default AccessoryCard;

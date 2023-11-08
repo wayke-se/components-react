@@ -69,7 +69,7 @@ const Result = ({ children }: Props) => {
       <Body>{children}</Body>
       <Footer>
         <FooterProgress>
-          <ProgressBar unit="bilar" valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
+          <ProgressBar valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
         </FooterProgress>
         {numberOfDocuments !== numberOfHits && (
           <FooterAction>

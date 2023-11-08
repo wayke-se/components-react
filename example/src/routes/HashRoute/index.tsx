@@ -10,6 +10,7 @@ const Home = () => (
     composite={{
       // initialQueryParams,
       removeSearchBar: false,
+      marketCode: 'NO',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

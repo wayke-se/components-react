@@ -13,6 +13,7 @@ import DataList from '../DataList/index';
 import { FinancialOption, Query } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 import SliderWithLabel from '../RangeSlider/SliderWithLabel';
+import { useTranslation } from 'react-i18next';
 
 const stepGenerator = (
   step: number,
@@ -38,6 +39,7 @@ interface LoanModalProps {
 }
 
 const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
+  const { t } = useTranslation();
   const [tmp, setTmp] = useState<Query>();
   const [extend, setExtend] = React.useState(false);
   const onToggleExtend = React.useCallback(() => {
@@ -109,9 +111,10 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
 
   const interestText = ((loan?.interest || 0) * 100).toFixed(2);
   const effectiveInterestText = ((loan?.effectiveInterest || 0) * 100).toFixed(2);
+  const monthlyCost = loan?.monthlyCost;
 
   return (
-    <Modal title="Lånealternativ" onClose={onClose}>
+    <Modal title={t('item.financialOptions.loanOptions')} onClose={onClose}>
       <Repeat>
         <ContentLogo>
           {financialOption?.description && (
@@ -123,7 +126,11 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
           )}
           {financialOption?.image && (
             <ContentLogoMedia>
-              <LogoBox logo={financialOption.image} alt={financialOption.name || 'Logotyp'} wide />
+              <LogoBox
+                logo={financialOption.image}
+                alt={financialOption.name || t('common.logotype')}
+                wide
+              />
             </ContentLogoMedia>
           )}
         </ContentLogo>
@@ -131,11 +138,11 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
       <Repeat>
         <RepeatSmall>
           <SliderWithLabel
-            label="Kontantinsatts"
+            label={t('item.financialOptions.downPayment')}
             values={[downPaymentCurrent]}
             domain={[downPaymentMin, downPaymentMax]}
             steps={downPaymentSteps}
-            unit="kr"
+            unit={t('currency.default')}
             formatValues
             loading={loading}
             onChange={onDownPaymentChange}
@@ -143,11 +150,11 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
         </RepeatSmall>
         <RepeatSmall>
           <SliderWithLabel
-            label="Avbetalning"
+            label={t('item.financialOptions.duration')}
             values={[durationCurrent]}
             domain={[durationMin, durationMax]}
             steps={durationSteps}
-            unit="mån"
+            unit={t('item.financialOptions.months')}
             loading={loading}
             onChange={onDurationChange}
           />
@@ -155,7 +162,7 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
         {residual !== undefined && residualMax !== 0 && (
           <RepeatSmall>
             <SliderWithLabel
-              label="Restskuld"
+              label={t('item.financialOptions.residual')}
               values={[residualCurrent]}
               domain={[residualMin, residualMax]}
               steps={residualSteps}
@@ -167,10 +174,23 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
         )}
         <RepeatSmall>
           <RepeatTiny>
+            {monthlyCost !== null && monthlyCost !== undefined && (
+              <Content>{`${numberSeparator(monthlyCost)} ${t('currency.monthly')}*`}</Content>
+            )}
             <Content small>
-              <p>{`*Beräknat på ${interestText} % ränta (effektivt ${effectiveInterestText} %)${
-                loan?.mileage !== null ? `och en årlig körsträcka om ${loan?.mileage} mil.` : ''
-              }`}</p>
+              <p>
+                *
+                {loan?.mileage !== null
+                  ? t('item.financialOptions.loanOptionsDisclaimerMileage', {
+                      interest: interestText,
+                      effectiveInterest: effectiveInterestText,
+                      mileage: loan?.mileage,
+                    })
+                  : t('item.financialOptions.loanOptionsDisclaimer', {
+                      interest: interestText,
+                      effectiveInterest: effectiveInterestText,
+                    })}
+              </p>
             </Content>
           </RepeatTiny>
         </RepeatSmall>
@@ -178,9 +198,13 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
         <RepeatSmall>
           <ButtonClear
             onClick={onToggleExtend}
-            title={extend ? 'Visa mindre information' : 'Visa mer information'}
+            title={
+              extend ? t('common.showLessInformation') || '' : t('common.showMoreInformation') || ''
+            }
           >
-            <ButtonContent>{extend ? 'Mindre information' : 'Mer information'}</ButtonContent>
+            <ButtonContent>
+              {extend ? t('common.lessInformation') : t('common.showMoreInformation')}
+            </ButtonContent>
           </ButtonClear>
         </RepeatSmall>
         <>
@@ -190,24 +214,30 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
                 <DataList
                   items={[
                     {
-                      label: 'Ränta',
+                      label: t('item.financialOptions.interest'),
                       value: `${interestText} %`,
                     },
                     {
-                      label: 'Effektiv ränta',
+                      label: t('item.financialOptions.effectiveinterest'),
                       value: `${effectiveInterestText} %`,
                     },
                     {
-                      label: 'Uppläggningskostnad',
-                      value: `${numberSeparator(financialOption?.setupFee || 0)} kr`,
+                      label: t('item.financialOptions.setupFee'),
+                      value: `${numberSeparator(financialOption?.setupFee || 0)} ${t(
+                        'currency.default'
+                      )}`,
                     },
                     {
-                      label: 'Administrativa avgifter',
-                      value: `${numberSeparator(financialOption?.administrationFee || 0)} kr/mån`,
+                      label: t('item.financialOptions.administrationFee'),
+                      value: `${numberSeparator(financialOption?.administrationFee || 0)} ${t(
+                        'currency.monthly'
+                      )}`,
                     },
                     {
-                      label: 'Total kreditkostnad',
-                      value: `${numberSeparator(loan?.totalCreditCost || 0)} kr`,
+                      label: t('item.financialOptions.totalCreditCost'),
+                      value: `${numberSeparator(loan?.totalCreditCost || 0)} ${t(
+                        'currency.default'
+                      )}`,
                     },
                   ]}
                 />

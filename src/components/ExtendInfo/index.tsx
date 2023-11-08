@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import { Wrapper, Header, Title, Info, InfoBtn, Extend } from './wrapper';
 import { IconInfo } from '../Icon/index';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   title: string;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const ExtendInfo = ({ title, children }: Props) => {
+  const { t } = useTranslation();
   const [extend, setExtend] = useState(false);
   const onToggleExtend = useCallback(() => setExtend(!extend), [extend]);
 
@@ -18,7 +20,7 @@ const ExtendInfo = ({ title, children }: Props) => {
         <Title>{title}</Title>
         {children && (
           <Info>
-            <InfoBtn onClick={onToggleExtend} title="Mer information">
+            <InfoBtn onClick={onToggleExtend} title={t('common.moreInformation') || ''}>
               <IconInfo block />
             </InfoBtn>
           </Info>

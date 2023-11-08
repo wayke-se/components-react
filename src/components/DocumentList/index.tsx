@@ -10,6 +10,7 @@ import {
   PdfLink,
   PdfColumn,
 } from './wrapper';
+import { useTranslation } from 'react-i18next';
 
 interface PdfDownloadItemProps {
   document: Scalars['FileDocument'];
@@ -27,6 +28,7 @@ const translateContentType = (document: Scalars['FileDocument']) => {
 };
 
 export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
+  const { t } = useTranslation();
   const contentType = useMemo(() => translateContentType(document), [document]);
   return (
     <PdfListItem>
@@ -36,8 +38,13 @@ export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
           <PdfSubtitle>{contentType}</PdfSubtitle>
         </PdfColumn>
         <PdfColumn>
-          <PdfLink href={document.url} rel="noopener noreferrer nofollow" target="_blank">
-            Öppna
+          <PdfLink
+            href={document.url}
+            rel="noopener noreferrer nofollow"
+            target="_blank"
+            title={t('other.openDocument', { document: document.name })}
+          >
+            {t('common.open')}
           </PdfLink>
         </PdfColumn>
       </PdfListInner>

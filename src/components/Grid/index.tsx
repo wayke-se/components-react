@@ -4,6 +4,7 @@ import { Wrapper, List, Item } from './wrapper';
 import ProductCard from '../ProductCard/index';
 import { Document } from '../../@types/search';
 import { numberSeparator } from '../../utils/formats';
+import i18next from 'i18next';
 
 const resolveImage = (document: Document) => {
   const img = document.featuredImage?.files?.[0]?.url;
@@ -78,7 +79,11 @@ const Grid = ({
                     title: document.modelYear,
                   },
                   {
-                    title: `${numberSeparator(document.mileage)} mil`,
+                    title: `${numberSeparator(
+                      document.odometerReading?.value || document.mileage
+                    )} ${i18next.t(
+                      `odometer.${document.odometerReading?.unit || 'ScandinavianMile'}`
+                    )}`,
                   },
                   {
                     title: document.gearboxType,
@@ -87,20 +92,22 @@ const Grid = ({
                     title: document.fuelType,
                   },
                 ]}
-                price={`${numberSeparator(document.price)} kr`}
+                price={`${numberSeparator(document.price)} ${i18next.t('currency.default')}`}
                 oldPrice={
                   document.oldPrice !== undefined && document.price < document.oldPrice
-                    ? `${numberSeparator(document.oldPrice)} kr`
+                    ? `${numberSeparator(document.oldPrice)} ${i18next.t('currency.default')}`
                     : undefined
                 }
                 leasingPrice={
                   document.leasingPrice !== undefined
-                    ? `${numberSeparator(document.leasingPrice)} kr/mån`
+                    ? `${numberSeparator(document.leasingPrice)} ${i18next.t('currency.monthly')}`
                     : undefined
                 }
                 businessLeasingPrice={
                   document.businessLeasingPrice !== undefined
-                    ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
+                    ? `${numberSeparator(document.businessLeasingPrice)} ${i18next.t(
+                        'currency.monthly'
+                      )}`
                     : undefined
                 }
               />

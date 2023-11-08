@@ -2,12 +2,12 @@ import React, { useState, useCallback } from 'react';
 
 import OptionBox from '../OptionBox/index';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { UtilityTextPrimary } from '../Utility/index';
 import { ButtonInline } from '../Button/index';
 import { numberSeparator } from '../../utils/formats';
 import useLoanCalculation from '../../hooks/useLoan';
 import { FinancialOption } from '../../@types/codegen/types';
 import LoanModal from './LoanModal';
+import { useTranslation } from 'react-i18next';
 
 interface LoanProps {
   id: string;
@@ -15,6 +15,7 @@ interface LoanProps {
 }
 
 const Loan = ({ id, financialOption }: LoanProps) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => setModal(!modal), [modal]);
 
@@ -43,11 +44,11 @@ const Loan = ({ id, financialOption }: LoanProps) => {
     monthlyCost === null
   ) {
     return (
-      <OptionBox logo={logo} logoAlt="Logotyp">
-        <OptionBoxHeading>Laddar...</OptionBoxHeading>
+      <OptionBox logo={logo} logoAlt={t('common.logotype')}>
+        <OptionBoxHeading>{t('other.loading')}</OptionBoxHeading>
 
         <OptionBoxContent>
-          <p>Laddar...</p>
+          <p>{t('other.loading')}</p>
         </OptionBoxContent>
       </OptionBox>
     );
@@ -56,26 +57,28 @@ const Loan = ({ id, financialOption }: LoanProps) => {
   return (
     <>
       {modal && <LoanModal id={id} financialOption={financialOption} onClose={toggleModal} />}
-      <OptionBox logo={logo} logoAlt="Logotyp">
+      <OptionBox logo={logo} logoAlt={t('common.logotype')}>
         <>
-          <OptionBoxHeading>{`${numberSeparator(monthlyCost)} kr/mån*`}</OptionBoxHeading>
+          <OptionBoxHeading>{`${numberSeparator(monthlyCost)} ${t(
+            'currency.monthly'
+          )}*`}</OptionBoxHeading>
 
           <OptionBoxContent>
             <p>
-              Delbetala{' '}
-              {financialOption.loanAmount && duration && (
-                <>
-                  <UtilityTextPrimary>
-                    {numberSeparator(financialOption.loanAmount)} kr
-                  </UtilityTextPrimary>{' '}
-                  i <UtilityTextPrimary>{duration} mån</UtilityTextPrimary>.
-                </>
-              )}
+              {financialOption.loanAmount && duration
+                ? t('item.financialOptions.payInInstallmentsDetailed', {
+                    amount: `${numberSeparator(financialOption.loanAmount)} kr`,
+                    duration,
+                  })
+                : t('item.financialOptions.payInInstallments')}
             </p>
 
             <p>
-              {`*Beräknat på ${(interest * 100).toFixed(2)}% ränta. `}
-              <ButtonInline onClick={toggleModal}>Läs mer</ButtonInline>
+              *
+              {t('item.financialOptions.disclaimer', {
+                interest: `${(interest * 100).toFixed(2)}%`,
+              })}{' '}
+              <ButtonInline onClick={toggleModal}>{t('common.readMore')}</ButtonInline>
             </p>
           </OptionBoxContent>
         </>

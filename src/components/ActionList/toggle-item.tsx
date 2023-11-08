@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { ButtonSecondary, ButtonContent } from '../Button/index';
 import { RepeatTiny } from '../Repeat/index';
+import { useTranslation } from 'react-i18next';
 
 interface ToggleItemProps {
   title: string;
@@ -11,6 +12,7 @@ interface ToggleItemProps {
 }
 
 const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: ToggleItemProps) => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   const _onClickValue = useCallback(() => {
@@ -28,7 +30,12 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
     }
   }, [visible]);
 
-  const visibleTitle = type === 'tel' ? 'Ring' : type === 'mailto' ? 'Skicka ett mail till' : '';
+  const visibleTitle =
+    type === 'tel'
+      ? t('item.actions.callNumber')
+      : type === 'mailto'
+      ? t('item.actions.sendEmailTo')
+      : '';
 
   return (
     <RepeatTiny>

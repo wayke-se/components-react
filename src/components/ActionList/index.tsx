@@ -4,6 +4,7 @@ import ToggleItem from './toggle-item';
 import { Maybe, ContactOptions, Branch } from '../../@types/codegen/types';
 import { formatPhonenumber } from '../../utils/phonenumbers';
 import PubSub from '../../utils/pubsub/pubsub';
+import { useTranslation } from 'react-i18next';
 
 interface ActionListProps {
   branch?: Maybe<Branch>;
@@ -11,6 +12,7 @@ interface ActionListProps {
 }
 
 const ActionList = ({ contact, branch }: ActionListProps) => {
+  const { t } = useTranslation();
   const email = contact?.email || branch?.contact?.email;
   const phonenumber = contact?.phonenumber || branch?.contact?.phonenumber;
 
@@ -27,14 +29,14 @@ const ActionList = ({ contact, branch }: ActionListProps) => {
       {email && (
         <ToggleItem
           onClickVisible={onClickMailVisible}
-          title="Visa mailadress"
+          title={t('item.actions.showEmail')}
           value={email}
           type="mailto"
         />
       )}
       {phonenumber && (
         <ToggleItem
-          title="Visa telefonnummer"
+          title={t('item.actions.showPhoneNumber')}
           value={formatPhonenumber(phonenumber)}
           type="tel"
           onClickVisible={onClickPhoneVisible}

@@ -3,6 +3,7 @@ import React from 'react';
 import { Image } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
 import Rotation from './Rotation';
+import { useTranslation } from 'react-i18next';
 
 const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
   e.stopPropagation();
@@ -18,12 +19,13 @@ type PropsType = {
 };
 
 const ThreeSixty = ({ urls, visible, onDisableNavigation, navigationDisabled }: PropsType) => {
+  const { t } = useTranslation();
   if (!visible || (!navigationDisabled && visible)) {
     return (
       <>
         <Image src={urls[0]} alt="alt" />
         <MediaButton
-          text="Starta 360° exteriört"
+          text={t('item.start360Exterior')}
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void =>
             onMediaClick(e, onDisableNavigation)
           }
@@ -41,7 +43,7 @@ const ThreeSixty = ({ urls, visible, onDisableNavigation, navigationDisabled }: 
       >
         <Rotation>
           {urls.map((image, i) => (
-            <Image key={image} src={image} alt={`Bild ${i + 1}`} />
+            <Image key={image} src={image} alt={t('common.imageIndex', { index: i + 1 }) || ''} />
           ))}
         </Rotation>
       </div>
