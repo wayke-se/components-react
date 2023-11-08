@@ -6,7 +6,7 @@ import { Scalars } from '../../@types/codegen/types';
 import DocumentList from '../../components/DocumentList/index';
 import { Repeat } from '../../components/Repeat/index';
 import { useTranslation } from 'react-i18next';
-import ExtendContent from '../../components/ExtendContent';
+import ExtendContent from '../../components/ExtendContent/index';
 import i18next from 'i18next';
 
 const Translation = {
