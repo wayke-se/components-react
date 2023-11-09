@@ -27,7 +27,8 @@ const ctx = esbuild.build({
   ...Shared,
   outfile: 'dist/index.js',
   plugins: [
-    copy({resolveFrom: 'cwd',
+    copy({
+      resolveFrom: 'cwd',
       assets: {
         from: ['./assets/**/*'],
         to: ['./dist/assets'],
@@ -54,6 +55,7 @@ const generator = new npmDts.Generator({
   output: 'dist/index.d.ts',
   help: true,
   logLevel: 'debug',
+  force: true,
 });
 
 try {

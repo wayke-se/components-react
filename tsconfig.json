@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "dist",
     "module": "esNext",
     "target": "es2020",
     "sourceMap": true,
@@ -12,7 +12,11 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
   },
+  "include": [
+    "src/index.ts",
+  ],
   "exclude": [
     "node_modules",
+    "example",
   ]
 }
