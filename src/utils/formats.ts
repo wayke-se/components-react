@@ -1,5 +1,5 @@
-import formatFns from 'date-fns/format';
-import sv from 'date-fns/locale/sv';
+import { format as formatFns } from 'date-fns';
+import sv from 'date-fns/locale/sv/index.js';
 
 // Filter function to remove any null/undefined values.
 export const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue =>
