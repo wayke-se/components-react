@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Javascript
         run: |
-          npm run build2
+          npm run build
       - name: Publish package to npm
         run: |
           npm publish --access public --tag next
