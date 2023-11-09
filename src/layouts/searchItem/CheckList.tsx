@@ -18,8 +18,8 @@ import {
 } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
-import { format } from 'date-fns';
-import sv from 'date-fns/locale/sv';
+import format from 'date-fns/esm/format/index';
+import sv from 'date-fns/esm/locale/sv/index';
 import { useTranslation } from 'react-i18next';
 
 interface CheckList {
