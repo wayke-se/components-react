@@ -1,10 +1,9 @@
-import i18n from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { MarketCode } from '../@types/market';
-import { initializeI18n } from '../utils/I18n';
+import { initializeI18n, i18nScoped } from '../utils/I18n';
 
 const useInitializeTranslation = (marketCode?: MarketCode) => {
-  const [initialized, setInitialized] = useState(() => !!i18n.isInitialized);
+  const [initialized, setInitialized] = useState(() => !!i18nScoped.isInitialized);
 
   const initialize = useCallback(async (m?: MarketCode) => {
     await initializeI18n(m);
@@ -12,7 +11,7 @@ const useInitializeTranslation = (marketCode?: MarketCode) => {
   }, []);
 
   useEffect(() => {
-    if (!i18n.isInitialized) {
+    if (!i18nScoped.isInitialized) {
       initialize(marketCode);
     }
   }, []);

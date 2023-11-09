@@ -69,7 +69,9 @@ export const Dialog = styled.article.attrs(() => ({
 
   ${(props) => props.theme.breakpoint.Sm} {
     transform: translateY(${size(2)});
-    animation: ${fadeIn} 400ms ease, ${noTransform} 400ms ease forwards;
+    animation:
+      ${fadeIn} 400ms ease,
+      ${noTransform} 400ms ease forwards;
   }
 `;
 

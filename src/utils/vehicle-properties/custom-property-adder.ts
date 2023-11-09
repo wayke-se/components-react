@@ -1,21 +1,21 @@
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { VehicleData } from '../../@types/codegen/types';
 import { EnhancedProperty, ItemCategory } from '../../@types/vehicle-properties';
 import deepCopy from '../deep-copy';
 
 export const TEXT_TYPE = 'text';
 export const NUMBER_TYPE = 'number';
-export const BASIC_CATEGORY: ItemCategory = Object.freeze({
+export const BASIC_CATEGORY = (t: TFunction<'translation', undefined>): ItemCategory => ({
   id: 1000,
-  name: i18next.t('category.basic'),
+  name: t('category.basic'),
   subCategory: null,
 });
-export const ENGINE_SUBCATEGORY: ItemCategory = Object.freeze({
+export const ENGINE_SUBCATEGORY = (t: TFunction<'translation', undefined>): ItemCategory => ({
   id: 6,
-  name: i18next.t('category.engineAndPerformance'),
+  name: t('category.engineAndPerformance'),
   subCategory: {
     id: 54,
-    name: i18next.t('subCategory.engine'),
+    name: t('subCategory.engine'),
     subCategory: null,
   },
 });
@@ -72,112 +72,116 @@ class PropertyBuilder {
   }
 }
 
-export default (item: VehicleData, properties: { [key: string]: EnhancedProperty }) => {
+export default (
+  t: TFunction<'translation', undefined>,
+  item: VehicleData,
+  properties: { [key: string]: EnhancedProperty }
+) => {
   const newProperties = deepCopy(properties);
 
   if (!!item.manufacturer) {
     newProperties.manufacturer = new PropertyBuilder()
-      .withName(i18next.t('customProperty.manufacturer.displayName'))
+      .withName(t('customProperty.manufacturer.displayName'))
       .withValue(item.manufacturer)
       .withType(TEXT_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (!!item.modelSeries) {
     newProperties.modelSeries = new PropertyBuilder()
-      .withName(i18next.t('customProperty.modelSeries.displayName'))
+      .withName(t('customProperty.modelSeries.displayName'))
       .withValue(item.modelSeries)
       .withType(TEXT_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (!!item.modelName) {
     newProperties.modelName = new PropertyBuilder()
-      .withName(i18next.t('customProperty.modelName.displayName'))
+      .withName(t('customProperty.modelName.displayName'))
       .withValue(item.modelName)
-      .withHint(i18next.t('customProperty.modelName.hint'))
+      .withHint(t('customProperty.modelName.hint'))
       .withType(TEXT_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (!!item.modelYear) {
     newProperties.modelYear = new PropertyBuilder()
-      .withName(i18next.t('customProperty.modelYear.displayName'))
+      .withName(t('customProperty.modelYear.displayName'))
       .withValue(item.modelYear)
-      .withHint(i18next.t('customProperty.modelYear.hint'))
+      .withHint(t('customProperty.modelYear.hint'))
       .withType(NUMBER_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (!!item.manufactureYear) {
     newProperties.manufactureYear = new PropertyBuilder()
-      .withName(i18next.t('customProperty.manufactureYear.displayName'))
+      .withName(t('customProperty.manufactureYear.displayName'))
       .withValue(item.manufactureYear)
-      .withHint(i18next.t('customProperty.manufactureYear.hint'))
+      .withHint(t('customProperty.manufactureYear.hint'))
       .withType(NUMBER_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (item.odometerReading) {
     newProperties.mileage = new PropertyBuilder()
-      .withName(i18next.t('customProperty.odometer.displayName'))
+      .withName(t('customProperty.odometer.displayName'))
       .withValue(item.odometerReading.value)
-      .withHint(i18next.t('customProperty.odometer.hint'))
+      .withHint(t('customProperty.odometer.hint'))
       .withType(NUMBER_TYPE)
-      .withCategory(BASIC_CATEGORY)
-      .withUnit(i18next.t(`odometer.${item.odometerReading.unit}`))
+      .withCategory(BASIC_CATEGORY(t))
+      .withUnit(t(`odometer.${item.odometerReading.unit}`))
       .build();
   } else if (!!item.mileage) {
     newProperties.mileage = new PropertyBuilder()
-      .withName(i18next.t('customProperty.odometer.displayName'))
+      .withName(t('customProperty.odometer.displayName'))
       .withValue(item.mileage)
-      .withHint(i18next.t('customProperty.odometer.hint'))
+      .withHint(t('customProperty.odometer.hint'))
       .withType(NUMBER_TYPE)
-      .withCategory(BASIC_CATEGORY)
-      .withUnit(i18next.t('odometer.ScandinavianMile'))
+      .withCategory(BASIC_CATEGORY(t))
+      .withUnit(t('odometer.ScandinavianMile'))
       .build();
   }
 
   if (!!item.gearboxType) {
     newProperties.gearboxType = new PropertyBuilder()
-      .withName(i18next.t('customProperty.gearboxType.displayName'))
+      .withName(t('customProperty.gearboxType.displayName'))
       .withValue(item.gearboxType)
       .withType(TEXT_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (!!item.registrationNumber) {
     newProperties.registrationNumber = new PropertyBuilder()
-      .withName(i18next.t('customProperty.registrationNumber.displayName'))
+      .withName(t('customProperty.registrationNumber.displayName'))
       .withValue(item.registrationNumber)
       .withType(TEXT_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (!!item.fuelType) {
     newProperties.fuelType = new PropertyBuilder()
-      .withName(i18next.t('customProperty.fuelType.displayName'))
+      .withName(t('customProperty.fuelType.displayName'))
       .withValue(item.fuelType)
-      .withHint(i18next.t('customProperty.fuelType.hint'))
+      .withHint(t('customProperty.fuelType.hint'))
       .withType(TEXT_TYPE)
-      .withCategory(BASIC_CATEGORY)
+      .withCategory(BASIC_CATEGORY(t))
       .build();
   }
 
   if (item.enginePower) {
     newProperties.enginePower = new PropertyBuilder()
-      .withName(i18next.t('customProperty.enginePower.displayName'))
+      .withName(t('customProperty.enginePower.displayName'))
       .withValue(item.enginePower)
-      .withUnit(i18next.t('customProperty.enginePower.unit'))
+      .withUnit(t('customProperty.enginePower.unit'))
       .withType(NUMBER_TYPE)
-      .withCategory(ENGINE_SUBCATEGORY)
+      .withCategory(ENGINE_SUBCATEGORY(t))
       .build();
   }
 

@@ -13,19 +13,23 @@ import { SrOnly } from '../../components/SrOnly';
 import { ButtonInline } from '../../components/Button';
 import Modal from '../../components/Modal';
 import Content from '../../components/Content';
-import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 
-const formatValue = (value: Property['value'], unit: Property['unit']) => {
+const formatValue = (
+  t: TFunction<'translation', undefined>,
+  value: Property['value'],
+  unit: Property['unit']
+) => {
   if (typeof value === 'boolean') {
     return value ? (
-      <TableListBooleanPos title={i18next.t('common.yes') || ''}>
-        <SrOnly>{i18next.t('common.yes')}</SrOnly>
+      <TableListBooleanPos title={t('common.yes') || ''}>
+        <SrOnly>{t('common.yes')}</SrOnly>
         <IconCheck block />
       </TableListBooleanPos>
     ) : (
-      <TableListBooleanNeg title={i18next.t('common.no') || ''}>
-        <SrOnly>{i18next.t('common.no')}</SrOnly>
+      <TableListBooleanNeg title={t('common.no') || ''}>
+        <SrOnly>{t('common.no')}</SrOnly>
         <IconCancel block />
       </TableListBooleanNeg>
     );
@@ -51,7 +55,7 @@ const MetadataItem = ({ name, hint, value, unit }: MetadataItemProps) => {
   const [foldout, setFoldout] = useState(false);
   const onToggleFoldout = useCallback(() => setFoldout(!foldout), [foldout]);
 
-  const presentedValue = formatValue(value, unit);
+  const presentedValue = formatValue(t, value, unit);
 
   return (
     <TableListItem>

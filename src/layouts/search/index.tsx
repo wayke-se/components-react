@@ -14,7 +14,7 @@ import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
 import { MarketCode } from '../../@types/market';
 import useInitializeTranslation from '../../hooks/useInitializeTranslation';
-import i18next from 'i18next';
+import { i18nScoped } from '../../utils/I18n';
 
 export interface WaykeSearchProps {
   marketCode?: MarketCode;
@@ -121,9 +121,9 @@ const WaykeSearch = ({
                   <Snackbar
                     severity="warning"
                     icon
-                    heading={i18next.t('search.snackbarNoSearchResults.heading') || undefined}
+                    heading={i18nScoped.t('search.snackbarNoSearchResults.heading') || undefined}
                   >
-                    {i18next.t('search.snackbarNoSearchResults.body')}
+                    {i18nScoped.t('search.snackbarNoSearchResults.body')}
                   </Snackbar>
                 )}
               </>

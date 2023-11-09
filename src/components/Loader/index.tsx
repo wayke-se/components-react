@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Spinner, Wrapper } from './wrapper';
 import { SrOnly } from '../SrOnly';
-import { useTranslation } from 'react-i18next';
+import { i18nScoped } from '../../utils/I18n';
 
 interface Props {
   inline?: boolean;
@@ -10,11 +10,10 @@ interface Props {
 }
 
 const Loader = ({ inline, center }: Props) => {
-  const { t } = useTranslation();
   return (
     <Wrapper inline={inline} center={center}>
       <Spinner aria-hidden="true" />
-      <SrOnly>{t('other.loading')}</SrOnly>
+      {i18nScoped.isInitialized && <SrOnly>{i18nScoped.t('other.loading')}</SrOnly>}
     </Wrapper>
   );
 };

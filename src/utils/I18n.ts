@@ -2,6 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { MarketCode } from '../@types/market';
 
+export const i18nScoped = i18n.createInstance();
+
 const getLanguage = (marketCode?: MarketCode) => {
   switch (marketCode) {
     case 'NO':
@@ -15,11 +17,11 @@ const getLanguage = (marketCode?: MarketCode) => {
 
 export const initializeI18n = (marketCode: MarketCode = 'SE') => {
   return new Promise((resolve) => {
-    if (i18n.isInitialized) {
+    if (i18nScoped.isInitialized) {
       resolve(true);
       return;
     }
-    i18n.use(initReactI18next).init(
+    i18nScoped.use(initReactI18next).init(
       {
         lng: getLanguage(marketCode),
         fallbackLng: 'en-US',
@@ -302,7 +304,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 closeModal: 'Stäng modal',
                 closePanel: 'Stäng panel',
                 goToHeading: 'Gå till {{heading}}',
-                openDoumentt: 'Öppna {{document}}',
+                openDocument: 'Öppna {{document}}',
                 previousImage: 'Föregående bild',
                 nextImage: 'Nästa bild',
                 goToImageIndex: 'Gå till bild {{index}}',
@@ -593,7 +595,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 closeModal: 'Close Modal',
                 closePanel: 'Lukk panel',
                 goToHeading: 'Gå til {{heading}}',
-                openDoumentt: 'Åpne {{dokument}}',
+                openDocument: 'Åpne {{dokument}}',
                 previousImage: 'Forrige bilde',
                 nextImage: 'Neste bilde',
                 goToImageIndex: 'Gå til bilde {{indeks}}',
@@ -885,7 +887,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 closeModal: 'Close Modal',
                 closePanel: 'Close panel',
                 goToHeading: 'Go to {{heading}}',
-                openDoumentt: 'Open {{document}}',
+                openDocument: 'Open {{document}}',
                 previousImage: 'Previous Image',
                 nextImage: 'Next Image',
                 goToImageIndex: 'Go to image {{index}}',

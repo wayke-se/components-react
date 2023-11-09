@@ -13,10 +13,10 @@ import {
 import { useTranslation } from 'react-i18next';
 
 interface PdfDownloadItemProps {
-  document: Scalars['FileDocument'];
+  document: Scalars['FileDocument']['input'];
 }
 
-const translateContentType = (document: Scalars['FileDocument']) => {
+const translateContentType = (document: Scalars['FileDocument']['input']) => {
   switch (document.contentType) {
     case 'application/pdf':
       return 'PDF';
@@ -53,7 +53,7 @@ export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
 };
 
 interface IDocumentList {
-  documents: Scalars['FileDocument'][];
+  documents: Scalars['FileDocument']['input'][];
 }
 
 export const DocumentList = ({ documents }: IDocumentList) => (

@@ -11,6 +11,7 @@ import { Repeat } from '../../components/Repeat';
 import { TableList } from '../../components/TableList';
 import Tabs from '../../components/Tabs';
 import { VehicleData } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
 
 interface MetadataSubCategoryProps {
   name: string;
@@ -74,6 +75,7 @@ interface PropertySetProps {
 }
 
 const PropertySet = ({ propertySet, vehicleData }: PropertySetProps) => {
+  const { t } = useTranslation();
   const [activeCategoryId, setActiveCategoryId] = useState(-1);
   const mappedProperties = useMemo(() => {
     if (!propertySet) {
@@ -81,7 +83,7 @@ const PropertySet = ({ propertySet, vehicleData }: PropertySetProps) => {
     }
 
     const newProperties = removeProperties(propertySet);
-    const enrichedProperties = addCustomProperties(vehicleData, newProperties);
+    const enrichedProperties = addCustomProperties(t, vehicleData, newProperties);
 
     const tree = new PropertyTreeCreator(enrichedProperties).create();
     sortTree(tree);

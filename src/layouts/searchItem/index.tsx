@@ -1,5 +1,4 @@
-import React, { useMemo, useRef, useCallback, useState, useEffect } from 'react';
-import WaykeEcomWeb from '@wayke-se/ecom-web';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 
 import Container from '../../components/Container';
 import UspList, { ItemProps } from '../../components/UspList';
@@ -43,7 +42,8 @@ import Documents from './Documents';
 import AccessoriesSection from './Accessories';
 import { MarketCode } from '../../@types/market';
 import useInitializeTranslation from '../../hooks/useInitializeTranslation';
-import i18next from 'i18next';
+import useEcom from './useEcom';
+import { i18nScoped } from '../../utils/I18n';
 
 export interface WaykeSearchItemProps {
   marketCode?: MarketCode;
@@ -70,37 +70,15 @@ const WaykeSearchItem = ({
 }: WaykeSearchItemProps) => {
   const initialized = useInitializeTranslation(marketCode);
   const { ecomSettings } = useSettings();
-  const ecomContext = useRef<WaykeEcomWeb | undefined>();
+
+  const ecomContext = useEcom(id, ecomSettings);
+
   const { loading, data: result } = useSearchItem(id);
   const { vehicle: centralStorageVehicle, loading: loadingCentralStorageVehicle } =
     useCentralStorage(result?.vehicle);
 
   const [demoCarModal, setDemoCarModal] = useState(false);
   const onToggleDemoCarModal = useCallback(() => setDemoCarModal(!demoCarModal), [demoCarModal]);
-
-  useEffect(() => {
-    if (ecomSettings) {
-      ecomContext.current = new WaykeEcomWeb({
-        id,
-        ecomSdkConfig: {
-          api: {
-            address: ecomSettings.url,
-          },
-          bankIdThumbprint: ecomSettings?.bankIdThumbprint,
-        },
-        logo: ecomSettings.serviceLogotypeUrl,
-        logoX2: ecomSettings.serviceLogotypeUrl,
-        onEvent(view, event, currentStep?, data?) {
-          PubSub.publish('EcomOnUserEvent', view, event, currentStep, data);
-        },
-      });
-    }
-    return () => {
-      if (ecomContext.current) {
-        ecomContext.current.destroy();
-      }
-    };
-  }, []);
 
   useEffect(() => {
     if (!disableResetScrollOnInit) {
@@ -166,13 +144,13 @@ const WaykeSearchItem = ({
 
   if (flags?.demoVersion) {
     uspList.push({
-      title: i18next.t('item.demoCar'),
+      title: i18nScoped.t('item.demoCar'),
       onClick: onToggleDemoCarModal,
     });
   }
 
   uspList.push({
-    title: `${numberSeparator(odometerReading?.value || mileage)} ${i18next.t(
+    title: `${numberSeparator(odometerReading?.value || mileage)} ${i18nScoped.t(
       `odometer.${odometerReading?.unit || 'ScandinavianMile'}`
     )}`,
   });
@@ -199,12 +177,12 @@ const WaykeSearchItem = ({
                         <ButtonInlineLight
                           as="a"
                           href="#"
-                          title={i18next.t('navigation.backToSearch')}
+                          title={i18nScoped.t('navigation.backToSearch')}
                         >
                           <ButtonContent>
                             <IconChevronLeft block />
                           </ButtonContent>
-                          <ButtonContent>{i18next.t('navigation.backToSearch')}</ButtonContent>
+                          <ButtonContent>{i18nScoped.t('navigation.backToSearch')}</ButtonContent>
                         </ButtonInlineLight>
                       </UtilityFontSizeSmall>
                     </Repeat>
@@ -268,11 +246,11 @@ const WaykeSearchItem = ({
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2 noMargin>{i18next.t('item.carData')}</H2>
+                    <H2 noMargin>{i18nScoped.t('item.carData')}</H2>
                   </Repeat>
                   <Repeat>
                     <Content>
-                      <p>{i18next.t('item.carDataDescription')}</p>
+                      <p>{i18nScoped.t('item.carDataDescription')}</p>
                     </Content>
                   </Repeat>
                   <Repeat>
@@ -298,16 +276,16 @@ const WaykeSearchItem = ({
                 {(options?.length || 0) > 0 && (
                   <ProductPageMainSection>
                     <Repeat>
-                      <H2 noMargin>{i18next.t('item.equipment')}</H2>
+                      <H2 noMargin>{i18nScoped.t('item.equipment')}</H2>
                     </Repeat>
                     <Repeat>
                       <Content>
-                        <p>{i18next.t('item.equipmentDescription')}</p>
+                        <p>{i18nScoped.t('item.equipmentDescription')}</p>
                       </Content>
                     </Repeat>
                     <Repeat>
                       <ExtendContent
-                        actionTitle={i18next.t('common.showMore')}
+                        actionTitle={i18nScoped.t('common.showMore')}
                         onClick={onShowMoreOptionsClick}
                       >
                         <UspList items={options} />

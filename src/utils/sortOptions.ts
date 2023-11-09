@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { i18nScoped } from './I18n';
 
 const SortOptionDisplayName = {
   PublishedAsc: 'published-asc',
@@ -25,21 +25,21 @@ type SortOptionDisplayName =
 export const getTranslatedSortOptionDisplayName = (str: string | SortOptionDisplayName): string => {
   switch (str) {
     case SortOptionDisplayName.PublishedAsc:
-      return i18next.t('search.sortOptions.publishedAsc');
+      return i18nScoped.t('search.sortOptions.publishedAsc');
     case SortOptionDisplayName.PublishedDesc:
-      return i18next.t('search.sortOptions.publishedDesc');
+      return i18nScoped.t('search.sortOptions.publishedDesc');
     case SortOptionDisplayName.PriceAsc:
-      return i18next.t('search.sortOptions.priceAsc');
+      return i18nScoped.t('search.sortOptions.priceAsc');
     case SortOptionDisplayName.Pricedesc:
-      return i18next.t('search.sortOptions.priceDesc');
+      return i18nScoped.t('search.sortOptions.priceDesc');
     case SortOptionDisplayName.ModelAsc:
-      return i18next.t('search.sortOptions.modelAsc');
+      return i18nScoped.t('search.sortOptions.modelAsc');
     case SortOptionDisplayName.Modeldesc:
-      return i18next.t('search.sortOptions.modelDesc');
+      return i18nScoped.t('search.sortOptions.modelDesc');
     case SortOptionDisplayName.MileageAsc:
-      return i18next.t('search.sortOptions.mileageAsc');
+      return i18nScoped.t('search.sortOptions.mileageAsc');
     case SortOptionDisplayName.Mileagedesc:
-      return i18next.t('search.sortOptions.mileageDesc');
+      return i18nScoped.t('search.sortOptions.mileageDesc');
     default:
       return str;
   }
