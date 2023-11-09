@@ -4,7 +4,7 @@
 
 ## Notes
 
-* Starting from version `2.0.0` and above will require import of `@wayke.se/components-react/assets/default.css` in order to apply basic styling to the gallery.
+* Starting from version `2.0.0` and above will require import of `@wayke-se/components-react/dist/assets/default.css` in order to apply basic styling to the gallery.
 
 ## Usage
 
@@ -21,7 +21,7 @@ npm install react react-dom styled-components
 ```javascript
 import React from 'react';
 import WaykeComposite from '@wayke-se/components-react'
-import '@wayke-se/components-react/assets/default.css';
+import '@wayke-se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
@@ -84,7 +84,7 @@ Examples given the application is located in `/search/vehicles`:
 ```javascript
 import React from 'react';
 import { WaykeCompositePath } from '@wayke-se/components-react'
-import '@wayke.se/components-react/assets/default.css';
+import '@wayke.se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
@@ -127,7 +127,7 @@ It's recomended to place WaykeItemProvider close to app-root in order to keep th
 ```javascript
 import React, { useCallback } from 'react';
 import { WaykeItemProvider, WaykeSearchItem } from '@wayke-se/components-react'
-import '@wayke.se/components-react/assets/default.css';
+import '@wayke.se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
