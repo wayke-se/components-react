@@ -20,7 +20,7 @@
     "libphonenumber-metadata": "libphonenumber-generate-metadata src/utils/metadata.min.json --countries SE --extended",
     "prepare": "husky install",
     "start": "node ./esbuild/start.js",
-    "build": "npm run clean2 && node ./esbuild/lib.js",
+    "build": "npm run clean && node ./esbuild/lib.js",
     "clean": "rimraf build && rimraf dist && rimraf dist-cdn"
   },
   "repository": {
