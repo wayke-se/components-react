@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "description": "",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
@@ -21,7 +21,8 @@
     "prepare": "husky install",
     "start": "node ./esbuild/start.js",
     "build": "npm run clean && node ./esbuild/lib.js",
-    "clean": "rimraf build && rimraf dist && rimraf dist-cdn"
+    "clean": "rimraf build && rimraf dist && rimraf dist-cdn",
+    "build:types": "tsc --emitDeclarationOnly --declaration --project tsconfig.build.json"
   },
   "repository": {
     "type": "git",

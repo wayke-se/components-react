@@ -55,7 +55,6 @@ const generator = new npmDts.Generator({
   output: 'dist/index.d.ts',
   help: true,
   logLevel: 'debug',
-  force: true,
 });
 
 try {
