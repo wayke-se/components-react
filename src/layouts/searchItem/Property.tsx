@@ -6,10 +6,10 @@ import addCustomProperties from '../../utils/vehicle-properties/custom-property-
 import removeProperties from '../../utils/vehicle-properties/property-remover';
 import MetadataItem from './MetadataItem';
 
-import { H5 } from '../../components/Heading/index';
-import { Repeat } from '../../components/Repeat/index';
-import { TableList } from '../../components/TableList/index';
-import Tabs from '../../components/Tabs/index';
+import { H5 } from '../../components/Heading';
+import { Repeat } from '../../components/Repeat';
+import { TableList } from '../../components/TableList';
+import Tabs from '../../components/Tabs';
 import { VehicleData } from '../../@types/codegen/types';
 
 interface MetadataSubCategoryProps {

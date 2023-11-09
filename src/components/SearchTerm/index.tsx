@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, Query, Clear } from './wrapper';
-import { IconCancel } from '../Icon/index';
+import { IconCancel } from '../Icon';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

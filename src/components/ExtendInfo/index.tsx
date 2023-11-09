@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { Wrapper, Header, Title, Info, InfoBtn, Extend } from './wrapper';
-import { IconInfo } from '../Icon/index';
+import { IconInfo } from '../Icon';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

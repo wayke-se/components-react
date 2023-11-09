@@ -1,12 +1,12 @@
-import WaykeSearch from './layouts/search/index';
-import type { WaykeSearchProps } from './layouts/search/index';
-import WaykeSearchItem from './layouts/searchItem/index';
-import type { WaykeSearchItemProps } from './layouts/searchItem/index';
+import WaykeSearch from './layouts/search';
+import type { WaykeSearchProps } from './layouts/search';
+import WaykeSearchItem from './layouts/searchItem';
+import type { WaykeSearchItemProps } from './layouts/searchItem';
 import WaykeProvider from './providers/WaykeProvider';
 import type { WaykeProviderSettings } from './providers/WaykeProvider';
 import WaykeComposite from './layouts/WaykeCompositeWithProvider';
 import type { WaykeCompositeWithProviderProps } from './layouts/WaykeCompositeWithProvider';
-import SearchBar from './components/SearchBar/index';
+import SearchBar from './components/SearchBar';
 import WaykeThemeProvider from './providers/themeProvider';
 import WaykeItemProvider from './providers/WaykeItemProvidet';
 import type { WaykeItemProviderSettings } from './providers/WaykeItemProvidet';

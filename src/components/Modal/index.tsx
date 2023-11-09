@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { Portal, PortalNamespace } from '../Portal/index';
+import { Portal, PortalNamespace } from '../Portal';
 
-import { H1 } from '../Heading/index';
-import { IconCancel } from '../Icon/index';
+import { H1 } from '../Heading';
+import { IconCancel } from '../Icon';
 import {
   Body,
   Content,

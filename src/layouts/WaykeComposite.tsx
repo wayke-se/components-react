@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import useHashGuid from '../hooks/useHashGuid';
 import PubSub from '../utils/pubsub/pubsub';
 
-import WaykeSearch, { WaykeSearchProps } from './search/index';
-import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem/index';
+import WaykeSearch, { WaykeSearchProps } from './search';
+import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem';
 import usePath from '../State/Path/usePath';
 import useInitializeTranslation from '../hooks/useInitializeTranslation';
 

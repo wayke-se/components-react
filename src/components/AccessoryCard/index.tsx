@@ -12,7 +12,7 @@ import {
   Preamble,
   ReadMoreBtn,
 } from './wrapper';
-import { IconImage } from '../Icon/index';
+import { IconImage } from '../Icon';
 import { useTranslation } from 'react-i18next';
 
 interface AccessoryCardImageProps {

@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat/index';
-import { VisualHeading } from '../Heading/index';
-import OptionBox from '../OptionBox/index';
+import { Repeat, RepeatTiny } from '../Repeat';
+import { VisualHeading } from '../Heading';
+import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { ButtonInline } from '../Button/index';
+import { ButtonInline } from '../Button';
 import { InsuranceOption, Branch } from '../../@types/codegen/types';
 import InsuranceModal from './InsuranceModal';
 import { useTranslation } from 'react-i18next';

@@ -11,7 +11,7 @@ import {
   Icon,
   Body,
 } from './wrapper';
-import { IconChevronDown } from '../Icon/index';
+import { IconChevronDown } from '../Icon';
 import { useTranslation } from 'react-i18next';
 
 export interface IAccordionItem {

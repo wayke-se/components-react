@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat/index';
-import { VisualHeading } from '../Heading/index';
+import { Repeat, RepeatTiny } from '../Repeat';
+import { VisualHeading } from '../Heading';
 import Leasing from './leasing';
 import Loan from './loan';
 import { FinancialOption } from '../../@types/codegen/types';

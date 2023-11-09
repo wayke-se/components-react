@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import useSettings from '../../State/Settings/useSettings';
 
 import { Wrapper, Image, Placeholder, PlaceholderAction } from './wrapper';
-import { ButtonSecondary, ButtonContent } from '../Button/index';
+import { ButtonSecondary, ButtonContent } from '../Button';
 import { Position, Maybe } from '../../@types/codegen/types';
 import { useTranslation } from 'react-i18next';
 

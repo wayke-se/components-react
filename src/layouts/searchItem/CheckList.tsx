@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { Repeat, RepeatTiny } from '../../components/Repeat/index';
-import ActionList from '../../components/ActionList/index';
-import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button/index';
-import { Columns, Column } from '../../components/Columns/index';
-import { UtilityFontSizeSmall } from '../../components/Utility/index';
-import { StateIndicator } from '../../components/StateIndicator/index';
-import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList/index';
-import Content from '../../components/Content/index';
-import SwitchBar from '../../components/SwitchBar/index';
+import { Repeat, RepeatTiny } from '../../components/Repeat';
+import ActionList from '../../components/ActionList';
+import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button';
+import { Columns, Column } from '../../components/Columns';
+import { UtilityFontSizeSmall } from '../../components/Utility';
+import { StateIndicator } from '../../components/StateIndicator';
+import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
+import Content from '../../components/Content';
+import SwitchBar from '../../components/SwitchBar';
 import {
   Manufacturer,
   PackageOption,
@@ -18,7 +18,7 @@ import {
 } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 import sv from 'date-fns/locale/sv';
 import { useTranslation } from 'react-i18next';
 

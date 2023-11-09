@@ -1,15 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { Repeat } from '../../components/Repeat/index';
-import Content from '../../components/Content/index';
-import { ProductPageContentLimit } from '../../components/ProductPage/index';
-import { H2 } from '../../components/Heading/index';
-import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button/index';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
+import { Repeat } from '../../components/Repeat';
+import Content from '../../components/Content';
+import { ProductPageContentLimit } from '../../components/ProductPage';
+import { H2 } from '../../components/Heading';
+import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button';
+import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 
-import OpeningHours from '../../components/OpeningHours/index';
-import PhoneNumber from '../../components/PhoneNumber/index';
-import Map from '../../components/Map/index';
+import OpeningHours from '../../components/OpeningHours';
+import PhoneNumber from '../../components/PhoneNumber';
+import Map from '../../components/Map';
 
 import { Branch, Maybe } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';

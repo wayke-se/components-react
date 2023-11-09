@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, List, Item } from './wrapper';
-import ProductCard from '../ProductCard/index';
+import ProductCard from '../ProductCard';
 import { Document } from '../../@types/search';
 import { numberSeparator } from '../../utils/formats';
 import i18next from 'i18next';

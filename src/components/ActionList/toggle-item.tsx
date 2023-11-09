@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { ButtonSecondary, ButtonContent } from '../Button/index';
-import { RepeatTiny } from '../Repeat/index';
+import { ButtonSecondary, ButtonContent } from '../Button';
+import { RepeatTiny } from '../Repeat';
 import { useTranslation } from 'react-i18next';
 
 interface ToggleItemProps {

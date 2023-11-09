@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wrapper, Icon, Content, Heading, Message } from './wrapper';
 
-import { IconCheck, IconInfo, IconExclamationCircle, IconExclamationTriangle } from '../Icon/index';
+import { IconCheck, IconInfo, IconExclamationCircle, IconExclamationTriangle } from '../Icon';
 
 interface Props {
   severity?: string;

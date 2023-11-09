@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 
-import OptionBox from '../OptionBox/index';
+import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { ButtonInline } from '../Button/index';
+import { ButtonInline } from '../Button';
 import { numberSeparator } from '../../utils/formats';
 import useLoanCalculation from '../../hooks/useLoan';
 import { FinancialOption } from '../../@types/codegen/types';

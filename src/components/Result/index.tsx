@@ -11,12 +11,12 @@ import {
   FooterAction,
   ResultCount,
 } from './wrapper';
-import ProgressBar from '../ProgressBar/index';
-import { ButtonSecondary, ButtonContent } from '../Button/index';
-import Loader from '../Loader/index';
+import ProgressBar from '../ProgressBar';
+import { ButtonSecondary, ButtonContent } from '../Button';
+import Loader from '../Loader';
 import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../State/Search/useSearch';
-import SortSelect, { OptionProps } from '../SortSelect/index';
+import SortSelect, { OptionProps } from '../SortSelect';
 import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
 
 interface Props {

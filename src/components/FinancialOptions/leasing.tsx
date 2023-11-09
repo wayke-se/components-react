@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from 'react';
 
-import OptionBox from '../OptionBox/index';
+import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { UtilityTextPrimary } from '../Utility/index';
-import { ButtonInline } from '../Button/index';
+import { UtilityTextPrimary } from '../Utility';
+import { ButtonInline } from '../Button';
 import { numberSeparator } from '../../utils/formats';
-import Modal from '../Modal/index';
+import Modal from '../Modal';
 import { Image, ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
-import Content from '../Content/index';
-import DataList from '../DataList/index';
+import Content from '../Content';
+import DataList from '../DataList';
 import { FinancialOption } from '../../@types/codegen/types';
 import { useTranslation } from 'react-i18next';
 

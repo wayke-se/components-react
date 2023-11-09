@@ -7,7 +7,7 @@ const PathRoute = lazy(() => import('./PathRoute'));
 const HashRoute = lazy(() => import('./HashRoute'));
 const Home = lazy(() => import('./Home'));
 const SearchItem = lazy(() => import('./SearchItem'));
-const NotFound = lazy(() => import('./NotFound/index'));
+const NotFound = lazy(() => import('./NotFound'));
 
 const Routes = () => (
   <Suspense fallback={<Loader />}>

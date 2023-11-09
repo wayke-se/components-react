@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { H2, H3 } from '../../components/Heading/index';
-import { ProductPageMainSection } from '../../components/ProductPage/index';
+import { H2, H3 } from '../../components/Heading';
+import { ProductPageMainSection } from '../../components/ProductPage';
 import { Scalars } from '../../@types/codegen/types';
-import DocumentList from '../../components/DocumentList/index';
-import { Repeat } from '../../components/Repeat/index';
+import DocumentList from '../../components/DocumentList';
+import { Repeat } from '../../components/Repeat';
 import { useTranslation } from 'react-i18next';
-import ExtendContent from '../../components/ExtendContent/index';
+import ExtendContent from '../../components/ExtendContent';
 import i18next from 'i18next';
 
 const Translation = {

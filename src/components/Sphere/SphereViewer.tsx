@@ -1,7 +1,7 @@
 import React, { lazy, useState, useEffect, Suspense } from 'react';
 
 import { Wrapper } from '../Sphere/wrapper';
-import Loader from '../Loader/index';
+import Loader from '../Loader';
 
 // Skip loading pannellum with video
 const Pannellum = lazy(() => import('@wayke-se/pannellum-react'));

@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 
 import { Wrapper, Header, Body, Info, Action, InfoContent, InfoBtn, Title } from './wrapper';
-import Modal from '../Modal/index';
-import { ButtonInline } from '../Button/index';
-import { IconInfo } from '../Icon/index';
+import Modal from '../Modal';
+import { ButtonInline } from '../Button';
+import { IconInfo } from '../Icon';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

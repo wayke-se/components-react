@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat/index';
-import { VisualHeading } from '../Heading/index';
-import OptionBox from '../OptionBox/index';
+import { Repeat, RepeatTiny } from '../Repeat';
+import { VisualHeading } from '../Heading';
+import OptionBox from '../OptionBox';
 import { OptionBoxContent } from '../OptionBox/wrapper';
-import Content from '../Content/index';
+import Content from '../Content';
 import { marked } from 'marked';
-import { ButtonInline } from '../Button/index';
+import { ButtonInline } from '../Button';
 import { InsuranceOption } from '../../@types/codegen/types';
 import InsuranceFreeModal from './InsuranceFreeModal';
 import { useTranslation } from 'react-i18next';

@@ -1,10 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-<<<<<<< Updated upstream
-  "version": "3.9.0",
-=======
   "version": "3.9.0-beta.2",
->>>>>>> Stashed changes
   "description": "",
   "module": "dist/index.mjs",
   "main": "dist/index.js",

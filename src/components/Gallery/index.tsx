@@ -1,6 +1,10 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react';
-import Slider from 'react-slick';
+import SliderComponent from 'react-slick';
 import scrollIntoView from 'scroll-into-view-if-needed';
+
+const Slider: typeof SliderComponent = (
+  SliderComponent as unknown as { default: typeof SliderComponent }
+).default;
 
 import {
   Wrapper,
@@ -17,10 +21,10 @@ import {
   QuickNavImg,
   EnableNavigationButton,
 } from './wrapper';
-import { IconChevronLeft, IconChevronRight } from '../Icon/index';
-import { ButtonSecondary, ButtonContent } from '../Button/index';
-import { NavButton } from '../NavButton/index';
-import Lightbox from '../Lightbox/index';
+import { IconChevronLeft, IconChevronRight } from '../Icon';
+import { ButtonSecondary, ButtonContent } from '../Button';
+import { NavButton } from '../NavButton';
+import Lightbox from '../Lightbox';
 import EmbededVideo from '../Video/EmbededVideo';
 import QuickNavEmbeded from '../Video/QuickNavEmbeded';
 import Sphere from '../Sphere/Sphere';
@@ -47,7 +51,7 @@ const sliderSettings = {
 
 const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   const { t } = useTranslation();
-  const slider = useRef<Slider>(null);
+  const slider = useRef<SliderComponent>(null);
   const quickNavRef = useRef<HTMLUListElement>(null);
   const isDragging = useRef(false);
   const [index, setIndex] = useState(0);

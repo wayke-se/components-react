@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 
 import { Facet } from '../../@types/search';
-import Panel from '../Panel/index';
+import Panel from '../Panel';
 import { FooterAction, FooterActionItem } from '../Panel/wrapper';
-import { ButtonSecondary, ButtonContent, ButtonPrimary } from '../Button/index';
-import Accordion, { AccordionItem } from '../Accordion/index';
-import { Repeat } from '../Repeat/index';
+import { ButtonSecondary, ButtonContent, ButtonPrimary } from '../Button';
+import Accordion, { AccordionItem } from '../Accordion';
+import { Repeat } from '../Repeat';
 import FacetSelector from './faceSelector';
 import { SearchFilterTypes } from '../../@types/filter';
 import { useTranslation } from 'react-i18next';

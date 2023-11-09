@@ -11,7 +11,7 @@ import {
 } from '../../utils/constants';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
-import FilterPanel from '../FilterPanel/index';
+import FilterPanel from '../FilterPanel';
 import { useTranslation } from 'react-i18next';
 import { MarketCode } from '../../@types/market';
 

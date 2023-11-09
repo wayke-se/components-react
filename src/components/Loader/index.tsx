@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Spinner, Wrapper } from './wrapper';
-import { SrOnly } from '../SrOnly/index';
+import { SrOnly } from '../SrOnly';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

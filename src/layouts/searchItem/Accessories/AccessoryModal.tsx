@@ -2,14 +2,14 @@ import React from 'react';
 import { marked } from 'marked';
 import { Accessory } from '../../../@types/codegen/types';
 import { numberSeparator } from '../../../utils/formats';
-import { Repeat } from '../../../components/Repeat/index';
-import { Image } from '../../../components/Image/index';
-import { Link } from '../../../components/Link/index';
-import { UtilityTextBold } from '../../../components/Utility/index';
-import Modal from '../../../components/Modal/index';
-import PriceBox from '../../../components/PriceBox/index';
-import LogoBox from '../../../components/LogoBox/index';
-import Content from '../../../components/Content/index';
+import { Repeat } from '../../../components/Repeat';
+import { Image } from '../../../components/Image';
+import { Link } from '../../../components/Link';
+import { UtilityTextBold } from '../../../components/Utility';
+import Modal from '../../../components/Modal';
+import PriceBox from '../../../components/PriceBox';
+import LogoBox from '../../../components/LogoBox';
+import Content from '../../../components/Content';
 import { useTranslation } from 'react-i18next';
 
 interface AccesoryModalProps {

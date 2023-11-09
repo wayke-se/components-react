@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import InputSearch from '../InputSearch/index';
+import InputSearch from '../InputSearch';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useTranslation } from 'react-i18next';
 

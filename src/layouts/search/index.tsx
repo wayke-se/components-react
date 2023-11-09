@@ -1,14 +1,14 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
 
-import Container from '../../components/Container/index';
-import { Page, PageSection } from '../../components/Page/index';
-import Result from '../../components/Result/index';
-import Filter from '../../components/Filter/index';
-import Grid from '../../components/Grid/index';
-import SearchTerm from '../../components/SearchTerm/index';
-import { PortalElement, PortalNamespace } from '../../components/Portal/index';
-import SearchFilter from '../../components/SearchFilter/index';
-import Snackbar from '../../components/Snackbar/index';
+import Container from '../../components/Container';
+import { Page, PageSection } from '../../components/Page';
+import Result from '../../components/Result';
+import Filter from '../../components/Filter';
+import Grid from '../../components/Grid';
+import SearchTerm from '../../components/SearchTerm';
+import { PortalElement, PortalNamespace } from '../../components/Portal';
+import SearchFilter from '../../components/SearchFilter';
+import Snackbar from '../../components/Snackbar';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';

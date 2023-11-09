@@ -20,7 +20,7 @@ import {
   Label,
   PreHeading,
 } from './wrapper';
-import UspList, { ItemProps } from '../UspList/index';
+import UspList, { ItemProps } from '../UspList';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import usePath from '../../State/Path/usePath';
 import { useTranslation } from 'react-i18next';

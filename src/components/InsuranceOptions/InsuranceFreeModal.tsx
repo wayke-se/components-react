@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Modal from '../Modal/index';
-import Content from '../Content/index';
-import { Repeat } from '../Repeat/index';
-import { ButtonInline } from '../Button/index';
-import LogoBox from '../LogoBox/index';
+import Modal from '../Modal';
+import Content from '../Content';
+import { Repeat } from '../Repeat';
+import { ButtonInline } from '../Button';
+import LogoBox from '../LogoBox';
 import { InsuranceOption } from '../../@types/codegen/types';
 import { marked } from 'marked';
 import { useTranslation } from 'react-i18next';

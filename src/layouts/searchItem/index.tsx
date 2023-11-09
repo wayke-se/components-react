@@ -1,32 +1,32 @@
 import React, { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import WaykeEcomWeb from '@wayke-se/ecom-web';
 
-import Container from '../../components/Container/index';
-import UspList, { ItemProps } from '../../components/UspList/index';
-import { Repeat, RepeatSmall } from '../../components/Repeat/index';
-import PriceTable from '../../components/PriceTable/index';
-import LogoBox from '../../components/LogoBox/index';
-import Content from '../../components/Content/index';
-import Blockquote from '../../components/Blockquote/index';
-import ExtendContent from '../../components/ExtendContent/index';
-import Gallery from '../../components/Gallery/index';
-import { Page, PageSection } from '../../components/Page/index';
+import Container from '../../components/Container';
+import UspList, { ItemProps } from '../../components/UspList';
+import { Repeat, RepeatSmall } from '../../components/Repeat';
+import PriceTable from '../../components/PriceTable';
+import LogoBox from '../../components/LogoBox';
+import Content from '../../components/Content';
+import Blockquote from '../../components/Blockquote';
+import ExtendContent from '../../components/ExtendContent';
+import Gallery from '../../components/Gallery';
+import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
   ProductPageMainSection,
   ProductPageAside,
   ProductPageMain,
   ProductPageAsideSection,
-} from '../../components/ProductPage/index';
-import { H1, H2 } from '../../components/Heading/index';
-import { ButtonPrimary, ButtonContent, ButtonInlineLight } from '../../components/Button/index';
-import { UtilityFontSizeSmall } from '../../components/Utility/index';
-import { IconChevronLeft } from '../../components/Icon/index';
+} from '../../components/ProductPage';
+import { H1, H2 } from '../../components/Heading';
+import { ButtonPrimary, ButtonContent, ButtonInlineLight } from '../../components/Button';
+import { UtilityFontSizeSmall } from '../../components/Utility';
+import { IconChevronLeft } from '../../components/Icon';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
-import { PortalNamespace, PortalElement } from '../../components/Portal/index';
-import FinancialOptions from '../../components/FinancialOptions/index';
-import InsuranceOptions from '../../components/InsuranceOptions/index';
+import { PortalNamespace, PortalElement } from '../../components/Portal';
+import FinancialOptions from '../../components/FinancialOptions';
+import InsuranceOptions from '../../components/InsuranceOptions';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
 import CheckList from './CheckList';
 import Related from './Related';
@@ -40,7 +40,7 @@ import Property from './Property';
 import DemoCarModal from './DemoCarModal';
 import useSettings from '../../State/Settings/useSettings';
 import Documents from './Documents';
-import AccessoriesSection from './Accessories/index';
+import AccessoriesSection from './Accessories';
 import { MarketCode } from '../../@types/market';
 import useInitializeTranslation from '../../hooks/useInitializeTranslation';
 import i18next from 'i18next';

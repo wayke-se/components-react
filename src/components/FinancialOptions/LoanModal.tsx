@@ -1,15 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
 import useLoanCalculation from '../../hooks/useLoan';
-import Modal from '../Modal/index';
+import Modal from '../Modal';
 import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
-import Content from '../Content/index';
-import LogoBox from '../LogoBox/index';
-import { Repeat, RepeatSmall, RepeatTiny } from '../Repeat/index';
+import Content from '../Content';
+import LogoBox from '../LogoBox';
+import { Repeat, RepeatSmall, RepeatTiny } from '../Repeat';
 import { numberSeparator } from '../../utils/formats';
-import { ButtonClear, ButtonContent } from '../Button/index';
-import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/index';
-import DataList from '../DataList/index';
+import { ButtonClear, ButtonContent } from '../Button';
+import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
+import DataList from '../DataList';
 import { FinancialOption, Query } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 import SliderWithLabel from '../RangeSlider/SliderWithLabel';

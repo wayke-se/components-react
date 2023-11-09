@@ -7,12 +7,12 @@ import {
   TableListValue,
   TableListBooleanPos,
   TableListBooleanNeg,
-} from '../../components/TableList/index';
-import { IconCheck, IconCancel } from '../../components/Icon/index';
-import { SrOnly } from '../../components/SrOnly/index';
-import { ButtonInline } from '../../components/Button/index';
-import Modal from '../../components/Modal/index';
-import Content from '../../components/Content/index';
+} from '../../components/TableList';
+import { IconCheck, IconCancel } from '../../components/Icon';
+import { SrOnly } from '../../components/SrOnly';
+import { ButtonInline } from '../../components/Button';
+import Modal from '../../components/Modal';
+import Content from '../../components/Content';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 

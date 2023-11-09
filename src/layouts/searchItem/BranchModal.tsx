@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useContext } from 'react';
 
-import { Repeat, RepeatTiny } from '../../components/Repeat/index';
-import InputSelect from '../../components/InputSelect/index';
-import { ButtonPrimary, ButtonContent } from '../../components/Button/index';
-import Modal from '../../components/Modal/index';
-import Content from '../../components/Content/index';
-import InputLabel from '../../components/InputLabel/index';
+import { Repeat, RepeatTiny } from '../../components/Repeat';
+import InputSelect from '../../components/InputSelect';
+import { ButtonPrimary, ButtonContent } from '../../components/Button';
+import Modal from '../../components/Modal';
+import Content from '../../components/Content';
+import InputLabel from '../../components/InputLabel';
 import { BranchConnection } from '../../@types/codegen/types';
 import { CentralStorageContext } from '../../State/CentralStorage/CentralStorageContext';
 import { useTranslation } from 'react-i18next';

@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import useThumbnail from './useThumbnail';
 import { ImageFull } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
-import Modal from '../Modal/index';
+import Modal from '../Modal';
 import VideoPlayer from './EmbeddedVideoLightbox';
 import { onImageLoad, onImageError } from './utils';
 import CustomPlayer from '../Video/CustomPlayer';

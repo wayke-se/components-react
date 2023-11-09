@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { size } from '../../layout/helpers';
-import { ButtonReset } from '../Button/index';
+import { ButtonReset } from '../Button';
 
 export const List = styled.ul.attrs(() => ({
   className: 'wayke__theme wayke__font--regular',

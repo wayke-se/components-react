@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Container from '../../components/Container/index';
-import { Repeat } from '../../components/Repeat/index';
+import Container from '../../components/Container';
+import { Repeat } from '../../components/Repeat';
 
-import { PageSection } from '../../components/Page/index';
-import SectionHeader from '../../components/SectionHeader/index';
-import OverflowGrid from '../../components/OverflowGrid/index';
-import ProductCard from '../../components/ProductCard/index';
-import { H2 } from '../../components/Heading/index';
+import { PageSection } from '../../components/Page';
+import SectionHeader from '../../components/SectionHeader';
+import OverflowGrid from '../../components/OverflowGrid';
+import ProductCard from '../../components/ProductCard';
+import { H2 } from '../../components/Heading';
 import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
-import Loader from '../../components/Loader/index';
+import Loader from '../../components/Loader';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 import { regexPathGuid } from '../../utils/regex';

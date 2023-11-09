@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Facet } from '../../@types/search';
-import RangeSlider from '../RangeSlider/index';
+import RangeSlider from '../RangeSlider';
 import useSearch from '../../State/Search/useSearch';
 
 interface RangeFacetProps {

@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 
 import { Wrapper, ListWrapper, List, Item, PrevBtn, NextBtn } from './wrapper';
-import { IconChevronLeft, IconChevronRight } from '../Icon/index';
-import { NavButton } from '../NavButton/index';
+import { IconChevronLeft, IconChevronRight } from '../Icon';
+import { NavButton } from '../NavButton';
 
 export interface IOverflowGrid {
   items: React.ReactNode[];

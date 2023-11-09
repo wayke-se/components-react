@@ -1,11 +1,11 @@
 import React from 'react';
 import { marked } from 'marked';
 
-import { Repeat } from '../../components/Repeat/index';
-import { ButtonInline } from '../../components/Button/index';
-import Modal from '../../components/Modal/index';
-import Content from '../../components/Content/index';
-import LogoBox from '../../components/LogoBox/index';
+import { Repeat } from '../../components/Repeat';
+import { ButtonInline } from '../../components/Button';
+import Modal from '../../components/Modal';
+import Content from '../../components/Content';
+import LogoBox from '../../components/LogoBox';
 
 interface ModelLink {
   href?: string | null;

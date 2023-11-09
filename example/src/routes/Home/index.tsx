@@ -1,6 +1,6 @@
 import React from 'react';
 
-import WaykeComposite from '../../../../src/index';
+import WaykeComposite from '../../../../src';
 
 const initialQueryParams = new URLSearchParams();
 initialQueryParams.set('modelYear.min', '2018');

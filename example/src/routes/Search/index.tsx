@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { WaykeProvider, WaykeSearch } from '../../../../src/index';
+import { WaykeProvider, WaykeSearch } from '../../../../src';
 
 const Search = () => {
   const onClickSearchItem = useCallback((id: string) => {
