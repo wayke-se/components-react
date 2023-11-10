@@ -44,6 +44,7 @@ import { MarketCode } from '../../@types/market';
 import useInitializeTranslation from '../../hooks/useInitializeTranslation';
 import useEcom from './useEcom';
 import { i18nScoped } from '../../utils/I18n';
+import { marked } from 'marked';
 
 export interface WaykeSearchItemProps {
   marketCode?: MarketCode;
@@ -268,7 +269,9 @@ const WaykeSearchItem = ({
                       }
                       avatar={contact?.avatar || undefined}
                     >
-                      {!!description && <p>{description}</p>}
+                      {!!description && (
+                        <div dangerouslySetInnerHTML={{ __html: marked(description) }} />
+                      )}
                     </Blockquote>
                   </ProductPageMainSection>
                 )}
