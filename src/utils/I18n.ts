@@ -28,7 +28,6 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
         interpolation: {
           escapeValue: false,
         },
-        debug: true,
         resources: {
           'sv-SE': {
             translation: {
