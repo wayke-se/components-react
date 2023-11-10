@@ -491,7 +491,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   downPayment: 'Kontantinnskudd',
                   duration: 'Avbetaling',
                   residual: 'Restgjeld',
-                  interesse: 'Interesse',
+                  interest: 'Interesse',
                   effectiveinterest: 'Effektiv interesse',
                   setupFee: 'Oppsettskostnad',
                   administrationFee: 'Administrative gebyrer',
