@@ -34,8 +34,8 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
     type === 'tel'
       ? t('item.actions.callNumber')
       : type === 'mailto'
-      ? t('item.actions.sendEmailTo')
-      : '';
+        ? t('item.actions.sendEmailTo')
+        : '';
 
   return (
     <RepeatTiny>

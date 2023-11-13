@@ -17,14 +17,14 @@ export const StateIndicator = styled.div<StateIndicatorProps>`
           background-color: ${(props) => props.theme.color.ui.positive};
         `
       : $tone === 'pending'
-      ? css`
-          background-color: ${(props) => props.theme.color.ui.neutral};
-        `
-      : $tone === 'error'
-      ? css`
-          background-color: ${(props) => props.theme.color.ui.negative};
-        `
-      : css`
-          background-color: ${(props) => props.theme.color.textDarkLighten};
-        `}
+        ? css`
+            background-color: ${(props) => props.theme.color.ui.neutral};
+          `
+        : $tone === 'error'
+          ? css`
+              background-color: ${(props) => props.theme.color.ui.negative};
+            `
+          : css`
+              background-color: ${(props) => props.theme.color.textDarkLighten};
+            `}
 `;

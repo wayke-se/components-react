@@ -49,8 +49,8 @@ const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
           {displayBranchName
             ? `${t('item.thisCarsIsLocatedAt')} ${branch.name}`
             : branch?.location?.city
-            ? t('item.thisCarIsAvailableAtOurBranch', { location: branch?.location?.city })
-            : t('item.contact')}
+              ? t('item.thisCarIsAvailableAtOurBranch', { location: branch?.location?.city })
+              : t('item.contact')}
         </H2>
       </Repeat>
       <Repeat>

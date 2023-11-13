@@ -229,6 +229,7 @@ const WaykeSearchItem = ({
 
                 <ProductPageAsideSection mobileOrder={5}>
                   <CheckList
+                    marketCode={marketCode}
                     manufacturer={manufacturer}
                     packageOptions={packageOptions}
                     ecommerce={ecommerce}
@@ -264,7 +265,7 @@ const WaykeSearchItem = ({
                       author={contact && contact.name ? contact.name : null}
                       date={
                         publishedAt
-                          ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth)
+                          ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth, marketCode)
                           : undefined
                       }
                       avatar={contact?.avatar || undefined}

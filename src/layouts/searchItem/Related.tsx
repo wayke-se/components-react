@@ -83,8 +83,8 @@ const Related = ({
                 window.location.pathname === '/'
                   ? `${prefix}${document._id}`
                   : r.test(`${pathRoute}${id}`)
-                  ? window.location.pathname.replace(r, document._id)
-                  : `${window.location.pathname}${prefix}${document._id}`;
+                    ? window.location.pathname.replace(r, document._id)
+                    : `${window.location.pathname}${prefix}${document._id}`;
 
               return (
                 <ProductCard

@@ -27,8 +27,8 @@ const Leasing = ({ financialOption }: LeasingProps) => {
     type === 'leasing'
       ? t('item.financialOptions.privateLease')
       : type === 'business-leasing'
-      ? t('item.financialOptions.businessLease')
-      : type;
+        ? t('item.financialOptions.businessLease')
+        : type;
 
   return (
     <>

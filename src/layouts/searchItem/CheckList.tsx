@@ -20,9 +20,12 @@ import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 import { format } from 'date-fns';
 import sv from 'date-fns/locale/sv/index.js';
+import no from 'date-fns/locale/nb/index.js';
 import { useTranslation } from 'react-i18next';
+import { MarketCode } from '../../@types/market';
 
 interface CheckList {
+  marketCode?: MarketCode;
   manufacturer?: Manufacturer | null;
   packageOptions: PackageOption[];
   ecommerce?: Ecommerce | null;
@@ -34,6 +37,7 @@ interface CheckList {
 }
 
 const CheckList = ({
+  marketCode,
   manufacturer,
   packageOptions,
   ecommerce,
@@ -102,7 +106,9 @@ const CheckList = ({
               <Column>
                 <UtilityFontSizeSmall>
                   {t('item.availableFromDate', {
-                    date: format(new Date(availableFrom), 'dd MMMM yyyy', { locale: sv }),
+                    date: format(new Date(availableFrom), 'dd MMMM yyyy', {
+                      locale: marketCode === 'NO' ? no : sv,
+                    }),
                   })}
                 </UtilityFontSizeSmall>
               </Column>

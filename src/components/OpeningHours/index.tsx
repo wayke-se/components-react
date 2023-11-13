@@ -130,17 +130,17 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
             </TableColumnCell>
             <TableColumnCell>
               <UtilityTextBold>
-                {today?.from ? `${today.from}-${today.until}` : t('item.closed')}
+                {today?.from ? `${today.from} - ${today.until}` : t('item.closed')}
               </UtilityTextBold>
             </TableColumnCell>
           </TableColumnRow>
           {oh.map((o) => (
             <TableColumnRow key={o.titleFrom}>
               <TableColumnCell>
-                {o.titleTo ? `${o.titleFrom}-${o.titleTo}` : o.titleFrom}
+                {o.titleTo ? `${o.titleFrom} - ${o.titleTo}` : o.titleFrom}
               </TableColumnCell>
               <TableColumnCell>
-                {o.from ? `${o.from}-${o.until}` : t('item.closed')}
+                {o.from ? `${o.from} - ${o.until}` : t('item.closed')}
               </TableColumnCell>
             </TableColumnRow>
           ))}

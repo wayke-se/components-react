@@ -43,12 +43,12 @@ export const Columns = styled.div<IColumns>`
           align-items: flex-end;
         `
       : valign === 'center'
-      ? css`
-          align-items: center;
-        `
-      : css`
-          align-items: flex-start;
-        `}
+        ? css`
+            align-items: center;
+          `
+        : css`
+            align-items: flex-start;
+          `}
 
   ${({ align }) =>
     align === 'end'
@@ -56,12 +56,12 @@ export const Columns = styled.div<IColumns>`
           justify-content: flex-end;
         `
       : align === 'center'
-      ? css`
-          justify-content: center;
-        `
-      : css`
-          justify-content: flex-start;
-        `}
+        ? css`
+            justify-content: center;
+          `
+        : css`
+            justify-content: flex-start;
+          `}
 
   ${({ $spacing }) =>
     $spacing &&
