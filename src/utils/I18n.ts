@@ -401,7 +401,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 tuesdayShort: 'Tirsdag',
                 wednesdayShort: 'Onsdag',
                 thursdayShort: 'Torsdag',
-                FridayShort: 'Fredag',
+                fridayShort: 'Fredag',
                 saturdayShort: 'Lørdag',
                 sundayShort: 'Søndag',
                 moreInformation: 'Mer informasjon',
