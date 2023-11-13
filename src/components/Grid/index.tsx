@@ -7,6 +7,10 @@ import { numberSeparator } from '../../utils/formats';
 import { useTranslation } from 'react-i18next';
 
 const resolveImage = (document: Document) => {
+  const formattedImg = document.featuredImage?.files?.[0].formats.find((x) => x.format === '800x')
+    ?.url;
+  if (formattedImg) return formattedImg;
+
   const img = document.featuredImage?.files?.[0]?.url;
   if (img) {
     return `${img}?w=567&q=72`;
@@ -40,27 +44,6 @@ const Grid = ({
     <Wrapper>
       <List>
         {documents.map((document) => {
-          /*
-          const _path = pathRoute?.replace(/^\/|\/$/g, '');
-
-          const prefix = _path ? `/${_path}/` : '/';
-
-          const pathRouteUrl =
-            window.location.pathname === '/'
-              ? `${prefix}${document._id}`
-              : `${window.location.pathname}${prefix}${document._id}`;
-          */
-
-          /*
-          const _pathRoute = pathRoute
-            ? pathRoute.startsWith('/')
-              ? `${location.pathname}${pathRoute}/${document._id}`
-              : `${pathRoute}/${document._id}`
-            : undefined;
-
-          console.log(_pathRoute);
-          */
-
           const _pathRoute = pathRoute ? `${pathRoute}/${document._id}` : undefined;
 
           return (
