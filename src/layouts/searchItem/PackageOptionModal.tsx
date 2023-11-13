@@ -9,7 +9,7 @@ import LogoBox from '../../components/LogoBox';
 import { useTranslation } from 'react-i18next';
 
 interface ModelLink {
-  href?: string | null;
+  url?: string | null;
   title?: string | null;
 }
 
@@ -39,11 +39,11 @@ const PackageOptionModal = ({ packageOption, onClose }: PackageOptionsModalProps
           <Content dangerouslySetInnerHTML={{ __html: marked(packageOption.description) }} />
         </Repeat>
       )}
-      {packageOption.link?.href && (
+      {packageOption.link?.url && (
         <Repeat>
           <ButtonInline
             as="a"
-            href={packageOption.link.href}
+            href={packageOption.link.url}
             target="_blank"
             rel="noopener noreferrer nofollow"
           >
