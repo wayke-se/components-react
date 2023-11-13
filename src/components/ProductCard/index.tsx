@@ -25,12 +25,13 @@ import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import usePath from '../../State/Path/usePath';
 import { useTranslation } from 'react-i18next';
 import useIsInViewport from '../../hooks/useIsInViewport';
+import { File } from '../../@types/search';
 
 interface Props {
   id: string;
   title: string;
   href?: string;
-  image?: string;
+  imageFile?: File;
   pathRoute?: string;
   placeholderImage?: string;
   description?: string;
@@ -47,7 +48,7 @@ const ProductCard = ({
   id,
   title,
   href,
-  image,
+  imageFile,
   pathRoute,
   placeholderImage,
   branchName,
@@ -81,23 +82,43 @@ const ProductCard = ({
     [id, pathRoute, href]
   );
 
+  const { webp, url } = useMemo(() => {
+    const format = imageFile?.formats.find((x) => x.format === '770x514');
+    if (format) {
+      return {
+        webp: format.webp,
+        url: format.url,
+      };
+    }
+
+    return {
+      url: imageFile?.url,
+    };
+  }, [imageFile]);
+
   return (
     <Wrapper onClick={_onClick}>
       <Image ref={containerRef}>
-        {isVisible && image ? (
+        {isVisible && url ? (
           <>
             <Picture>
-              <Source
-                type="image/webp"
-                srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411x274&format=webp 411w`}
-                sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-              />
-              <Img
-                srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
-                sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                src={`${image}?spec=411x274`}
-                alt={title}
-              />
+              {webp && <Source type="image/webp" srcSet={webp} />}
+              <Img alt={title} src={url} />
+              {/*
+                <>
+                  <Source
+                    type="image/webp"
+                    srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411 411w`}
+                    sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                  />
+                  <Img
+                    srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
+                    sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                    src={`${image}?spec=411x274`}
+                    alt={title}
+                  />
+                </>
+        )*/}
             </Picture>
           </>
         ) : (

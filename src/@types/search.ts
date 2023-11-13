@@ -14,6 +14,8 @@ export interface Format {
   format: string;
   id: string;
   url: string;
+  webp: string;
+  jpeg: string;
 }
 
 export interface File {

@@ -6,18 +6,6 @@ import { Document } from '../../@types/search';
 import { numberSeparator } from '../../utils/formats';
 import { useTranslation } from 'react-i18next';
 
-const resolveImage = (document: Document) => {
-  const formattedImg = document.featuredImage?.files?.[0].formats.find((x) => x.format === '800x')
-    ?.url;
-  if (formattedImg) return formattedImg;
-
-  const img = document.featuredImage?.files?.[0]?.url;
-  if (img) {
-    return `${img}?w=567&q=72`;
-  }
-  return undefined;
-};
-
 interface GridProps {
   documents?: Document[];
   hashRoute?: boolean;
@@ -54,7 +42,7 @@ const Grid = ({
                 title={document.title}
                 pathRoute={pathRoute}
                 href={_pathRoute ? _pathRoute : hashRoute ? `#${document._id}` : undefined}
-                image={resolveImage(document)}
+                imageFile={document?.featuredImage?.files?.[0]}
                 placeholderImage={placeholderImage}
                 description={document.shortDescription}
                 branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
