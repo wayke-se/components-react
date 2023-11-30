@@ -135,8 +135,8 @@ const App = ({}) => {
   const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';
 
   // Optional, get id when related vehicles are clicked
-  const onClickSearchItem = useCallback((id: string) => {
-    console.log(id);
+  const onClickSearchItem = useCallback((data) => {
+    console.log(data.id);
   }, []);
 
   return (
@@ -191,7 +191,7 @@ const App = ({}) => {
 | removeSearchBar           | boolean                   |                           |
 | removeFilterOptions       | boolean                   |                           |
 | placeholderImage          | string                    |                           |
-| onClickSearchItem         | function                  | (id: string) => void      |
+| onClickSearchItem         | function                  | (data: CallbackItemData) => void      |
 | modifyDocumentTitleSearch | string                    |                           |
 | displayBranchName         | string                    |                           |
 
@@ -338,7 +338,7 @@ import { WaykePubSub}  from '@wayke-se/components-react';
 
 const event = {
   eventName: 'ItemClicked',
-  callback: (data) => <('subscribed ItemClicked:', data),
+  callback: (data) => console.log('subscribed ItemClicked:', data),
 };
 
 WaykePubSub.subscribe(event);
