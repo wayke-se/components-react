@@ -25,7 +25,13 @@ import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import usePath from '../../State/Path/usePath';
 import { useTranslation } from 'react-i18next';
 import useIsInViewport from '../../hooks/useIsInViewport';
-import { File } from '../../@types/search';
+import { Branch, File } from '../../@types/search';
+
+export interface OnItemClick {
+  id: string;
+  branchId?: string;
+  branchName?: string;
+}
 
 interface Props {
   id: string;
@@ -33,6 +39,7 @@ interface Props {
   href?: string;
   imageFile?: File;
   pathRoute?: string;
+  branch?: Branch;
   placeholderImage?: string;
   description?: string;
   uspList?: ItemProps[];
@@ -41,7 +48,7 @@ interface Props {
   oldPrice?: string;
   branchName?: string;
   businessLeasingPrice?: string;
-  onClick?: (id: string) => void;
+  onClick?: (data: OnItemClick) => void;
 }
 
 const ProductCard = ({
@@ -51,6 +58,7 @@ const ProductCard = ({
   imageFile,
   pathRoute,
   placeholderImage,
+  branch,
   branchName,
   description,
   uspList,
@@ -67,7 +75,11 @@ const ProductCard = ({
   });
 
   const { pushState } = usePath();
-  const _onClick = useMemo(() => (onClick ? () => onClick(id) : undefined), [id]);
+  const _onClick = useMemo(
+    () =>
+      onClick ? () => onClick({ id, branchId: branch?.id, branchName: branch?.name }) : undefined,
+    [id, branch]
+  );
 
   const onHrefClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {

@@ -1,3 +1,5 @@
+import { EcomEvent, EcomStep, EcomView } from '@wayke-se/ecom-web/src/Utils/ecomEvent';
+
 interface EventBase<Callback> {
   eventName: EventNames;
   callback: Callback;
@@ -5,55 +7,104 @@ interface EventBase<Callback> {
 
 export type CallbackEmpty = () => void;
 
-export type CallbackHashRouteChange = (id?: string) => void;
+interface CallbackHashRouteChangeData {
+  id: string;
+}
+export type CallbackHashRouteChange = (data: CallbackHashRouteChangeData) => void;
+
+interface CallbackItemData {
+  id: string;
+  branchId: string;
+  branchName: string;
+}
+export type CallbackItem = (data: CallbackItemData) => void;
+
+export interface CallbackSearchData {
+  query: string;
+}
+export type CallbackSearch = (data: CallbackSearchData) => void;
+
+export interface CallbackEcomData extends CallbackItemData {
+  view: EcomView;
+  event: EcomEvent;
+  currentStep?: EcomStep;
+  data?: any;
+}
+
+export interface CallbackFilterApplyData {
+  type: 'checkbox' | 'range';
+  filter: string;
+  value?: string;
+  checked?: boolean;
+  min?: number;
+  max?: number;
+}
+export type CallbackFilterApply = (data: CallbackFilterApplyData) => void;
+
+export type CallbackEcom = (data: CallbackEcomData) => void;
+
 export interface EventHashRouteChange extends EventBase<CallbackHashRouteChange> {
   eventName: 'HashRouteChange';
 }
 
-export type CallbackEventItemClicked = (id: string) => void;
-export interface EventItemClicked extends EventBase<CallbackEventItemClicked> {
+export interface EventItemClicked extends EventBase<CallbackItem> {
   eventName: 'ItemClicked';
 }
 
-export interface EventEcomOnInit extends EventBase<CallbackEmpty> {
-  eventName: 'EcomOnInit';
+export interface EventEcom extends EventBase<CallbackEcom> {
+  eventName: 'Ecom';
 }
 
-export type CallbackEcomOnUserEvent = (userEvent: string, currentStep: string) => void;
-export interface EventEcomOnUser extends EventBase<CallbackEcomOnUserEvent> {
-  eventName: 'EcomOnUserEvent';
-}
-
-export interface EventEcomOnExit extends EventBase<CallbackEmpty> {
-  eventName: 'EcomOnExit';
-}
-
-export interface EventImagesClick extends EventBase<CallbackEmpty> {
+export interface EventImagesClick extends EventBase<CallbackItem> {
   eventName: 'ImagesClick';
 }
 
-export interface EventOptionsClick extends EventBase<CallbackEmpty> {
+export interface EventOptionsClick extends EventBase<CallbackItem> {
   eventName: 'OptionsClick';
 }
 
-export interface EventPhonenumberVisible extends EventBase<CallbackEmpty> {
+export interface EventPhonenumberVisible extends EventBase<CallbackItem> {
   eventName: 'PhonenumberVisible';
 }
 
-export interface EventPhonenumberCall extends EventBase<CallbackEmpty> {
+export interface EventPhonenumberCall extends EventBase<CallbackItem> {
   eventName: 'PhonenumberCall';
 }
 
-export interface EventMailVisible extends EventBase<CallbackEmpty> {
+export interface EventMailVisible extends EventBase<CallbackItem> {
   eventName: 'MailVisible';
 }
 
-export interface EventInsuranceInterest extends EventBase<CallbackEmpty> {
+export interface EventInsuranceOpen extends EventBase<CallbackItem> {
+  eventName: 'InsuranceOpen';
+}
+
+export interface EventInsuranceClose extends EventBase<CallbackItem> {
+  eventName: 'InsuranceClose';
+}
+
+export interface EventInsuranceInterest extends EventBase<CallbackItem> {
   eventName: 'InsuranceInterest';
 }
 
-export interface EventFinanceInterest extends EventBase<CallbackEmpty> {
+export interface EventFinanceOpen extends EventBase<CallbackItem> {
+  eventName: 'FinanceOpen';
+}
+
+export interface EventFinanceClose extends EventBase<CallbackItem> {
+  eventName: 'FinanceClose';
+}
+
+export interface EventFinanceInterest extends EventBase<CallbackItem> {
   eventName: 'FinanceInterest';
+}
+
+export interface EventSearch extends EventBase<CallbackSearch> {
+  eventName: 'Search';
+}
+
+export interface EventFilterApply extends EventBase<CallbackFilterApply> {
+  eventName: 'FilterApply';
 }
 
 export type CallbackAll = (eventName: Omit<EventNames, 'All'>, data: any) => void;
@@ -64,16 +115,20 @@ export interface EventAll extends EventBase<CallbackAll> {
 export type EventType =
   | EventHashRouteChange
   | EventItemClicked
-  | EventEcomOnInit
-  | EventEcomOnUser
-  | EventEcomOnExit
+  | EventEcom
   | EventImagesClick
   | EventOptionsClick
   | EventPhonenumberVisible
   | EventPhonenumberCall
   | EventMailVisible
+  | EventInsuranceOpen
+  | EventInsuranceClose
   | EventInsuranceInterest
+  | EventFinanceOpen
+  | EventFinanceClose
   | EventFinanceInterest
+  | EventSearch
+  | EventFilterApply
   | EventAll;
 
 export type EventNames = Pick<EventType, 'eventName'>['eventName'];

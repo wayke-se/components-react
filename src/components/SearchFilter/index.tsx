@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import useSearch from '../../State/Search/useSearch';
 import SearchBar from '../SearchBar';
+import PubSub from '../../utils/pubsub/pubsub';
 
 const SearchFilter = () => {
   const [value, setValue] = useState('');
@@ -16,11 +17,12 @@ const SearchFilter = () => {
       if (value) {
         nextQuery.set('query', value);
       } else {
-        nextQuery.delete('qquery');
+        nextQuery.delete('query');
       }
 
       onFilterUpdate(nextQuery.toString());
       setValue('');
+      PubSub.publish('Search', { query: value });
     },
     [queryFilter]
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, List, Item } from './wrapper';
-import ProductCard from '../ProductCard';
+import ProductCard, { OnItemClick } from '../ProductCard';
 import { Document } from '../../@types/search';
 import { numberSeparator } from '../../utils/formats';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ interface GridProps {
   pathRoute?: string;
   placeholderImage?: string;
   displayBranchName?: boolean;
-  onClickItem?: (id: string) => void;
+  onClickItem?: (data: OnItemClick) => void;
 }
 
 const Grid = ({
@@ -45,6 +45,7 @@ const Grid = ({
                 imageFile={document?.featuredImage?.files?.[0]}
                 placeholderImage={placeholderImage}
                 description={document.shortDescription}
+                branch={document.branches?.[0]}
                 branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
                 uspList={[
                   {

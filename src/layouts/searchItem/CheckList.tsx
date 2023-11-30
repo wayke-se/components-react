@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { MarketCode } from '../../@types/market';
 
 interface CheckList {
+  id: string;
   marketCode?: MarketCode;
   manufacturer?: Manufacturer | null;
   packageOptions: PackageOption[];
@@ -37,6 +38,7 @@ interface CheckList {
 }
 
 const CheckList = ({
+  id,
   marketCode,
   manufacturer,
   packageOptions,
@@ -94,7 +96,7 @@ const CheckList = ({
             </SwitchBar>
           </RepeatTiny>
         )}
-        <ActionList branch={branch} contact={contact} />
+        <ActionList id={id} branch={branch} contact={contact} />
       </Repeat>
       <Repeat>
         {availableFrom && new Date(availableFrom).valueOf() > new Date().valueOf() && (

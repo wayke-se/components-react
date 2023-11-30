@@ -1,14 +1,21 @@
 import { useEffect, useRef } from 'react';
 import { SettingsContextProps } from '../../State/Settings/SettingsContext';
 import PubSub from '../../utils/pubsub/pubsub';
+import { Branch, Maybe } from '../../@types/codegen/types';
 
 interface EcomWeb {
   start: () => void;
   destroy: () => void;
 }
 
-function useEcom(id: string, ecomSettings: SettingsContextProps['ecomSettings']) {
+function useEcom(
+  id: string,
+  ecomSettings: SettingsContextProps['ecomSettings'],
+  branch?: Maybe<Branch>
+) {
   const ecomContext = useRef<EcomWeb | undefined>();
+  const branchRef = useRef(branch);
+  branchRef.current = branch;
 
   const load = async () => {
     if (!ecomSettings) return;
@@ -25,8 +32,16 @@ function useEcom(id: string, ecomSettings: SettingsContextProps['ecomSettings'])
           },
           logo: ecomSettings.serviceLogotypeUrl,
           logoX2: ecomSettings.serviceLogotypeUrl,
-          onEvent(view, event, currentStep?, data?) {
-            PubSub.publish('EcomOnUserEvent', view, event, currentStep, data);
+          onEvent: (view, event, currentStep?, data?) => {
+            PubSub.publish('Ecom', {
+              id,
+              branchId: branchRef.current?.id,
+              branchName: branchRef.current?.name,
+              view,
+              event,
+              currentStep,
+              data,
+            });
           },
         });
       }

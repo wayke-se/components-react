@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 import Modal from '../Modal';
 import Content from '../Content';
@@ -62,10 +62,15 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
     [form]
   );
 
+  const trackPayload = useMemo(
+    () => ({ branchId: branch?.id, branchName: branch?.name }),
+    [branch]
+  );
+
   const onShowInsurances = useCallback(() => {
-    PubSub.publish('InsuranceInterest');
+    PubSub.publish('InsuranceInterest', trackPayload);
     setPayload(form);
-  }, [form]);
+  }, [form, trackPayload]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {

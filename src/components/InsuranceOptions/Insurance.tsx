@@ -7,6 +7,7 @@ import { ButtonInline } from '../Button';
 import { InsuranceOption, Branch } from '../../@types/codegen/types';
 import InsuranceModal from './InsuranceModal';
 import { useTranslation } from 'react-i18next';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface InsuranceOptions {
   id: string;
@@ -17,7 +18,15 @@ interface InsuranceOptions {
 const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
   const { t } = useTranslation();
   const [modal, setModal] = useState(false);
-  const toggleModal = useCallback(() => setModal(!modal), [modal]);
+  const toggleModal = useCallback(() => {
+    setModal(!modal);
+    PubSub.publish(modal ? 'InsuranceClose' : 'InsuranceOpen', {
+      id,
+      branchId: branch?.id,
+      branchName: branch?.name,
+    });
+  }, [modal, branch]);
+
   if (!insuranceOptions.length) {
     return null;
   }

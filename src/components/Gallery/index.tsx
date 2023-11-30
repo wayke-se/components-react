@@ -30,12 +30,14 @@ import QuickNavEmbeded from '../Video/QuickNavEmbeded';
 import Sphere from '../Sphere/Sphere';
 import { notEmpty } from '../../utils/formats';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
-import { Media } from '../../@types/codegen/types';
+import { Branch, Maybe, Media } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
 
 interface GalleryProps {
+  id: string;
+  branch?: Maybe<Branch>;
   media?: Media[];
   placeholderImage?: string;
 }
@@ -49,7 +51,7 @@ const sliderSettings = {
   slidesToScroll: 1,
 };
 
-const Gallery = ({ media, placeholderImage }: GalleryProps) => {
+const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
   const { t } = useTranslation();
   const slider = useRef<SliderComponent>(null);
   const quickNavRef = useRef<HTMLUListElement>(null);
@@ -78,7 +80,11 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   }, []);
 
   const onClick = useCallback(() => {
-    PubSub.publish('ImagesClick');
+    PubSub.publish('ImagesClick', {
+      id,
+      branchId: branch?.id,
+      branchName: branch?.name,
+    });
     if (!isDragging.current && !lightbox && !!media?.length) {
       setLightbox(true);
     }

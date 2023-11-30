@@ -3,15 +3,16 @@ import { Repeat, RepeatTiny } from '../Repeat';
 import { VisualHeading } from '../Heading';
 import Leasing from './leasing';
 import Loan from './loan';
-import { FinancialOption } from '../../@types/codegen/types';
+import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
 import { useTranslation } from 'react-i18next';
 
 interface FinancialOptionsProps {
   id: string;
+  branch?: Maybe<Branch>;
   financialOptions: FinancialOption[];
 }
 
-const FinancialOptions = ({ id, financialOptions }: FinancialOptionsProps) => {
+const FinancialOptions = ({ id, branch, financialOptions }: FinancialOptionsProps) => {
   const { t } = useTranslation();
   return (
     <Repeat>
@@ -25,7 +26,9 @@ const FinancialOptions = ({ id, financialOptions }: FinancialOptionsProps) => {
               financialOption.type === 'business-leasing') && (
               <Leasing financialOption={financialOption} />
             )}
-            {financialOption.type === 'loan' && <Loan id={id} financialOption={financialOption} />}
+            {financialOption.type === 'loan' && (
+              <Loan id={id} branch={branch} financialOption={financialOption} />
+            )}
           </Fragment>
         ))}
       </RepeatTiny>

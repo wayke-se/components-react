@@ -8,9 +8,7 @@ import {
 import {
   EventHashRouteChange,
   EventItemClicked,
-  EventEcomOnInit,
-  EventEcomOnUser,
-  EventEcomOnExit,
+  EventEcom,
   EventImagesClick,
   EventOptionsClick,
   EventPhonenumberVisible,
@@ -22,24 +20,33 @@ import {
   EventType,
   EventNames,
   CallbackHashRouteChange,
-  CallbackEventItemClicked,
-  CallbackEcomOnUserEvent,
-  CallbackEmpty,
+  CallbackEcom,
+  CallbackItem,
+  EventSearch,
+  EventFinanceOpen,
+  EventFinanceClose,
+  EventInsuranceClose,
+  EventInsuranceOpen,
+  EventFilterApply,
 } from './Events';
 
 export type EventSubscriptions = {
   HashRouteChange: EventHashRouteChange[];
   ItemClicked: EventItemClicked[];
-  EcomOnInit: EventEcomOnInit[];
-  EcomOnUserEvent: EventEcomOnUser[];
-  EcomOnExit: EventEcomOnExit[];
+  Ecom: EventEcom[];
   ImagesClick: EventImagesClick[];
   OptionsClick: EventOptionsClick[];
   PhonenumberVisible: EventPhonenumberVisible[];
   PhonenumberCall: EventPhonenumberCall[];
   MailVisible: EventMailVisible[];
+  InsuranceOpen: EventInsuranceOpen[];
+  InsuranceClose: EventInsuranceClose[];
   InsuranceInterest: EventInsuranceInterest[];
+  FinanceOpen: EventFinanceOpen[];
+  FinanceClose: EventFinanceClose[];
   FinanceInterest: EventFinanceInterest[];
+  Search: EventSearch[];
+  FilterApply: EventFilterApply[];
   All: EventAll[];
 };
 
@@ -52,16 +59,20 @@ class PubSub {
   private static events: EventSubscriptions = {
     HashRouteChange: [],
     ItemClicked: [],
-    EcomOnInit: [],
-    EcomOnUserEvent: [],
-    EcomOnExit: [],
+    Ecom: [],
     ImagesClick: [],
     OptionsClick: [],
     PhonenumberVisible: [],
     PhonenumberCall: [],
     MailVisible: [],
+    InsuranceOpen: [],
+    InsuranceClose: [],
     InsuranceInterest: [],
+    FinanceOpen: [],
+    FinanceClose: [],
     FinanceInterest: [],
+    Search: [],
+    FilterApply: [],
     All: [],
   };
 
@@ -86,7 +97,7 @@ class PubSub {
 
   public static publishAction = (eventName: ActionNames, ...args: any) => {
     if (PubSub.actions.All) {
-      PubSub.events.All.forEach((event) => event.callback(eventName, args));
+      PubSub.events.All.forEach((event) => event.callback(eventName, args[0]));
     }
     if (PubSub.actions[eventName]) {
       PubSub.actions[eventName].forEach((event: ActionTypes) => {
@@ -116,7 +127,7 @@ class PubSub {
 
   public static publish = (eventName: EventNames, ...args: any) => {
     if (PubSub.events.All) {
-      PubSub.events.All.forEach((event) => event.callback(eventName, args));
+      PubSub.events.All.forEach((event) => event.callback(eventName, args[0]));
     }
     if (PubSub.events[eventName]) {
       PubSub.events[eventName].forEach((event: EventType) => {
@@ -124,22 +135,24 @@ class PubSub {
           case 'HashRouteChange':
             (event.callback as CallbackHashRouteChange)(args[0]);
             break;
+          case 'Ecom':
+            (event.callback as CallbackEcom)(args[0]);
+            break;
           case 'ItemClicked':
-            (event.callback as CallbackEventItemClicked)(args[0]);
-            break;
-          case 'EcomOnUserEvent':
-            (event.callback as CallbackEcomOnUserEvent)(args[0], args[1]);
-            break;
-          case 'EcomOnInit':
-          case 'EcomOnExit':
           case 'ImagesClick':
           case 'OptionsClick':
           case 'PhonenumberVisible':
           case 'PhonenumberCall':
           case 'MailVisible':
           case 'InsuranceInterest':
+          case 'InsuranceOpen':
+          case 'InsuranceClose':
+          case 'FinanceOpen':
+          case 'FinanceClose':
+          case 'Search':
+          case 'FilterApply':
           case 'FinanceInterest':
-            (event.callback as CallbackEmpty)();
+            (event.callback as CallbackItem)(args[0]);
             break;
           default:
             break;

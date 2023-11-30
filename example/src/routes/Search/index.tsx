@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 
 import { WaykeProvider, WaykeSearch } from '../../../../src';
+import { OnItemClick } from '../../../../src/components/ProductCard';
 
 const Search = () => {
-  const onClickSearchItem = useCallback((id: string) => {
+  const onClickSearchItem = useCallback((data: OnItemClick) => {
     // eslint-disable-next-line
-    console.log(id);
+    console.log(data);
   }, []);
 
   return (

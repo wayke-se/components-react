@@ -15,6 +15,7 @@ import PubSub from '../../utils/pubsub/pubsub';
 import { MarketCode } from '../../@types/market';
 import useInitializeTranslation from '../../hooks/useInitializeTranslation';
 import { i18nScoped } from '../../utils/I18n';
+import { OnItemClick } from '../../components/ProductCard';
 
 export interface WaykeSearchProps {
   marketCode?: MarketCode;
@@ -27,7 +28,7 @@ export interface WaykeSearchProps {
   pathRoute?: string;
   modifyDocumentTitleSearch?: string;
   displayBranchName?: boolean;
-  onClickSearchItem?: (id: string) => void;
+  onClickSearchItem?: (data: OnItemClick) => void;
 }
 
 const WaykeSearch = ({
@@ -57,10 +58,10 @@ const WaykeSearch = ({
     );
   }, []);
 
-  const onItemClicked = useCallback((id: string) => {
-    PubSub.publish('ItemClicked', id);
+  const onItemClicked = useCallback((data: OnItemClick) => {
+    PubSub.publish('ItemClicked', data);
     if (onClickSearchItem) {
-      onClickSearchItem(id);
+      onClickSearchItem(data);
     }
   }, []);
 

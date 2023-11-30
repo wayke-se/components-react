@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 
 import useLoanCalculation from '../../hooks/useLoan';
 import Modal from '../Modal';
@@ -10,7 +10,7 @@ import { numberSeparator } from '../../utils/formats';
 import { ButtonClear, ButtonContent } from '../Button';
 import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
 import DataList from '../DataList';
-import { FinancialOption, Query } from '../../@types/codegen/types';
+import { Branch, FinancialOption, Maybe, Query } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
 import SliderWithLabel from '../RangeSlider/SliderWithLabel';
 import { useTranslation } from 'react-i18next';
@@ -34,17 +34,28 @@ const stepGenerator = (
 
 interface LoanModalProps {
   id: string;
+  branch?: Maybe<Branch>;
   financialOption: FinancialOption;
   onClose: () => void;
 }
 
-const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
+const LoanModal = ({ id, branch, financialOption, onClose }: LoanModalProps) => {
   const { t } = useTranslation();
   const [tmp, setTmp] = useState<Query>();
   const [extend, setExtend] = React.useState(false);
+
+  const trackPayload = useMemo(
+    () => ({
+      id,
+      branchId: branch?.id,
+      branchName: branch?.name,
+    }),
+    [id, branch]
+  );
+
   const onToggleExtend = React.useCallback(() => {
     if (!extend) {
-      PubSub.publish('FinanceInterest');
+      PubSub.publish('FinanceInterest', trackPayload);
     }
     setExtend(!extend);
   }, [extend]);
@@ -77,10 +88,10 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   const downPaymentSteps = stepGenerator(downPaymentStep, downPaymentMax);
   const onDownPaymentChange = useCallback(
     (values: readonly number[]) => {
-      PubSub.publish('FinanceInterest');
+      PubSub.publish('FinanceInterest', trackPayload);
       setVariables({ ...variables, downPayment: values[0] });
     },
-    [variables]
+    [variables, trackPayload]
   );
 
   const durationCurrent = loan?.duration?.current || 0;
@@ -90,10 +101,10 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   const durationSteps = stepGenerator(durationStep, durationMax);
   const onDurationChange = useCallback(
     (values: readonly number[]) => {
-      PubSub.publish('FinanceInterest');
+      PubSub.publish('FinanceInterest', trackPayload);
       setVariables({ ...variables, duration: values[0] });
     },
-    [variables]
+    [variables, trackPayload]
   );
 
   const residualCurrent = (loan?.residual?.current || 0) * 100 || 0;
@@ -103,10 +114,10 @@ const LoanModal = ({ id, financialOption, onClose }: LoanModalProps) => {
   const residualSteps = stepGenerator(residualStep, residualMax);
   const onResidualChange = useCallback(
     (values: readonly number[]) => {
-      PubSub.publish('FinanceInterest');
+      PubSub.publish('FinanceInterest', trackPayload);
       setVariables({ ...variables, residual: values[0] / 100 });
     },
-    [variables]
+    [variables, trackPayload]
   );
 
   const interestText = ((loan?.interest || 0) * 100).toFixed(2);

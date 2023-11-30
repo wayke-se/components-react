@@ -7,7 +7,7 @@ import { Repeat } from '../../components/Repeat';
 import { PageSection } from '../../components/Page';
 import SectionHeader from '../../components/SectionHeader';
 import OverflowGrid from '../../components/OverflowGrid';
-import ProductCard from '../../components/ProductCard';
+import ProductCard, { OnItemClick } from '../../components/ProductCard';
 import { H2 } from '../../components/Heading';
 import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
 import Loader from '../../components/Loader';
@@ -35,8 +35,8 @@ const Related = ({
   const { t } = useTranslation();
   const { loading, response, moreLikeThisUrl } = useRelatedSearch(id, !!authorizedReseller);
 
-  const onItemClicked = useCallback((id: string) => {
-    PubSub.publish('ItemClicked', id);
+  const onItemClicked = useCallback((data: OnItemClick) => {
+    PubSub.publish('ItemClicked', data);
     if (onClickSearchItem) {
       onClickSearchItem(id);
     }
@@ -95,6 +95,7 @@ const Related = ({
                   href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
                   imageFile={document.featuredImage?.files?.[0]}
                   description={document.shortDescription}
+                  branch={document.branches?.[0]}
                   branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
                   uspList={[
                     {

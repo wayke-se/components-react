@@ -338,7 +338,7 @@ import { WaykePubSub}  from '@wayke-se/components-react';
 
 const event = {
   eventName: 'ItemClicked',
-  callback: (id) => <('subscribed ItemClicked:', id),
+  callback: (data) => <('subscribed ItemClicked:', data),
 };
 
 WaykePubSub.subscribe(event);
@@ -353,23 +353,65 @@ WaykePubSub.unsubscribe(event);
 | publish      | eventName: string, ...arg: any |
 
 ### EventBase
-| eventName          | callback                                         |
-|--------------------|--------------------------------------------------|
-| HashRouteChange    | (id: string) => void                             |
-| ItemClicked        | (id: string) => void                             |
-| EcomOnInit         | () => void                                       |
-| EcomOnUserEvent    | (userEvent: string, currentStep: string) => void |
-| EcomOnExit         | () => void                                       |
-| ImagesClick        | () => void                                       |
-| OptionsClick       | () => void                                       |
-| PhonenumberVisible | () => void                                       |
-| PhonenumberCall    | () => void                                       |
-| MailVisible        | () => void                                       |
-| InsuranceInterest  | () => void                                       |
-| FinanceInterest    | () => void                                       |
-| All                | (eventName: string, data: any[]) => void         |
-
+| eventName             | callback                  | Data                                                                                                                            |
+|-----------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| HashRouteChange       | (data) => void            | CallbackHashRouteChangeData                                                                                                     |
+| ItemClicked           | (data) => void            | CallbackItemData                                                                                                                |
+| Ecom                  | (data) => void            | CallbackEcomData                                                                                                                |
+| ImagesClick           | (data) => void            | CallbackItemData                                                                                                                |
+| OptionsClick          | (data) => void            | CallbackItemData                                                                                                                |
+| PhonenumberVisible    | (data) => void            | CallbackItemData                                                                                                                |
+| PhonenumberCall       | (data) => void            | CallbackItemData                                                                                                                |
+| MailVisible           | (data) => void            | CallbackItemData                                                                                                                |
+| InsuranceInterest     | (data) => void            | CallbackItemData                                                                                                                |
+| InsuranceOpen         | (data) => void            | CallbackItemData                                                                                                                |
+| InsuranceClose        | (data) => void            | CallbackItemData                                                                                                                |
+| FinanceInterest       | (data) => void            | CallbackItemData                                                                                                                |
+| FinanceOpen           | (data) => void            | CallbackItemData                                                                                                                |
+| FinanceClose          | (data) => void            | CallbackItemData                                                                                                                |
+| Search                | (data) => void            | CallbackSearchData                                                                                                              |
+| Search                | (data) => void            | CallbackSearchData                                                                                                              |
+| FilterApply           | (data) => void            | CallbackFilterApplyData                                                                                                         |
+| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchData \| CallbackFilterApplyData |
 * `All` - Subscribes to all events.
+
+#### CallbackHashRouteChangeData
+| Property  | Type      |
+|-----------|-----------|
+| id        | string    |
+
+#### CallbackItemData
+| Property      | Type      |
+|---------------|-----------|
+| id            | string    |
+| branchName    | string    |
+| branchId      | string    |
+
+#### CallbackEcomData
+| Property      | Type                  |
+|---------------|-----------------------|
+| id            | string                |
+| branchName    | string                |
+| branchId      | string                |
+| view          | EcomView              |  
+| event         | EcomView              |  
+| currentStep   | EcomStep \| undefined |  
+| data          | any \| undefined      |  
+
+#### CallbackSearchData
+| Property  | Type      |
+|-----------|-----------|
+| query     | string    |
+
+#### CallbackFilterApplyData
+| Property  | Type                  |
+|-----------|-----------------------|
+| type      | "checkbox" \| "range" |
+| filter    | string                |
+| value     | string \| undefined   |
+| checked   | boolean \| "range"    |
+| min       | number \| "range"     |
+| max       | number \| "range"     |
 
 ## Theme
 It is possible to apply a custom theme using *CSS*. The things that can be styled are:

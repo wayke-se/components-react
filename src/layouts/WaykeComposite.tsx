@@ -29,9 +29,9 @@ const WaykeComposite = ({
   useEffect(() => {
     if (!pathRoute) {
       if (hashId) {
-        PubSub.publish('HashRouteChange', hashId);
+        PubSub.publish('HashRouteChange', { id: hashId });
       } else {
-        PubSub.publish('HashRouteChange');
+        PubSub.publish('HashRouteChange', { id: undefined });
       }
     }
   }, [hashId]);

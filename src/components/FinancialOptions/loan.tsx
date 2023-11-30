@@ -5,19 +5,28 @@ import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
 import { ButtonInline } from '../Button';
 import { numberSeparator } from '../../utils/formats';
 import useLoanCalculation from '../../hooks/useLoan';
-import { FinancialOption } from '../../@types/codegen/types';
+import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
 import LoanModal from './LoanModal';
 import { useTranslation } from 'react-i18next';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface LoanProps {
   id: string;
+  branch?: Maybe<Branch>;
   financialOption: FinancialOption;
 }
 
-const Loan = ({ id, financialOption }: LoanProps) => {
+const Loan = ({ id, branch, financialOption }: LoanProps) => {
   const { t } = useTranslation();
   const [modal, setModal] = useState(false);
-  const toggleModal = useCallback(() => setModal(!modal), [modal]);
+  const toggleModal = useCallback(() => {
+    setModal(!modal);
+    PubSub.publish(modal ? 'FinanceClose' : 'FinanceOpen', {
+      id,
+      branchId: branch?.id,
+      branchName: branch?.name,
+    });
+  }, [modal, branch]);
 
   const { data } = useLoanCalculation(
     id,
@@ -56,7 +65,14 @@ const Loan = ({ id, financialOption }: LoanProps) => {
 
   return (
     <>
-      {modal && <LoanModal id={id} financialOption={financialOption} onClose={toggleModal} />}
+      {modal && (
+        <LoanModal
+          id={id}
+          branch={branch}
+          financialOption={financialOption}
+          onClose={toggleModal}
+        />
+      )}
       <OptionBox logo={logo} logoAlt={t('common.logotype')}>
         <>
           <OptionBoxHeading>{`${numberSeparator(monthlyCost)} ${t(
