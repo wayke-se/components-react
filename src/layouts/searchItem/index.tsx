@@ -148,7 +148,7 @@ const WaykeSearchItem = ({
   const insuranceOptions = centralStorageVehicle?.insuranceOptions
     ? centralStorageVehicle.insuranceOptions
     : vehicle.insuranceOptions;
-  const { fuelType, mileage, gearbox, modelYear, propertySet } = vehicle.data;
+  const { fuelType, mileage, gearboxType, modelYear, propertySet } = vehicle.data;
 
   const uspList: ItemProps[] = [
     {
@@ -167,8 +167,8 @@ const WaykeSearchItem = ({
     title: `${numberSeparator(mileage)} mil`,
   });
 
-  if (gearbox) {
-    uspList.push({ title: gearbox });
+  if (gearboxType) {
+    uspList.push({ title: gearboxType });
   }
 
   if (fuelType) {
