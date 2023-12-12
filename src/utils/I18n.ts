@@ -327,7 +327,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
               filter: {
                 manufacturer: 'Produsent',
                 modelSeries: 'Modell',
-                fuelType: 'Drivmiddel',
+                fuelType: 'Drivstoff',
                 gearboxType: 'Girkasse',
                 branch: 'Forhandler',
                 color: 'Farge',
@@ -377,7 +377,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 gearboxType: { displayName: 'Girkasse', hint: '' },
                 registrationNumber: { displayName: 'Registreringsnummer', hint: '' },
                 fuelType: {
-                  displayName: 'Drivmiddel',
+                  displayName: 'Drivstoff',
                   hint: 'Hva bilen skal tankes med og drives av.',
                 },
                 enginePower: { displayName: 'Effekt', unit: 'hk' },
