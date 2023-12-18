@@ -50,6 +50,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 odometerValueAsKm: 'Mätarställning',
                 leasingPrice: 'Privatleasing',
                 businessLeasingPrice: 'Företagsleasa',
+                city: 'Stad',
               },
               currency: {
                 default: 'kr',
@@ -340,6 +341,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 odometerValueAsKm: 'Måleravlesning',
                 leasingPrice: 'Leasingpris',
                 businessLease: 'Bedriftsleasingpris',
+                city: 'By',
               },
               currency: {
                 default: 'kr',
@@ -530,7 +532,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 filter: 'Filter',
                 sort: 'Sorter',
                 showMore: {
-                  text: 'Vis mer',
+                  text: 'Vis fler',
                   title: 'Vis flere resultater',
                 },
                 filterButton: {
@@ -631,6 +633,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 odometerValueAsKm: 'Meter setting',
                 leasingPrice: 'Private leasing',
                 businessLeasingPrice: 'Business leasing',
+                city: 'City',
               },
               currency: {
                 default: 'kr',

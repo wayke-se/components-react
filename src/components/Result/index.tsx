@@ -18,12 +18,14 @@ import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../State/Search/useSearch';
 import SortSelect, { OptionProps } from '../SortSelect';
 import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Result = ({ children }: Props) => {
+  const { t } = useTranslation();
   const { loading, response, documents, queryFilter, onLoadMore, onFilterUpdate } = useSearch();
 
   const onSortOptionChange = useCallback(
@@ -53,7 +55,7 @@ const Result = ({ children }: Props) => {
       <Header>
         <HeaderCount>
           <ResultCount>{`${numberSeparator(numberOfHits)} ${
-            numberOfHits === 1 ? 'bil' : 'bilar'
+            numberOfHits === 1 ? t('search.result.plural') : t('search.result.plural')
           }`}</ResultCount>
         </HeaderCount>
         {sortOptions && selectedSortOption && (
@@ -76,10 +78,10 @@ const Result = ({ children }: Props) => {
             <ButtonSecondary
               disabled={loading}
               onClick={onLoadMore}
-              title="Visa fler"
-              aria-label="Visa fler"
+              title={t('search.showMore.title')}
+              aria-label={t('search.showMore.text')}
             >
-              <ButtonContent>Visa fler</ButtonContent>
+              <ButtonContent>{t('search.showMore.text')}</ButtonContent>
             </ButtonSecondary>
           </FooterAction>
         )}
