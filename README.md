@@ -159,7 +159,7 @@ const App = ({}) => {
 | Property                 | Type       | Required | Value                |
 |--------------------------|------------|----------|----------------------|
 | id                       | string     | true     |                      |
-| marketCode               | MarketCode | false    |                      |
+| marketCode               | MarketCode | false    | SE | NO              |
 | pathRoute                | string     | false    |                      |
 | hashRoute                | boolean    | false    |                      |
 | disableResetScrollOnInit | boolean    | false    |                      |
@@ -183,7 +183,7 @@ const App = ({}) => {
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
 |---------------------------|---------------------------|---------------------------|
-| marketCode                | MarketCode                |                           |
+| marketCode                | MarketCode                | SE | NO                   |
 | pathRoute                 | string                    |                           |
 | hashRoute                 | boolean                   |                           |
 | filterList                | SearchFilterTypes[]       |                           |
