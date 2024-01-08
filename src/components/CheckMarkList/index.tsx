@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List, Item, Icon, Label } from './wrapper';
-import { IconCheck } from '../Icon/index';
+import { IconCheck } from '../Icon';
 
 export interface ICheckMarkList {
   children: React.ReactNode;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List, Item, Box, ItemSection, Action } from './wrapper';
-import { IconInfo } from '../Icon/index';
+import { IconInfo } from '../Icon';
 
 export interface ItemProps {
   title: string | number | null;

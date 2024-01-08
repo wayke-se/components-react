@@ -2,13 +2,15 @@ import React, { useEffect } from 'react';
 import useHashGuid from '../hooks/useHashGuid';
 import PubSub from '../utils/pubsub/pubsub';
 
-import WaykeSearch, { WaykeSearchProps } from './search/index';
-import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem/index';
+import WaykeSearch, { WaykeSearchProps } from './search';
+import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem';
 import usePath from '../State/Path/usePath';
+import useInitializeTranslation from '../hooks/useInitializeTranslation';
 
 export type WaykeCompositeProps = Omit<WaykeSearchProps & WaykeSearchItemProps, 'id'>;
 
 const WaykeComposite = ({
+  marketCode,
   filterList,
   initialQueryParams,
   removeSearchBar,
@@ -22,18 +24,21 @@ const WaykeComposite = ({
 }: WaykeCompositeProps) => {
   const hashId = useHashGuid();
   const { id: pathId } = usePath();
+  const initialized = useInitializeTranslation(marketCode);
 
   useEffect(() => {
     if (!pathRoute) {
       if (hashId) {
-        PubSub.publish('HashRouteChange', hashId);
+        PubSub.publish('HashRouteChange', { id: hashId });
       } else {
-        PubSub.publish('HashRouteChange');
+        PubSub.publish('HashRouteChange', { id: undefined });
       }
     }
   }, [hashId]);
 
   const id = pathId || hashId;
+
+  if (!initialized) return null;
 
   return (
     <>
@@ -49,6 +54,7 @@ const WaykeComposite = ({
         />
       ) : (
         <WaykeSearch
+          marketCode={marketCode}
           filterList={filterList}
           initialQueryParams={initialQueryParams}
           removeSearchBar={removeSearchBar}

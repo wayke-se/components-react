@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat/index';
-import { VisualHeading } from '../Heading/index';
-import OptionBox from '../OptionBox/index';
+import { Repeat, RepeatTiny } from '../Repeat';
+import { VisualHeading } from '../Heading';
+import OptionBox from '../OptionBox';
 import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { ButtonInline } from '../Button/index';
+import { ButtonInline } from '../Button';
 import { InsuranceOption, Branch } from '../../@types/codegen/types';
 import InsuranceModal from './InsuranceModal';
+import { useTranslation } from 'react-i18next';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface InsuranceOptions {
   id: string;
@@ -14,8 +16,17 @@ interface InsuranceOptions {
 }
 
 const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
-  const toggleModal = useCallback(() => setModal(!modal), [modal]);
+  const toggleModal = useCallback(() => {
+    setModal(!modal);
+    PubSub.publish(modal ? 'InsuranceClose' : 'InsuranceOpen', {
+      id,
+      branchId: branch?.id,
+      branchName: branch?.name,
+    });
+  }, [modal, branch]);
+
   if (!insuranceOptions.length) {
     return null;
   }
@@ -32,7 +43,7 @@ const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
       )}
       <Repeat>
         <RepeatTiny>
-          <VisualHeading>Välj till försäkring</VisualHeading>
+          <VisualHeading>{t('item.addInsurance')}</VisualHeading>
         </RepeatTiny>
         <RepeatTiny>
           <>
@@ -40,12 +51,12 @@ const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
               <OptionBox
                 key={`${insuranceOption.url}-${index}`}
                 logo={insuranceOption.logotype || undefined}
-                logoAlt={insuranceOption.name || 'Logotyp'}
+                logoAlt={insuranceOption.name || t('common.logotype')}
               >
-                <OptionBoxHeading>Få prisförslag</OptionBoxHeading>
+                <OptionBoxHeading>{t('item.getInsuranceQuote')}</OptionBoxHeading>
                 <OptionBoxContent>
                   <p>
-                    <ButtonInline onClick={toggleModal}>Mer information</ButtonInline>
+                    <ButtonInline onClick={toggleModal}>{t('common.moreInformation')}</ButtonInline>
                   </p>
                 </OptionBoxContent>
               </OptionBox>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import GraphqlProvider from './graphqlProvider';
 import Theme from './themeProvider';
-import Root from '../components/Root/index';
+import Root from '../components/Root';
 
 import SettingsProvider from '../State/Settings/SettingsProvider';
 import RelatedSearchProvider from '../State/RelatedSearch/RelatedSearchProvider';

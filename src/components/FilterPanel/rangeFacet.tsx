@@ -1,7 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Facet } from '../../@types/search';
-import RangeSlider from '../RangeSlider/index';
+import RangeSlider from '../RangeSlider';
 import useSearch from '../../State/Search/useSearch';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface RangeFacetProps {
   facet: Facet;
@@ -101,6 +102,12 @@ const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
 
           query.sort();
           onFilterUpdate(query.toString());
+          PubSub.publish('FilterApply', {
+            type: 'range',
+            filter: facet.id,
+            min: nextValues[0],
+            max: nextValues[1],
+          });
         }
       }
     },

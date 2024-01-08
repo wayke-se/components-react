@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 
 import { List, Item, Action, Label, Indicator, IndicatorValue } from './wrapper';
 import { Facet } from '../../@types/search';
-import { FacetIdToTitle } from '../../utils/formats';
 import {
   PRICE,
   MILEAGE,
@@ -12,7 +11,9 @@ import {
 } from '../../utils/constants';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
-import FilterPanel from '../FilterPanel/index';
+import FilterPanel from '../FilterPanel';
+import { useTranslation } from 'react-i18next';
+import { MarketCode } from '../../@types/market';
 
 const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {
@@ -27,11 +28,30 @@ const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   }
 };
 
+const filterOdometer = (
+  id: string,
+  marketCode: MarketCode = 'SE',
+  filterList?: SearchFilterNameTypes[]
+) => {
+  if (filterList) return true;
+
+  if (id === 'mileage') {
+    return marketCode === 'SE' ? true : false;
+  }
+
+  if (id === 'odometerValueAsKm') {
+    return marketCode === 'NO' ? true : false;
+  }
+  return true;
+};
+
 interface FilterProps {
+  marketCode?: MarketCode;
   filterList?: SearchFilterTypes[];
 }
 
-const Filter = ({ filterList }: FilterProps) => {
+const Filter = ({ marketCode, filterList }: FilterProps) => {
+  const { t } = useTranslation();
   const { queryFilter, initialFacets, loading, response, onFilterUpdate } = useSearch();
 
   const facets = response?.facets;
@@ -46,7 +66,7 @@ const Filter = ({ filterList }: FilterProps) => {
   const filterNames = filterList ? filterList.map((x) => x.filterName) : undefined;
 
   const filteredFacets = facets
-    ?.filter((x) => x.id !== 'segment')
+    ?.filter((x) => x.id !== 'segment' && filterOdometer(x.id, marketCode, filterNames))
     ?.filter((f) => (filterNames ? filterNames.includes(f.id as SearchFilterNameTypes) : true))
     .sort((a, b) =>
       filterNames
@@ -64,7 +84,7 @@ const Filter = ({ filterList }: FilterProps) => {
       }
       return {
         ...x,
-        displayName: FacetIdToTitle(x.id),
+        displayName: t(`filter.${x.id}`),
       };
     });
 

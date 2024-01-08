@@ -1,28 +1,29 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
-import Modal from '../Modal/index';
-import Content from '../Content/index';
-import { Repeat, RepeatTiny, RepeatSmall } from '../Repeat/index';
-import LogoBox from '../LogoBox/index';
-import DetailBox from '../DetailBox/index';
-import ExtendInfo from '../ExtendInfo/index';
-import Snackbar from '../Snackbar/index';
-import { UtilityTextBold } from '../Utility/index';
-import InputLabel from '../InputLabel/index';
-import InputText from '../InputText/index';
-import InputCheckbox from '../InputCheckbox/index';
-import InputSelect, { OptionProps } from '../InputSelect/index';
-import { H4 } from '../Heading/index';
-import { InputGroup, InputGroupColumn } from '../InputGroup/index';
-import { ButtonPrimary, ButtonContent, ButtonInline } from '../Button/index';
-import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo/index';
-import { ColumnRow, ColumnRowItem } from '../ColumnRow/index';
+import Modal from '../Modal';
+import Content from '../Content';
+import { Repeat, RepeatTiny, RepeatSmall } from '../Repeat';
+import LogoBox from '../LogoBox';
+import DetailBox from '../DetailBox';
+import ExtendInfo from '../ExtendInfo';
+import Snackbar from '../Snackbar';
+import { UtilityTextBold } from '../Utility';
+import InputLabel from '../InputLabel';
+import InputText from '../InputText';
+import InputCheckbox from '../InputCheckbox';
+import InputSelect, { OptionProps } from '../InputSelect';
+import { H4 } from '../Heading';
+import { InputGroup, InputGroupColumn } from '../InputGroup';
+import { ButtonPrimary, ButtonContent, ButtonInline } from '../Button';
+import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
+import { ColumnRow, ColumnRowItem } from '../ColumnRow';
 import useInsuranceCalculation from '../../hooks/useInsurance';
 import { ssnIsValid } from '../../utils/ssn';
-import Loader from '../Loader/index';
+import Loader from '../Loader';
 import { numberSeparator } from '../../utils/formats';
 import { DrivingDistance, InsuranceOption, Branch } from '../../@types/codegen/types';
 import PubSub from '../../utils/pubsub/pubsub';
+import { useTranslation } from 'react-i18next';
 
 interface FormData {
   ssn: string;
@@ -37,6 +38,7 @@ interface InsuranceModal {
 }
 
 const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModal) => {
+  const { t } = useTranslation();
   const [form, setForm] = useState<FormData>({
     ssn: '',
     drivingDistance: DrivingDistance.Between0And1000,
@@ -60,10 +62,15 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
     [form]
   );
 
+  const trackPayload = useMemo(
+    () => ({ branchId: branch?.id, branchName: branch?.name }),
+    [branch]
+  );
+
   const onShowInsurances = useCallback(() => {
-    PubSub.publish('InsuranceInterest');
+    PubSub.publish('InsuranceInterest', trackPayload);
     setPayload(form);
-  }, [form]);
+  }, [form, trackPayload]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -83,7 +90,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
   ];
 
   return (
-    <Modal title="Försäkring" onClose={onClose}>
+    <Modal title={t('item.insurance')} onClose={onClose}>
       {(insuranceOptions?.description || insuranceOptions?.logotype) && (
         <Repeat>
           <ContentLogo>
@@ -98,7 +105,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
               <ContentLogoMedia>
                 <LogoBox
                   logo={insuranceOptions.logotype}
-                  alt={insuranceOptions.name || 'Logotyp'}
+                  alt={insuranceOptions.name || t('common.logotype')}
                   wide
                 />
               </ContentLogoMedia>
@@ -112,10 +119,12 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
           <RepeatTiny>
             <InputGroup>
               <InputGroupColumn>
-                <InputLabel htmlFor="input-insurance-personalnumber">Personnummer</InputLabel>
+                <InputLabel htmlFor="input-insurance-personalnumber">
+                  {t('item.personalNumber')}
+                </InputLabel>
                 <InputText
                   placeholder="ÅÅÅÅMMDD-XXXX"
-                  label="Personnummer"
+                  label={t('item.personalNumber')}
                   value={form.ssn}
                   onChange={onChangeSsn}
                   onKeyDown={onKeyDown}
@@ -124,14 +133,14 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
               </InputGroupColumn>
               <InputGroupColumn>
                 <InputLabel htmlFor="input-insurance-mileage">
-                  Uppskattad körsträcka per år
+                  {t('item.estimatedAnualMileage')}
                 </InputLabel>
                 <InputSelect
                   value={form.drivingDistance}
                   onChange={onChangeDrivingDistance}
                   options={options}
                   unit="mil"
-                  title="Uppskattad körsträcka per år"
+                  title={t('item.estimatedAnualMileage')}
                 />
               </InputGroupColumn>
             </InputGroup>
@@ -142,23 +151,20 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
               disabled={!ssnIsValid(form.ssn) || loading}
               onClick={onShowInsurances}
             >
-              <ButtonContent>Visa försäkringar</ButtonContent>
+              <ButtonContent>{t('item.showInsurances')}</ButtonContent>
             </ButtonPrimary>
           </RepeatTiny>
         </RepeatSmall>
         {false && (
           <RepeatSmall>
             <InputCheckbox id="input-insurance-save-personalnumber">
-              Spara personnummer på denna enhet
+              {t('item.savePersonalNumberOnThisDevice')}
             </InputCheckbox>
           </RepeatSmall>
         )}
         <RepeatSmall>
           <Content small>
-            <p>
-              Spara personnummer på denna dator för att direkt visa försäkringskostnaderna i Wayke.
-              Personnumret lagras inte hos Wayke utan finns bara sparad i din webbläsare.
-            </p>
+            <p>{t('item.savePersonalNumberOnThisDeviceHelp')}</p>
           </Content>
         </RepeatSmall>
       </Repeat>
@@ -171,8 +177,8 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
 
       {error && (
         <Repeat>
-          <Snackbar severity="error" icon heading="Ett fel har inträffat">
-            Kunde inte hämta försäkringar. Vänligen försök igen.
+          <Snackbar severity="error" icon heading={t('common.anErrorHasOccured') || undefined}>
+            {t('item.couldNotfetchInsurances')}
           </Snackbar>
         </Repeat>
       )}
@@ -204,8 +210,9 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                             href={insurance.url || ''}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
+                            title={t('item.openPrePurchaseInformationInNewTab') || ''}
                           >
-                            Förköpsinformation och villkor (öppnas i ny flik)
+                            {t('item.openPrePurchaseInformationInNewTab')}
                           </ButtonInline>
                         </RepeatTiny>
                       )}
@@ -213,7 +220,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                   </Repeat>
                   {insurance.items && insurance.items.length > 0 && (
                     <Repeat>
-                      <H4>Försäkringen innehåller</H4>
+                      <H4>{t('item.insuranceIncludes')}</H4>
                       {insurance.items.map((item) => (
                         <RepeatSmall key={item.name || ''}>
                           <ExtendInfo title={item.name || ''}>{item.description}</ExtendInfo>
@@ -223,7 +230,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                   )}
                   {insurance.addons && insurance.addons.length > 0 && (
                     <Repeat>
-                      <H4>Välj till</H4>
+                      <H4>{t('item.addInsuranceHeading')}</H4>
                       {insurance.addons.map((addon) => (
                         <RepeatSmall key={addon.title || ''}>
                           <ColumnRow>

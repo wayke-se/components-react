@@ -4,7 +4,7 @@
 
 ## Notes
 
-* Starting from version `2.0.0` and above will require import of `@wayke.se/components-react/assets/default.css` in order to apply basic styling to the gallery.
+* Starting from version `2.0.0` and above will require import of `@wayke-se/components-react/dist/assets/default.css` in order to apply basic styling to the gallery.
 
 ## Usage
 
@@ -21,7 +21,7 @@ npm install react react-dom styled-components
 ```javascript
 import React from 'react';
 import WaykeComposite from '@wayke-se/components-react'
-import '@wayke-se/components-react/assets/default.css';
+import '@wayke-se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
@@ -84,7 +84,7 @@ Examples given the application is located in `/search/vehicles`:
 ```javascript
 import React from 'react';
 import { WaykeCompositePath } from '@wayke-se/components-react'
-import '@wayke.se/components-react/assets/default.css';
+import '@wayke.se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
@@ -127,7 +127,7 @@ It's recomended to place WaykeItemProvider close to app-root in order to keep th
 ```javascript
 import React, { useCallback } from 'react';
 import { WaykeItemProvider, WaykeSearchItem } from '@wayke-se/components-react'
-import '@wayke.se/components-react/assets/default.css';
+import '@wayke.se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
@@ -135,8 +135,8 @@ const App = ({}) => {
   const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';
 
   // Optional, get id when related vehicles are clicked
-  const onClickSearchItem = useCallback((id: string) => {
-    console.log(id);
+  const onClickSearchItem = useCallback((data) => {
+    console.log(data.id);
   }, []);
 
   return (
@@ -156,20 +156,22 @@ const App = ({}) => {
 | composite         | WaykeCompositeProps    | false    |
 
 ### WaykeSearchItem
-| Property                 | Type     | Required | Value                |
-|--------------------------|----------|----------|----------------------|
-| id                       | string   | true     |                      |
-| pathRoute                | string   | false    |                      |
-| hashRoute                | boolean  | false    |                      |
-| disableResetScrollOnInit | boolean  | false    |                      |
-| placeholderImage         | string   | false    |                      |
-| onClickSearchItem        | function | false    | (id: string) => void |
-| modifyDocumentTitleItem  | boolean  | false    |                      |
-| displayBranchName        | boolean  | false    |                      |
+| Property                 | Type       | Required | Value                |
+|--------------------------|------------|----------|----------------------|
+| id                       | string     | true     |                      |
+| marketCode               | MarketCode | false    |                      |
+| pathRoute                | string     | false    |                      |
+| hashRoute                | boolean    | false    |                      |
+| disableResetScrollOnInit | boolean    | false    |                      |
+| placeholderImage         | string     | false    |                      |
+| onClickSearchItem        | function   | false    | (id: string) => void |
+| modifyDocumentTitleItem  | boolean    | false    |                      |
+| displayBranchName        | boolean    | false    |                      |
 
 * Required
   * `id` - Guid that represents a vehicle.
 * Optional
+  * `marketCode` - Set the language, available options are SE and NO, default to SE.
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
@@ -181,6 +183,7 @@ const App = ({}) => {
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
 |---------------------------|---------------------------|---------------------------|
+| marketCode                | MarketCode                |                           |
 | pathRoute                 | string                    |                           |
 | hashRoute                 | boolean                   |                           |
 | filterList                | SearchFilterTypes[]       |                           |
@@ -188,11 +191,12 @@ const App = ({}) => {
 | removeSearchBar           | boolean                   |                           |
 | removeFilterOptions       | boolean                   |                           |
 | placeholderImage          | string                    |                           |
-| onClickSearchItem         | function                  | (id: string) => void      |
+| onClickSearchItem         | function                  | (data: CallbackItemData) => void      |
 | modifyDocumentTitleSearch | string                    |                           |
 | displayBranchName         | string                    |                           |
 
 * Optional
+  * `marketCode` - Set the language, available options are SE and NO, default to SE.
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice
@@ -203,6 +207,11 @@ const App = ({}) => {
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
   * `modifyDocumentTitleSearch` - Set custom document title
   * `displayBranchName` - Displays branch name on product cards
+
+### Notes on MarketCode
+`marketCode` defines what langugage that will be used (defaults to `SE` - Swedish). Other things that `marketCode` will effect:
+- `SE` will exclude the filter `odometerReadingValueInKm` and instead use `mileage`, while `NO` will do the opposite. The difference between the two filters are the unit used. For `odometerReadingValueInKm` the unit is kilometer, while `mileage` is kilometer/10 (Scandinavian miles)
+
 
 ## Types
 
@@ -275,7 +284,7 @@ WaykeSearchItem & WaykeSearch combined without `id`
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
 |-------------|-----------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice |
+| filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, odometerValueAsKm, modelYear, leasingPrice, businessLeasingPrice |
 | displayName | string                | false    |                                                                                                                                                |
 
 * `displayName` override default translation of title
@@ -329,7 +338,7 @@ import { WaykePubSub}  from '@wayke-se/components-react';
 
 const event = {
   eventName: 'ItemClicked',
-  callback: (id) => <('subscribed ItemClicked:', id),
+  callback: (data) => console.log('subscribed ItemClicked:', data),
 };
 
 WaykePubSub.subscribe(event);
@@ -344,23 +353,65 @@ WaykePubSub.unsubscribe(event);
 | publish      | eventName: string, ...arg: any |
 
 ### EventBase
-| eventName          | callback                                         |
-|--------------------|--------------------------------------------------|
-| HashRouteChange    | (id: string) => void                             |
-| ItemClicked        | (id: string) => void                             |
-| EcomOnInit         | () => void                                       |
-| EcomOnUserEvent    | (userEvent: string, currentStep: string) => void |
-| EcomOnExit         | () => void                                       |
-| ImagesClick        | () => void                                       |
-| OptionsClick       | () => void                                       |
-| PhonenumberVisible | () => void                                       |
-| PhonenumberCall    | () => void                                       |
-| MailVisible        | () => void                                       |
-| InsuranceInterest  | () => void                                       |
-| FinanceInterest    | () => void                                       |
-| All                | (eventName: string, data: any[]) => void         |
-
+| eventName             | callback                  | Data                                                                                                                            |
+|-----------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| HashRouteChange       | (data) => void            | CallbackHashRouteChangeData                                                                                                     |
+| ItemClicked           | (data) => void            | CallbackItemData                                                                                                                |
+| Ecom                  | (data) => void            | CallbackEcomData                                                                                                                |
+| ImagesClick           | (data) => void            | CallbackItemData                                                                                                                |
+| OptionsClick          | (data) => void            | CallbackItemData                                                                                                                |
+| PhonenumberVisible    | (data) => void            | CallbackItemData                                                                                                                |
+| PhonenumberCall       | (data) => void            | CallbackItemData                                                                                                                |
+| MailVisible           | (data) => void            | CallbackItemData                                                                                                                |
+| InsuranceInterest     | (data) => void            | CallbackItemData                                                                                                                |
+| InsuranceOpen         | (data) => void            | CallbackItemData                                                                                                                |
+| InsuranceClose        | (data) => void            | CallbackItemData                                                                                                                |
+| FinanceInterest       | (data) => void            | CallbackItemData                                                                                                                |
+| FinanceOpen           | (data) => void            | CallbackItemData                                                                                                                |
+| FinanceClose          | (data) => void            | CallbackItemData                                                                                                                |
+| Search                | (data) => void            | CallbackSearchData                                                                                                              |
+| Search                | (data) => void            | CallbackSearchData                                                                                                              |
+| FilterApply           | (data) => void            | CallbackFilterApplyData                                                                                                         |
+| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchData \| CallbackFilterApplyData |
 * `All` - Subscribes to all events.
+
+#### CallbackHashRouteChangeData
+| Property  | Type      |
+|-----------|-----------|
+| id        | string    |
+
+#### CallbackItemData
+| Property      | Type      |
+|---------------|-----------|
+| id            | string    |
+| branchName    | string    |
+| branchId      | string    |
+
+#### CallbackEcomData
+| Property      | Type                  |
+|---------------|-----------------------|
+| id            | string                |
+| branchName    | string                |
+| branchId      | string                |
+| view          | EcomView              |  
+| event         | EcomView              |  
+| currentStep   | EcomStep \| undefined |  
+| data          | any \| undefined      |  
+
+#### CallbackSearchData
+| Property  | Type      |
+|-----------|-----------|
+| query     | string    |
+
+#### CallbackFilterApplyData
+| Property  | Type                  |
+|-----------|-----------------------|
+| type      | "checkbox" \| "range" |
+| filter    | string                |
+| value     | string \| undefined   |
+| checked   | boolean \| "range"    |
+| min       | number \| "range"     |
+| max       | number \| "range"     |
 
 ## Theme
 It is possible to apply a custom theme using *CSS*. The things that can be styled are:

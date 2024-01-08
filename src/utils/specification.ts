@@ -70,7 +70,7 @@ const specLabels: { [key: string]: SpecPropertyType } = {
   mileage: {
     label: 'Mätarställning',
     formatData: (value: ValueTypes, _: VehicleData): string | null =>
-      (value || -1) >= 0 ? `${numberSeparator(value as number)} mil` : null,
+      ((value as number) || -1) >= 0 ? `${numberSeparator(value as number)} mil` : null,
     modal: {
       title: 'Mätarställning',
       text: 'Antal mil som bilen har körts. I bilen anges det i kilometer istället.',
@@ -502,7 +502,7 @@ const All = [
   'annualBonus',
 ] as const;
 
-type KEYS = typeof All[number];
+type KEYS = (typeof All)[number];
 type ITEM_KEYS = keyof VehicleData;
 
 const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null => {
@@ -520,7 +520,8 @@ const extractSpecData = (key: KEYS, item: VehicleData): ItemPropertyType | null 
     data = item[key as ITEM_KEYS];
   } else if (
     !!item?.properties?.[key] ||
-    (typeof item?.properties?.[key] === 'number' && (item?.properties?.[key] || -1) > -1)
+    (typeof item?.properties?.[key] === 'number' &&
+      ((item?.properties?.[key] as number) || -1) > -1)
   ) {
     data = item.properties[key];
   }

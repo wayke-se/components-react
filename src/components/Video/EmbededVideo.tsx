@@ -3,10 +3,11 @@ import React, { useState, useCallback } from 'react';
 import useThumbnail from './useThumbnail';
 import { ImageFull } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
-import Modal from '../Modal/index';
+import Modal from '../Modal';
 import VideoPlayer from './EmbeddedVideoLightbox';
 import { onImageLoad, onImageError } from './utils';
 import CustomPlayer from '../Video/CustomPlayer';
+import { useTranslation } from 'react-i18next';
 
 interface GalleryEmbed {
   src: string;
@@ -15,6 +16,7 @@ interface GalleryEmbed {
 }
 
 const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState<string>();
   const thumbnail = useThumbnail(src);
 
@@ -43,10 +45,15 @@ const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
   if (thumbnail?.length && !customVideo) {
     return (
       <>
-        <ImageFull onLoad={onLoad} src={thumbnail[0]} onError={onError} alt={`Bild ${index + 1}`} />
-        <MediaButton text="Spela video" onClick={onClick} />
+        <ImageFull
+          onLoad={onLoad}
+          src={thumbnail[0]}
+          onError={onError}
+          alt={t('common.imageIndex', { index: index + 1 }) || ''}
+        />
+        <MediaButton text={t('other.playVideo')} onClick={onClick} />
         {modal && (
-          <Modal title="Video" onClose={onCloseModal}>
+          <Modal title={t('other.video')} onClose={onCloseModal}>
             <VideoPlayer url={modal} />
           </Modal>
         )}
@@ -58,9 +65,9 @@ const GalleryEmbed = ({ src, index }: GalleryEmbed) => {
     return (
       <>
         <CustomPlayer ratio="66.66%" isPreview controls={false} url={src} />
-        <MediaButton text="Spela video" onClick={onClick} />
+        <MediaButton text={t('other.playVideo')} onClick={onClick} />
         {modal && (
-          <Modal title="Video" onClose={onCloseModal}>
+          <Modal title={t('other.video')} onClose={onCloseModal}>
             <VideoPlayer url={modal} />
           </Modal>
         )}

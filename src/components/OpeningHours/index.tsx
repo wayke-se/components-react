@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
-import { RepeatSmall } from '../Repeat/index';
-import Badge from '../Badge/index';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn/index';
-import { UtilityTextBold } from '../Utility/index';
+import { RepeatSmall } from '../Repeat';
+import Badge from '../Badge';
+import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn';
+import { UtilityTextBold } from '../Utility';
 
 import { OpeningHours, Maybe } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 type Days = Omit<OpeningHours, '__typename'>;
 type KeyType = keyof Days;
@@ -18,22 +20,22 @@ const KeyOrder: KeyType[] = [
   'sunday',
 ];
 
-const TranslateWeekDays = (d: KeyType) => {
+const TranslateWeekDays = (t: TFunction<'translation', undefined>, d: KeyType) => {
   switch (d) {
     case 'monday':
-      return 'Mån';
+      return t('common.mondayShort');
     case 'tuesday':
-      return 'Tis';
+      return t('common.tuesdayShort');
     case 'wednesday':
-      return 'Ons';
+      return t('common.wednesdayShort');
     case 'thursday':
-      return 'Tor';
+      return t('common.thursdayShort');
     case 'friday':
-      return 'Fre';
+      return t('common.fridayShort');
     case 'saturday':
-      return 'Lör';
+      return t('common.saturdayShort');
     case 'sunday':
-      return 'Sön';
+      return t('common.sundayShort');
   }
 };
 
@@ -46,9 +48,9 @@ interface OpeningHoursSample {
 
 const arr: OpeningHoursSample[] = [];
 
-const GetOpeningHours = (o: OpeningHours) =>
+const GetOpeningHours = (t: TFunction<'translation', undefined>, o: OpeningHours) =>
   KeyOrder.reduce((prev, current) => {
-    const title = TranslateWeekDays(current);
+    const title = TranslateWeekDays(t, current);
     const item = o[current];
     const previous = prev?.[prev.length - 1];
     if (previous && previous.from == item?.from && previous.until === item?.until) {
@@ -64,12 +66,12 @@ const GetOpeningHours = (o: OpeningHours) =>
     return prev;
   }, arr.slice());
 
-const GetOpeningHoursToday = (o: OpeningHours) => {
+const GetOpeningHoursToday = (t: TFunction<'translation', undefined>, o: OpeningHours) => {
   const dayNumber = new Date().getDay();
   const day = KeyOrder[dayNumber === 0 ? 6 : dayNumber - 1] as KeyType;
   const current = o[day];
   return {
-    title: current ? 'Öppetider idag' : 'Stängt idag',
+    title: current ? t('item.openingHoursToday') : t('item.closedToday'),
     from: current?.from,
     until: current?.until,
   };
@@ -85,8 +87,9 @@ interface OpeningHoursProps {
 }
 
 const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
+  const { t } = useTranslation();
   const today = useMemo(
-    () => (openingHours ? GetOpeningHoursToday(openingHours) : null),
+    () => (openingHours ? GetOpeningHoursToday(t, openingHours) : null),
     [openingHours]
   );
 
@@ -103,7 +106,10 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
     }
   }, [today]);
 
-  const oh = useMemo(() => (openingHours ? GetOpeningHours(openingHours) : null), [openingHours]);
+  const oh = useMemo(
+    () => (openingHours ? GetOpeningHours(t, openingHours) : null),
+    [openingHours]
+  );
   if (!oh) {
     return null;
   }
@@ -112,7 +118,7 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
     <>
       <RepeatSmall>
         <Badge
-          label={currentlyOpen ? 'Öppet' : 'Stängt'}
+          label={currentlyOpen ? t('item.open') : t('item.closed')}
           severity={currentlyOpen ? 'positive' : 'negative'}
         />
       </RepeatSmall>
@@ -124,16 +130,18 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
             </TableColumnCell>
             <TableColumnCell>
               <UtilityTextBold>
-                {today?.from ? `${today.from}-${today.until}` : 'Stängt'}
+                {today?.from ? `${today.from} - ${today.until}` : t('item.closed')}
               </UtilityTextBold>
             </TableColumnCell>
           </TableColumnRow>
           {oh.map((o) => (
             <TableColumnRow key={o.titleFrom}>
               <TableColumnCell>
-                {o.titleTo ? `${o.titleFrom}-${o.titleTo}` : o.titleFrom}
+                {o.titleTo ? `${o.titleFrom} - ${o.titleTo}` : o.titleFrom}
               </TableColumnCell>
-              <TableColumnCell>{o.from ? `${o.from}-${o.until}` : 'Stängt'}</TableColumnCell>
+              <TableColumnCell>
+                {o.from ? `${o.from} - ${o.until}` : t('item.closed')}
+              </TableColumnCell>
             </TableColumnRow>
           ))}
         </TableColumn>

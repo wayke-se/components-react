@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 
-import { ButtonReset } from '../Button/index';
+import { ButtonReset } from '../Button';
 import { size } from '../../layout/helpers';
 
 export const Wrapper = styled.div`

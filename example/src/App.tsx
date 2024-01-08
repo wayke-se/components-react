@@ -1,63 +1,105 @@
 import React from 'react';
 
-import Routes from './routes/index';
+import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
 
-import { WaykePubSub } from '../../src/index';
+import { WaykePubSub } from '../../src';
 
 WaykePubSub.subscribe({
   eventName: 'ItemClicked',
   // eslint-disable-next-line
-  callback: (id) => console.log('subscribed ItemClicked:', id),
+  callback: (data) => console.log('subscribed ItemClicked:', data),
 });
 
 WaykePubSub.subscribe({
   eventName: 'HashRouteChange',
   // eslint-disable-next-line
-  callback: (id) => console.log('subscribed HashRouteChange:', id),
+  callback: (data) => console.log('subscribed HashRouteChange:', data),
 });
 
 WaykePubSub.subscribe({
-  eventName: 'EcomOnUserEvent',
-  callback: (userEvent, currentStep) =>
+  eventName: 'Ecom',
+  callback: (data) =>
     // eslint-disable-next-line
-    console.log('subscribed EcomOnUserEvent:', userEvent, currentStep),
-});
-
-WaykePubSub.subscribe({
-  eventName: 'EcomOnExit',
-  // eslint-disable-next-line
-  callback: () => console.log('subscribed EcomOnExit:'),
+    console.log('subscribed Ecom:', data),
 });
 
 WaykePubSub.subscribe({
   eventName: 'ImagesClick',
   // eslint-disable-next-line
-  callback: () => console.log('subscribed ImagesClick:'),
+  callback: (data) => console.log('subscribed ImagesClick:', data),
 });
 
 WaykePubSub.subscribe({
   eventName: 'OptionsClick',
   // eslint-disable-next-line
-  callback: () => console.log('subscribed OptionsClick:'),
+  callback: (data) => console.log('subscribed OptionsClick:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'FilterApply',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed EventFilterApply:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'InsuranceOpen',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed InsuranceOpen:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'InsuranceClose',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed InsuranceClose:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'InsuranceInterest',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed InsuranceInterest:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'FinanceOpen',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed FinanceOpen:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'FinanceClose',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed FinanceClose:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'FinanceInterest',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed FinanceInterest:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'Search',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed Search:', data),
 });
 
 WaykePubSub.subscribe({
   eventName: 'PhonenumberVisible',
   // eslint-disable-next-line
-  callback: () => console.log('subscribed PhonenumberVisible:'),
+  callback: (data) => console.log('subscribed PhonenumberVisible:', data),
 });
 
 WaykePubSub.subscribe({
   eventName: 'PhonenumberCall',
   // eslint-disable-next-line
-  callback: () => console.log('subscribed PhonenumberCall:'),
+  callback: (data) => console.log('subscribed PhonenumberCall:', data),
 });
 
 WaykePubSub.subscribe({
   eventName: 'MailVisible',
   // eslint-disable-next-line
-  callback: () => console.log('subscribed MailVisible:'),
+  callback: (data) => console.log('subscribed MailVisible:', data),
 });
 
 WaykePubSub.subscribe({

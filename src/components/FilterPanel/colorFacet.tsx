@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { Facet, FacetFilter } from '../../@types/search';
-import ColorSelect from '../ColorSelect/index';
+import ColorSelect from '../ColorSelect';
 import useSearch from '../../State/Search/useSearch';
 import { getHexColorFromDisplayName } from '../../utils/converters';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface ColorSelectFacetProps {
   facet: Facet;
@@ -23,6 +24,12 @@ const ColorSelectFacet = ({ facet }: ColorSelectFacetProps) => {
         setSelected({
           ...selected,
           [f.displayName]: !f.selected,
+        });
+        PubSub.publish('FilterApply', {
+          type: 'checkbox',
+          filter: facet.id,
+          value: f.displayName,
+          checked: !f.selected,
         });
         onFilterUpdate(f.query);
       }

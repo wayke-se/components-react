@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { Portal, PortalNamespace } from '../Portal/index';
+import { Portal, PortalNamespace } from '../Portal';
 
-import { H1 } from '../Heading/index';
-import { IconCancel } from '../Icon/index';
+import { H1 } from '../Heading';
+import { IconCancel } from '../Icon';
 import {
   Body,
   Content,
@@ -15,6 +15,7 @@ import {
   Close,
   CloseBtn,
 } from './wrapper';
+import { useTranslation } from 'react-i18next';
 
 interface ModalProps {
   id?: string | null;
@@ -24,10 +25,11 @@ interface ModalProps {
 }
 
 const Modal = ({ id, title, onClose, children }: ModalProps) => {
+  const { t } = useTranslation();
   return (
     <Portal id={id || PortalNamespace.DefaultPortal}>
       <Wrapper onClick={(e) => e.stopPropagation()}>
-        <UiBlock onClick={onClose} title="Stäng modal" />
+        <UiBlock onClick={onClose} title={t('other.closeModal') || ''} />
         <Dialog>
           <Content>
             <Header>
@@ -35,7 +37,7 @@ const Modal = ({ id, title, onClose, children }: ModalProps) => {
                 <H1 noMargin>{title}</H1>
               </Heading>
               <Close>
-                <CloseBtn onClick={onClose} title="Stäng modal">
+                <CloseBtn onClick={onClose} title={t('other.closeModal') || ''}>
                   <IconCancel block />
                 </CloseBtn>
               </Close>

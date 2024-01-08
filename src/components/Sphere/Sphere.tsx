@@ -3,6 +3,7 @@ import SphereViewer from './SphereViewer';
 
 import { ImageFull } from '../Gallery/wrapper';
 import MediaButton from '../Gallery/MediaButton';
+import { useTranslation } from 'react-i18next';
 
 const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
   e.stopPropagation();
@@ -19,12 +20,13 @@ type PropsType = {
 };
 
 const Sphere = ({ url, preview, visible, onDisableNavigation, navigationDisabled }: PropsType) => {
+  const { t } = useTranslation();
   if (!visible || (!navigationDisabled && visible)) {
     return (
       <>
         <ImageFull src={preview} alt="alt" />
         <MediaButton
-          text="Starta 360° interiört"
+          text={t('item.start360Interior')}
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void =>
             onMediaClick(e, onDisableNavigation)
           }

@@ -2,16 +2,16 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Category, Property } from '../../@types/vehicle-properties';
 import PropertyTreeCreator from '../../utils/vehicle-properties/property-tree-creator';
 import sortTree from '../../utils/vehicle-properties/property-tree-sorter';
-import enrichWithHint from '../../utils/vehicle-properties/property-hint-enricher';
 import addCustomProperties from '../../utils/vehicle-properties/custom-property-adder';
 import removeProperties from '../../utils/vehicle-properties/property-remover';
 import MetadataItem from './MetadataItem';
 
-import { H5 } from '../../components/Heading/index';
-import { Repeat } from '../../components/Repeat/index';
-import { TableList } from '../../components/TableList/index';
-import Tabs from '../../components/Tabs/index';
+import { H5 } from '../../components/Heading';
+import { Repeat } from '../../components/Repeat';
+import { TableList } from '../../components/TableList';
+import Tabs from '../../components/Tabs';
 import { VehicleData } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
 
 interface MetadataSubCategoryProps {
   name: string;
@@ -75,15 +75,15 @@ interface PropertySetProps {
 }
 
 const PropertySet = ({ propertySet, vehicleData }: PropertySetProps) => {
+  const { t } = useTranslation();
   const [activeCategoryId, setActiveCategoryId] = useState(-1);
   const mappedProperties = useMemo(() => {
     if (!propertySet) {
       return undefined;
     }
 
-    let newProperties = removeProperties(propertySet);
-    newProperties = addCustomProperties(vehicleData, newProperties);
-    const enrichedProperties = enrichWithHint(newProperties);
+    const newProperties = removeProperties(propertySet);
+    const enrichedProperties = addCustomProperties(t, vehicleData, newProperties);
 
     const tree = new PropertyTreeCreator(enrichedProperties).create();
     sortTree(tree);

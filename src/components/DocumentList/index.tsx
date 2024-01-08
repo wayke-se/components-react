@@ -10,12 +10,13 @@ import {
   PdfLink,
   PdfColumn,
 } from './wrapper';
+import { useTranslation } from 'react-i18next';
 
 interface PdfDownloadItemProps {
-  document: Scalars['FileDocument'];
+  document: Scalars['FileDocument']['input'];
 }
 
-const translateContentType = (document: Scalars['FileDocument']) => {
+const translateContentType = (document: Scalars['FileDocument']['input']) => {
   switch (document.contentType) {
     case 'application/pdf':
       return 'PDF';
@@ -27,6 +28,7 @@ const translateContentType = (document: Scalars['FileDocument']) => {
 };
 
 export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
+  const { t } = useTranslation();
   const contentType = useMemo(() => translateContentType(document), [document]);
   return (
     <PdfListItem>
@@ -36,8 +38,13 @@ export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
           <PdfSubtitle>{contentType}</PdfSubtitle>
         </PdfColumn>
         <PdfColumn>
-          <PdfLink href={document.url} rel="noopener noreferrer nofollow" target="_blank">
-            Öppna
+          <PdfLink
+            href={document.url}
+            rel="noopener noreferrer nofollow"
+            target="_blank"
+            title={t('other.openDocument', { document: document.name })}
+          >
+            {t('common.open')}
           </PdfLink>
         </PdfColumn>
       </PdfListInner>
@@ -46,7 +53,7 @@ export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
 };
 
 interface IDocumentList {
-  documents: Scalars['FileDocument'][];
+  documents: Scalars['FileDocument']['input'][];
 }
 
 export const DocumentList = ({ documents }: IDocumentList) => (

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, Select, Option, Icon } from './wrapper';
-import { IconChevronDown } from '../Icon/index';
+import { IconChevronDown } from '../Icon';
 
 export interface OptionProps {
   value: number | string;

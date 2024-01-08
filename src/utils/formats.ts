@@ -1,5 +1,6 @@
 import { format as formatFns } from 'date-fns';
-import { sv } from 'date-fns/locale';
+import sv from 'date-fns/locale/sv/index.js';
+import no from 'date-fns/locale/nb/index.js';
 
 // Filter function to remove any null/undefined values.
 export const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue =>
@@ -32,6 +33,7 @@ import {
   LEASING_PRICE,
   BUSINESS_LEASING_PRICE,
 } from './constants';
+import { MarketCode } from '../@types/market';
 
 export const FacetIdToTitle = (f: string) => {
   switch (f) {
@@ -72,15 +74,16 @@ export const dateTimeFormat = {
   YearMonth: 1,
   DayMonth: 2,
 
-  format: (value: string | Date, format: number) => {
+  format: (value: string | Date, format: number, marketCode?: MarketCode) => {
     const date = new Date(value);
+    const settings = { locale: marketCode === 'NO' ? no : sv };
     switch (format) {
       case dateTimeFormat.YearMonth:
-        return formatFns(date, 'MMMM yyyy', { locale: sv });
+        return formatFns(date, 'MMMM yyyy', settings);
       case dateTimeFormat.DayMonth:
-        return formatFns(date, 'd MMMM yyyy', { locale: sv });
+        return formatFns(date, 'd MMMM yyyy', settings);
       default:
-        return formatFns(date, 'yyyy-MM-dd HH:mm', { locale: sv });
+        return formatFns(date, 'yyyy-MM-dd HH:mm', settings);
     }
   },
 };

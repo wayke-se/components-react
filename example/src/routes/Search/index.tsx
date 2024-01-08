@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 
-import { WaykeProvider, WaykeSearch } from '../../../../src/index';
+import { WaykeProvider, WaykeSearch } from '../../../../src';
+import { OnItemClick } from '../../../../src/components/ProductCard';
 
 const Search = () => {
-  const onClickSearchItem = useCallback((id: string) => {
+  const onClickSearchItem = useCallback((data: OnItemClick) => {
     // eslint-disable-next-line
-    console.log(id);
+    console.log(data);
   }, []);
 
   return (
@@ -20,7 +21,7 @@ const Search = () => {
       }}
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
     >
-      <WaykeSearch onClickSearchItem={onClickSearchItem} />
+      <WaykeSearch onClickSearchItem={onClickSearchItem} marketCode="NO" />
     </WaykeProvider>
   );
 };

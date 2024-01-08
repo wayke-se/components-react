@@ -1,15 +1,16 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import Container from '../../components/Container/index';
-import { Repeat } from '../../components/Repeat/index';
+import Container from '../../components/Container';
+import { Repeat } from '../../components/Repeat';
 
-import { PageSection } from '../../components/Page/index';
-import SectionHeader from '../../components/SectionHeader/index';
-import OverflowGrid from '../../components/OverflowGrid/index';
-import ProductCard from '../../components/ProductCard/index';
-import { H2 } from '../../components/Heading/index';
+import { PageSection } from '../../components/Page';
+import SectionHeader from '../../components/SectionHeader';
+import OverflowGrid from '../../components/OverflowGrid';
+import ProductCard, { OnItemClick } from '../../components/ProductCard';
+import { H2 } from '../../components/Heading';
 import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
-import Loader from '../../components/Loader/index';
+import Loader from '../../components/Loader';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 import { regexPathGuid } from '../../utils/regex';
@@ -31,10 +32,11 @@ const Related = ({
   displayBranchName,
   onClickSearchItem,
 }: RelatedProps) => {
+  const { t } = useTranslation();
   const { loading, response, moreLikeThisUrl } = useRelatedSearch(id, !!authorizedReseller);
 
-  const onItemClicked = useCallback((id: string) => {
-    PubSub.publish('ItemClicked', id);
+  const onItemClicked = useCallback((data: OnItemClick) => {
+    PubSub.publish('ItemClicked', data);
     if (onClickSearchItem) {
       onClickSearchItem(id);
     }
@@ -54,13 +56,13 @@ const Related = ({
         {moreLikeThisUrl ? (
           <Repeat>
             <SectionHeader onClick={() => {}}>
-              <H2 noMargin>Relaterade fordon</H2>
+              <H2 noMargin>{t('item.relatedVehicles')}</H2>
             </SectionHeader>
           </Repeat>
         ) : (
           <Repeat>
             <SectionHeader onClick={() => {}} actionTitle="Visa alla">
-              <H2 noMargin>Senast inkomna</H2>
+              <H2 noMargin>{t('item.latestVehicles')}</H2>
             </SectionHeader>
           </Repeat>
         )}
@@ -81,8 +83,8 @@ const Related = ({
                 window.location.pathname === '/'
                   ? `${prefix}${document._id}`
                   : r.test(`${pathRoute}${id}`)
-                  ? window.location.pathname.replace(r, document._id)
-                  : `${window.location.pathname}${prefix}${document._id}`;
+                    ? window.location.pathname.replace(r, document._id)
+                    : `${window.location.pathname}${prefix}${document._id}`;
 
               return (
                 <ProductCard
@@ -91,15 +93,18 @@ const Related = ({
                   onClick={onItemClicked}
                   title={document.title}
                   href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
-                  image={document.featuredImage?.files?.[0]?.url}
+                  imageFile={document.featuredImage?.files?.[0]}
                   description={document.shortDescription}
+                  branch={document.branches?.[0]}
                   branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
                   uspList={[
                     {
                       title: document.modelYear,
                     },
                     {
-                      title: `${numberSeparator(document.mileage)} mil`,
+                      title: `${numberSeparator(
+                        document.odometerReading?.value || document.mileage
+                      )} ${t(`odometer.${document.odometerReading?.unit || 'ScandinavianMile'}`)}`,
                     },
                     {
                       title: document.gearboxType,
@@ -108,20 +113,20 @@ const Related = ({
                       title: document.fuelType,
                     },
                   ]}
-                  price={`${numberSeparator(document.price)} kr`}
+                  price={`${numberSeparator(document.price)} ${t('currency.default')}`}
                   oldPrice={
                     document.oldPrice !== undefined && document.price < document.oldPrice
-                      ? `${numberSeparator(document.oldPrice)} kr`
+                      ? `${numberSeparator(document.oldPrice)} ${t('currency.default')}`
                       : undefined
                   }
                   leasingPrice={
                     document.leasingPrice !== undefined
-                      ? `${numberSeparator(document.leasingPrice)} kr/mån`
+                      ? `${numberSeparator(document.leasingPrice)} ${t('currency.monthly')}`
                       : undefined
                   }
                   businessLeasingPrice={
                     document.businessLeasingPrice !== undefined
-                      ? `${numberSeparator(document.businessLeasingPrice)} kr/mån`
+                      ? `${numberSeparator(document.businessLeasingPrice)} ${t('currency.monthly')}`
                       : undefined
                   }
                   pathRoute={pathRoute}

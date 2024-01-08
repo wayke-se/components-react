@@ -10,6 +10,7 @@ export type SearchFilterNameTypes =
   | 'drivingWheel'
   | 'price'
   | 'mileage'
+  | 'odometerValueAsKm'
   | 'modelYear'
   | 'leasingPrice'
   | 'businessLeasingPrice';

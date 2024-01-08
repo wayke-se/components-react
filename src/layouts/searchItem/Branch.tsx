@@ -1,19 +1,20 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { Repeat } from '../../components/Repeat/index';
-import Content from '../../components/Content/index';
-import { ProductPageContentLimit } from '../../components/ProductPage/index';
-import { H2 } from '../../components/Heading/index';
-import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button/index';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn/index';
+import { Repeat } from '../../components/Repeat';
+import Content from '../../components/Content';
+import { ProductPageContentLimit } from '../../components/ProductPage';
+import { H2 } from '../../components/Heading';
+import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button';
+import { TableColumn, TableColumnRow, TableColumnCell } from '../../components/TableColumn';
 
-import OpeningHours from '../../components/OpeningHours/index';
-import PhoneNumber from '../../components/PhoneNumber/index';
-import Map from '../../components/Map/index';
+import OpeningHours from '../../components/OpeningHours';
+import PhoneNumber from '../../components/PhoneNumber';
+import Map from '../../components/Map';
 
 import { Branch, Maybe } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 import { formatPhonenumber } from '../../utils/phonenumbers';
+import { useTranslation } from 'react-i18next';
 
 interface BranchProps {
   branch?: Maybe<Branch>;
@@ -22,6 +23,7 @@ interface BranchProps {
 }
 
 const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
 
   const openModal = useCallback(() => setModal(true), []);
@@ -45,10 +47,10 @@ const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
       <Repeat>
         <H2 noMargin>
           {displayBranchName
-            ? `Den här bilen finns på ${branch.name}`
+            ? `${t('item.thisCarsIsLocatedAt')} ${branch.name}`
             : branch?.location?.city
-            ? `Den här bilen finns på vår anläggning i ${branch?.location?.city}`
-            : 'Kontakt'}
+              ? t('item.thisCarIsAvailableAtOurBranch', { location: branch?.location?.city })
+              : t('item.contact')}
         </H2>
       </Repeat>
       <Repeat>
@@ -58,9 +60,15 @@ const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
         <Repeat>
           <Content>
             <p>
-              Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar.{' '}
-              <ButtonInline as="span" role="button" onClick={openModal} inline>
-                Klicka här för att visa kontaktuppgifter till en annan anläggning
+              {t('item.centralWarehouseCarDescriptionShort')}{' '}
+              <ButtonInline
+                as="span"
+                role="button"
+                onClick={openModal}
+                inline
+                title={t('item.clickHereToShowContactToAnotherBranch') || ''}
+              >
+                {t('item.clickHereToShowContactToAnotherBranch')}
               </ButtonInline>
               .
             </p>
@@ -73,7 +81,7 @@ const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
             <TableColumn>
               {branch?.location?.streetAddress && branch?.location?.city && (
                 <TableColumnRow>
-                  <TableColumnCell>Adress</TableColumnCell>
+                  <TableColumnCell>{t('common.address')}</TableColumnCell>
                   <TableColumnCell>
                     <ButtonInlineBold>
                       <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>

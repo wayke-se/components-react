@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Checklist from '../Checklist/index';
-import OverflowBox from '../OverflowBox/index';
+import Checklist from '../Checklist';
+import OverflowBox from '../OverflowBox';
 import { Facet, FacetFilter } from '../../@types/search';
 import useSearch from '../../State/Search/useSearch';
+import PubSub from '../../utils/pubsub/pubsub';
 
 interface ChecklistFacetProps {
   facet: Facet;
@@ -21,6 +22,12 @@ const ChecklistFacet = ({ facet }: ChecklistFacetProps) => {
         setSelected({
           ...selected,
           [f.displayName]: !f.selected,
+        });
+        PubSub.publish('FilterApply', {
+          type: 'checkbox',
+          filter: facet.id,
+          value: f.displayName,
+          checked: !f.selected,
         });
         onFilterUpdate(f.query);
       }

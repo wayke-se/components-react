@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useContext } from 'react';
 
-import { Repeat, RepeatTiny } from '../../components/Repeat/index';
-import InputSelect from '../../components/InputSelect/index';
-import { ButtonPrimary, ButtonContent } from '../../components/Button/index';
-import Modal from '../../components/Modal/index';
-import Content from '../../components/Content/index';
-import InputLabel from '../../components/InputLabel/index';
+import { Repeat, RepeatTiny } from '../../components/Repeat';
+import InputSelect from '../../components/InputSelect';
+import { ButtonPrimary, ButtonContent } from '../../components/Button';
+import Modal from '../../components/Modal';
+import Content from '../../components/Content';
+import InputLabel from '../../components/InputLabel';
 import { BranchConnection } from '../../@types/codegen/types';
 import { CentralStorageContext } from '../../State/CentralStorage/CentralStorageContext';
+import { useTranslation } from 'react-i18next';
 
 interface BranchModalProps {
   loading: boolean;
@@ -16,6 +17,7 @@ interface BranchModalProps {
 }
 
 const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
+  const { t } = useTranslation();
   const { centralStorageId, setCentralStorageId } = useContext(CentralStorageContext);
   const [localValue, setLocalValue] = useState(centralStorageId);
 
@@ -35,15 +37,15 @@ const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
   }
 
   return (
-    <Modal title="Byt anläggning" onClose={onClose}>
+    <Modal title={t('item.switchBranch')} onClose={onClose}>
       <Repeat>
         <RepeatTiny>
           <Content>
-            <p>Välj den anläggning du vill visa kontaktuppgifter för.</p>
+            <p>{t('item.switchBranchDescription')}</p>
           </Content>
         </RepeatTiny>
         <RepeatTiny>
-          <InputLabel>Välj anläggning</InputLabel>
+          <InputLabel>{t('item.chooseBranch')}</InputLabel>
           <InputSelect
             value={localValue}
             onChange={onChange}
@@ -51,13 +53,18 @@ const BranchModal = ({ loading, connections, onClose }: BranchModalProps) => {
               value: x.id,
               displayName: x.name,
             }))}
-            title="Välj anläggning"
+            title={t('item.chooseBranch')}
           />
         </RepeatTiny>
       </Repeat>
       <Repeat>
-        <ButtonPrimary disabled={loading} fullWidth onClick={() => onConfirm(localValue)}>
-          <ButtonContent>Välj</ButtonContent>
+        <ButtonPrimary
+          disabled={loading}
+          fullWidth
+          onClick={() => onConfirm(localValue)}
+          title={t('item.chooseSelectedBranch') || ''}
+        >
+          <ButtonContent>{t('common.choose')}</ButtonContent>
         </ButtonPrimary>
       </Repeat>
     </Modal>

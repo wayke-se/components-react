@@ -1,32 +1,31 @@
-import React, { useMemo, useRef, useCallback, useState, useEffect } from 'react';
-import WaykeEcomWeb from '@wayke-se/ecom-web';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 
-import Container from '../../components/Container/index';
-import UspList, { ItemProps } from '../../components/UspList/index';
-import { Repeat, RepeatSmall } from '../../components/Repeat/index';
-import PriceTable from '../../components/PriceTable/index';
-import LogoBox from '../../components/LogoBox/index';
-import Content from '../../components/Content/index';
-import Blockquote from '../../components/Blockquote/index';
-import ExtendContent from '../../components/ExtendContent/index';
-import Gallery from '../../components/Gallery/index';
-import { Page, PageSection } from '../../components/Page/index';
+import Container from '../../components/Container';
+import UspList, { ItemProps } from '../../components/UspList';
+import { Repeat, RepeatSmall } from '../../components/Repeat';
+import PriceTable from '../../components/PriceTable';
+import LogoBox from '../../components/LogoBox';
+import Content from '../../components/Content';
+import Blockquote from '../../components/Blockquote';
+import ExtendContent from '../../components/ExtendContent';
+import Gallery from '../../components/Gallery';
+import { Page, PageSection } from '../../components/Page';
 import {
   ProductPage,
   ProductPageMainSection,
   ProductPageAside,
   ProductPageMain,
   ProductPageAsideSection,
-} from '../../components/ProductPage/index';
-import { H1, H2 } from '../../components/Heading/index';
-import { ButtonPrimary, ButtonContent, ButtonInlineLight } from '../../components/Button/index';
-import { UtilityFontSizeSmall } from '../../components/Utility/index';
-import { IconChevronLeft } from '../../components/Icon/index';
+} from '../../components/ProductPage';
+import { H1, H2 } from '../../components/Heading';
+import { ButtonPrimary, ButtonContent, ButtonInlineLight } from '../../components/Button';
+import { UtilityFontSizeSmall } from '../../components/Utility';
+import { IconChevronLeft } from '../../components/Icon';
 import useSearchItem from '../../hooks/useSearchItem';
 import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
-import { PortalNamespace, PortalElement } from '../../components/Portal/index';
-import FinancialOptions from '../../components/FinancialOptions/index';
-import InsuranceOptions from '../../components/InsuranceOptions/index';
+import { PortalNamespace, PortalElement } from '../../components/Portal';
+import FinancialOptions from '../../components/FinancialOptions';
+import InsuranceOptions from '../../components/InsuranceOptions';
 import ManufacturerPackageOption from './ManufacturerPackagesOption';
 import CheckList from './CheckList';
 import Related from './Related';
@@ -40,9 +39,15 @@ import Property from './Property';
 import DemoCarModal from './DemoCarModal';
 import useSettings from '../../State/Settings/useSettings';
 import Documents from './Documents';
-import AccessoriesSection from './Accessories/index';
+import AccessoriesSection from './Accessories';
+import { MarketCode } from '../../@types/market';
+import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import useEcom from './useEcom';
+import { i18nScoped } from '../../utils/I18n';
+import { marked } from 'marked';
 
 export interface WaykeSearchItemProps {
+  marketCode?: MarketCode;
   id: string;
   hashRoute?: boolean;
   pathRoute?: string;
@@ -54,6 +59,7 @@ export interface WaykeSearchItemProps {
 }
 
 const WaykeSearchItem = ({
+  marketCode,
   id,
   hashRoute,
   pathRoute,
@@ -63,38 +69,19 @@ const WaykeSearchItem = ({
   displayBranchName,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
+  const initialized = useInitializeTranslation(marketCode);
   const { ecomSettings } = useSettings();
-  const ecomContext = useRef<WaykeEcomWeb | undefined>();
+
   const { loading, data: result } = useSearchItem(id);
   const { vehicle: centralStorageVehicle, loading: loadingCentralStorageVehicle } =
     useCentralStorage(result?.vehicle);
 
+  const contact = centralStorageVehicle?.contact;
+  const branch = centralStorageVehicle?.branch;
+  const ecomContext = useEcom(id, ecomSettings, branch);
+
   const [demoCarModal, setDemoCarModal] = useState(false);
   const onToggleDemoCarModal = useCallback(() => setDemoCarModal(!demoCarModal), [demoCarModal]);
-
-  useEffect(() => {
-    if (ecomSettings) {
-      ecomContext.current = new WaykeEcomWeb({
-        id,
-        ecomSdkConfig: {
-          api: {
-            address: ecomSettings.url,
-          },
-          bankIdThumbprint: ecomSettings?.bankIdThumbprint,
-        },
-        logo: ecomSettings.serviceLogotypeUrl,
-        logoX2: ecomSettings.serviceLogotypeUrl,
-        onEvent(view, event, currentStep?, data?) {
-          PubSub.publish('EcomOnUserEvent', view, event, currentStep, data);
-        },
-      });
-    }
-    return () => {
-      if (ecomContext.current) {
-        ecomContext.current.destroy();
-      }
-    };
-  }, []);
 
   useEffect(() => {
     if (!disableResetScrollOnInit) {
@@ -115,7 +102,17 @@ const WaykeSearchItem = ({
     [result?.vehicle?.data?.options]
   );
 
-  const onShowMoreOptionsClick = useCallback(() => PubSub.publish('OptionsClick'), []);
+  const onShowMoreOptionsClick = useCallback(
+    () =>
+      PubSub.publish('OptionsClick', {
+        id,
+        branchId: branch?.id,
+        branchName: branch?.name,
+      }),
+    [branch]
+  );
+
+  if (!initialized) return null;
 
   if (loading) {
     return <PageLoading />;
@@ -126,8 +123,6 @@ const WaykeSearchItem = ({
   }
 
   const { vehicle } = result;
-  const contact = centralStorageVehicle?.contact;
-  const branch = centralStorageVehicle?.branch;
   const {
     title,
     accessories,
@@ -148,7 +143,7 @@ const WaykeSearchItem = ({
   const insuranceOptions = centralStorageVehicle?.insuranceOptions
     ? centralStorageVehicle.insuranceOptions
     : vehicle.insuranceOptions;
-  const { fuelType, mileage, gearboxType, modelYear, propertySet } = vehicle.data;
+  const { fuelType, mileage, gearboxType, odometerReading, modelYear, propertySet } = vehicle.data;
 
   const uspList: ItemProps[] = [
     {
@@ -158,13 +153,15 @@ const WaykeSearchItem = ({
 
   if (flags?.demoVersion) {
     uspList.push({
-      title: 'Demobil',
+      title: i18nScoped.t('item.demoCar'),
       onClick: onToggleDemoCarModal,
     });
   }
 
   uspList.push({
-    title: `${numberSeparator(mileage)} mil`,
+    title: `${numberSeparator(odometerReading?.value || mileage)} ${i18nScoped.t(
+      `odometer.${odometerReading?.unit || 'ScandinavianMile'}`
+    )}`,
   });
 
   if (gearboxType) {
@@ -186,11 +183,15 @@ const WaykeSearchItem = ({
                   {!pathRoute && hashRoute ? (
                     <Repeat>
                       <UtilityFontSizeSmall>
-                        <ButtonInlineLight as="a" href="#" title="Tillbaka till bilsök">
+                        <ButtonInlineLight
+                          as="a"
+                          href="#"
+                          title={i18nScoped.t('navigation.backToSearch')}
+                        >
                           <ButtonContent>
                             <IconChevronLeft block />
                           </ButtonContent>
-                          <ButtonContent>Tillbaka till bilsök</ButtonContent>
+                          <ButtonContent>{i18nScoped.t('navigation.backToSearch')}</ButtonContent>
                         </ButtonInlineLight>
                       </UtilityFontSizeSmall>
                     </Repeat>
@@ -222,7 +223,11 @@ const WaykeSearchItem = ({
                 {(financialOptions.length > 0 || insuranceOptions.length > 0) && (
                   <ProductPageAsideSection mobileOrder={4}>
                     {financialOptions.length > 0 && (
-                      <FinancialOptions id={id} financialOptions={financialOptions} />
+                      <FinancialOptions
+                        id={id}
+                        branch={branch}
+                        financialOptions={financialOptions}
+                      />
                     )}
                     {insuranceOptions.length > 0 && (
                       <InsuranceOptions
@@ -236,6 +241,8 @@ const WaykeSearchItem = ({
 
                 <ProductPageAsideSection mobileOrder={5}>
                   <CheckList
+                    id={id}
+                    marketCode={marketCode}
                     manufacturer={manufacturer}
                     packageOptions={packageOptions}
                     ecommerce={ecommerce}
@@ -249,35 +256,41 @@ const WaykeSearchItem = ({
               </ProductPageAside>
               <ProductPageMain>
                 <ProductPageAsideSection mobileOrder={3}>
-                  <Gallery media={media} placeholderImage={placeholderImage} />
+                  <Gallery
+                    id={id}
+                    branch={branch}
+                    media={media}
+                    placeholderImage={placeholderImage}
+                  />
                 </ProductPageAsideSection>
 
                 <ProductPageMainSection>
                   <Repeat>
-                    <H2 noMargin>Biluppgifter</H2>
+                    <H2 noMargin>{i18nScoped.t('item.carData')}</H2>
                   </Repeat>
                   <Repeat>
                     <Content>
-                      <p>Information direkt från Transportstyrelsen och tillverkaren.</p>
+                      <p>{i18nScoped.t('item.carDataDescription')}</p>
                     </Content>
                   </Repeat>
                   <Repeat>
                     <Property propertySet={propertySet} vehicleData={vehicle.data} />
                   </Repeat>
                 </ProductPageMainSection>
-
                 {description && (
                   <ProductPageMainSection>
                     <Blockquote
                       author={contact && contact.name ? contact.name : null}
                       date={
                         publishedAt
-                          ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth)
+                          ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth, marketCode)
                           : undefined
                       }
                       avatar={contact?.avatar || undefined}
                     >
-                      {!!description && <p>{description}</p>}
+                      {!!description && (
+                        <div dangerouslySetInnerHTML={{ __html: marked(description) }} />
+                      )}
                     </Blockquote>
                   </ProductPageMainSection>
                 )}
@@ -285,15 +298,18 @@ const WaykeSearchItem = ({
                 {(options?.length || 0) > 0 && (
                   <ProductPageMainSection>
                     <Repeat>
-                      <H2 noMargin>Utrustning</H2>
+                      <H2 noMargin>{i18nScoped.t('item.equipment')}</H2>
                     </Repeat>
                     <Repeat>
                       <Content>
-                        <p>Kompletterande uppgifter om bilen.</p>
+                        <p>{i18nScoped.t('item.equipmentDescription')}</p>
                       </Content>
                     </Repeat>
                     <Repeat>
-                      <ExtendContent actionTitle="Visa mer" onClick={onShowMoreOptionsClick}>
+                      <ExtendContent
+                        actionTitle={i18nScoped.t('common.showMore')}
+                        onClick={onShowMoreOptionsClick}
+                      >
                         <UspList items={options} />
                       </ExtendContent>
                     </Repeat>

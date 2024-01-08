@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
-import InputSearch from '../InputSearch/index';
+import InputSearch from '../InputSearch';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import { useTranslation } from 'react-i18next';
 
 interface SearchBarProps {
   value: string;
@@ -9,6 +10,7 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ value, setValue, onSearch }: SearchBarProps) => {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
 
   const onChange = useCallback(
@@ -38,8 +40,8 @@ const SearchBar = ({ value, setValue, onSearch }: SearchBarProps) => {
       onChange={onChange}
       onKeyDown={onKeyDown}
       onSearch={_onSearch}
-      placeholder="Sök"
-      label="Sök"
+      placeholder={t('searchBar.placeholder')}
+      label={t('searchBar.placeholder')}
       id="main-search"
     />
   );

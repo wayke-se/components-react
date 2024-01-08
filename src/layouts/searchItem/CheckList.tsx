@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { Repeat, RepeatTiny } from '../../components/Repeat/index';
-import ActionList from '../../components/ActionList/index';
-import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button/index';
-import { Columns, Column } from '../../components/Columns/index';
-import { UtilityFontSizeSmall } from '../../components/Utility/index';
-import { StateIndicator } from '../../components/StateIndicator/index';
-import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList/index';
-import Content from '../../components/Content/index';
-import SwitchBar from '../../components/SwitchBar/index';
+import { Repeat, RepeatTiny } from '../../components/Repeat';
+import ActionList from '../../components/ActionList';
+import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button';
+import { Columns, Column } from '../../components/Columns';
+import { UtilityFontSizeSmall } from '../../components/Utility';
+import { StateIndicator } from '../../components/StateIndicator';
+import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
+import Content from '../../components/Content';
+import SwitchBar from '../../components/SwitchBar';
 import {
   Manufacturer,
   PackageOption,
@@ -18,10 +18,15 @@ import {
 } from '../../@types/codegen/types';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
-import { format } from 'date-fns/esm';
-import sv from 'date-fns/locale/sv';
+import { format } from 'date-fns';
+import sv from 'date-fns/locale/sv/index.js';
+import no from 'date-fns/locale/nb/index.js';
+import { useTranslation } from 'react-i18next';
+import { MarketCode } from '../../@types/market';
 
 interface CheckList {
+  id: string;
+  marketCode?: MarketCode;
   manufacturer?: Manufacturer | null;
   packageOptions: PackageOption[];
   ecommerce?: Ecommerce | null;
@@ -33,6 +38,8 @@ interface CheckList {
 }
 
 const CheckList = ({
+  id,
+  marketCode,
   manufacturer,
   packageOptions,
   ecommerce,
@@ -42,6 +49,7 @@ const CheckList = ({
   toggleEcomModal,
   loadingCentralStorageVehicle,
 }: CheckList) => {
+  const { t } = useTranslation();
   const [modalBranch, setModalBranch] = useState(false);
   const openModalBranch = useCallback(() => setModalBranch(true), []);
   const closeModalBranch = useCallback(() => setModalBranch(false), []);
@@ -72,23 +80,23 @@ const CheckList = ({
         {ecommerce && ecommerce.enabled && (
           <RepeatTiny>
             <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
-              <ButtonContent>Köp bilen online</ButtonContent>
+              <ButtonContent>{t('item.actions.buyOnline')}</ButtonContent>
             </ButtonPrimary>
           </RepeatTiny>
         )}
         {ecommerce?.reserved && (
           <RepeatTiny>
             <SwitchBar
-              title="Bilen är reserverad"
-              body="Denna bil är reserverad av en annan köpare."
+              title={t('item.carIsReserved')}
+              body={t('item.carIsReservedDescription') || undefined}
             >
               <Content>
-                <p>Denna bil är reserverad av en annan köpare.</p>
+                <p>{t('item.carIsReservedModalBody')}</p>
               </Content>
             </SwitchBar>
           </RepeatTiny>
         )}
-        <ActionList branch={branch} contact={contact} />
+        <ActionList id={id} branch={branch} contact={contact} />
       </Repeat>
       <Repeat>
         {availableFrom && new Date(availableFrom).valueOf() > new Date().valueOf() && (
@@ -99,7 +107,11 @@ const CheckList = ({
               </Column>
               <Column>
                 <UtilityFontSizeSmall>
-                  Tillgänglig från {format(new Date(availableFrom), 'dd MMMM yyyy', { locale: sv })}
+                  {t('item.availableFromDate', {
+                    date: format(new Date(availableFrom), 'dd MMMM yyyy', {
+                      locale: marketCode === 'NO' ? no : sv,
+                    }),
+                  })}
                 </UtilityFontSizeSmall>
               </Column>
             </Columns>
@@ -110,7 +122,7 @@ const CheckList = ({
             {packageOption?.title && (
               <CheckMarkListItem>
                 <>
-                  Inkl.{' '}
+                  {t('item.includingShort')}{' '}
                   <ButtonInline
                     onClick={() =>
                       onOpen({
@@ -123,14 +135,14 @@ const CheckList = ({
                   >
                     {packageOption.title}
                   </ButtonInline>{' '}
-                  begagnatgaranti
+                  {t('item.usedWarrany').toLowerCase()}
                 </>
               </CheckMarkListItem>
             )}
             {packageOptions?.map((packageOption, index) => (
               <CheckMarkListItem key={packageOption.title || index}>
                 <>
-                  Inkl.{' '}
+                  {t('item.includingShort')}{' '}
                   <ButtonInline
                     onClick={() =>
                       onOpen({
@@ -146,18 +158,21 @@ const CheckList = ({
                 </>
               </CheckMarkListItem>
             ))}
-            {ecommerce?.withHomeDelivery && <CheckMarkListItem>Hemleverans</CheckMarkListItem>}
+            {ecommerce?.withHomeDelivery && (
+              <CheckMarkListItem>{t('item.homeDelivery')}</CheckMarkListItem>
+            )}
           </CheckMarkList>
         </RepeatTiny>
       </Repeat>
       {(branch?.connections.length || 0) > 1 && (
         <Repeat>
-          <SwitchBar title="Centrallagerbil" actionTitle="Byt anläggning" onClick={openModalBranch}>
+          <SwitchBar
+            title={t('item.centralWarehouseCar')}
+            actionTitle={t('item.switchBranch') || ''}
+            onClick={openModalBranch}
+          >
             <Content>
-              <p>
-                Denna bil tillhör ett centrallager och går att köpa genom flera anläggningar. Byt
-                anläggning för att visa kontaktuppgifter till just den anläggningen.
-              </p>
+              <p>{t('item.centralWarehouseCarDescription')}</p>
             </Content>
           </SwitchBar>
         </Repeat>

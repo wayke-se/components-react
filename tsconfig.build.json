@@ -5,6 +5,7 @@
   ],
   "exclude": [
     "node_modules",
-    "example"
+    "example",
+    ".eslintrc.js",
   ]
 }

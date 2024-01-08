@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Wrapper, Main, Heading, Description, Footer, Foldout } from './wrapper';
-import { ButtonClear, ButtonContent } from '../Button/index';
+import { ButtonClear, ButtonContent } from '../Button';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   heading: string;
@@ -10,10 +11,11 @@ interface Props {
 }
 
 const DetailBox = ({ heading, description, children }: Props) => {
+  const { t } = useTranslation();
   const [extend, setExtend] = React.useState(false);
   const onToggleExtend = React.useCallback(() => setExtend(!extend), [extend]);
 
-  const extendBtnText = extend ? 'Mindre information' : 'Mer information';
+  const extendBtnText = extend ? t('common.lessInformation') : t('common.moreInformation');
 
   return (
     <Wrapper>

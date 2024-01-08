@@ -1,34 +1,42 @@
 import React from 'react';
 
 import { List, Item, Value, Label } from './wrapper';
-import { VisualHeading } from '../Heading/index';
-import { Price, OldPrice } from '../Price/index';
+import { VisualHeading } from '../Heading';
+import { Price, OldPrice } from '../Price';
 import { numberSeparator } from '../../utils/formats';
+import { useTranslation } from 'react-i18next';
 
 interface PriceTableProps {
   price: number;
   discount?: number;
 }
 
-const PriceTable = ({ price, discount }: PriceTableProps) => (
-  <List>
-    <Item>
-      <Label>
-        <VisualHeading>Pris</VisualHeading>
-      </Label>
-      <Value>
-        <Price>{numberSeparator(price)} kr</Price>
-      </Value>
-    </Item>
-    {discount !== undefined && (
+const PriceTable = ({ price, discount }: PriceTableProps) => {
+  const { t } = useTranslation();
+  return (
+    <List>
       <Item>
-        <Label />
+        <Label>
+          <VisualHeading>{t('other.price')}</VisualHeading>
+        </Label>
         <Value>
-          <OldPrice>{numberSeparator(price + discount)} kr</OldPrice>
+          <Price>
+            {numberSeparator(price)} {t('currency.default')}
+          </Price>
         </Value>
       </Item>
-    )}
-  </List>
-);
+      {discount !== undefined && (
+        <Item>
+          <Label />
+          <Value>
+            <OldPrice>
+              {numberSeparator(price + discount)} {t('currency.default')}
+            </OldPrice>
+          </Value>
+        </Item>
+      )}
+    </List>
+  );
+};
 
 export default PriceTable;

@@ -11,19 +11,21 @@ import {
   FooterAction,
   ResultCount,
 } from './wrapper';
-import ProgressBar from '../ProgressBar/index';
-import { ButtonSecondary, ButtonContent } from '../Button/index';
-import Loader from '../Loader/index';
+import ProgressBar from '../ProgressBar';
+import { ButtonSecondary, ButtonContent } from '../Button';
+import Loader from '../Loader';
 import { numberSeparator } from '../../utils/formats';
 import useSearch from '../../State/Search/useSearch';
-import SortSelect, { OptionProps } from '../SortSelect/index';
+import SortSelect, { OptionProps } from '../SortSelect';
 import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Result = ({ children }: Props) => {
+  const { t } = useTranslation();
   const { loading, response, documents, queryFilter, onLoadMore, onFilterUpdate } = useSearch();
 
   const onSortOptionChange = useCallback(
@@ -53,7 +55,7 @@ const Result = ({ children }: Props) => {
       <Header>
         <HeaderCount>
           <ResultCount>{`${numberSeparator(numberOfHits)} ${
-            numberOfHits === 1 ? 'bil' : 'bilar'
+            numberOfHits === 1 ? t('search.result.plural') : t('search.result.plural')
           }`}</ResultCount>
         </HeaderCount>
         {sortOptions && selectedSortOption && (
@@ -69,17 +71,17 @@ const Result = ({ children }: Props) => {
       <Body>{children}</Body>
       <Footer>
         <FooterProgress>
-          <ProgressBar unit="bilar" valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
+          <ProgressBar valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
         </FooterProgress>
         {numberOfDocuments !== numberOfHits && (
           <FooterAction>
             <ButtonSecondary
               disabled={loading}
               onClick={onLoadMore}
-              title="Visa fler"
-              aria-label="Visa fler"
+              title={t('search.showMore.title')}
+              aria-label={t('search.showMore.text')}
             >
-              <ButtonContent>Visa fler</ButtonContent>
+              <ButtonContent>{t('search.showMore.text')}</ButtonContent>
             </ButtonSecondary>
           </FooterAction>
         )}

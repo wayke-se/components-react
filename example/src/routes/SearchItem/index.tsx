@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { WaykeItemProvider, WaykeSearchItem } from '../../../../src/index';
+import { WaykeItemProvider, WaykeSearchItem } from '../../../../src';
 
 const SearchItem = () => {
   const { id } = useParams();
@@ -20,7 +20,7 @@ const SearchItem = () => {
       }}
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
     >
-      <WaykeSearchItem id={id} />
+      <WaykeSearchItem id={id} marketCode="NO" />
     </WaykeItemProvider>
   );
 };

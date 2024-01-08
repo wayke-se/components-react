@@ -18,7 +18,7 @@ const InsuranceOptions = ({ id, branch, insuranceOptions }: InsuranceOptions) =>
     if (insuranceOptions[0].requiresDistance && insuranceOptions[0].requiresPersonalNumber)
       return <Insurance id={id} branch={branch} insuranceOptions={insuranceOptions} />;
 
-    return <InsuranceFree insuranceOptions={insuranceOptions} />;
+    return <InsuranceFree id={id} branch={branch} insuranceOptions={insuranceOptions} />;
   }
 
   return null;

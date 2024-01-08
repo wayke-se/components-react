@@ -1,12 +1,13 @@
 import React from 'react';
 import { marked } from 'marked';
+import { useTranslation } from 'react-i18next';
 
-import { Repeat } from '../../components/Repeat/index';
-import { ProductPageMainSection } from '../../components/ProductPage/index';
-import Content from '../../components/Content/index';
-import { H2 } from '../../components/Heading/index';
-import { ButtonInline } from '../../components/Button/index';
-import LogoBox from '../../components/LogoBox/index';
+import { Repeat } from '../../components/Repeat';
+import { ProductPageMainSection } from '../../components/ProductPage';
+import Content from '../../components/Content';
+import { H2 } from '../../components/Heading';
+import { ButtonInline } from '../../components/Button';
+import LogoBox from '../../components/LogoBox';
 import { Maybe, PackageOption } from '../../@types/codegen/types';
 
 interface ManufacturerPackageOption {
@@ -14,6 +15,7 @@ interface ManufacturerPackageOption {
 }
 
 const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption) => {
+  const { t } = useTranslation();
   if (!packageOption) {
     return null;
   }
@@ -36,15 +38,13 @@ const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption)
             target="_blank"
             rel="noopener noreferrer"
           >
-            {packageOption.link.title
-              ? packageOption.link.title
-              : 'Läs mer (Öppnas i ett nytt fönster)'}
+            {packageOption.link.title ? packageOption.link.title : t('item.readMoreInNewTab')}
           </ButtonInline>
         </Repeat>
       )}
       {packageOption.image && (
         <Repeat>
-          <LogoBox logo={packageOption.image} alt="Logotyp" wide />
+          <LogoBox logo={packageOption.image} alt={t('common.logotype') || ''} wide />
         </Repeat>
       )}
     </ProductPageMainSection>

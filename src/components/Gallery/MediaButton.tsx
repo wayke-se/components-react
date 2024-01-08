@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MediaButtonWrapper } from './wrapper';
-import { ButtonSecondary, ButtonContent } from '../Button/index';
+import { ButtonSecondary, ButtonContent } from '../Button';
 
 interface MediaButtonProps {
   text: string;

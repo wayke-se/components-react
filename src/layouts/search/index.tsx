@@ -1,19 +1,24 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
 
-import Container from '../../components/Container/index';
-import { Page, PageSection } from '../../components/Page/index';
-import Result from '../../components/Result/index';
-import Filter from '../../components/Filter/index';
-import Grid from '../../components/Grid/index';
-import SearchTerm from '../../components/SearchTerm/index';
-import { PortalElement, PortalNamespace } from '../../components/Portal/index';
-import SearchFilter from '../../components/SearchFilter/index';
-import Snackbar from '../../components/Snackbar/index';
+import Container from '../../components/Container';
+import { Page, PageSection } from '../../components/Page';
+import Result from '../../components/Result';
+import Filter from '../../components/Filter';
+import Grid from '../../components/Grid';
+import SearchTerm from '../../components/SearchTerm';
+import { PortalElement, PortalNamespace } from '../../components/Portal';
+import SearchFilter from '../../components/SearchFilter';
+import Snackbar from '../../components/Snackbar';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes } from '../../@types/filter';
 import PubSub from '../../utils/pubsub/pubsub';
+import { MarketCode } from '../../@types/market';
+import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import { i18nScoped } from '../../utils/I18n';
+import { OnItemClick } from '../../components/ProductCard';
 
 export interface WaykeSearchProps {
+  marketCode?: MarketCode;
   filterList?: SearchFilterTypes[];
   initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
@@ -23,10 +28,11 @@ export interface WaykeSearchProps {
   pathRoute?: string;
   modifyDocumentTitleSearch?: string;
   displayBranchName?: boolean;
-  onClickSearchItem?: (id: string) => void;
+  onClickSearchItem?: (data: OnItemClick) => void;
 }
 
 const WaykeSearch = ({
+  marketCode,
   filterList,
   initialQueryParams,
   hashRoute,
@@ -39,6 +45,7 @@ const WaykeSearch = ({
   onClickSearchItem,
 }: WaykeSearchProps) => {
   const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
+  const initialized = useInitializeTranslation(marketCode);
 
   useEffect(() => {
     if (modifyDocumentTitleSearch) {
@@ -51,10 +58,10 @@ const WaykeSearch = ({
     );
   }, []);
 
-  const onItemClicked = useCallback((id: string) => {
-    PubSub.publish('ItemClicked', id);
+  const onItemClicked = useCallback((data: OnItemClick) => {
+    PubSub.publish('ItemClicked', data);
     if (onClickSearchItem) {
-      onClickSearchItem(id);
+      onClickSearchItem(data);
     }
   }, []);
 
@@ -65,6 +72,8 @@ const WaykeSearch = ({
   }, [queryFilter.searchParams]);
 
   const searchQuery = useMemo(() => queryFilter.searchParams.get('query'), [documents]);
+
+  if (!initialized) return null;
 
   return (
     <>
@@ -86,7 +95,7 @@ const WaykeSearch = ({
         {!removeFilterOptions && (
           <PageSection>
             <Container>
-              <Filter filterList={filterList} />
+              <Filter filterList={filterList} marketCode={marketCode} />
             </Container>
           </PageSection>
         )}
@@ -110,8 +119,12 @@ const WaykeSearch = ({
                   />
                 )}
                 {!error && documents && documents.length === 0 && (
-                  <Snackbar severity="warning" icon heading="Inga resultat">
-                    Det finns inga resultat som matchar din sökning.
+                  <Snackbar
+                    severity="warning"
+                    icon
+                    heading={i18nScoped.t('search.snackbarNoSearchResults.heading') || undefined}
+                  >
+                    {i18nScoped.t('search.snackbarNoSearchResults.body')}
                   </Snackbar>
                 )}
               </>

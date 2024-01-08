@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react';
-import LazyLoad from 'react-lazyload';
 
 import {
   Wrapper,
@@ -21,16 +20,26 @@ import {
   Label,
   PreHeading,
 } from './wrapper';
-import UspList, { ItemProps } from '../UspList/index';
+import UspList, { ItemProps } from '../UspList';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import usePath from '../../State/Path/usePath';
+import { useTranslation } from 'react-i18next';
+import useIsInViewport from '../../hooks/useIsInViewport';
+import { Branch, File } from '../../@types/search';
+
+export interface OnItemClick {
+  id: string;
+  branchId?: string;
+  branchName?: string;
+}
 
 interface Props {
   id: string;
   title: string;
   href?: string;
-  image?: string;
+  imageFile?: File;
   pathRoute?: string;
+  branch?: Branch;
   placeholderImage?: string;
   description?: string;
   uspList?: ItemProps[];
@@ -39,16 +48,17 @@ interface Props {
   oldPrice?: string;
   branchName?: string;
   businessLeasingPrice?: string;
-  onClick?: (id: string) => void;
+  onClick?: (data: OnItemClick) => void;
 }
 
 const ProductCard = ({
   id,
   title,
   href,
-  image,
+  imageFile,
   pathRoute,
   placeholderImage,
+  branch,
   branchName,
   description,
   uspList,
@@ -58,8 +68,18 @@ const ProductCard = ({
   businessLeasingPrice,
   onClick,
 }: Props) => {
+  const { t } = useTranslation();
+
+  const [containerRef, isVisible] = useIsInViewport<HTMLDivElement>({
+    persistVisibility: true,
+  });
+
   const { pushState } = usePath();
-  const _onClick = useMemo(() => (onClick ? () => onClick(id) : undefined), [id]);
+  const _onClick = useMemo(
+    () =>
+      onClick ? () => onClick({ id, branchId: branch?.id, branchName: branch?.name }) : undefined,
+    [id, branch]
+  );
 
   const onHrefClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -74,32 +94,50 @@ const ProductCard = ({
     [id, pathRoute, href]
   );
 
+  const { webp, url } = useMemo(() => {
+    const format = imageFile?.formats.find((x) => x.format === '770x514');
+    if (format) {
+      return {
+        webp: format.webp,
+        url: format.url,
+      };
+    }
+
+    return {
+      url: imageFile?.url,
+    };
+  }, [imageFile]);
+
   return (
     <Wrapper onClick={_onClick}>
-      <Image>
-        <LazyLoad>
-          {image ? (
-            <>
-              <Picture>
-                <Source
-                  type="image/webp"
-                  srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411x274&format=webp 411w`}
-                  sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                />
-                <Img
-                  srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
-                  sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                  src={`${image}?spec=411x274`}
-                  alt={title}
-                />
-              </Picture>
-            </>
-          ) : (
+      <Image ref={containerRef}>
+        {isVisible && url ? (
+          <>
             <Picture>
-              <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />
+              {webp && <Source type="image/webp" srcSet={webp} />}
+              <Img alt={title} src={url} />
+              {/*
+                <>
+                  <Source
+                    type="image/webp"
+                    srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411 411w`}
+                    sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                  />
+                  <Img
+                    srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
+                    sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
+                    src={`${image}?spec=411x274`}
+                    alt={title}
+                  />
+                </>
+        )*/}
             </Picture>
-          )}
-        </LazyLoad>
+          </>
+        ) : (
+          <Picture>
+            <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />
+          </Picture>
+        )}
       </Image>
       <Content>
         <ContentBody>
@@ -123,18 +161,18 @@ const ProductCard = ({
         <ContentFooter>
           <Price>
             <PriceCell>
-              {oldPrice ? <OldPrice>{oldPrice}</OldPrice> : <Label>Pris</Label>}
+              {oldPrice ? <OldPrice>{oldPrice}</OldPrice> : <Label>{t('productCard.price')}</Label>}
               <CurrentPrice>{price}</CurrentPrice>
             </PriceCell>
             {leasingPrice && (
               <PriceCell>
-                <Label>Privatleasing</Label>
+                <Label>{t('productCard.privateLeasing')}</Label>
                 <CurrentPrice>{leasingPrice}</CurrentPrice>
               </PriceCell>
             )}
             {businessLeasingPrice && (
               <PriceCell>
-                <Label>Företagsleasing</Label>
+                <Label>{t('productCard.businessLeasing')}</Label>
                 <CurrentPrice>{businessLeasingPrice}</CurrentPrice>
               </PriceCell>
             )}

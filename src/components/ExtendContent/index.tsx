@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { Wrapper, Extend, Action } from './wrapper';
-import { ButtonClear, ButtonContent } from '../Button/index';
+import { ButtonClear, ButtonContent } from '../Button';
 
 interface Props {
   children: React.ReactNode;

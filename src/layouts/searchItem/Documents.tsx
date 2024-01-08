@@ -1,16 +1,12 @@
 import React from 'react';
 
-import { H2, H3 } from '../../components/Heading/index';
-import { ProductPageMainSection } from '../../components/ProductPage/index';
+import { H2, H3 } from '../../components/Heading';
+import { ProductPageMainSection } from '../../components/ProductPage';
 import { Scalars } from '../../@types/codegen/types';
-import DocumentList from '../../components/DocumentList/index';
-import { Repeat } from '../../components/Repeat/index';
-
-const Translation = {
-  'tyre-label': 'Energideklaration för däck',
-  'content declaration': 'Varudeklaration',
-  other: 'Övriga dokument',
-};
+import DocumentList from '../../components/DocumentList';
+import { Repeat } from '../../components/Repeat';
+import { useTranslation } from 'react-i18next';
+import ExtendContent from '../../components/ExtendContent';
 
 const SortOrder = {
   'tyre-label': 2,
@@ -18,19 +14,27 @@ const SortOrder = {
   other: 3,
 };
 
-type CategoryType = keyof typeof Translation;
+type CategoryType = keyof typeof SortOrder;
 
 interface DocumentCategory {
   category: string;
   sortOrder: number;
-  documents: Scalars['FileDocument'][];
+  documents: Scalars['FileDocument']['input'][];
 }
 
 interface DocumentsProps {
-  documents: Scalars['FileDocument'][];
+  documents: Scalars['FileDocument']['input'][];
 }
 
 const Documents = ({ documents }: DocumentsProps) => {
+  const { t } = useTranslation();
+
+  const Translation = {
+    'tyre-label': t('item.documentTypes.tireEnergyDeclaration'),
+    'content declaration': t('item.documentTypes.goodsDeclaration'),
+    other: t('item.documentTypes.other'),
+  };
+
   const categorised = documents
     .reduce((prev, curr) => {
       const index = prev.findIndex((x) => x.category === (curr.category || 'others'));
@@ -56,17 +60,20 @@ const Documents = ({ documents }: DocumentsProps) => {
   return (
     <ProductPageMainSection>
       <Repeat>
-        <H2 noMargin>Dokument</H2>
+        <H2 noMargin>{t('item.documents')}</H2>
       </Repeat>
-
-      {categorised.map((group) => (
-        <Repeat key={group.category}>
-          {manyCategories && (
-            <H3>{Translation?.[group.category as CategoryType] || Translation.other}</H3>
-          )}
-          <DocumentList documents={group.documents} />
-        </Repeat>
-      ))}
+      <Repeat>
+        <ExtendContent actionTitle={t('common.showMore')}>
+          {categorised.map((group) => (
+            <Repeat key={group.category}>
+              {manyCategories && (
+                <H3>{Translation?.[group.category as CategoryType] || Translation.other}</H3>
+              )}
+              <DocumentList documents={group.documents} />
+            </Repeat>
+          ))}
+        </ExtendContent>
+      </Repeat>
     </ProductPageMainSection>
   );
 };

@@ -11,7 +11,8 @@ import {
   Icon,
   Body,
 } from './wrapper';
-import { IconChevronDown } from '../Icon/index';
+import { IconChevronDown } from '../Icon';
+import { useTranslation } from 'react-i18next';
 
 export interface IAccordionItem {
   heading: string;
@@ -25,12 +26,13 @@ export interface IAccordion {
 }
 
 export const AccordionItem = ({ heading, children, activeCount, isActive }: IAccordionItem) => {
+  const { t } = useTranslation();
   const [extend, setExtend] = useState(isActive || false);
   const onToggleExtend = useCallback(() => setExtend(!extend), [extend]);
 
   return (
     <Item isOpen={extend}>
-      <Header onClick={onToggleExtend} title="Visa mer">
+      <Header onClick={onToggleExtend} title={t('common.showMore') || ''}>
         <Label>
           <Heading
             className={activeCount && activeCount > 0 ? 'wayke__theme wayke__font--bold' : ''}

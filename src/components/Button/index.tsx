@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 
 import { size } from '../../layout/helpers';
-import { UtilityTextRight } from '../Utility/index';
+import { UtilityTextRight } from '../Utility';
 
 export const ButtonReset = styled.button.attrs(() => ({
   type: 'button',
@@ -52,7 +52,9 @@ const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
   line-height: 1.2;
   text-decoration: none;
   transform-origin: 50% 50%;
-  transition: 200ms ease, transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+  transition:
+    200ms ease,
+    transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
   :before {
     content: '';

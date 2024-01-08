@@ -1,6 +1,6 @@
 import React from 'react';
 
-import WaykeComposite from '../../../../src/index';
+import WaykeComposite from '../../../../src';
 
 const initialQueryParams = new URLSearchParams();
 initialQueryParams.set('modelYear.min', '2018');
@@ -14,6 +14,7 @@ const PathRoute = () => (
       modifyDocumentTitleItem: true,
       modifyDocumentTitleSearch: 'Wayke',
       //initialQueryParams: 'modelSeries=A5&modelSeries=A3',
+      marketCode: 'NO',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

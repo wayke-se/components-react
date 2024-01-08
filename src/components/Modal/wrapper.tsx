@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { size } from '../../layout/helpers';
 import { fadeIn, noTransform } from '../../layout/keyframes';
 
-import { ButtonReset } from '../Button/index';
-import { H1 } from '../Heading/index';
+import { ButtonReset } from '../Button';
+import { H1 } from '../Heading';
 
 export const Wrapper = styled.div.attrs(() => ({
   role: 'dialog',
@@ -69,7 +69,9 @@ export const Dialog = styled.article.attrs(() => ({
 
   ${(props) => props.theme.breakpoint.Sm} {
     transform: translateY(${size(2)});
-    animation: ${fadeIn} 400ms ease, ${noTransform} 400ms ease forwards;
+    animation:
+      ${fadeIn} 400ms ease,
+      ${noTransform} 400ms ease forwards;
   }
 `;
 
