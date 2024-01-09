@@ -75,7 +75,7 @@
     "libphonenumber-js": "^1.9.42",
     "marked": "^10.0.0",
     "react-compound-slider": "^3.3.1",
-    "react-i18next": "^13.3.1",
+    "react-i18next": "^13.5.0",
     "react-slick": "^0.29.0",
     "scroll-into-view-if-needed": "^3.1.0"
   }
