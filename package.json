@@ -71,7 +71,7 @@
     "@wayke-se/pannellum-react": "^1.0.0",
     "date-fns": "^2.25.0",
     "graphql": "^16.0.1",
-    "i18next": "^23.6.0",
+    "i18next": "^23.7.11",
     "libphonenumber-js": "^1.9.42",
     "marked": "^10.0.0",
     "react-compound-slider": "^3.3.1",
