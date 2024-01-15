@@ -165,9 +165,11 @@ const SearchProvider = ({
         if (!initialize) {
           setInitialize(true);
         }
+        const nextSearchParams = new URLSearchParams(nextQuery);
+        nextSearchParams.delete('offset');
 
         setQueryFilter({
-          searchParams: new URLSearchParams(nextQuery),
+          searchParams: nextSearchParams,
         });
       }
     },

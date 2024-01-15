@@ -24,6 +24,29 @@ export interface CallbackSearchData {
 }
 export type CallbackSearch = (data: CallbackSearchData) => void;
 
+export interface CallbackSearchClearQueryData {
+  query: string;
+}
+export type CallbackSearchClearQuery = (data: CallbackSearchClearQueryData) => void;
+
+export interface CallbackSearchClearAllFiltersQueryData {
+  query: string;
+}
+export type CallbackSearchClearAllFiltersQuery = (
+  data: CallbackSearchClearAllFiltersQueryData
+) => void;
+
+export interface CallbackSearchInitiatedData {
+  query: string;
+}
+export type CallbackSearchInitiated = (data: CallbackSearchInitiatedData) => void;
+
+export interface CallbackSearchCompletedData {
+  query: string;
+  hits: number;
+}
+export type CallbackSearchCompleted = (data: CallbackSearchCompletedData) => void;
+
 export interface CallbackEcomData extends CallbackItemData {
   view: EcomView;
   event: EcomEvent;
@@ -103,6 +126,23 @@ export interface EventSearch extends EventBase<CallbackSearch> {
   eventName: 'Search';
 }
 
+export interface EventSearchClearQuery extends EventBase<CallbackSearchClearQuery> {
+  eventName: 'SearchClearQuery';
+}
+
+export interface EventSearchClearAllFiltersQuery
+  extends EventBase<CallbackSearchClearAllFiltersQuery> {
+  eventName: 'SearchClearAllFilters';
+}
+
+export interface EventSearchInitiated extends EventBase<CallbackSearchInitiated> {
+  eventName: 'SearchInitiated';
+}
+
+export interface EventSearchCompleted extends EventBase<CallbackSearchCompleted> {
+  eventName: 'SearchCompleted';
+}
+
 export interface EventFilterApply extends EventBase<CallbackFilterApply> {
   eventName: 'FilterApply';
 }
@@ -128,6 +168,10 @@ export type EventType =
   | EventFinanceClose
   | EventFinanceInterest
   | EventSearch
+  | EventSearchClearQuery
+  | EventSearchClearAllFiltersQuery
+  | EventSearchInitiated
+  | EventSearchCompleted
   | EventFilterApply
   | EventAll;
 

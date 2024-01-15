@@ -28,6 +28,10 @@ import {
   EventInsuranceClose,
   EventInsuranceOpen,
   EventFilterApply,
+  EventSearchCompleted,
+  EventSearchInitiated,
+  EventSearchClearQuery,
+  EventSearchClearAllFiltersQuery,
 } from './Events';
 
 export type EventSubscriptions = {
@@ -46,6 +50,10 @@ export type EventSubscriptions = {
   FinanceClose: EventFinanceClose[];
   FinanceInterest: EventFinanceInterest[];
   Search: EventSearch[];
+  SearchClearQuery: EventSearchClearQuery[];
+  SearchClearAllFilters: EventSearchClearAllFiltersQuery[];
+  SearchInitiated: EventSearchInitiated[];
+  SearchCompleted: EventSearchCompleted[];
   FilterApply: EventFilterApply[];
   All: EventAll[];
 };
@@ -72,6 +80,10 @@ class PubSub {
     FinanceClose: [],
     FinanceInterest: [],
     Search: [],
+    SearchClearQuery: [],
+    SearchClearAllFilters: [],
+    SearchInitiated: [],
+    SearchCompleted: [],
     FilterApply: [],
     All: [],
   };
@@ -150,6 +162,10 @@ class PubSub {
           case 'FinanceOpen':
           case 'FinanceClose':
           case 'Search':
+          case 'SearchClearQuery':
+          case 'SearchClearAllFilters':
+          case 'SearchInitiated':
+          case 'SearchCompleted':
           case 'FilterApply':
           case 'FinanceInterest':
             (event.callback as CallbackItem)(args[0]);
