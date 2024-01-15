@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Facet } from '../../@types/search';
 import Panel from '../Panel';
@@ -8,7 +9,8 @@ import Accordion, { AccordionItem } from '../Accordion';
 import { Repeat } from '../Repeat';
 import FacetSelector from './faceSelector';
 import { SearchFilterTypes } from '../../@types/filter';
-import { useTranslation } from 'react-i18next';
+import { QueryFilter } from '../../@types/queryFilter';
+import PubSub from '../../utils/pubsub/pubsub';
 
 export interface FilterProps {
   label: string;
@@ -16,6 +18,7 @@ export interface FilterProps {
 }
 
 export interface Props {
+  queryFilter: QueryFilter;
   facet?: Facet;
   loading: boolean;
   filteredFacets: Facet[];
@@ -26,6 +29,7 @@ export interface Props {
 }
 
 const FilterPanel = ({
+  queryFilter,
   facet,
   filteredFacets,
   numberOfHits,
@@ -34,7 +38,16 @@ const FilterPanel = ({
   onClose,
 }: Props) => {
   const { t } = useTranslation();
-  const onClearFilters = useCallback(() => onFilterUpdate(''), []);
+  const onClearFilters = useCallback(() => {
+    PubSub.publish('SearchClearAllFilters', {
+      query: new URLSearchParams(queryFilter.searchParams).toString(),
+    });
+    const currentSort = queryFilter.searchParams.get('sort') || 'published-desc';
+    const nextQuery = new URLSearchParams();
+    nextQuery.set('hits', '30');
+    nextQuery.set('sort', currentSort);
+    onFilterUpdate(`?${nextQuery.toString()}`);
+  }, [queryFilter]);
 
   return (
     <Panel
@@ -66,11 +79,7 @@ const FilterPanel = ({
         {filteredFacets
           .filter((x) => x.filters.length)
           .map((f) => (
-            <AccordionItem
-              key={f.displayName}
-              heading={f.displayName}
-              isActive={f.id === facet?.id}
-            >
+            <AccordionItem key={f.id} heading={f.displayName} isActive={f.id === facet?.id}>
               <Repeat>
                 <FacetSelector facet={f} />
               </Repeat>

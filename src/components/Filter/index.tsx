@@ -92,6 +92,7 @@ const Filter = ({ marketCode, filterList }: FilterProps) => {
     <>
       {initialFacets && facet && (
         <FilterPanel
+          queryFilter={queryFilter}
           filterList={filterList}
           facet={facet}
           loading={loading}

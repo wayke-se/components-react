@@ -20,6 +20,9 @@ import {
   LEASING_PRICE,
   BUSINESS_LEASING_PRICE,
   ODOMETER_VALUE_AS_KM,
+  FUEL_TYPES,
+  ENGINE_BASE_TYPE,
+  ELECTRICAL_RANGE_WLTP,
 } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
 
@@ -30,6 +33,8 @@ interface FacetSelectorProps {
 const FacetSelector = ({ facet }: FacetSelectorProps) => {
   const { t } = useTranslation();
   switch (facet.id) {
+    case ENGINE_BASE_TYPE:
+    case FUEL_TYPES:
     case MANUFACTURER:
     case MODEL_SERIES:
     case FUEL_TYPE:
@@ -52,6 +57,8 @@ const FacetSelector = ({ facet }: FacetSelectorProps) => {
       return <RangeFacet facet={facet} unit={t('odometer.ScandinavianMile')} formatValues />;
     case MODEL_YEAR:
       return <RangeFacet facet={facet} unit="år" />;
+    case ELECTRICAL_RANGE_WLTP:
+      return <RangeFacet facet={facet} unit={t('odometer.Kilometer')} />;
     default:
       return null;
   }

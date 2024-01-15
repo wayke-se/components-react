@@ -85,6 +85,30 @@ WaykePubSub.subscribe({
 });
 
 WaykePubSub.subscribe({
+  eventName: 'SearchClearQuery',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed SearchClearQuery:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'SearchClearAllFilters',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed SearchClearAllFilters:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'SearchInitiated',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed SearchInitiated:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'SearchCompleted',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed SearchCompleted:', data),
+});
+
+WaykePubSub.subscribe({
   eventName: 'PhonenumberVisible',
   // eslint-disable-next-line
   callback: (data) => console.log('subscribed PhonenumberVisible:', data),

@@ -58,6 +58,23 @@ const WaykeSearch = ({
     );
   }, []);
 
+  useEffect(() => {
+    const nextQuery = new URLSearchParams(queryFilter.searchParams);
+    PubSub.publish('SearchInitiated', {
+      query: nextQuery.toString(),
+    });
+  }, [queryFilter]);
+
+  useEffect(() => {
+    if (documents) {
+      const nextQuery = new URLSearchParams(queryFilter.searchParams);
+      PubSub.publish('SearchCompleted', {
+        query: nextQuery.toString(),
+        hits: documents.length,
+      });
+    }
+  }, [documents]);
+
   const onItemClicked = useCallback((data: OnItemClick) => {
     PubSub.publish('ItemClicked', data);
     if (onClickSearchItem) {
@@ -67,7 +84,11 @@ const WaykeSearch = ({
 
   const onClearQuery = useCallback(() => {
     const nextQuery = new URLSearchParams(queryFilter.searchParams);
+    const query = nextQuery.get('query');
     nextQuery.delete('query');
+    PubSub.publish('SearchClearQuery', {
+      query,
+    });
     onFilterUpdate(nextQuery.toString());
   }, [queryFilter.searchParams]);
 

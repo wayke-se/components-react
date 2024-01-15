@@ -369,10 +369,13 @@ WaykePubSub.unsubscribe(event);
 | FinanceInterest       | (data) => void            | CallbackItemData                                                                                                                |
 | FinanceOpen           | (data) => void            | CallbackItemData                                                                                                                |
 | FinanceClose          | (data) => void            | CallbackItemData                                                                                                                |
-| Search                | (data) => void            | CallbackSearchData                                                                                                              |
+| SearchClearQuery      | (data) => void            | CallbackSearchClearQueryData                                                                                                    |
+| SearchClearAllFilters | (data) => void            | CallbackSearchClearAllFiltersQueryData                                                                                          |
+| SearchInitiated       | (data) => void            | CallbackSearchInitiatedData                                                                                                     |
+| SearchCompleted       | (data) => void            | CallbackSearchCompletedData                                                                                                     |
 | Search                | (data) => void            | CallbackSearchData                                                                                                              |
 | FilterApply           | (data) => void            | CallbackFilterApplyData                                                                                                         |
-| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchData \| CallbackFilterApplyData |
+| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
 * `All` - Subscribes to all events.
 
 #### CallbackHashRouteChangeData
@@ -397,6 +400,27 @@ WaykePubSub.unsubscribe(event);
 | event         | EcomView              |  
 | currentStep   | EcomStep \| undefined |  
 | data          | any \| undefined      |  
+
+#### CallbackSearchClearQueryData
+| Property  | Type      |
+|-----------|-----------|
+| query     | string    |
+
+#### CallbackSearchClearAllFiltersQueryData
+| Property  | Type      |
+|-----------|-----------|
+| query     | string    |
+
+#### CallbackSearchInitiatedData
+| Property  | Type      |
+|-----------|-----------|
+| query     | string    |
+
+#### CallbackSearchCompletedData
+| Property  | Type      |
+|-----------|-----------|
+| query     | string    |
+| hits      | number    |
 
 #### CallbackSearchData
 | Property  | Type      |

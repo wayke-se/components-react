@@ -13,6 +13,9 @@ export const MODEL_YEAR = 'modelYear';
 export const LEASING_PRICE = 'leasingPrice';
 export const BUSINESS_LEASING_PRICE = 'businessLeasingPrice';
 export const ODOMETER_VALUE_AS_KM = 'odometerValueAsKm';
+export const FUEL_TYPES = 'fuelTypes';
+export const ENGINE_BASE_TYPE = 'engineBaseType';
+export const ELECTRICAL_RANGE_WLTP = 'enhancedProperties.electricalRangeWLTP.value';
 
 export const COLOR_WHITE = { displayName: 'Vit', hex: '#ffffff' };
 export const COLOR_BLACK = { displayName: 'Svart', hex: '#000000' };

@@ -51,6 +51,9 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 leasingPrice: 'Privatleasing',
                 businessLeasingPrice: 'Företagsleasa',
                 city: 'Stad',
+                fuelTypes: 'Drivmedel',
+                engineBaseType: 'Motortyp',
+                'enhancedProperties.electricalRangeWLTP.value': 'Elektrisk räckvidd',
               },
               currency: {
                 default: 'kr',
@@ -342,6 +345,9 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 leasingPrice: 'Leasingpris',
                 businessLease: 'Bedriftsleasingpris',
                 city: 'By',
+                fuelTypes: 'Drivstoff',
+                engineBaseType: 'Motortype',
+                'enhancedProperties.electricalRangeWLTP.value': 'Elektrisk rekkevidde',
               },
               currency: {
                 default: 'kr',
@@ -634,6 +640,9 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 leasingPrice: 'Private leasing',
                 businessLeasingPrice: 'Business leasing',
                 city: 'City',
+                fuelTypes: 'Fuel',
+                engineBaseType: 'Engine type',
+                'enhancedProperties.electricalRangeWLTP.value': 'Electric range',
               },
               currency: {
                 default: 'kr',
