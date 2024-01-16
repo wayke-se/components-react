@@ -421,6 +421,7 @@ WaykePubSub.unsubscribe(event);
 |-----------|-----------|
 | query     | string    |
 | hits      | number    |
+| totalHits | number    |
 
 #### CallbackSearchData
 | Property  | Type      |

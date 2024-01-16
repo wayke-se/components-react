@@ -44,7 +44,7 @@ const WaykeSearch = ({
   displayBranchName,
   onClickSearchItem,
 }: WaykeSearchProps) => {
-  const { error, documents, queryFilter, onFilterUpdate, onInitialize } = useSearch();
+  const { error, documents, response, queryFilter, onFilterUpdate, onInitialize } = useSearch();
   const initialized = useInitializeTranslation(marketCode);
 
   useEffect(() => {
@@ -71,6 +71,7 @@ const WaykeSearch = ({
       PubSub.publish('SearchCompleted', {
         query: nextQuery.toString(),
         hits: documents.length,
+        totalHits: response?.stats.totalHits || documents.length,
       });
     }
   }, [documents]);
