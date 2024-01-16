@@ -44,6 +44,7 @@ export type CallbackSearchInitiated = (data: CallbackSearchInitiatedData) => voi
 export interface CallbackSearchCompletedData {
   query: string;
   hits: number;
+  totalHits: number;
 }
 export type CallbackSearchCompleted = (data: CallbackSearchCompletedData) => void;
 
