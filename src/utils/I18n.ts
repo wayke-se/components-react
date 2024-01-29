@@ -95,6 +95,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   hint: 'Vad bilen ska tankas med och drivs av.',
                 },
                 enginePower: { displayName: 'Effekt', unit: 'hk' },
+                numberOfDoors: { displayName: 'Dörrar' },
               },
               odometer: {
                 Kilometer: 'km',
@@ -389,6 +390,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   hint: 'Hva bilen skal tankes med og drives av.',
                 },
                 enginePower: { displayName: 'Effekt', unit: 'hk' },
+                numberOfDoors: { displayName: 'Dører' },
               },
               odometer: {
                 Kilometer: 'km',
@@ -684,6 +686,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   hint: 'What the car should be fueled with and powered by.',
                 },
                 enginePower: { displayName: 'Power', unit: 'hp' },
+                numberOfDoors: { displayName: 'Doors' },
               },
               odometer: {
                 Kilometer: 'km',
