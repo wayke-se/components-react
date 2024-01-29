@@ -175,6 +175,15 @@ export default (
       .build();
   }
 
+  if (!!item?.properties?.numberOfDoors) {
+    newProperties.fuelType = new PropertyBuilder()
+      .withName(t('customProperty.numberOfDoors.displayName'))
+      .withValue(item.properties.numberOfDoors as number)
+      .withType(NUMBER_TYPE)
+      .withCategory(BASIC_CATEGORY(t))
+      .build();
+  }
+
   if (item.enginePower) {
     newProperties.enginePower = new PropertyBuilder()
       .withName(t('customProperty.enginePower.displayName'))
