@@ -17,6 +17,54 @@ import useInitializeTranslation from '../../hooks/useInitializeTranslation';
 import { i18nScoped } from '../../utils/I18n';
 import { OnItemClick } from '../../components/ProductCard';
 
+const DefaultFilterList: SearchFilterTypes[] = [
+  {
+    filterName: 'manufacturer',
+  },
+  {
+    filterName: 'modelSeries',
+  },
+  {
+    filterName: 'fuelType',
+  },
+  {
+    filterName: 'gearboxType',
+  },
+  {
+    filterName: 'branch',
+  },
+  {
+    filterName: 'color',
+  },
+  {
+    filterName: 'environmentClass',
+  },
+  {
+    filterName: 'properties.segment',
+  },
+  {
+    filterName: 'drivingWheel',
+  },
+  {
+    filterName: 'price',
+  },
+  {
+    filterName: 'leasingPrice',
+  },
+  {
+    filterName: 'businessLeasingPrice',
+  },
+  {
+    filterName: 'mileage',
+  },
+  {
+    filterName: 'odometerValueAsKm',
+  },
+  {
+    filterName: 'modelYear',
+  },
+];
+
 export interface WaykeSearchProps {
   marketCode?: MarketCode;
   filterList?: SearchFilterTypes[];
@@ -33,7 +81,7 @@ export interface WaykeSearchProps {
 
 const WaykeSearch = ({
   marketCode,
-  filterList,
+  filterList: _filterList,
   initialQueryParams,
   hashRoute,
   pathRoute,
@@ -46,6 +94,18 @@ const WaykeSearch = ({
 }: WaykeSearchProps) => {
   const { error, documents, response, queryFilter, onFilterUpdate, onInitialize } = useSearch();
   const initialized = useInitializeTranslation(marketCode);
+
+  const filterList = useMemo(() => {
+    if (_filterList) return _filterList;
+
+    const f = [...DefaultFilterList];
+    if (!marketCode || marketCode === 'SE') {
+      return f.filter((x) => x.filterName !== 'odometerValueAsKm');
+    } else if (marketCode === 'NO') {
+      return f.filter((x) => x.filterName !== 'mileage');
+    }
+    return f;
+  }, [_filterList, marketCode]);
 
   useEffect(() => {
     if (modifyDocumentTitleSearch) {

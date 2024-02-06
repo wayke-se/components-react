@@ -17,58 +17,7 @@ export const numberSeparator = (value: number, n = 0, x = 3, s = ' ', c = '.') =
   return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), `$&${s || ','}`);
 };
 
-import {
-  MANUFACTURER,
-  MODEL_SERIES,
-  FUEL_TYPE,
-  GEARBOX_TYPE,
-  ENVIRONMENT_CLASS,
-  SEGMENT,
-  DRIVING_WHEEL,
-  COLOR,
-  PRICE,
-  BRANCH,
-  MILEAGE,
-  MODEL_YEAR,
-  LEASING_PRICE,
-  BUSINESS_LEASING_PRICE,
-} from './constants';
 import { MarketCode } from '../@types/market';
-
-export const FacetIdToTitle = (f: string) => {
-  switch (f) {
-    case MANUFACTURER:
-      return 'Tillverkare';
-    case MODEL_SERIES:
-      return 'Modell';
-    case FUEL_TYPE:
-      return 'Drivmedel';
-    case GEARBOX_TYPE:
-      return 'Växellåda';
-    case SEGMENT:
-      return 'Segment';
-    case DRIVING_WHEEL:
-      return 'Drivhjul';
-    case ENVIRONMENT_CLASS:
-      return 'Miljöklass';
-    case COLOR:
-      return 'Färg';
-    case PRICE:
-      return 'Pris';
-    case BRANCH:
-      return 'Anläggning';
-    case MILEAGE:
-      return 'Miltal';
-    case MODEL_YEAR:
-      return 'Modellår';
-    case LEASING_PRICE:
-      return 'Privatleasing';
-    case BUSINESS_LEASING_PRICE:
-      return 'Företagsleasing';
-    default:
-      return f;
-  }
-};
 
 export const dateTimeFormat = {
   YearMonth: 1,
