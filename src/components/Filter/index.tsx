@@ -8,6 +8,7 @@ import {
   MODEL_YEAR,
   LEASING_PRICE,
   BUSINESS_LEASING_PRICE,
+  ODOMETER_VALUE_AS_KM,
 } from '../../utils/constants';
 import useSearch from '../../State/Search/useSearch';
 import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
@@ -19,6 +20,7 @@ const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {
     case PRICE:
     case MILEAGE:
+    case ODOMETER_VALUE_AS_KM:
     case LEASING_PRICE:
     case BUSINESS_LEASING_PRICE:
     case MODEL_YEAR:
