@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "4.3.2",
+  "version": "4.4.0",
   "description": "",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
@@ -46,7 +46,7 @@
     "@types/styled-components": "^5.1.15",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
-    "@wayke-se/ecom-web": "^1.5.2",
+    "@wayke-se/ecom-web": "^1.6.0",
     "dotenv": "^16.3.1",
     "esbuild": "^0.19.5",
     "esbuild-plugin-copy": "^2.1.1",
