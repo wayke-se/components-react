@@ -1,0 +1,23 @@
+# Start lint-staged in the background
+npx lint-staged &
+PID_LINT=$!
+
+# Start typecheck in the background
+npm run typecheck &
+PID_TYPECHECK=$!
+
+# Wait for both processes to complete and capture their exit statuses
+wait $PID_LINT
+STATUS_LINT=$?
+
+wait $PID_TYPECHECK
+STATUS_TYPECHECK=$?
+
+# Check if either lint-staged or typecheck failed
+if [ $STATUS_LINT -ne 0 ] || [ $STATUS_TYPECHECK -ne 0 ]; then
+  echo "Linting or typecheck failed, exiting..."
+  exit 1
+fi
+
+# Proceed with commit if both succeeded
+echo "Linting and typecheck succeeded, proceeding with commit..."
