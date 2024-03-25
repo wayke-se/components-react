@@ -19,8 +19,7 @@ import {
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 import { format } from 'date-fns';
-import sv from 'date-fns/locale/sv/index.js';
-import no from 'date-fns/locale/nb/index.js';
+import { sv, nb } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { MarketCode } from '../../@types/market';
 
@@ -109,7 +108,7 @@ const CheckList = ({
                 <UtilityFontSizeSmall>
                   {t('item.availableFromDate', {
                     date: format(new Date(availableFrom), 'dd MMMM yyyy', {
-                      locale: marketCode === 'NO' ? no : sv,
+                      locale: marketCode === 'NO' ? nb : sv,
                     }),
                   })}
                 </UtilityFontSizeSmall>

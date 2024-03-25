@@ -1,6 +1,5 @@
 import { format as formatFns } from 'date-fns';
-import sv from 'date-fns/locale/sv/index.js';
-import no from 'date-fns/locale/nb/index.js';
+import { sv, nb } from 'date-fns/locale';
 
 // Filter function to remove any null/undefined values.
 export const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue =>
@@ -25,7 +24,7 @@ export const dateTimeFormat = {
 
   format: (value: string | Date, format: number, marketCode?: MarketCode) => {
     const date = new Date(value);
-    const settings = { locale: marketCode === 'NO' ? no : sv };
+    const settings = { locale: marketCode === 'NO' ? nb : sv };
     switch (format) {
       case dateTimeFormat.YearMonth:
         return formatFns(date, 'MMMM yyyy', settings);
