@@ -355,6 +355,7 @@ WaykePubSub.unsubscribe(event);
 ### EventBase
 | eventName             | callback                  | Data                                                                                                                            |
 |-----------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| View                  | (data) => void            | CallbackViewData                                                                                                                |
 | HashRouteChange       | (data) => void            | CallbackHashRouteChangeData                                                                                                     |
 | ItemClicked           | (data) => void            | CallbackItemData                                                                                                                |
 | Ecom                  | (data) => void            | CallbackEcomData                                                                                                                |
@@ -375,8 +376,22 @@ WaykePubSub.unsubscribe(event);
 | SearchCompleted       | (data) => void            | CallbackSearchCompletedData                                                                                                     |
 | Search                | (data) => void            | CallbackSearchData                                                                                                              |
 | FilterApply           | (data) => void            | CallbackFilterApplyData                                                                                                         |
-| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
+| All                   | (eventName, data) => void | CallbackViewData \| CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
 * `All` - Subscribes to all events.
+
+#### CallbackViewData
+Can be either  `CallbackViewSearchData` or `CallbackViewItemData`
+##### CallbackViewSearchData
+| Property  | Type      |
+|-----------|-----------|
+| type      | "search"    |
+
+##### CallbackViewItemData
+| Property  | Type      |
+|-----------|-----------|
+| type      | "item"    |
+| id        | string    |
+
 
 #### CallbackHashRouteChangeData
 | Property  | Type      |

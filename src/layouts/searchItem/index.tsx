@@ -87,6 +87,10 @@ const WaykeSearchItem = ({
     if (!disableResetScrollOnInit) {
       window.scrollTo(0, 0);
     }
+    PubSub.publish('View', {
+      type: 'item',
+      id,
+    });
   }, []);
 
   useEffect(() => {
