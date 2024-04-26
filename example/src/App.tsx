@@ -6,6 +6,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { WaykePubSub } from '../../src';
 
 WaykePubSub.subscribe({
+  eventName: 'View',
+  // eslint-disable-next-line
+  callback: (data) => console.log('subscribed View:', data),
+});
+
+WaykePubSub.subscribe({
   eventName: 'ItemClicked',
   // eslint-disable-next-line
   callback: (data) => console.log('subscribed ItemClicked:', data),

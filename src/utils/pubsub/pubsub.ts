@@ -6,6 +6,7 @@ import {
   CallbackOnFilterUpdate,
 } from './Actions';
 import {
+  EventView,
   EventHashRouteChange,
   EventItemClicked,
   EventEcom,
@@ -32,6 +33,7 @@ import {
   EventSearchInitiated,
   EventSearchClearQuery,
   EventSearchClearAllFiltersQuery,
+  CallbackView,
 } from './Events';
 
 export type EventSubscriptions = {
@@ -55,6 +57,7 @@ export type EventSubscriptions = {
   SearchInitiated: EventSearchInitiated[];
   SearchCompleted: EventSearchCompleted[];
   FilterApply: EventFilterApply[];
+  View: EventView[];
   All: EventAll[];
 };
 
@@ -85,6 +88,7 @@ class PubSub {
     SearchInitiated: [],
     SearchCompleted: [],
     FilterApply: [],
+    View: [],
     All: [],
   };
 
@@ -144,6 +148,9 @@ class PubSub {
     if (PubSub.events[eventName]) {
       PubSub.events[eventName].forEach((event: EventType) => {
         switch (eventName) {
+          case 'View':
+            (event.callback as CallbackView)(args[0]);
+            break;
           case 'HashRouteChange':
             (event.callback as CallbackHashRouteChange)(args[0]);
             break;

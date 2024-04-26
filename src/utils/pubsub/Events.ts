@@ -12,6 +12,20 @@ interface CallbackHashRouteChangeData {
 }
 export type CallbackHashRouteChange = (data: CallbackHashRouteChangeData) => void;
 
+interface CallbackViewDataBase<T> {
+  type: T;
+}
+
+interface CallbackViewSearchData extends CallbackViewDataBase<'search'> {}
+
+interface CallbackViewItemData extends CallbackViewDataBase<'item'> {
+  id: string;
+}
+
+type CallbackViewData = CallbackViewSearchData | CallbackViewItemData;
+
+export type CallbackView = (data: CallbackViewData) => void;
+
 interface CallbackItemData {
   id: string;
   branchId: string;
@@ -66,6 +80,10 @@ export interface CallbackFilterApplyData {
 export type CallbackFilterApply = (data: CallbackFilterApplyData) => void;
 
 export type CallbackEcom = (data: CallbackEcomData) => void;
+
+export interface EventView extends EventBase<CallbackView> {
+  eventName: 'View';
+}
 
 export interface EventHashRouteChange extends EventBase<CallbackHashRouteChange> {
   eventName: 'HashRouteChange';
@@ -154,6 +172,7 @@ export interface EventAll extends EventBase<CallbackAll> {
 }
 
 export type EventType =
+  | EventView
   | EventHashRouteChange
   | EventItemClicked
   | EventEcom
