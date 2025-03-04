@@ -5,15 +5,22 @@ import Leasing from './leasing';
 import Loan from './loan';
 import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
 import { useTranslation } from 'react-i18next';
+import { CreditorDisclaimer } from '../CreditorDisclaimer';
+import { MarketCode } from '../../@types/market';
 
 interface FinancialOptionsProps {
   id: string;
   branch?: Maybe<Branch>;
   financialOptions: FinancialOption[];
+  marketCode?: MarketCode;
 }
 
-const FinancialOptions = ({ id, branch, financialOptions }: FinancialOptionsProps) => {
+const FinancialOptions = ({ id, branch, financialOptions, marketCode }: FinancialOptionsProps) => {
   const { t } = useTranslation();
+
+  const hasLoanOption = financialOptions.some((option) => option.type === 'loan');
+  const showCreditorDisclaimer = marketCode === 'SE' && hasLoanOption;
+
   return (
     <Repeat>
       <RepeatTiny>
@@ -27,11 +34,21 @@ const FinancialOptions = ({ id, branch, financialOptions }: FinancialOptionsProp
               <Leasing financialOption={financialOption} />
             )}
             {financialOption.type === 'loan' && (
-              <Loan id={id} branch={branch} financialOption={financialOption} />
+              <Loan
+                id={id}
+                branch={branch}
+                financialOption={financialOption}
+                marketCode={marketCode}
+              />
             )}
           </Fragment>
         ))}
       </RepeatTiny>
+      {showCreditorDisclaimer && (
+        <RepeatTiny>
+          <CreditorDisclaimer />
+        </RepeatTiny>
+      )}
     </Repeat>
   );
 };

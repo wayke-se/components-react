@@ -14,6 +14,8 @@ import { Branch, FinancialOption, Maybe, Query } from '../../@types/codegen/type
 import PubSub from '../../utils/pubsub/pubsub';
 import SliderWithLabel from '../RangeSlider/SliderWithLabel';
 import { useTranslation } from 'react-i18next';
+import { CreditorDisclaimer } from '../CreditorDisclaimer';
+import { MarketCode } from '../../@types/market';
 
 const stepGenerator = (
   step: number,
@@ -36,10 +38,11 @@ interface LoanModalProps {
   id: string;
   branch?: Maybe<Branch>;
   financialOption: FinancialOption;
+  marketCode?: MarketCode;
   onClose: () => void;
 }
 
-const LoanModal = ({ id, branch, financialOption, onClose }: LoanModalProps) => {
+const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanModalProps) => {
   const { t } = useTranslation();
   const [tmp, setTmp] = useState<Query>();
   const [extend, setExtend] = React.useState(false);
@@ -257,6 +260,11 @@ const LoanModal = ({ id, branch, financialOption, onClose }: LoanModalProps) => 
           )}
         </>
       </Repeat>
+      {marketCode === 'SE' && (
+        <Repeat>
+          <CreditorDisclaimer />
+        </Repeat>
+      )}
     </Modal>
   );
 };

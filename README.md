@@ -69,7 +69,7 @@ const ProviderSettings: WaykeProviderSettings = {
 
 ### WaykeComposite uses hash-route, i want to use path-route
 
-In this case you need to make sure that you are in control of the routing, if the user reloads the page, where same html file is 
+In this case you need to make sure that you are in control of the routing, if the user reloads the page, where same html file is
 served for `/your/path/to/this/component` and `/your/path/to/this/component/00000000-0000-0000-0000-000000000000`.
 
 Examples given the application is located in `/search/vehicles`:
@@ -396,10 +396,10 @@ WaykePubSub.unsubscribe(event);
 | id            | string                |
 | branchName    | string                |
 | branchId      | string                |
-| view          | EcomView              |  
-| event         | EcomView              |  
-| currentStep   | EcomStep \| undefined |  
-| data          | any \| undefined      |  
+| view          | EcomView              |
+| event         | EcomView              |
+| currentStep   | EcomStep \| undefined |
+| data          | any \| undefined      |
 
 #### CallbackSearchClearQueryData
 | Property  | Type      |
@@ -571,7 +571,7 @@ WAYKE_ECOM_URL=https://ecom.wayketech.se
 GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_STATIC_API_KEY
 ```
 
-* `WAYKE_SEARCH_MLT_URL` - An *optional* flag. Will fetch related vehicles to current vehicle. If not provided 
+* `WAYKE_SEARCH_MLT_URL` - An *optional* flag. Will fetch related vehicles to current vehicle. If not provided
 `WAYKE_SEARCH_URL` will be used instead, but will fetch latest vehicles.
 
 Then run the following:
