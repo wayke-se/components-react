@@ -9,14 +9,16 @@ import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
 import LoanModal from './LoanModal';
 import { useTranslation } from 'react-i18next';
 import PubSub from '../../utils/pubsub/pubsub';
+import { MarketCode } from '../../@types/market';
 
 interface LoanProps {
   id: string;
   branch?: Maybe<Branch>;
   financialOption: FinancialOption;
+  marketCode?: MarketCode;
 }
 
-const Loan = ({ id, branch, financialOption }: LoanProps) => {
+const Loan = ({ id, branch, financialOption, marketCode }: LoanProps) => {
   const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => {
@@ -70,6 +72,7 @@ const Loan = ({ id, branch, financialOption }: LoanProps) => {
           id={id}
           branch={branch}
           financialOption={financialOption}
+          marketCode={marketCode}
           onClose={toggleModal}
         />
       )}
