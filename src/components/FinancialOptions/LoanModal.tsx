@@ -129,26 +129,38 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
 
   return (
     <Modal title={t('item.financialOptions.loanOptions')} onClose={onClose}>
-      <Repeat>
-        <ContentLogo>
-          {financialOption?.description && (
+      {financialOption?.description ? (
+        <Repeat>
+          <ContentLogo>
             <ContentLogoText>
               <Content>
                 <p>{financialOption.description}</p>
               </Content>
             </ContentLogoText>
-          )}
+            {financialOption?.image && (
+              <ContentLogoMedia>
+                <LogoBox
+                  logo={financialOption.image}
+                  alt={financialOption.name || t('common.logotype')}
+                  wide
+                />
+              </ContentLogoMedia>
+            )}
+          </ContentLogo>
+        </Repeat>
+      ) : (
+        <>
           {financialOption?.image && (
-            <ContentLogoMedia>
+            <Repeat>
               <LogoBox
                 logo={financialOption.image}
                 alt={financialOption.name || t('common.logotype')}
                 wide
               />
-            </ContentLogoMedia>
+            </Repeat>
           )}
-        </ContentLogo>
-      </Repeat>
+        </>
+      )}
       <Repeat>
         <RepeatSmall>
           <SliderWithLabel
