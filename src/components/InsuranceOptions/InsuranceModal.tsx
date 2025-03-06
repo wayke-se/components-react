@@ -93,24 +93,34 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
     <Modal title={t('item.insurance')} onClose={onClose}>
       {(insuranceOptions?.description || insuranceOptions?.logotype) && (
         <Repeat>
-          <ContentLogo>
-            {insuranceOptions.description && (
+          {insuranceOptions.description ? (
+            <ContentLogo>
               <ContentLogoText>
                 <Content>
                   <p>{insuranceOptions.description}</p>
                 </Content>
               </ContentLogoText>
-            )}
-            {insuranceOptions.logotype && (
-              <ContentLogoMedia>
+              {insuranceOptions.logotype && (
+                <ContentLogoMedia>
+                  <LogoBox
+                    logo={insuranceOptions.logotype}
+                    alt={insuranceOptions.name || t('common.logotype')}
+                    wide
+                  />
+                </ContentLogoMedia>
+              )}
+            </ContentLogo>
+          ) : (
+            <>
+              {insuranceOptions.logotype && (
                 <LogoBox
                   logo={insuranceOptions.logotype}
                   alt={insuranceOptions.name || t('common.logotype')}
                   wide
                 />
-              </ContentLogoMedia>
-            )}
-          </ContentLogo>
+              )}
+            </>
+          )}
         </Repeat>
       )}
 

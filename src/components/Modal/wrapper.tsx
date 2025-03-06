@@ -121,9 +121,9 @@ export const Image = styled.img`
 
 export const ModalFoldout = styled.div`
   background-color: ${(props) => props.theme.color.accent};
-  margin: ${size(-3)};
   margin-top: ${size(3)};
-  padding: ${size(3)};
+  padding: ${size(2)};
+  border-radius: 3px;
 `;
 
 export const ModalFoldoutBody = styled.div``;
