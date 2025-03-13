@@ -83,13 +83,13 @@ Examples given the application is located in `/search/vehicles`:
 
 ```javascript
 import React from 'react';
-import { WaykeCompositePath } from '@wayke-se/components-react'
+import { WaykeComposite } from '@wayke-se/components-react'
 import '@wayke.se/components-react/dist/assets/default.css';
 // Optional
 import '@wayke-se/ecom-web/dist/index.css';
 
 const App = () => (
-  <WaykeCompositePath
+  <WaykeComposite
     composite={{
       ...,
       pathRoute: "your/path/to/this/component/"
