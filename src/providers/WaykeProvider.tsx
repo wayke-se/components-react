@@ -1,5 +1,6 @@
 import React from 'react';
 
+import packageJson from '../../package.json';
 import GraphqlProvider from './graphqlProvider';
 import Theme from './themeProvider';
 import SearchProvider from '../State/Search/SearchProvider';
@@ -62,7 +63,7 @@ const WaykeProvider = ({
           >
             <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
               <Theme>
-                <Root>{children}</Root>
+                <Root data-version={packageJson.version}>{children}</Root>
               </Theme>
             </RelatedSearchProvider>
           </SearchProvider>
