@@ -80,7 +80,7 @@ export interface WaykeSearchProps {
 }
 
 const WaykeSearch = ({
-  marketCode,
+  marketCode = 'SE',
   filterList: _filterList,
   initialQueryParams,
   hashRoute,

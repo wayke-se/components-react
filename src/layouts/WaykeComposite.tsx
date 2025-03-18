@@ -10,7 +10,7 @@ import useInitializeTranslation from '../hooks/useInitializeTranslation';
 export type WaykeCompositeProps = Omit<WaykeSearchProps & WaykeSearchItemProps, 'id'>;
 
 const WaykeComposite = ({
-  marketCode,
+  marketCode = 'SE',
   filterList,
   initialQueryParams,
   removeSearchBar,
