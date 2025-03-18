@@ -44,6 +44,7 @@ const WaykeComposite = ({
     <>
       {id ? (
         <WaykeSearchItem
+          marketCode={marketCode}
           id={id}
           hashRoute={!pathRoute}
           disableResetScrollOnInit={disableResetScrollOnInit}
