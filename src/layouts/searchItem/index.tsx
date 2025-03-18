@@ -59,7 +59,7 @@ export interface WaykeSearchItemProps {
 }
 
 const WaykeSearchItem = ({
-  marketCode,
+  marketCode = 'SE',
   id,
   hashRoute,
   pathRoute,
