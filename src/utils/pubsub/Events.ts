@@ -1,4 +1,4 @@
-import { EcomEvent, EcomStep, EcomView } from '@wayke-se/ecom-web/src/Utils/ecomEvent';
+import { EcomEvent, EcomStep, EcomView } from '@wayke-se/ecom-web/dist/Utils/ecomEvent';
 
 interface EventBase<Callback> {
   eventName: EventNames;
