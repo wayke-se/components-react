@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+      - master
+      - test
+
+name: Release
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'master' && 'production' || 'test' }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Upgrade npm (for OIDC trusted publishing)
+        run: npm install -g npm@latest
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+
+      - name: Build Javascript
+        run: npm run build
+
+      - name: Publish package to npm
+        run: npm publish --access public --provenance --tag ${{ github.ref_name == 'master' && 'latest' || 'next' }}
