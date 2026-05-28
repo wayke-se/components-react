@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Viewer } from '@photo-sphere-viewer/core';
+import { useTranslation } from 'react-i18next';
 import '@photo-sphere-viewer/core/index.css';
 
 import { Wrapper } from '../Sphere/wrapper';
 import Loader from '../Loader';
+import MediaButton from '../Gallery/MediaButton';
 
 type PropsType = {
   id: string;
   src: string;
+  onStart?: () => void;
 };
 
 const isWebgl2Supported = (): boolean => {
@@ -18,10 +21,12 @@ const isWebgl2Supported = (): boolean => {
   }
 };
 
-const SphereViewer = ({ id, src }: PropsType) => {
+const SphereViewer = ({ id, src, onStart }: PropsType) => {
+  const { t } = useTranslation();
   const container = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
   const [loading, setLoading] = useState(true);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     if (!container.current) return;
@@ -56,6 +61,13 @@ const SphereViewer = ({ id, src }: PropsType) => {
     };
   }, [src]);
 
+  const handleStart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setStarted(true);
+    if (onStart) onStart();
+  };
+
   const fillStyle: React.CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -66,8 +78,17 @@ const SphereViewer = ({ id, src }: PropsType) => {
 
   return (
     <Wrapper>
+      <div
+        id={`a-${id}`}
+        ref={container}
+        style={{ ...fillStyle, pointerEvents: started ? 'auto' : 'none' }}
+      />
       {loading && <Loader />}
-      <div id={`a-${id}`} ref={container} style={fillStyle} />
+      {!loading && !started && (
+        <div style={{ ...fillStyle, pointerEvents: 'none' }}>
+          <MediaButton text={t('item.start360Interior')} onClick={handleStart} />
+        </div>
+      )}
     </Wrapper>
   );
 };

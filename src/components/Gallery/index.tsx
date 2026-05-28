@@ -168,9 +168,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
                       <Sphere
                         visible={i === index}
                         url={m.files[0].url}
-                        preview={m.files[0].url}
                         onDisableNavigation={onDisableNavigation}
-                        navigationDisabled={navigationDisabled}
                       />
                     )}
                   </Item>
