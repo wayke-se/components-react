@@ -77,7 +77,7 @@ const SphereViewer = ({ id, src, onStart }: PropsType) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper $started={started}>
       <div
         id={`a-${id}`}
         ref={container}

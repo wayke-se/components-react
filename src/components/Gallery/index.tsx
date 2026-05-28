@@ -165,11 +165,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
                     )}
                     {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
                     {m.type === 'sphere' && (
-                      <Sphere
-                        visible={i === index}
-                        url={m.files[0].url}
-                        onDisableNavigation={onDisableNavigation}
-                      />
+                      <Sphere url={m.files[0].url} onDisableNavigation={onDisableNavigation} />
                     )}
                   </Item>
                 ))
