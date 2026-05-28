@@ -144,7 +144,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
               ref={slider}
               beforeChange={beforeChange}
             >
-              {!!media?.length ? (
+              {media?.length ? (
                 media.map((m, i) => (
                   <Item key={m.files[0].url || i}>
                     {m.type === 'image' && (
@@ -206,7 +206,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
         </Main>
         <Alt>
           <QuickNav ref={quickNavRef}>
-            {!!media?.length ? (
+            {media?.length ? (
               media.map((m, i) => {
                 const src =
                   m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||

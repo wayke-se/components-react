@@ -131,8 +131,7 @@ export interface EventSearchClearQuery extends EventBase<CallbackSearchClearQuer
   eventName: 'SearchClearQuery';
 }
 
-export interface EventSearchClearAllFiltersQuery
-  extends EventBase<CallbackSearchClearAllFiltersQuery> {
+export interface EventSearchClearAllFiltersQuery extends EventBase<CallbackSearchClearAllFiltersQuery> {
   eventName: 'SearchClearAllFilters';
 }
 

@@ -50,7 +50,7 @@ const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
 
   useEffect(() => {
     const _initialAllValues = initialFacet?.filters.map((f) =>
-      parseInt(f.displayName.replace(/[\<\>+-]+/g, ''), 10)
+      parseInt(f.displayName.replace(/[<>+-]+/g, ''), 10)
     ) || [1, 2];
 
     const _steps = getSteps(_initialAllValues);
