@@ -74,11 +74,11 @@
     "@photo-sphere-viewer/core": "^5.14.1",
     "date-fns": "^4.3.0",
     "graphql": "^16.0.1",
-    "i18next": "^23.6.0",
+    "i18next": "^26.3.0",
     "libphonenumber-js": "^1.9.42",
     "marked": "^18.0.4",
     "react-compound-slider": "^3.3.1",
-    "react-i18next": "^14.1.0",
+    "react-i18next": "^17.0.8",
     "react-slick": "^0.31.0",
     "scroll-into-view-if-needed": "^3.1.0"
   }
