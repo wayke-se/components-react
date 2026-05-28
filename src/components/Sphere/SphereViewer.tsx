@@ -8,9 +8,6 @@ import Loader from '../Loader';
 type PropsType = {
   id: string;
   src: string;
-  preview: string;
-  autoLoad?: boolean;
-  onStart?: () => void;
 };
 
 const isWebgl2Supported = (): boolean => {
@@ -21,17 +18,14 @@ const isWebgl2Supported = (): boolean => {
   }
 };
 
-const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
+const SphereViewer = ({ id, src }: PropsType) => {
   const container = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
-  const [started, setStarted] = useState(!!autoLoad);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!started || !container.current) return;
+    if (!container.current) return;
     if (!isWebgl2Supported()) return;
-
-    setLoading(true);
 
     let viewer: Viewer;
     try {
@@ -60,12 +54,7 @@ const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
       viewer.destroy();
       viewerRef.current = null;
     };
-  }, [started, src]);
-
-  const handleStart = () => {
-    setStarted(true);
-    if (onStart) onStart();
-  };
+  }, [src]);
 
   const fillStyle: React.CSSProperties = {
     position: 'absolute',
@@ -77,24 +66,8 @@ const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
 
   return (
     <Wrapper>
-      {!started && (
-        <button
-          type="button"
-          id={`a-${id}-start`}
-          onClick={handleStart}
-          style={{
-            ...fillStyle,
-            backgroundImage: `url(${preview})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-          aria-label="Start 360 view"
-        />
-      )}
-      {started && loading && <Loader />}
-      {started && <div ref={container} style={fillStyle} />}
+      {loading && <Loader />}
+      <div id={`a-${id}`} ref={container} style={fillStyle} />
     </Wrapper>
   );
 };

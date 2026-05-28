@@ -35,15 +35,7 @@ const Sphere = ({ url, preview, visible, onDisableNavigation, navigationDisabled
     );
   }
   if (navigationDisabled && visible) {
-    return (
-      <SphereViewer
-        id={url}
-        preview={url}
-        src={url}
-        autoLoad={true}
-        onStart={onDisableNavigation}
-      />
-    );
+    return <SphereViewer id={url} src={url} />;
   }
   return null;
 };
