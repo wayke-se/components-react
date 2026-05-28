@@ -71,7 +71,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.17",
+    "@apollo/client": "^4.2.0",
     "@photo-sphere-viewer/core": "^5.14.1",
     "date-fns": "^4.3.0",
     "graphql": "^16.0.1",
