@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Viewer } from '@photo-sphere-viewer/core';
 import { CompassPlugin } from '@photo-sphere-viewer/compass-plugin';
 import '@photo-sphere-viewer/core/index.css';
+import '@photo-sphere-viewer/compass-plugin/index.css';
 
 import { Wrapper } from '../Sphere/wrapper';
 import Loader from '../Loader';
