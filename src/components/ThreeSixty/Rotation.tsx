@@ -17,7 +17,7 @@ type RotationEvent = any;
 
 const Rotation = ({ children }: PropsType) => {
   const startFrame = useRef(0);
-  const pointerPosition = useRef<number>();
+  const pointerPosition = useRef<number | undefined>(undefined);
   const max = useRef(0);
 
   const [state, setState] = useState({
@@ -122,7 +122,7 @@ const Rotation = ({ children }: PropsType) => {
       onMouseLeave={onMouseLeave}
     >
       {Children.map(children, (child, i) =>
-        cloneElement(child as React.ReactElement, {
+        cloneElement(child as React.ReactElement<{ style?: React.CSSProperties }>, {
           style: {
             width: '100%',
             display: state.current === i ? 'block' : 'none',

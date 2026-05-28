@@ -13,7 +13,7 @@ function useEcom(
   ecomSettings: SettingsContextProps['ecomSettings'],
   branch?: Maybe<Branch>
 ) {
-  const ecomContext = useRef<EcomWeb | undefined>();
+  const ecomContext = useRef<EcomWeb | undefined>(undefined);
   const branchRef = useRef(branch);
   branchRef.current = branch;
 
