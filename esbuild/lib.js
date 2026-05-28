@@ -2,7 +2,7 @@
 import * as esbuild from 'esbuild';
 import { copy } from 'esbuild-plugin-copy';
 import npmDts from 'npm-dts';
-import packageJson from '../package.json' assert { type: 'json' };
+import packageJson from '../package.json' with { type: 'json' };
 
 const Shared = {
   entryPoints: ['src/index.ts'],
