@@ -3,11 +3,8 @@ import SphereViewer from './SphereViewer';
 
 type PropsType = {
   url: string;
-  onDisableNavigation: () => void;
 };
 
-const Sphere = ({ url, onDisableNavigation }: PropsType) => (
-  <SphereViewer id={url} src={url} onStart={onDisableNavigation} />
-);
+const Sphere = ({ url }: PropsType) => <SphereViewer id={url} src={url} />;
 
 export default Sphere;

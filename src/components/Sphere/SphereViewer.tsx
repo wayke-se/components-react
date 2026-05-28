@@ -10,7 +10,7 @@ import MediaButton from '../Gallery/MediaButton';
 type PropsType = {
   id: string;
   src: string;
-  onStart?: () => void;
+  interactive?: boolean;
 };
 
 const isWebgl2Supported = (): boolean => {
@@ -21,12 +21,13 @@ const isWebgl2Supported = (): boolean => {
   }
 };
 
-const SphereViewer = ({ id, src, onStart }: PropsType) => {
+const noop = () => undefined;
+
+const SphereViewer = ({ id, src, interactive }: PropsType) => {
   const { t } = useTranslation();
   const container = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
   const [loading, setLoading] = useState(true);
-  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     if (!container.current) return;
@@ -61,13 +62,6 @@ const SphereViewer = ({ id, src, onStart }: PropsType) => {
     };
   }, [src]);
 
-  const handleStart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setStarted(true);
-    if (onStart) onStart();
-  };
-
   const fillStyle: React.CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -77,18 +71,14 @@ const SphereViewer = ({ id, src, onStart }: PropsType) => {
   };
 
   return (
-    <Wrapper $started={started}>
+    <Wrapper $started={!!interactive}>
       <div
         id={`a-${id}`}
         ref={container}
-        style={{ ...fillStyle, pointerEvents: started ? 'auto' : 'none' }}
+        style={{ ...fillStyle, pointerEvents: interactive ? 'auto' : 'none' }}
       />
       {loading && <Loader />}
-      {!loading && !started && (
-        <div style={{ ...fillStyle, pointerEvents: 'none' }}>
-          <MediaButton text={t('item.start360Interior')} onClick={handleStart} />
-        </div>
-      )}
+      {!loading && !interactive && <MediaButton text={t('item.start360Interior')} onClick={noop} />}
     </Wrapper>
   );
 };

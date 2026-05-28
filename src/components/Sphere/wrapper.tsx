@@ -8,8 +8,7 @@ const controlBtnSize = size(4);
 export const Wrapper = styled.div<{ $started?: boolean }>`
   position: relative;
   width: 100%;
-  height: 0 !important;
-  padding-bottom: 66.666% !important; // 3:2
+  height: 100%;
 
   .psv-navbar {
     display: ${(p) => (p.$started ? 'flex' : 'none')};
