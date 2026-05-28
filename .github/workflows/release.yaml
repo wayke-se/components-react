@@ -16,14 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node 22
+      - name: Use Node 24
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Upgrade npm (for OIDC trusted publishing)
-        run: npm install -g npm@latest
 
       - name: Cache dependencies
         id: cache
