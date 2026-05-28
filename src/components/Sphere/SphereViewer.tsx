@@ -65,6 +65,14 @@ const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
     if (onStart) onStart();
   };
 
+  const fillStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
+
   return (
     <Wrapper>
       {!started && (
@@ -73,8 +81,7 @@ const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
           id={`a-${id}-start`}
           onClick={handleStart}
           style={{
-            width: '100%',
-            height: '100%',
+            ...fillStyle,
             backgroundImage: `url(${preview})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -85,7 +92,7 @@ const SphereViewer = ({ id, src, preview, autoLoad, onStart }: PropsType) => {
         />
       )}
       {started && loading && <Loader />}
-      {started && <div ref={container} style={{ width: '100%', height: '100%' }} />}
+      {started && <div ref={container} style={fillStyle} />}
     </Wrapper>
   );
 };
