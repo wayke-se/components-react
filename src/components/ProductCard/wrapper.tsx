@@ -45,7 +45,7 @@ export const Image = styled.div`
 
 export const Picture = styled.picture``;
 
-export const Source = styled.source``;
+export const Source = styled('source')<{ type?: string; srcSet?: string; media?: string }>``;
 
 export const Img = styled.img`
   position: absolute;

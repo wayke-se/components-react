@@ -61,7 +61,7 @@ export const Action = styled(ButtonReset).attrs(() => ({
   }
 `;
 
-export const List = styled.ul`
+export const List = styled.ul<{ $isSmall?: boolean }>`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -69,8 +69,8 @@ export const List = styled.ul`
   padding: 0;
   margin: ${size(-0.5)};
 
-  ${({ isSmall }: { isSmall?: boolean }) =>
-    isSmall &&
+  ${({ $isSmall }) =>
+    $isSmall &&
     css`
       margin: ${size(-0.25)};
 
