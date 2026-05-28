@@ -239,6 +239,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
               productCard: {
                 price: 'Pris',
                 privateLeasing: 'Privatleasing',
+                businessLeasing: 'Företagsleasing',
               },
               search: {
                 filter: 'Filter',
@@ -535,6 +536,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
               productCard: {
                 price: 'Pris',
                 privateLeasing: 'Privatleasing',
+                businessLeasing: 'Bedriftsleasing',
               },
               search: {
                 filter: 'Filter',
@@ -832,6 +834,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
               productCard: {
                 price: 'Price',
                 privateLeasing: 'Privatleasing',
+                businessLeasing: 'Business leasing',
               },
               search: {
                 filter: 'Filter',
