@@ -72,7 +72,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
-    "@photo-sphere-viewer/compass-plugin": "^5.14.1",
     "@photo-sphere-viewer/core": "^5.14.1",
     "date-fns": "^3.6.0",
     "graphql": "^16.0.1",
