@@ -13,7 +13,7 @@ export const Extend = styled.div<ExtendProps>`
   max-height: 175px;
   overflow: hidden;
 
-  :after {
+  &:after {
     content: '';
     position: absolute;
     bottom: 0;

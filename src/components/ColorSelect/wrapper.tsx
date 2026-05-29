@@ -43,7 +43,7 @@ export const Color = styled.div<ColorProps>`
   border-radius: 50%;
   color: ${(props) => props.theme.color.border};
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: -5px;

@@ -61,7 +61,7 @@ export const Header = styled.header`
   padding: ${size(3)};
   padding-bottom: 0;
 
-  :after {
+  &:after {
     content: '';
     position: absolute;
     top: 100%;
@@ -98,7 +98,7 @@ export const CloseBtn = styled(ButtonReset)`
   transition: transform 200ms ease;
   z-index: 2;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -112,11 +112,11 @@ export const CloseBtn = styled(ButtonReset)`
     z-index: -1;
   }
 
-  :active {
+  &:active {
     transform: scale(0.9);
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }

@@ -27,7 +27,7 @@ export const Input = styled.input.attrs(() => ({
   -moz-appearance: none;
   -webkit-appearance: none;
 
-  :focus {
+  &:focus {
     outline: none;
   }
 

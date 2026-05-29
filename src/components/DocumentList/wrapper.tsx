@@ -55,7 +55,7 @@ export const PdfListInner = styled.div`
   padding: ${size(1.5)};
   display: flex;
   align-items: center;
-  :hover {
+  &:hover {
     background-color: ${(props) => props.theme.color.hoverOverlay};
   }
 `;

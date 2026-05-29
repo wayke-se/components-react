@@ -24,7 +24,7 @@ export const ButtonReset = styled.button.attrs(() => ({
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 
-  :focus {
+  &:focus {
     outline: none;
   }
 
@@ -56,7 +56,7 @@ const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
     200ms ease,
     transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -69,13 +69,13 @@ const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
     transition: opacity 150ms ease;
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.97);
   }
 
@@ -139,7 +139,7 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
     text-align: right;
   }
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -152,13 +152,13 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
     transition: opacity 200ms ease;
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.95);
   }
 `;
@@ -179,7 +179,7 @@ export const ButtonInline = styled(ButtonReset).attrs(() => ({
   text-align: left;
   text-decoration: underline;
 
-  :not(:hover) {
+  &:not(:hover) {
     color: ${(props) => props.theme.color.textDark};
   }
 
@@ -197,7 +197,7 @@ export const ButtonInlineBold = styled(ButtonReset).attrs(() => ({
   vertical-align: baseline;
   text-align: left;
 
-  :hover {
+  &:hover {
     text-decoration: underline;
   }
 `;
@@ -210,7 +210,7 @@ export const ButtonInlineLight = styled(ButtonReset).attrs(() => ({
   text-align: left;
   text-decoration: none;
 
-  :not(:hover) {
+  &:not(:hover) {
     color: ${(props) => props.theme.color.textDarkLighten};
   }
 `;
@@ -222,7 +222,7 @@ export const ButtonInlinePrimary = styled(ButtonReset).attrs(() => ({
   vertical-align: baseline;
   text-align: left;
 
-  :hover {
+  &:hover {
     text-decoration: underline;
   }
 `;

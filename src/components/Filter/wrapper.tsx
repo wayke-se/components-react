@@ -28,7 +28,7 @@ export const Action = styled(ButtonReset)`
   transform-origin: 50% 50%;
   transition: transform 150ms ease;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -41,13 +41,13 @@ export const Action = styled(ButtonReset)`
     transition: opacity 150ms ease;
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.95);
   }
 `;

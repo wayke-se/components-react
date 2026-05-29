@@ -28,7 +28,7 @@ export const Action = styled(ButtonReset)`
   font: inherit;
   padding: ${size(1)} 0;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     left: 0;

@@ -10,7 +10,7 @@ export const ColumnRow = styled.div`
 export const ColumnRowItem = styled.div`
   flex: 1 1 auto;
 
-  :last-child:not(:only-child) {
+  &:last-child:not(:only-child) {
     flex: 0 0 auto;
   }
 

@@ -13,7 +13,7 @@ export const Label = styled.label.attrs(() => ({
   line-height: 1.2;
   cursor: pointer;
 
-  :before {
+  &:before {
     content: '';
     display: flex;
     align-items: center;
