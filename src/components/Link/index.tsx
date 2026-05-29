@@ -11,7 +11,7 @@ export const Link = styled.a.attrs(() => ({
   cursor: pointer;
   text-decoration: underline;
 
-  :not(:hover) {
+  &:not(:hover) {
     color: ${(props) => props.theme.color.textDark};
   }
 

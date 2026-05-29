@@ -16,8 +16,8 @@ export const Query = styled.div.attrs(() => ({
   overflow-wrap: break-word;
   hyphens: auto;
 
-  :before,
-  :after {
+  &:before,
+  &:after {
     content: '"';
   }
 `;
@@ -36,7 +36,7 @@ export const Clear = styled(ButtonReset)`
   transform-origin: 50% 50%;
   transition: transform 150ms ease;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: ${size(-1)};
@@ -46,7 +46,7 @@ export const Clear = styled(ButtonReset)`
     border-radius: 50%;
   }
 
-  :after {
+  &:after {
     content: '';
     position: absolute;
     top: 0;
@@ -59,13 +59,13 @@ export const Clear = styled(ButtonReset)`
     transition: opacity 150ms ease;
   }
 
-  :hover {
+  &:hover {
     :after {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.95);
   }
 `;

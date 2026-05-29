@@ -5,6 +5,6 @@ type PropsType = {
   url: string;
 };
 
-const SphereLightbox = ({ url }: PropsType) => <SphereViewer id={url} src={url} preview={url} />;
+const SphereLightbox = ({ url }: PropsType) => <SphereViewer id={url} src={url} interactive />;
 
 export default SphereLightbox;

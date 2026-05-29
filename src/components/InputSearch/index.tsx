@@ -16,15 +16,8 @@ type Props = InputProps & {
   onSearch: () => void;
 };
 
-const InputSearch = React.forwardRef(
-  (
-    { placeholder, label, value, id, onSearch, onChange, onKeyDown }: Props,
-    ref:
-      | ((instance: HTMLDivElement | null) => void)
-      | React.RefObject<HTMLDivElement>
-      | null
-      | undefined
-  ) => (
+const InputSearch = React.forwardRef<HTMLDivElement, Props>(
+  ({ placeholder, label, value, id, onSearch, onChange, onKeyDown }, ref) => (
     <Wrapper ref={ref}>
       <Label htmlFor={id}>{label}</Label>
       <Search>

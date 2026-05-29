@@ -144,7 +144,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
               ref={slider}
               beforeChange={beforeChange}
             >
-              {!!media?.length ? (
+              {media?.length ? (
                 media.map((m, i) => (
                   <Item key={m.files[0].url || i}>
                     {m.type === 'image' && (
@@ -164,15 +164,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
                       />
                     )}
                     {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
-                    {m.type === 'sphere' && (
-                      <Sphere
-                        visible={i === index}
-                        url={m.files[0].url}
-                        preview={m.files[0].url}
-                        onDisableNavigation={onDisableNavigation}
-                        navigationDisabled={navigationDisabled}
-                      />
-                    )}
+                    {m.type === 'sphere' && <Sphere url={m.files[0].url} />}
                   </Item>
                 ))
               ) : (
@@ -206,7 +198,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
         </Main>
         <Alt>
           <QuickNav ref={quickNavRef}>
-            {!!media?.length ? (
+            {media?.length ? (
               media.map((m, i) => {
                 const src =
                   m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||

@@ -65,7 +65,7 @@ export const Alt = styled.div`
     display: none;
   }
 
-  :after {
+  &:after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -83,7 +83,7 @@ export const Item = styled.div`
   height: 100%;
   overflow: hidden;
 
-  :focus {
+  &:focus {
     outline: none;
   }
 
@@ -231,7 +231,7 @@ export const QuickNavBtn = styled(ButtonReset)`
   transform-origin: 50% 50%;
   transition: transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -244,13 +244,13 @@ export const QuickNavBtn = styled(ButtonReset)`
     transition: opacity 150ms ease;
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.95);
   }
 `;
@@ -273,6 +273,7 @@ export const MediaButtonWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+  cursor: pointer;
 `;
 
 // Sphere Close Button

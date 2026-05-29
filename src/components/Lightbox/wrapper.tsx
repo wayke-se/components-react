@@ -69,7 +69,7 @@ export const CloseBtn = styled(ButtonReset)`
     transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
   z-index: 1;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -82,13 +82,13 @@ export const CloseBtn = styled(ButtonReset)`
     transition: opacity 150ms ease;
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.97);
   }
 

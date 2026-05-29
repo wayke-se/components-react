@@ -26,7 +26,7 @@ export const InfoBtn = styled(ButtonReset).attrs(() => ({
   transform-origin: 50% 50%;
   transition: transform 300ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: ${size(-0.5)};
@@ -44,13 +44,13 @@ export const InfoBtn = styled(ButtonReset).attrs(() => ({
     z-index: 1;
   }
 
-  :hover {
+  &:hover {
     :before {
       opacity: 1;
     }
   }
 
-  :active {
+  &:active {
     transform: scale(0.95);
   }
 `;

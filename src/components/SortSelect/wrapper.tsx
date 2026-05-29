@@ -27,7 +27,7 @@ export const Select = styled.select.attrs(() => ({
   cursor: pointer;
   z-index: 1;
 
-  :focus {
+  &:focus {
     outline: none;
     text-decoration: underline;
   }

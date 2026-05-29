@@ -5,10 +5,24 @@ import { size } from '../../layout/helpers';
 const compassSize = size(4);
 const controlBtnSize = size(4);
 
-export const Wrapper = styled.div`
-  width: 100%;
-  height: 0 !important;
-  padding-bottom: 66.666% !important; // 3:2
+export const Wrapper = styled.div<{ $started?: boolean }>`
+  position: relative;
+  aspect-ratio: 3 / 2;
+  ${(p) =>
+    p.$started
+      ? `
+        width: 100%;
+        max-width: 1200px;
+        max-height: calc(100vh - ${size(6)});
+        margin: 0 auto;
+      `
+      : `
+        width: 100%;
+      `}
+
+  .psv-navbar {
+    display: ${(p) => (p.$started ? 'flex' : 'none')};
+  }
 
   .pnlm-container {
     background-image: none;

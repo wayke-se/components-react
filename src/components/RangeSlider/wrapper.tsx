@@ -13,11 +13,11 @@ export const RangeSpanItem = styled.div`
   font-size: 0.875rem;
   color: ${(props) => props.theme.color.textDarkLighten};
 
-  :first-child {
+  &:first-child {
     flex: 1 1 auto;
   }
 
-  :last-child {
+  &:last-child {
     flex-shrink: 0;
   }
 `;
@@ -30,7 +30,7 @@ export const Bar = styled.div`
   position: relative;
   height: 4px;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -70,7 +70,7 @@ export const Handle = styled.div.attrs(() => ({
   cursor: grab;
   transition: transform 150ms ease;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -83,7 +83,7 @@ export const Handle = styled.div.attrs(() => ({
     transition: opacity 150ms ease;
   }
 
-  :active {
+  &:active {
     transform: scale(1.3);
 
     :before {

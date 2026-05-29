@@ -53,11 +53,11 @@ export const Action = styled(ButtonReset).attrs(() => ({
   padding: ${size(1)};
   color: ${(props) => props.theme.color.textDarkLighten};
 
-  :hover {
+  &:hover {
     color: ${(props) => props.theme.color.textDark};
   }
 
-  :after {
+  &:after {
     content: '';
     position: absolute;
     bottom: 0;

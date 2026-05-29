@@ -20,10 +20,11 @@ const translateContentType = (document: Scalars['FileDocument']['input']) => {
   switch (document.contentType) {
     case 'application/pdf':
       return 'PDF';
-    default:
+    default: {
       const formattedContentType =
         document.url && document.url.includes('.') ? document.url.split('.').pop() : '';
       return formattedContentType;
+    }
   }
 };
 

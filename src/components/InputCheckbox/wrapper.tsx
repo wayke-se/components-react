@@ -13,7 +13,7 @@ export const Label = styled.label.attrs(() => ({
   line-height: 1.2;
   cursor: pointer;
 
-  :before {
+  &:before {
     content: '';
     display: flex;
     align-items: center;
@@ -34,7 +34,15 @@ export const Label = styled.label.attrs(() => ({
   }
 `;
 
-export const Wrapper = styled((props) => <div {...props} />).attrs(({ type, checked }) => ({
+export const Wrapper = styled(
+  (
+    props: React.HTMLAttributes<HTMLDivElement> & {
+      type?: string;
+      checked?: boolean;
+      error?: boolean;
+    }
+  ) => <div {...props} />
+).attrs(({ type, checked }) => ({
   role: type || 'checkbox',
   'aria-checked': checked,
 }))`
@@ -51,7 +59,7 @@ export const Wrapper = styled((props) => <div {...props} />).attrs(({ type, chec
     `}
 `;
 
-export const Input = styled((props) => (
+export const Input = styled((props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input {...props} className={`${props.checked ? 'checked' : undefined} ${props.className}`} />
 )).attrs(({ type, checked }) => ({
   checked,

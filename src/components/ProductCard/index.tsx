@@ -110,6 +110,7 @@ const ProductCard = ({
 
   return (
     <Wrapper onClick={_onClick}>
+      {href && <Link onClick={onHrefClick} href={href} title={title} aria-label={title} />}
       <Image ref={containerRef}>
         {isVisible && url ? (
           <>
@@ -142,15 +143,7 @@ const ProductCard = ({
       <Content>
         <ContentBody>
           {branchName && <PreHeading>{branchName}</PreHeading>}
-          <Heading>
-            {href ? (
-              <Link onClick={onHrefClick} href={href} title={title} aria-label={title}>
-                {title}
-              </Link>
-            ) : (
-              title
-            )}
-          </Heading>
+          <Heading>{title}</Heading>
           {description && <Description>{description}</Description>}
           {uspList && (
             <Usp>

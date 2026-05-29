@@ -7,10 +7,11 @@ export const Wrapper = styled.article`
   height: 100%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   transform-origin: 50% 50%;
   transition: transform 150ms ease;
 
-  :active {
+  &:active {
     transform: scale(0.98);
   }
 `;
@@ -23,7 +24,7 @@ export const Image = styled.div`
   background-color: ${(props) => props.theme.color.accentDark};
   border-radius: 3px;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -45,7 +46,7 @@ export const Image = styled.div`
 
 export const Picture = styled.picture``;
 
-export const Source = styled.source``;
+export const Source = styled('source')<{ type?: string; srcSet?: string; media?: string }>``;
 
 export const Img = styled.img`
   position: absolute;
@@ -90,22 +91,16 @@ export const Heading = styled.h1.attrs(() => ({
 `;
 
 export const Link = styled.a`
-  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   color: inherit;
   text-decoration: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
-  :before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  :focus {
-    text-decoration: underline;
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
   }
 `;
 

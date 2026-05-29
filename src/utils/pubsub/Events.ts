@@ -1,4 +1,4 @@
-import { EcomEvent, EcomStep, EcomView } from '@wayke-se/ecom-web/src/Utils/ecomEvent';
+import { EcomEvent, EcomStep, EcomView } from '@wayke-se/ecom-web';
 
 interface EventBase<Callback> {
   eventName: EventNames;
@@ -131,8 +131,7 @@ export interface EventSearchClearQuery extends EventBase<CallbackSearchClearQuer
   eventName: 'SearchClearQuery';
 }
 
-export interface EventSearchClearAllFiltersQuery
-  extends EventBase<CallbackSearchClearAllFiltersQuery> {
+export interface EventSearchClearAllFiltersQuery extends EventBase<CallbackSearchClearAllFiltersQuery> {
   eventName: 'SearchClearAllFilters';
 }
 

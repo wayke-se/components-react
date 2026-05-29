@@ -56,7 +56,7 @@ export const Icon = styled.div`
   padding-left: ${size(1)};
   transition: color 150ms ease;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: ${size(-1)};

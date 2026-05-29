@@ -79,7 +79,7 @@ export default (
 ) => {
   const newProperties = deepCopy(properties);
 
-  if (!!item.manufacturer) {
+  if (item.manufacturer) {
     newProperties.manufacturer = new PropertyBuilder()
       .withName(t('customProperty.manufacturer.displayName'))
       .withValue(item.manufacturer)
@@ -88,7 +88,7 @@ export default (
       .build();
   }
 
-  if (!!item.modelSeries) {
+  if (item.modelSeries) {
     newProperties.modelSeries = new PropertyBuilder()
       .withName(t('customProperty.modelSeries.displayName'))
       .withValue(item.modelSeries)
@@ -97,7 +97,7 @@ export default (
       .build();
   }
 
-  if (!!item.modelName) {
+  if (item.modelName) {
     newProperties.modelName = new PropertyBuilder()
       .withName(t('customProperty.modelName.displayName'))
       .withValue(item.modelName)
@@ -107,7 +107,7 @@ export default (
       .build();
   }
 
-  if (!!item.modelYear) {
+  if (item.modelYear) {
     newProperties.modelYear = new PropertyBuilder()
       .withName(t('customProperty.modelYear.displayName'))
       .withValue(item.modelYear)
@@ -117,7 +117,7 @@ export default (
       .build();
   }
 
-  if (!!item.manufactureYear) {
+  if (item.manufactureYear) {
     newProperties.manufactureYear = new PropertyBuilder()
       .withName(t('customProperty.manufactureYear.displayName'))
       .withValue(item.manufactureYear)
@@ -136,7 +136,7 @@ export default (
       .withCategory(BASIC_CATEGORY(t))
       .withUnit(t(`odometer.${item.odometerReading.unit}`))
       .build();
-  } else if (!!item.mileage) {
+  } else if (item.mileage) {
     newProperties.mileage = new PropertyBuilder()
       .withName(t('customProperty.odometer.displayName'))
       .withValue(item.mileage)
@@ -147,7 +147,7 @@ export default (
       .build();
   }
 
-  if (!!item.gearboxType) {
+  if (item.gearboxType) {
     newProperties.gearboxType = new PropertyBuilder()
       .withName(t('customProperty.gearboxType.displayName'))
       .withValue(item.gearboxType)
@@ -156,7 +156,7 @@ export default (
       .build();
   }
 
-  if (!!item.registrationNumber) {
+  if (item.registrationNumber) {
     newProperties.registrationNumber = new PropertyBuilder()
       .withName(t('customProperty.registrationNumber.displayName'))
       .withValue(item.registrationNumber)
@@ -165,7 +165,7 @@ export default (
       .build();
   }
 
-  if (!!item.fuelType) {
+  if (item.fuelType) {
     newProperties.fuelType = new PropertyBuilder()
       .withName(t('customProperty.fuelType.displayName'))
       .withValue(item.fuelType)
@@ -175,7 +175,7 @@ export default (
       .build();
   }
 
-  if (!!item?.properties?.numberOfDoors) {
+  if (item?.properties?.numberOfDoors) {
     newProperties.fuelType = new PropertyBuilder()
       .withName(t('customProperty.numberOfDoors.displayName'))
       .withValue(item.properties.numberOfDoors as number)
