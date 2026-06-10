@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "@apollo/client": "^4.2.3",
+    "@emotion/is-prop-valid": "^1.4.0",
     "@photo-sphere-viewer/core": "^5.14.1",
     "date-fns": "^4.4.0",
     "graphql": "^16.14.2",
