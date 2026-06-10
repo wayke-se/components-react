@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/components-react",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
