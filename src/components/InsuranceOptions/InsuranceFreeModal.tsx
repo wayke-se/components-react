@@ -1,13 +1,12 @@
-import React from 'react';
-
-import Modal from '../Modal';
-import Content from '../Content';
-import { Repeat } from '../Repeat';
-import { ButtonInline } from '../Button';
-import LogoBox from '../LogoBox';
-import { InsuranceOption } from '../../@types/codegen/types';
 import { marked } from 'marked';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { InsuranceOption } from '../../@types/codegen/types';
+import { ButtonInline } from '../Button';
+import Content from '../Content';
+import LogoBox from '../LogoBox';
+import Modal from '../Modal';
+import { Repeat } from '../Repeat';
 
 interface InsuranceFreeModal {
   onClose: () => void;

@@ -6,10 +6,11 @@ type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLD
   small?: boolean;
 };
 
-const Content = ({ children, small, dangerouslySetInnerHTML }: Props) => (
-  <Wrapper small={small} dangerouslySetInnerHTML={dangerouslySetInnerHTML}>
-    {children}
-  </Wrapper>
-);
+const Content = ({ children, small, dangerouslySetInnerHTML }: Props) =>
+  dangerouslySetInnerHTML ? (
+    <Wrapper small={small} dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+  ) : (
+    <Wrapper small={small}>{children}</Wrapper>
+  );
 
 export default Content;

@@ -1,13 +1,12 @@
-import React, { useState, useCallback } from 'react';
-
-import useThumbnail from './useThumbnail';
-import { ImageFull } from '../Gallery/wrapper';
-import MediaButton from '../Gallery/MediaButton';
-import Modal from '../Modal';
-import VideoPlayer from './EmbeddedVideoLightbox';
-import { onImageLoad, onImageError } from './utils';
-import CustomPlayer from '../Video/CustomPlayer';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import MediaButton from '../Gallery/MediaButton';
+import { ImageFull } from '../Gallery/wrapper';
+import Modal from '../Modal';
+import CustomPlayer from '../Video/CustomPlayer';
+import VideoPlayer from './EmbeddedVideoLightbox';
+import useThumbnail from './useThumbnail';
+import { onImageError, onImageLoad } from './utils';
 
 interface GalleryEmbed {
   src: string;

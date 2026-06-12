@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, Item, Label, Value } from './wrapper';
+import { Item, Label, List, Value } from './wrapper';
 
 interface ItemProps {
   label: string;

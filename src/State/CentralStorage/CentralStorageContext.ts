@@ -6,5 +6,5 @@ export interface CentralStorageContextProps {
 }
 
 export const CentralStorageContext = createContext<CentralStorageContextProps>({
-  setCentralStorageId: (_) => {},
+  setCentralStorageId: (_) => undefined,
 });

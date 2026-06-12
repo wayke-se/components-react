@@ -1,27 +1,26 @@
-import React, { useState, useCallback, useEffect } from 'react';
-
-import { Repeat, RepeatTiny } from '../../components/Repeat';
-import ActionList from '../../components/ActionList';
-import { ButtonPrimary, ButtonContent, ButtonInline } from '../../components/Button';
-import { Columns, Column } from '../../components/Columns';
-import { UtilityFontSizeSmall } from '../../components/Utility';
-import { StateIndicator } from '../../components/StateIndicator';
-import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
-import Content from '../../components/Content';
-import SwitchBar from '../../components/SwitchBar';
+import { format } from 'date-fns';
+import { nb, sv } from 'date-fns/locale';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
+  Branch,
+  ContactOptions,
+  Ecommerce,
   Manufacturer,
   PackageOption,
-  Ecommerce,
-  ContactOptions,
-  Branch,
 } from '../../@types/codegen/types';
+import { MarketCode } from '../../@types/market';
+import ActionList from '../../components/ActionList';
+import { ButtonContent, ButtonInline, ButtonPrimary } from '../../components/Button';
+import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
+import { Column, Columns } from '../../components/Columns';
+import Content from '../../components/Content';
+import { Repeat, RepeatTiny } from '../../components/Repeat';
+import { StateIndicator } from '../../components/StateIndicator';
+import SwitchBar from '../../components/SwitchBar';
+import { UtilityFontSizeSmall } from '../../components/Utility';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
-import { format } from 'date-fns';
-import { sv, nb } from 'date-fns/locale';
-import { useTranslation } from 'react-i18next';
-import { MarketCode } from '../../@types/market';
 
 interface CheckList {
   id: string;

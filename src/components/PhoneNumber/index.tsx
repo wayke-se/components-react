@@ -1,8 +1,7 @@
-import React, { useState, useCallback } from 'react';
-
-import { TableColumnRow, TableColumnCell } from '../TableColumn';
-import { ButtonContent, ButtonInlineBold } from '../Button';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ButtonContent, ButtonInlineBold } from '../Button';
+import { TableColumnCell, TableColumnRow } from '../TableColumn';
 
 interface PhoneNumberProps {
   phoneNumber: string;

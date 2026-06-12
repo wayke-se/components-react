@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react';
-
-import { Wrapper, Extend, Action } from './wrapper';
+import React, { useCallback, useState } from 'react';
 import { ButtonClear, ButtonContent } from '../Button';
+import { Action, Extend, Wrapper } from './wrapper';
 
 interface Props {
   children: React.ReactNode;

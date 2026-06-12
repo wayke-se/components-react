@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Input } from './wrapper';
+import { Input, Wrapper } from './wrapper';
 
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,

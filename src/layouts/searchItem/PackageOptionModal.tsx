@@ -1,12 +1,11 @@
-import React from 'react';
 import { marked } from 'marked';
-
-import { Repeat } from '../../components/Repeat';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonInline } from '../../components/Button';
-import Modal from '../../components/Modal';
 import Content from '../../components/Content';
 import LogoBox from '../../components/LogoBox';
-import { useTranslation } from 'react-i18next';
+import Modal from '../../components/Modal';
+import { Repeat } from '../../components/Repeat';
 
 interface ModelLink {
   url?: string | null;

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Accessory } from '../../../@types/codegen/types';
-import { numberSeparator } from '../../../utils/formats';
+import AccessoryCard from '../../../components/AccessoryCard';
+import Content from '../../../components/Content';
+import { H2 } from '../../../components/Heading';
+import OverflowGrid from '../../../components/OverflowGrid';
 import { ProductPageMainSection } from '../../../components/ProductPage';
 import { Repeat } from '../../../components/Repeat';
-import { H2 } from '../../../components/Heading';
-import Content from '../../../components/Content';
-import AccessoryCard from '../../../components/AccessoryCard';
-import OverflowGrid from '../../../components/OverflowGrid';
+import { numberSeparator } from '../../../utils/formats';
 import AccesoryModal from './AccessoryModal';
 
 interface AccessoriesSectionProps {

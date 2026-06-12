@@ -1,18 +1,17 @@
-import React, { useState, useCallback } from 'react';
-
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IconChevronDown } from '../Icon';
 import {
-  List,
-  Item,
+  Body,
   Header,
-  Label,
   Heading,
+  Icon,
   Indicator,
   IndicatorValue,
-  Icon,
-  Body,
+  Item,
+  Label,
+  List,
 } from './wrapper';
-import { IconChevronDown } from '../Icon';
-import { useTranslation } from 'react-i18next';
 
 export interface IAccordionItem {
   heading: string;

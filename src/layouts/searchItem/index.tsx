@@ -1,50 +1,49 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
-
-import Container from '../../components/Container';
-import UspList, { ItemProps } from '../../components/UspList';
-import { Repeat, RepeatSmall } from '../../components/Repeat';
-import PriceTable from '../../components/PriceTable';
-import LogoBox from '../../components/LogoBox';
-import Content from '../../components/Content';
+import { marked } from 'marked';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { MarketCode } from '../../@types/market';
 import Blockquote from '../../components/Blockquote';
+import { ButtonContent, ButtonInlineLight, ButtonPrimary } from '../../components/Button';
+import Container from '../../components/Container';
+import Content from '../../components/Content';
 import ExtendContent from '../../components/ExtendContent';
+import FinancialOptions from '../../components/FinancialOptions';
 import Gallery from '../../components/Gallery';
+import { H1, H2 } from '../../components/Heading';
+import { IconChevronLeft } from '../../components/Icon';
+import InsuranceOptions from '../../components/InsuranceOptions';
+import LogoBox from '../../components/LogoBox';
 import { Page, PageSection } from '../../components/Page';
+import { PortalElement, PortalNamespace } from '../../components/Portal';
+import PriceTable from '../../components/PriceTable';
 import {
   ProductPage,
-  ProductPageMainSection,
   ProductPageAside,
-  ProductPageMain,
   ProductPageAsideSection,
+  ProductPageMain,
+  ProductPageMainSection,
 } from '../../components/ProductPage';
-import { H1, H2 } from '../../components/Heading';
-import { ButtonPrimary, ButtonContent, ButtonInlineLight } from '../../components/Button';
+import { Repeat, RepeatSmall } from '../../components/Repeat';
+import UspList, { ItemProps } from '../../components/UspList';
 import { UtilityFontSizeSmall } from '../../components/Utility';
-import { IconChevronLeft } from '../../components/Icon';
+import useInitializeTranslation from '../../hooks/useInitializeTranslation';
 import useSearchItem from '../../hooks/useSearchItem';
-import { notEmpty, numberSeparator, dateTimeFormat } from '../../utils/formats';
-import { PortalNamespace, PortalElement } from '../../components/Portal';
-import FinancialOptions from '../../components/FinancialOptions';
-import InsuranceOptions from '../../components/InsuranceOptions';
-import ManufacturerPackageOption from './ManufacturerPackagesOption';
-import CheckList from './CheckList';
-import Related from './Related';
-import PackageOptions from './PackageOptions';
-import Branch from './Branch';
 import useCentralStorage from '../../State/CentralStorage/useCentralStorage';
+import useSettings from '../../State/Settings/useSettings';
+import { dateTimeFormat, notEmpty, numberSeparator } from '../../utils/formats';
+import { i18nScoped } from '../../utils/I18n';
+import PubSub from '../../utils/pubsub/pubsub';
+import AccessoriesSection from './Accessories';
+import Branch from './Branch';
+import CheckList from './CheckList';
+import DemoCarModal from './DemoCarModal';
+import Documents from './Documents';
+import ManufacturerPackageOption from './ManufacturerPackagesOption';
+import PackageOptions from './PackageOptions';
 import Page404 from './Page404';
 import PageLoading from './PageLoading';
-import PubSub from '../../utils/pubsub/pubsub';
 import Property from './Property';
-import DemoCarModal from './DemoCarModal';
-import useSettings from '../../State/Settings/useSettings';
-import Documents from './Documents';
-import AccessoriesSection from './Accessories';
-import { MarketCode } from '../../@types/market';
-import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import Related from './Related';
 import useEcom from './useEcom';
-import { i18nScoped } from '../../utils/I18n';
-import { marked } from 'marked';
 
 export interface WaykeSearchItemProps {
   marketCode?: MarketCode;

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { Facet, Document, Search } from '../../@types/search';
 import { QueryFilter } from '../../@types/queryFilter';
+import { Document, Facet, Search } from '../../@types/search';
 
 export interface SearchContextProps {
   loading: boolean;
@@ -21,7 +21,7 @@ export const SearchContext = createContext<SearchContextProps>({
   documents: undefined,
   initialFacets: undefined,
   queryFilter: { searchParams: new URLSearchParams() },
-  onFilterUpdate: (_) => {},
-  onLoadMore: () => {},
-  onInitialize: (_) => {},
+  onFilterUpdate: (_) => undefined,
+  onLoadMore: () => undefined,
+  onInitialize: (_) => undefined,
 });

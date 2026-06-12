@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Facet, FacetFilter } from '../../@types/search';
-import ColorSelect from '../ColorSelect';
 import useSearch from '../../State/Search/useSearch';
 import { getHexColorFromDisplayName } from '../../utils/converters';
 import PubSub from '../../utils/pubsub/pubsub';
+import ColorSelect from '../ColorSelect';
 
 interface ColorSelectFacetProps {
   facet: Facet;

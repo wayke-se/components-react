@@ -1,12 +1,11 @@
 import React from 'react';
-
-import { H2, H3 } from '../../components/Heading';
-import { ProductPageMainSection } from '../../components/ProductPage';
+import { useTranslation } from 'react-i18next';
 import { Scalars } from '../../@types/codegen/types';
 import DocumentList from '../../components/DocumentList';
-import { Repeat } from '../../components/Repeat';
-import { useTranslation } from 'react-i18next';
 import ExtendContent from '../../components/ExtendContent';
+import { H2, H3 } from '../../components/Heading';
+import { ProductPageMainSection } from '../../components/ProductPage';
+import { Repeat } from '../../components/Repeat';
 
 const SortOrder = {
   'tyre-label': 2,

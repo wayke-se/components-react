@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Logo, LogoImg, Content, Wrapper } from './wrapper';
+import { Content, Logo, LogoImg, Wrapper } from './wrapper';
 
 interface IOptionBox {
   logo?: string;

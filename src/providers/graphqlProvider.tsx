@@ -1,6 +1,6 @@
-import React from 'react';
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { ApolloProvider as ApolloProviderBase } from '@apollo/client/react';
+import React from 'react';
 
 const GraphqlProvider = ({ uri, children }: { uri: string; children: React.ReactNode }) => {
   const client = new ApolloClient({

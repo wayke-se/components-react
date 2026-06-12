@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { Branch, Maybe } from '../../@types/codegen/types';
 import { SettingsContextProps } from '../../State/Settings/SettingsContext';
 import PubSub from '../../utils/pubsub/pubsub';
-import { Branch, Maybe } from '../../@types/codegen/types';
 
 interface EcomWeb {
   start: () => void;
@@ -45,7 +45,7 @@ function useEcom(
           },
         });
       }
-    } catch (e) {
+    } catch {
       //
     }
   };

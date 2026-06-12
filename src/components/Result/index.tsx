@@ -1,24 +1,23 @@
 import React, { useCallback } from 'react';
-
+import { useTranslation } from 'react-i18next';
+import useSearch from '../../State/Search/useSearch';
+import { numberSeparator } from '../../utils/formats';
+import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
+import { ButtonContent, ButtonSecondary } from '../Button';
+import Loader from '../Loader';
+import ProgressBar from '../ProgressBar';
+import SortSelect, { OptionProps } from '../SortSelect';
 import {
-  Wrapper,
+  Body,
+  Footer,
+  FooterAction,
+  FooterProgress,
   Header,
   HeaderCount,
   HeaderSort,
-  Body,
-  Footer,
-  FooterProgress,
-  FooterAction,
   ResultCount,
+  Wrapper,
 } from './wrapper';
-import ProgressBar from '../ProgressBar';
-import { ButtonSecondary, ButtonContent } from '../Button';
-import Loader from '../Loader';
-import { numberSeparator } from '../../utils/formats';
-import useSearch from '../../State/Search/useSearch';
-import SortSelect, { OptionProps } from '../SortSelect';
-import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
-import { useTranslation } from 'react-i18next';
 
 interface Props {
   children: React.ReactNode;

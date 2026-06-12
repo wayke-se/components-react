@@ -1,21 +1,20 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
-
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { SearchFilterTypes } from '../../@types/filter';
+import { MarketCode } from '../../@types/market';
 import Container from '../../components/Container';
-import { Page, PageSection } from '../../components/Page';
-import Result from '../../components/Result';
 import Filter from '../../components/Filter';
 import Grid from '../../components/Grid';
-import SearchTerm from '../../components/SearchTerm';
+import { Page, PageSection } from '../../components/Page';
 import { PortalElement, PortalNamespace } from '../../components/Portal';
-import SearchFilter from '../../components/SearchFilter';
-import Snackbar from '../../components/Snackbar';
-import useSearch from '../../State/Search/useSearch';
-import { SearchFilterTypes } from '../../@types/filter';
-import PubSub from '../../utils/pubsub/pubsub';
-import { MarketCode } from '../../@types/market';
-import useInitializeTranslation from '../../hooks/useInitializeTranslation';
-import { i18nScoped } from '../../utils/I18n';
 import { OnItemClick } from '../../components/ProductCard';
+import Result from '../../components/Result';
+import SearchFilter from '../../components/SearchFilter';
+import SearchTerm from '../../components/SearchTerm';
+import Snackbar from '../../components/Snackbar';
+import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import useSearch from '../../State/Search/useSearch';
+import { i18nScoped } from '../../utils/I18n';
+import PubSub from '../../utils/pubsub/pubsub';
 
 const DefaultFilterList: SearchFilterTypes[] = [
   {
@@ -101,7 +100,8 @@ const WaykeSearch = ({
     const f = [...DefaultFilterList];
     if (!marketCode || marketCode === 'SE') {
       return f.filter((x) => x.filterName !== 'odometerValueAsKm');
-    } else if (marketCode === 'NO') {
+    }
+    if (marketCode === 'NO') {
       return f.filter((x) => x.filterName !== 'mileage');
     }
     return f;

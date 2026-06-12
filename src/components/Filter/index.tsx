@@ -1,20 +1,19 @@
-import React, { useState, useCallback } from 'react';
-
-import { List, Item, Action, Label, Indicator, IndicatorValue } from './wrapper';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { SearchFilterNameTypes, SearchFilterTypes } from '../../@types/filter';
+import { MarketCode } from '../../@types/market';
 import { Facet } from '../../@types/search';
+import useSearch from '../../State/Search/useSearch';
 import {
-  PRICE,
+  BUSINESS_LEASING_PRICE,
+  LEASING_PRICE,
   MILEAGE,
   MODEL_YEAR,
-  LEASING_PRICE,
-  BUSINESS_LEASING_PRICE,
   ODOMETER_VALUE_AS_KM,
+  PRICE,
 } from '../../utils/constants';
-import useSearch from '../../State/Search/useSearch';
-import { SearchFilterTypes, SearchFilterNameTypes } from '../../@types/filter';
 import FilterPanel from '../FilterPanel';
-import { useTranslation } from 'react-i18next';
-import { MarketCode } from '../../@types/market';
+import { Action, Indicator, IndicatorValue, Item, Label, List } from './wrapper';
 
 const isSelected = (f: Facet, searchParams: URLSearchParams) => {
   switch (f.id) {

@@ -1,8 +1,8 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Facet } from '../../@types/search';
-import RangeSlider from '../RangeSlider';
 import useSearch from '../../State/Search/useSearch';
 import PubSub from '../../utils/pubsub/pubsub';
+import RangeSlider from '../RangeSlider';
 
 interface RangeFacetProps {
   facet: Facet;

@@ -1,12 +1,11 @@
-import React, { useMemo } from 'react';
-import { RepeatSmall } from '../Repeat';
-import Badge from '../Badge';
-import { TableColumn, TableColumnRow, TableColumnCell } from '../TableColumn';
-import { UtilityTextBold } from '../Utility';
-
-import { OpeningHours, Maybe } from '../../@types/codegen/types';
-import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Maybe, OpeningHours } from '../../@types/codegen/types';
+import Badge from '../Badge';
+import { RepeatSmall } from '../Repeat';
+import { TableColumn, TableColumnCell, TableColumnRow } from '../TableColumn';
+import { UtilityTextBold } from '../Utility';
 
 type Days = Omit<OpeningHours, '__typename'>;
 type KeyType = keyof Days;
@@ -101,7 +100,7 @@ const OpeningHours = ({ openingHours }: OpeningHoursProps) => {
         const until = valuOfDateString(today.until);
         return currentDate >= from && currentDate <= until;
       }
-    } catch (e) {
+    } catch {
       return false;
     }
   }, [today]);

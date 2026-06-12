@@ -1,5 +1,5 @@
 import React from 'react';
-import { InsuranceOption, Branch } from '../../@types/codegen/types';
+import { Branch, InsuranceOption } from '../../@types/codegen/types';
 import Insurance from './Insurance';
 import InsuranceFree from './InsuranceFree';
 

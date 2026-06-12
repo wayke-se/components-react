@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import Checklist from '../Checklist';
-import OverflowBox from '../OverflowBox';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Facet, FacetFilter } from '../../@types/search';
 import useSearch from '../../State/Search/useSearch';
 import PubSub from '../../utils/pubsub/pubsub';
+import Checklist from '../Checklist';
+import OverflowBox from '../OverflowBox';
 
 interface ChecklistFacetProps {
   facet: Facet;

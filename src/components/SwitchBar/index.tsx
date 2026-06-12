@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from 'react';
-
-import { Wrapper, Header, Body, Info, Action, InfoContent, InfoBtn, Title } from './wrapper';
-import Modal from '../Modal';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonInline } from '../Button';
 import { IconInfo } from '../Icon';
-import { useTranslation } from 'react-i18next';
+import Modal from '../Modal';
+import { Action, Body, Header, Info, InfoBtn, InfoContent, Title, Wrapper } from './wrapper';
 
 interface Props {
   title: string;

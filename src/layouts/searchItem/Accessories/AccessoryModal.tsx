@@ -1,16 +1,16 @@
-import React from 'react';
 import { marked } from 'marked';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Accessory } from '../../../@types/codegen/types';
-import { numberSeparator } from '../../../utils/formats';
-import { Repeat } from '../../../components/Repeat';
+import Content from '../../../components/Content';
 import { Image } from '../../../components/Image';
 import { Link } from '../../../components/Link';
-import { UtilityTextBold } from '../../../components/Utility';
+import LogoBox from '../../../components/LogoBox';
 import Modal from '../../../components/Modal';
 import PriceBox from '../../../components/PriceBox';
-import LogoBox from '../../../components/LogoBox';
-import Content from '../../../components/Content';
-import { useTranslation } from 'react-i18next';
+import { Repeat } from '../../../components/Repeat';
+import { UtilityTextBold } from '../../../components/Utility';
+import { numberSeparator } from '../../../utils/formats';
 
 interface AccesoryModalProps {
   accessory: Accessory;

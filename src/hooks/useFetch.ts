@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const cache: { [key: string]: unknown | undefined } = {};
 
@@ -63,7 +63,7 @@ const useFetch = <T>(
         setCachedResult(key, json);
         setData(json);
       }
-    } catch (e) {
+    } catch {
       setError(true);
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 import { Tree } from '../../@types/vehicle-properties';
-import compareCategories from './compare-categories';
 import compareBasicProperties from './compare-basic-properties';
+import compareCategories from './compare-categories';
 import compareProperties from './compare-properties';
 
 const sort = (tree: Tree) => {

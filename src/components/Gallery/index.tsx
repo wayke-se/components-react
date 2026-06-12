@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import SliderComponent from 'react-slick';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
@@ -6,34 +6,34 @@ const Slider: typeof SliderComponent = (
   SliderComponent as unknown as { default: typeof SliderComponent }
 ).default;
 
-import {
-  Wrapper,
-  SliderWrapper,
-  Item,
-  Image,
-  ArrowLeft,
-  ArrowRight,
-  Main,
-  Alt,
-  QuickNav,
-  QuickNavItem,
-  QuickNavBtn,
-  QuickNavImg,
-  EnableNavigationButton,
-} from './wrapper';
+import { useTranslation } from 'react-i18next';
+import { Branch, Maybe, Media } from '../../@types/codegen/types';
+import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
+import { notEmpty } from '../../utils/formats';
+import PubSub from '../../utils/pubsub/pubsub';
+import { ButtonContent, ButtonSecondary } from '../Button';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
-import { ButtonSecondary, ButtonContent } from '../Button';
-import { NavButton } from '../NavButton';
 import Lightbox from '../Lightbox';
+import { NavButton } from '../NavButton';
+import Sphere from '../Sphere/Sphere';
+import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import EmbededVideo from '../Video/EmbededVideo';
 import QuickNavEmbeded from '../Video/QuickNavEmbeded';
-import Sphere from '../Sphere/Sphere';
-import { notEmpty } from '../../utils/formats';
-import ThreeSixty from '../ThreeSixty/ThreeSixty';
-import { Branch, Maybe, Media } from '../../@types/codegen/types';
-import PubSub from '../../utils/pubsub/pubsub';
-import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
-import { useTranslation } from 'react-i18next';
+import {
+  Alt,
+  ArrowLeft,
+  ArrowRight,
+  EnableNavigationButton,
+  Image,
+  Item,
+  Main,
+  QuickNav,
+  QuickNavBtn,
+  QuickNavImg,
+  QuickNavItem,
+  SliderWrapper,
+  Wrapper,
+} from './wrapper';
 
 interface GalleryProps {
   id: string;

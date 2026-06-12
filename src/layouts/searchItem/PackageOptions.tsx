@@ -1,14 +1,13 @@
-import React from 'react';
 import { marked } from 'marked';
-
-import { Repeat } from '../../components/Repeat';
-import { ProductPageMainSection } from '../../components/ProductPage';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { PackageOption } from '../../@types/codegen/types';
+import { ButtonInline } from '../../components/Button';
 import Content from '../../components/Content';
 import { H2 } from '../../components/Heading';
-import { ButtonInline } from '../../components/Button';
 import LogoBox from '../../components/LogoBox';
-import { PackageOption } from '../../@types/codegen/types';
-import { useTranslation } from 'react-i18next';
+import { ProductPageMainSection } from '../../components/ProductPage';
+import { Repeat } from '../../components/Repeat';
 
 interface PackageOptionsProps {
   packageOptions?: PackageOption[] | null;

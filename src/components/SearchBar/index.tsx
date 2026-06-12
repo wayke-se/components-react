@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
-import InputSearch from '../InputSearch';
-import useOutsideClick from '../../hooks/useOutsideClick';
 import { useTranslation } from 'react-i18next';
+import useOutsideClick from '../../hooks/useOutsideClick';
+import InputSearch from '../InputSearch';
 
 interface SearchBarProps {
   value: string;

@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react';
-
-import { Item, Img } from '../Lightbox/wrapper';
-import MediaButton from '../Gallery/MediaButton';
-import Rotation from './Rotation';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import MediaButton from '../Gallery/MediaButton';
+import { Img, Item } from '../Lightbox/wrapper';
+import Rotation from './Rotation';
 
 type PropsType = {
   urls: string[];

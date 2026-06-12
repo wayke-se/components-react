@@ -13,7 +13,7 @@ export const formatPhonenumber = (text: string) => {
       typedMetadata
     );
     return parsed?.formatNational() || text;
-  } catch (e) {
+  } catch {
     return text;
   }
 };

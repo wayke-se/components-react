@@ -1,31 +1,30 @@
 import React, { useCallback, useMemo } from 'react';
-
+import { useTranslation } from 'react-i18next';
+import { Branch, File } from '../../@types/search';
+import useIsInViewport from '../../hooks/useIsInViewport';
+import usePath from '../../State/Path/usePath';
+import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
+import UspList, { ItemProps } from '../UspList';
 import {
-  Wrapper,
-  Image,
-  Picture,
-  Source,
-  Img,
   Content,
   ContentBody,
   ContentFooter,
-  Heading,
-  Link,
-  Description,
-  Usp,
-  Price,
   CurrentPrice,
-  OldPrice,
-  PriceCell,
+  Description,
+  Heading,
+  Image,
+  Img,
   Label,
+  Link,
+  OldPrice,
+  Picture,
   PreHeading,
+  Price,
+  PriceCell,
+  Source,
+  Usp,
+  Wrapper,
 } from './wrapper';
-import UspList, { ItemProps } from '../UspList';
-import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
-import usePath from '../../State/Path/usePath';
-import { useTranslation } from 'react-i18next';
-import useIsInViewport from '../../hooks/useIsInViewport';
-import { Branch, File } from '../../@types/search';
 
 export interface OnItemClick {
   id: string;

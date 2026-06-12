@@ -1,14 +1,13 @@
-import React, { useState, useCallback, useContext } from 'react';
-
-import { Repeat, RepeatTiny } from '../../components/Repeat';
-import InputSelect from '../../components/InputSelect';
-import { ButtonPrimary, ButtonContent } from '../../components/Button';
-import Modal from '../../components/Modal';
+import React, { useCallback, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BranchConnection } from '../../@types/codegen/types';
+import { ButtonContent, ButtonPrimary } from '../../components/Button';
 import Content from '../../components/Content';
 import InputLabel from '../../components/InputLabel';
-import { BranchConnection } from '../../@types/codegen/types';
+import InputSelect from '../../components/InputSelect';
+import Modal from '../../components/Modal';
+import { Repeat, RepeatTiny } from '../../components/Repeat';
 import { CentralStorageContext } from '../../State/CentralStorage/CentralStorageContext';
-import { useTranslation } from 'react-i18next';
 
 interface BranchModalProps {
   loading: boolean;

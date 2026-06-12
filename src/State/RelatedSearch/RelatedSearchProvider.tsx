@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react';
-
-import { Search } from '../../@types/search';
+import React, { useCallback, useState } from 'react';
 import { QueryFilter } from '../../@types/queryFilter';
+import { Search } from '../../@types/search';
 import useFetch from '../../hooks/useFetch';
 import { RelatedSearchContext } from './RelatedSearchContext';
 

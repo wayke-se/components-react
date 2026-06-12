@@ -1,4 +1,4 @@
-import { EnhancedProperty, Tree, Category, ItemCategory } from '../../@types/vehicle-properties';
+import { Category, EnhancedProperty, ItemCategory, Tree } from '../../@types/vehicle-properties';
 
 class PropertyTreeCreator {
   private properties: { [key: string]: EnhancedProperty };

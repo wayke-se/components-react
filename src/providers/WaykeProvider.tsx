@@ -1,15 +1,14 @@
 import React from 'react';
 
 import packageJson from '../../package.json';
-import GraphqlProvider from './graphqlProvider';
-import Theme from './themeProvider';
-import SearchProvider from '../State/Search/SearchProvider';
 import Root from '../components/Root';
-
-import SettingsProvider from '../State/Settings/SettingsProvider';
-import RelatedSearchProvider from '../State/RelatedSearch/RelatedSearchProvider';
 import CentralStorageProvider from '../State/CentralStorage/CentralStorageProvider';
 import PathProvider from '../State/Path/PathProvider';
+import RelatedSearchProvider from '../State/RelatedSearch/RelatedSearchProvider';
+import SearchProvider from '../State/Search/SearchProvider';
+import SettingsProvider from '../State/Settings/SettingsProvider';
+import GraphqlProvider from './graphqlProvider';
+import Theme from './themeProvider';
 
 export interface EcomSettings {
   url: string;

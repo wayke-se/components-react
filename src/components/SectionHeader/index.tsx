@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { Wrapper, Heading, Action } from './wrapper';
 import { ButtonClear, ButtonContent } from '../Button';
+import { Action, Heading, Wrapper } from './wrapper';
 
 interface Props {
   children: React.ReactNode;

@@ -14,5 +14,5 @@ export const RelatedSearchContext = createContext<RelatedSearchContextProps>({
   loading: false,
   error: false,
   response: undefined,
-  fetchRelated: (_) => {},
+  fetchRelated: (_) => undefined,
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, cloneElement, Children } from 'react';
+import React, { Children, cloneElement, useEffect, useRef, useState } from 'react';
 
 const calculateCurrentFrame = (startFrame: number, delta: number, length: number): number => {
   const frame = (startFrame + delta) % length;

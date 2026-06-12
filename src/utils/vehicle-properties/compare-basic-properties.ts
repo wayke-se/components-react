@@ -46,7 +46,8 @@ const compareByPredefinedOrder = (firstId: string, secondId: string) => {
 
   if (firstOrder < secondOrder) {
     return -1;
-  } else if (secondOrder < firstOrder) {
+  }
+  if (secondOrder < firstOrder) {
     return 1;
   }
   return 0;

@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { VehicleData } from '../../@types/codegen/types';
 import { Category, Property } from '../../@types/vehicle-properties';
-import PropertyTreeCreator from '../../utils/vehicle-properties/property-tree-creator';
-import sortTree from '../../utils/vehicle-properties/property-tree-sorter';
-import addCustomProperties from '../../utils/vehicle-properties/custom-property-adder';
-import removeProperties from '../../utils/vehicle-properties/property-remover';
-import MetadataItem from './MetadataItem';
-
 import { H5 } from '../../components/Heading';
 import { Repeat } from '../../components/Repeat';
 import { TableList } from '../../components/TableList';
 import Tabs from '../../components/Tabs';
-import { VehicleData } from '../../@types/codegen/types';
-import { useTranslation } from 'react-i18next';
+import addCustomProperties from '../../utils/vehicle-properties/custom-property-adder';
+import removeProperties from '../../utils/vehicle-properties/property-remover';
+import PropertyTreeCreator from '../../utils/vehicle-properties/property-tree-creator';
+import sortTree from '../../utils/vehicle-properties/property-tree-sorter';
+import MetadataItem from './MetadataItem';
 
 interface MetadataSubCategoryProps {
   name: string;

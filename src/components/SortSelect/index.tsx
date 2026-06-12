@@ -1,9 +1,8 @@
 import React from 'react';
-
-import { Wrapper, Select, Option, Icon } from './wrapper';
-import { IconChevronDown } from '../Icon';
-import { DrivingDistance } from '../../@types/codegen/types';
 import { useTranslation } from 'react-i18next';
+import { DrivingDistance } from '../../@types/codegen/types';
+import { IconChevronDown } from '../Icon';
+import { Icon, Option, Select, Wrapper } from './wrapper';
 
 export interface OptionProps {
   value: number | string | DrivingDistance;

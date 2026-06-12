@@ -1,6 +1,5 @@
-import React from 'react';
-
 import isPropValid from '@emotion/is-prop-valid';
+import React from 'react';
 import { StyleSheetManager, ThemeProvider as ThemeProviderBase } from 'styled-components';
 
 import theme from '../layout/theme';

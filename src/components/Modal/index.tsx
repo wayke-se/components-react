@@ -1,21 +1,20 @@
 import * as React from 'react';
-
-import { Portal, PortalNamespace } from '../Portal';
+import { useTranslation } from 'react-i18next';
 
 import { H1 } from '../Heading';
 import { IconCancel } from '../Icon';
+import { Portal, PortalNamespace } from '../Portal';
 import {
   Body,
+  Close,
+  CloseBtn,
   Content,
   Dialog,
   Header,
   Heading,
   UiBlock,
   Wrapper,
-  Close,
-  CloseBtn,
 } from './wrapper';
-import { useTranslation } from 'react-i18next';
 
 interface ModalProps {
   id?: string | null;

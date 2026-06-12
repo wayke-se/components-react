@@ -3,7 +3,6 @@ import { Link } from '../Link';
 import { Body, Heading, Icon, Wrapper } from './wrapper';
 
 export const CreditorDisclaimer = () => (
-  // biome-ignore lint/a11y/useSemanticElements: Output element is not suitable for this use case
   <Wrapper role="status" aria-live="polite">
     <Icon aria-hidden="true">
       <svg

@@ -1,8 +1,7 @@
 import React from 'react';
-
-import Modal from '../../components/Modal';
-import Content from '../../components/Content';
 import { useTranslation } from 'react-i18next';
+import Content from '../../components/Content';
+import Modal from '../../components/Modal';
 
 interface DemoCarModalProps {
   onClose: () => void;
