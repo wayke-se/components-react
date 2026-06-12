@@ -1,10 +1,9 @@
 import React from 'react';
-
-import { Wrapper, List, Item } from './wrapper';
-import ProductCard, { OnItemClick } from '../ProductCard';
+import { useTranslation } from 'react-i18next';
 import { Document } from '../../@types/search';
 import { numberSeparator } from '../../utils/formats';
-import { useTranslation } from 'react-i18next';
+import ProductCard, { OnItemClick } from '../ProductCard';
+import { Item, List, Wrapper } from './wrapper';
 
 interface GridProps {
   documents?: Document[];

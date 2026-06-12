@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client/react';
+import { Query, QueryLoanArgs } from '../@types/codegen/types';
 import LOAN_CALCULATION from '../queries/LOAN_CALCULATION';
-import { QueryLoanArgs, Query } from '../@types/codegen/types';
 import { asStrict, StrictQueryResult } from './apolloTypes';
 
 const useLoanCalculation = (

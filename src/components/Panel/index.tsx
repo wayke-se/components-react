@@ -1,20 +1,19 @@
 import * as React from 'react';
-
+import { useTranslation } from 'react-i18next';
+import { H1 } from '../Heading';
+import { IconCancel } from '../Icon';
+import { Portal, PortalNamespace } from '../Portal';
 import {
-  PanelWrapper,
+  Body,
   Close,
   CloseBtn,
+  Footer,
   Header,
   Heading,
-  Body,
-  Footer,
+  PanelWrapper,
   UiBlock,
   Wrapper,
 } from './wrapper';
-import { Portal, PortalNamespace } from '../Portal';
-import { H1 } from '../Heading';
-import { IconCancel } from '../Icon';
-import { useTranslation } from 'react-i18next';
 
 interface IPanelPortal {
   id?: string | null;

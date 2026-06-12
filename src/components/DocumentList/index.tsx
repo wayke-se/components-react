@@ -1,16 +1,15 @@
 import React, { useMemo } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { Scalars } from '../../@types/codegen/types';
 import {
+  List,
+  PdfColumn,
+  PdfLink,
+  PdfListInner,
   PdfListItem,
   PdfSubtitle,
   PdfTitle,
-  List,
-  PdfListInner,
-  PdfLink,
-  PdfColumn,
 } from './wrapper';
-import { useTranslation } from 'react-i18next';
 
 interface PdfDownloadItemProps {
   document: Scalars['FileDocument']['input'];

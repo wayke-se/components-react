@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { Wrapper, Main, Heading, Description, Footer, Foldout } from './wrapper';
-import { ButtonClear, ButtonContent } from '../Button';
 import { useTranslation } from 'react-i18next';
+import { ButtonClear, ButtonContent } from '../Button';
+import { Description, Foldout, Footer, Heading, Main, Wrapper } from './wrapper';
 
 interface Props {
   heading: string;

@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { Wrapper, Search, Action, ActionBtn, Input, Label } from './wrapper';
 import { IconSearch } from '../Icon';
+import { Action, ActionBtn, Input, Label, Search, Wrapper } from './wrapper';
 
 type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Label, Value } from './wrapper';
+import { Label, Value, Wrapper } from './wrapper';
 
 interface Props {
   label: string;

@@ -1,30 +1,29 @@
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { Facet } from '../../@types/search';
+import {
+  BRANCH,
+  BUSINESS_LEASING_PRICE,
+  COLOR,
+  DRIVING_WHEEL,
+  ELECTRICAL_RANGE_WLTP,
+  ENGINE_BASE_TYPE,
+  ENVIRONMENT_CLASS,
+  FUEL_TYPE,
+  FUEL_TYPES,
+  GEARBOX_TYPE,
+  LEASING_PRICE,
+  MANUFACTURER,
+  MILEAGE,
+  MODEL_SERIES,
+  MODEL_YEAR,
+  ODOMETER_VALUE_AS_KM,
+  PRICE,
+  SEGMENT,
+} from '../../utils/constants';
 import CheckListFacet from './checkListFacet';
 import ColorSelectFacet from './colorFacet';
 import RangeFacet from './rangeFacet';
-import {
-  MANUFACTURER,
-  MODEL_SERIES,
-  FUEL_TYPE,
-  GEARBOX_TYPE,
-  ENVIRONMENT_CLASS,
-  SEGMENT,
-  DRIVING_WHEEL,
-  COLOR,
-  PRICE,
-  BRANCH,
-  MILEAGE,
-  MODEL_YEAR,
-  LEASING_PRICE,
-  BUSINESS_LEASING_PRICE,
-  ODOMETER_VALUE_AS_KM,
-  FUEL_TYPES,
-  ENGINE_BASE_TYPE,
-  ELECTRICAL_RANGE_WLTP,
-} from '../../utils/constants';
-import { useTranslation } from 'react-i18next';
 
 interface FacetSelectorProps {
   facet: Facet;

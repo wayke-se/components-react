@@ -5,7 +5,6 @@ import { OnItemClick } from '../../../../src/components/ProductCard';
 
 const Search = () => {
   const onClickSearchItem = useCallback((data: OnItemClick) => {
-    // eslint-disable-next-line
     console.log(data);
   }, []);
 

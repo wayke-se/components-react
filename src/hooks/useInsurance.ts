@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client/react';
+import { DrivingDistance, Query, QueryInsurancesArgs } from '../@types/codegen/types';
 import INSURANCE_CALCULATION from '../queries/INSURANCE_CALCULATION';
-
-import { DrivingDistance, QueryInsurancesArgs, Query } from '../@types/codegen/types';
 import { asStrict, StrictQueryResult } from './apolloTypes';
 
 const useInsuranceCalculation = (

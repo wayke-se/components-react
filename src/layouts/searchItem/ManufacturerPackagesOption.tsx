@@ -1,14 +1,13 @@
-import React from 'react';
 import { marked } from 'marked';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { Repeat } from '../../components/Repeat';
-import { ProductPageMainSection } from '../../components/ProductPage';
+import { Maybe, PackageOption } from '../../@types/codegen/types';
+import { ButtonInline } from '../../components/Button';
 import Content from '../../components/Content';
 import { H2 } from '../../components/Heading';
-import { ButtonInline } from '../../components/Button';
 import LogoBox from '../../components/LogoBox';
-import { Maybe, PackageOption } from '../../@types/codegen/types';
+import { ProductPageMainSection } from '../../components/ProductPage';
+import { Repeat } from '../../components/Repeat';
 
 interface ManufacturerPackageOption {
   packageOption?: Maybe<PackageOption>;

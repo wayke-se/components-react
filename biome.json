@@ -1,0 +1,75 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+  "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": ["**/src/**/*.ts", "**/src/**/*.tsx", "**/example/**/*.ts", "**/example/**/*.tsx"]
+  },
+  "formatter": {
+    "enabled": true,
+    "useEditorconfig": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto",
+    "bracketSpacing": true
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "a11y": {},
+      "complexity": { "useArrowFunction": "error" },
+      "correctness": {
+        "noChildrenProp": "error",
+        "noUnusedLabels": "error",
+        "noUnusedVariables": "error",
+        "useJsxKeyInIterable": "error"
+      },
+      "security": {
+        "noDangerouslySetInnerHtmlWithChildren": "error",
+        "noGlobalEval": "error",
+        "noBlankTarget": "error"
+      },
+      "style": {
+        "noUselessElse": "error",
+        "useBlockStatements": "off",
+        "useConst": "error",
+        "useSingleVarDeclarator": "error",
+        "useTemplate": "error"
+      },
+      "suspicious": {
+        "noCommentText": "error",
+        "noConsole": "error",
+        "noDebugger": "error",
+        "noDuplicateCase": "error",
+        "noDuplicateJsxProps": "error",
+        "noEmptyBlockStatements": "error",
+        "noVar": "error"
+      }
+    },
+    "includes": ["**", "!**/src/@types/codegen/**/*"]
+  },
+  "overrides": [
+    {
+      "includes": ["**/example/**"],
+      "linter": { "rules": { "suspicious": { "noConsole": "off" } } }
+    }
+  ],
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    }
+  }
+}

@@ -1,5 +1,5 @@
-import { notEmpty, dateTimeFormat, numberSeparator } from './formats';
 import { VehicleData } from '../@types/codegen/types';
+import { dateTimeFormat, notEmpty, numberSeparator } from './formats';
 
 export interface ItemPropertModalType {
   title: string;

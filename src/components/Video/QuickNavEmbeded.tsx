@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-
-import useThumbnail from './useThumbnail';
-import { QuickNavImg } from '../Gallery/wrapper';
-import { onImageLoad, onImageError } from './utils';
-import CustomPlayer from '../Video/CustomPlayer';
 import { useTranslation } from 'react-i18next';
+import { QuickNavImg } from '../Gallery/wrapper';
+import CustomPlayer from '../Video/CustomPlayer';
+import useThumbnail from './useThumbnail';
+import { onImageError, onImageLoad } from './utils';
 
 interface QuickNavEmbededProps {
   src?: string;

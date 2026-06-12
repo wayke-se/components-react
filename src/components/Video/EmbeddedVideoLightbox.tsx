@@ -1,8 +1,7 @@
 import React from 'react';
-
-import YouTubePlayer from './YoutubePlayer';
-import VimeoPlayer from './VimeoPlayer';
 import CustomPlayer from '../Video/CustomPlayer';
+import VimeoPlayer from './VimeoPlayer';
+import YouTubePlayer from './YoutubePlayer';
 
 const ytNames = ['youtube.com', 'youtu.be'];
 const isYouTubeVideo = (url: string): boolean =>

@@ -1,16 +1,15 @@
-import React, { useState, useCallback } from 'react';
-
-import OptionBox from '../OptionBox';
-import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { UtilityTextPrimary } from '../Utility';
-import { ButtonInline } from '../Button';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FinancialOption } from '../../@types/codegen/types';
 import { numberSeparator } from '../../utils/formats';
-import Modal from '../Modal';
-import { Image, ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
+import { ButtonInline } from '../Button';
 import Content from '../Content';
 import DataList from '../DataList';
-import { FinancialOption } from '../../@types/codegen/types';
-import { useTranslation } from 'react-i18next';
+import Modal from '../Modal';
+import { Image, ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
+import OptionBox from '../OptionBox';
+import { OptionBoxContent, OptionBoxHeading } from '../OptionBox/wrapper';
+import { UtilityTextPrimary } from '../Utility';
 
 interface LeasingProps {
   financialOption: FinancialOption;

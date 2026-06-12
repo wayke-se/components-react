@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import useSearch from '../../State/Search/useSearch';
-import SearchBar from '../SearchBar';
 import PubSub from '../../utils/pubsub/pubsub';
+import SearchBar from '../SearchBar';
 
 const SearchFilter = () => {
   const [value, setValue] = useState('');

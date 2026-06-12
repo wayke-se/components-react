@@ -1,20 +1,19 @@
-import React, { useState, useCallback } from 'react';
+import { TFunction } from 'i18next';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Property } from '../../@types/vehicle-properties';
-
+import { ButtonInline } from '../../components/Button';
+import Content from '../../components/Content';
+import { IconCancel, IconCheck } from '../../components/Icon';
+import Modal from '../../components/Modal';
+import { SrOnly } from '../../components/SrOnly';
 import {
+  TableListBooleanNeg,
+  TableListBooleanPos,
   TableListItem,
   TableListKey,
   TableListValue,
-  TableListBooleanPos,
-  TableListBooleanNeg,
 } from '../../components/TableList';
-import { IconCheck, IconCancel } from '../../components/Icon';
-import { SrOnly } from '../../components/SrOnly';
-import { ButtonInline } from '../../components/Button';
-import Modal from '../../components/Modal';
-import Content from '../../components/Content';
-import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
 
 const formatValue = (
   t: TFunction<'translation', undefined>,

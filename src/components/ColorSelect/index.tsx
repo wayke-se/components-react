@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, Item, Action, Color, Label } from './wrapper';
+import { Action, Color, Item, Label, List } from './wrapper';
 
 export interface ItemProps {
   label: string;

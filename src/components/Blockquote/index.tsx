@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { Wrapper, Quote, Author, AvatarWrapper, Info, Name, Date } from './wrapper';
 import Avatar from '../Avatar';
+import { Author, AvatarWrapper, Date, Info, Name, Quote, Wrapper } from './wrapper';
 
 interface Props {
   children: React.ReactNode;

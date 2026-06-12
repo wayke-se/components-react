@@ -1,10 +1,9 @@
 import React from 'react';
-
-import { List, Item, Value, Label } from './wrapper';
-import { VisualHeading } from '../Heading';
-import { Price, OldPrice } from '../Price';
-import { numberSeparator } from '../../utils/formats';
 import { useTranslation } from 'react-i18next';
+import { numberSeparator } from '../../utils/formats';
+import { VisualHeading } from '../Heading';
+import { OldPrice, Price } from '../Price';
+import { Item, Label, List, Value } from './wrapper';
 
 interface PriceTableProps {
   price: number;

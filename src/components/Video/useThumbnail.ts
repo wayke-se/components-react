@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getVimeoId, getYoutubeThumbnail } from './utils';
 import useVimeoThumbnail from '../../hooks/useVimeoThumbnail';
+import { getVimeoId, getYoutubeThumbnail } from './utils';
 
 const useThumbnail = (url?: string | null, small?: boolean) => {
   if (url?.toLowerCase().endsWith('.mp4')) return;

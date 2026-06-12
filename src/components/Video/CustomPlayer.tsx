@@ -1,6 +1,6 @@
 import React from 'react';
-import { Wrapper } from './wrapper';
 import Video from './Video';
+import { Wrapper } from './wrapper';
 
 type PropsType = {
   url?: string;

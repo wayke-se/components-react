@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { CentralStorageContext } from './CentralStorageContext';
 import useSessionStorage from '../../hooks/useSessionStorage';
+import { CentralStorageContext } from './CentralStorageContext';
 
 interface CentralStorageProviderProps {
   children: React.ReactNode;

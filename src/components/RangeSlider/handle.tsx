@@ -1,6 +1,6 @@
 import React from 'react';
+import { GetHandleProps, SliderItem } from 'react-compound-slider';
 import { Handle as OwnHandle } from './wrapper';
-import { SliderItem, GetHandleProps } from 'react-compound-slider';
 
 interface IHandleProps {
   domain: number[];

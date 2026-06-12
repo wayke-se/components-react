@@ -1,9 +1,8 @@
 import React from 'react';
-
-import { Image } from '../Gallery/wrapper';
-import MediaButton from '../Gallery/MediaButton';
-import Rotation from './Rotation';
 import { useTranslation } from 'react-i18next';
+import MediaButton from '../Gallery/MediaButton';
+import { Image } from '../Gallery/wrapper';
+import Rotation from './Rotation';
 
 const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
   e.stopPropagation();

@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { Wrapper, Description, Bar, BarActive } from './wrapper';
 import { useTranslation } from 'react-i18next';
+import { Bar, BarActive, Description, Wrapper } from './wrapper';
 
 interface Props {
   valueCurrent: number;

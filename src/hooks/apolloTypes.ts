@@ -1,5 +1,5 @@
-import { QueryResult } from '@apollo/client/react';
 import { OperationVariables } from '@apollo/client';
+import { QueryResult } from '@apollo/client/react';
 
 // Apollo v4 types data as DeepPartial<TData> to reflect that GraphQL
 // responses can have any field missing. The codebase predates that and

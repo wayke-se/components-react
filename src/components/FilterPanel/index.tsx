@@ -1,16 +1,15 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { Facet } from '../../@types/search';
-import Panel from '../Panel';
-import { FooterAction, FooterActionItem } from '../Panel/wrapper';
-import { ButtonSecondary, ButtonContent, ButtonPrimary } from '../Button';
-import Accordion, { AccordionItem } from '../Accordion';
-import { Repeat } from '../Repeat';
-import FacetSelector from './faceSelector';
 import { SearchFilterTypes } from '../../@types/filter';
 import { QueryFilter } from '../../@types/queryFilter';
+import { Facet } from '../../@types/search';
 import PubSub from '../../utils/pubsub/pubsub';
+import Accordion, { AccordionItem } from '../Accordion';
+import { ButtonContent, ButtonPrimary, ButtonSecondary } from '../Button';
+import Panel from '../Panel';
+import { FooterAction, FooterActionItem } from '../Panel/wrapper';
+import { Repeat } from '../Repeat';
+import FacetSelector from './faceSelector';
 
 export interface FilterProps {
   label: string;

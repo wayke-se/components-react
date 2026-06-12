@@ -2,15 +2,14 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Container from '../../components/Container';
-import { Repeat } from '../../components/Repeat';
-
-import { PageSection } from '../../components/Page';
-import SectionHeader from '../../components/SectionHeader';
-import OverflowGrid from '../../components/OverflowGrid';
-import ProductCard, { OnItemClick } from '../../components/ProductCard';
 import { H2 } from '../../components/Heading';
-import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
 import Loader from '../../components/Loader';
+import OverflowGrid from '../../components/OverflowGrid';
+import { PageSection } from '../../components/Page';
+import ProductCard, { OnItemClick } from '../../components/ProductCard';
+import { Repeat } from '../../components/Repeat';
+import SectionHeader from '../../components/SectionHeader';
+import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 import { regexPathGuid } from '../../utils/regex';
@@ -55,13 +54,13 @@ const Related = ({
       <Container>
         {moreLikeThisUrl ? (
           <Repeat>
-            <SectionHeader onClick={() => {}}>
+            <SectionHeader onClick={() => undefined}>
               <H2 noMargin>{t('item.relatedVehicles')}</H2>
             </SectionHeader>
           </Repeat>
         ) : (
           <Repeat>
-            <SectionHeader onClick={() => {}} actionTitle="Visa alla">
+            <SectionHeader onClick={() => undefined} actionTitle="Visa alla">
               <H2 noMargin>{t('item.latestVehicles')}</H2>
             </SectionHeader>
           </Repeat>

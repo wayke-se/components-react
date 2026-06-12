@@ -1,17 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { Slider, Rail, Handles, Tracks } from 'react-compound-slider';
-
-import {
-  Bar,
-  RangeSpan,
-  RangeSpanItem,
-  Slider as OwnSlider,
-  Track as OwnTrack,
-  Handle as OwnHandle,
-} from './wrapper';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Handles, Rail, Slider, Tracks } from 'react-compound-slider';
+import { numberSeparator } from '../../utils/formats';
 import { Handle } from './handle';
 import { Track } from './track';
-import { numberSeparator } from '../../utils/formats';
+import {
+  Bar,
+  Handle as OwnHandle,
+  Slider as OwnSlider,
+  Track as OwnTrack,
+  RangeSpan,
+  RangeSpanItem,
+} from './wrapper';
 
 const getSteps = (steps: number[]) => {
   let current = Number.MAX_SAFE_INTEGER;

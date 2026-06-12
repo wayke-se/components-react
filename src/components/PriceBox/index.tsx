@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Row, Label, Price } from './wrapper';
+import { Label, Price, Row, Wrapper } from './wrapper';
 
 interface PriceBoxItemProps {
   label: string;

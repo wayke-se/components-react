@@ -1,12 +1,11 @@
 import React from 'react';
-
-import { Wrapper, UiBlock, Item, Img, CloseBtn } from './wrapper';
+import { useTranslation } from 'react-i18next';
+import { Media } from '../../@types/codegen/types';
 import { IconCancel } from '../Icon';
-import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
 import SphereLightbox from '../Sphere/SphereLightbox';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
-import { Media } from '../../@types/codegen/types';
-import { useTranslation } from 'react-i18next';
+import EmbeddedVideoLightbox from '../Video/EmbeddedVideoLightbox';
+import { CloseBtn, Img, Item, UiBlock, Wrapper } from './wrapper';
 
 interface LightboxProps {
   index: number;

@@ -1,10 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
-
-import ToggleItem from './toggle-item';
-import { Maybe, ContactOptions, Branch } from '../../@types/codegen/types';
+import { useTranslation } from 'react-i18next';
+import { Branch, ContactOptions, Maybe } from '../../@types/codegen/types';
 import { formatPhonenumber } from '../../utils/phonenumbers';
 import PubSub from '../../utils/pubsub/pubsub';
-import { useTranslation } from 'react-i18next';
+import ToggleItem from './toggle-item';
 
 interface ActionListProps {
   id: string;

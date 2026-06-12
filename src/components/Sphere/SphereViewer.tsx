@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { Viewer } from '@photo-sphere-viewer/core';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '@photo-sphere-viewer/core/index.css';
 
-import { Wrapper } from '../Sphere/wrapper';
-import Loader from '../Loader';
 import MediaButton from '../Gallery/MediaButton';
+import Loader from '../Loader';
+import { Wrapper } from '../Sphere/wrapper';
 
 type PropsType = {
   id: string;

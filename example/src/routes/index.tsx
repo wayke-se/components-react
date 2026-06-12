@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react';
-import { Route, Routes as ReactRouterDomRoutes } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { Routes as ReactRouterDomRoutes, Route } from 'react-router-dom';
 import Loader from '../../../src/components/Loader';
 
 const Search = lazy(() => import('./Search'));

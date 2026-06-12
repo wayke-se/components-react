@@ -1,7 +1,7 @@
 import React from 'react';
 import { getVimeoId } from './utils';
 
-import { Wrapper, Iframe } from './wrapper';
+import { Iframe, Wrapper } from './wrapper';
 
 type PropsType = {
   url: string;

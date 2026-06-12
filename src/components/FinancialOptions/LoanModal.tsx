@@ -1,21 +1,20 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
-
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Branch, FinancialOption, Maybe, Query } from '../../@types/codegen/types';
+import { MarketCode } from '../../@types/market';
 import useLoanCalculation from '../../hooks/useLoan';
+import { numberSeparator } from '../../utils/formats';
+import PubSub from '../../utils/pubsub/pubsub';
+import { ButtonClear, ButtonContent } from '../Button';
+import Content from '../Content';
+import { ContentLogo, ContentLogoMedia, ContentLogoText } from '../ContentLogo';
+import { CreditorDisclaimer } from '../CreditorDisclaimer';
+import DataList from '../DataList';
+import LogoBox from '../LogoBox';
 import Modal from '../Modal';
 import { ModalFoldout, ModalFoldoutBody } from '../Modal/wrapper';
-import Content from '../Content';
-import LogoBox from '../LogoBox';
-import { Repeat, RepeatSmall, RepeatTiny } from '../Repeat';
-import { numberSeparator } from '../../utils/formats';
-import { ButtonClear, ButtonContent } from '../Button';
-import { ContentLogo, ContentLogoText, ContentLogoMedia } from '../ContentLogo';
-import DataList from '../DataList';
-import { Branch, FinancialOption, Maybe, Query } from '../../@types/codegen/types';
-import PubSub from '../../utils/pubsub/pubsub';
 import SliderWithLabel from '../RangeSlider/SliderWithLabel';
-import { useTranslation } from 'react-i18next';
-import { CreditorDisclaimer } from '../CreditorDisclaimer';
-import { MarketCode } from '../../@types/market';
+import { Repeat, RepeatSmall, RepeatTiny } from '../Repeat';
 
 const stepGenerator = (
   step: number,

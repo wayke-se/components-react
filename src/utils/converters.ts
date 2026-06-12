@@ -1,16 +1,16 @@
 import {
-  COLOR_WHITE,
+  COLOR_BEIGE,
   COLOR_BLACK,
-  COLOR_GRAY,
-  COLOR_SILVER,
   COLOR_BLUE,
-  COLOR_RED,
   COLOR_BROWN,
+  COLOR_GRAY,
   COLOR_GREEN,
   COLOR_ORANGE,
-  COLOR_YELLOW,
   COLOR_PURPLE,
-  COLOR_BEIGE,
+  COLOR_RED,
+  COLOR_SILVER,
+  COLOR_WHITE,
+  COLOR_YELLOW,
 } from './constants';
 
 export const getHexColorFromDisplayName = (displayName: string) => {

@@ -1,15 +1,14 @@
-import React, { useState, useCallback } from 'react';
-
-import OptionBox from '../OptionBox';
-import { OptionBoxHeading, OptionBoxContent } from '../OptionBox/wrapper';
-import { ButtonInline } from '../Button';
-import { numberSeparator } from '../../utils/formats';
-import useLoanCalculation from '../../hooks/useLoan';
-import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
-import LoanModal from './LoanModal';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PubSub from '../../utils/pubsub/pubsub';
+import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
 import { MarketCode } from '../../@types/market';
+import useLoanCalculation from '../../hooks/useLoan';
+import { numberSeparator } from '../../utils/formats';
+import PubSub from '../../utils/pubsub/pubsub';
+import { ButtonInline } from '../Button';
+import OptionBox from '../OptionBox';
+import { OptionBoxContent, OptionBoxHeading } from '../OptionBox/wrapper';
+import LoanModal from './LoanModal';
 
 interface LoanProps {
   id: string;

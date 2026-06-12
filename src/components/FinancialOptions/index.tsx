@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat';
+import { useTranslation } from 'react-i18next';
+import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
+import { MarketCode } from '../../@types/market';
+import { CreditorDisclaimer } from '../CreditorDisclaimer';
 import { VisualHeading } from '../Heading';
+import { Repeat, RepeatTiny } from '../Repeat';
 import Leasing from './leasing';
 import Loan from './loan';
-import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
-import { useTranslation } from 'react-i18next';
-import { CreditorDisclaimer } from '../CreditorDisclaimer';
-import { MarketCode } from '../../@types/market';
 
 interface FinancialOptionsProps {
   id: string;

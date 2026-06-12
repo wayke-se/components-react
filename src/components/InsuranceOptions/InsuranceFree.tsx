@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import { Repeat, RepeatTiny } from '../Repeat';
+import { marked } from 'marked';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Branch, InsuranceOption, Maybe } from '../../@types/codegen/types';
+import PubSub from '../../utils/pubsub/pubsub';
+import { ButtonInline } from '../Button';
+import Content from '../Content';
 import { VisualHeading } from '../Heading';
 import OptionBox from '../OptionBox';
 import { OptionBoxContent } from '../OptionBox/wrapper';
-import Content from '../Content';
-import { marked } from 'marked';
-import { ButtonInline } from '../Button';
-import { Branch, InsuranceOption, Maybe } from '../../@types/codegen/types';
+import { Repeat, RepeatTiny } from '../Repeat';
 import InsuranceFreeModal from './InsuranceFreeModal';
-import { useTranslation } from 'react-i18next';
-import PubSub from '../../utils/pubsub/pubsub';
 
 interface InsuranceOptions {
   id: string;

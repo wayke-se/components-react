@@ -1,6 +1,6 @@
 import React from 'react';
+import { GetTrackProps, SliderItem } from 'react-compound-slider';
 import { Track as OwnTrack } from './wrapper';
-import { SliderItem, GetTrackProps } from 'react-compound-slider';
 
 interface ITrackProps {
   source: SliderItem;

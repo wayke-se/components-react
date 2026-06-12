@@ -1,10 +1,9 @@
 import React from 'react';
-import { Slider, Rail, Handles, Tracks } from 'react-compound-slider';
-
-import { Bar, RangeSpan, RangeSpanItem, Slider as OwnSlider } from './wrapper';
+import { Handles, Rail, Slider, Tracks } from 'react-compound-slider';
+import { numberSeparator } from '../../utils/formats';
 import { Handle } from './handle';
 import { Track } from './track';
-import { numberSeparator } from '../../utils/formats';
+import { Bar, Slider as OwnSlider, RangeSpan, RangeSpanItem } from './wrapper';
 
 interface RangeSliderProps {
   loading: boolean;

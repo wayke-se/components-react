@@ -1,19 +1,18 @@
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
+import { IconImage } from '../Icon';
 import {
-  Wrapper,
+  Body,
+  Branding,
+  Heading,
   Image,
   ImageaPlaceholder,
-  Body,
-  Heading,
-  Title,
-  Branding,
-  Price,
   Preamble,
+  Price,
   ReadMoreBtn,
+  Title,
+  Wrapper,
 } from './wrapper';
-import { IconImage } from '../Icon';
-import { useTranslation } from 'react-i18next';
 
 interface AccessoryCardImageProps {
   src: string;

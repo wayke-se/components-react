@@ -1,8 +1,7 @@
 import * as React from 'react';
-
-import { Spinner, Wrapper } from './wrapper';
-import { SrOnly } from '../SrOnly';
 import { i18nScoped } from '../../utils/I18n';
+import { SrOnly } from '../SrOnly';
+import { Spinner, Wrapper } from './wrapper';
 
 interface Props {
   inline?: boolean;

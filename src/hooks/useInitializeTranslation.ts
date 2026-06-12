@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { MarketCode } from '../@types/market';
-import { initializeI18n, i18nScoped } from '../utils/I18n';
+import { i18nScoped, initializeI18n } from '../utils/I18n';
 
 const useInitializeTranslation = (marketCode?: MarketCode) => {
   const [initialized, setInitialized] = useState(() => !!i18nScoped.isInitialized);

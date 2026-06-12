@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import useSettings from '../../State/Settings/useSettings';
-
-import { Wrapper, Image, Placeholder, PlaceholderAction } from './wrapper';
-import { ButtonSecondary, ButtonContent } from '../Button';
-import { Position, Maybe } from '../../@types/codegen/types';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Maybe, Position } from '../../@types/codegen/types';
+import useSettings from '../../State/Settings/useSettings';
+import { ButtonContent, ButtonSecondary } from '../Button';
+import { Image, Placeholder, PlaceholderAction, Wrapper } from './wrapper';
 
 interface StaticMapProps {
   position?: Maybe<Position>;

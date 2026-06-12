@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { Wrapper, Query, Clear } from './wrapper';
-import { IconCancel } from '../Icon';
 import { useTranslation } from 'react-i18next';
+import { IconCancel } from '../Icon';
+import { Clear, Query, Wrapper } from './wrapper';
 
 interface Props {
   children: string;
