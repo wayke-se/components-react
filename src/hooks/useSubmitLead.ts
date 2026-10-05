@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import packageJson from '../../package.json';
 import { MarketCode } from '../@types/market';
 
 export type LeadCommunication = 'email' | 'callme';
@@ -74,6 +75,9 @@ const useSubmitLead = (apiUrl: string | undefined, marketCode: MarketCode = 'SE'
         metaData: [
           { key: 'source', value: window.location.hostname.replace(/^www\./, '') },
           { key: 'sourceMechanism', value: `cta.${communication}` },
+          // Lets Wayke tell leads from this package apart from dealer sites and wayke.se.
+          { key: 'client', value: 'components-react' },
+          { key: 'clientVersion', value: packageJson.version },
           { key: 'itemForSaleId', value: itemId },
           ...(tradeInCarRegNo ? [{ key: 'registrationNumber', value: tradeInCarRegNo }] : []),
           // readingUnit describes the unit of tradeInCarMileage, so it only travels with it.
