@@ -421,6 +421,7 @@ WaykePubSub.unsubscribe(event);
 | PhonenumberVisible    | (data) => void            | CallbackItemData                                                                                                                |
 | PhonenumberCall       | (data) => void            | CallbackItemData                                                                                                                |
 | MailVisible           | (data) => void            | CallbackItemData                                                                                                                |
+| MailClick             | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceInterest     | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceOpen         | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceClose        | (data) => void            | CallbackItemData                                                                                                                |

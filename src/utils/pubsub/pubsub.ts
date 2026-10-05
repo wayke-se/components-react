@@ -21,6 +21,7 @@ import {
   EventInsuranceInterest,
   EventInsuranceOpen,
   EventItemClicked,
+  EventMailClick,
   EventMailVisible,
   EventNames,
   EventOptionsClick,
@@ -43,6 +44,7 @@ export type EventSubscriptions = {
   PhonenumberVisible: EventPhonenumberVisible[];
   PhonenumberCall: EventPhonenumberCall[];
   MailVisible: EventMailVisible[];
+  MailClick: EventMailClick[];
   InsuranceOpen: EventInsuranceOpen[];
   InsuranceClose: EventInsuranceClose[];
   InsuranceInterest: EventInsuranceInterest[];
@@ -73,6 +75,7 @@ class PubSub {
     PhonenumberVisible: [],
     PhonenumberCall: [],
     MailVisible: [],
+    MailClick: [],
     InsuranceOpen: [],
     InsuranceClose: [],
     InsuranceInterest: [],
@@ -156,6 +159,7 @@ class PubSub {
           case 'PhonenumberVisible':
           case 'PhonenumberCall':
           case 'MailVisible':
+          case 'MailClick':
           case 'InsuranceInterest':
           case 'InsuranceOpen':
           case 'InsuranceClose':

@@ -219,6 +219,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 actions: {
                   emailSubject: '{{hostName}} – Jag är intresserad av {{vehicle}}',
+                  emailBody: 'Länk till bilen: {{url}}',
                   openform: 'Öppna formulär',
                   buyOnline: 'Köp bilen online',
                   showEmail: 'Visa mailadress',
@@ -516,6 +517,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 actions: {
                   emailSubject: '{{hostName}} - Jeg er interessert i {{vehicle}}',
+                  emailBody: 'Lenke til bilen: {{url}}',
                   openform: 'Åpent skjema',
                   buyOnline: 'Kjøp bilen på nett',
                   showEmail: 'Vis e-postadresse',
@@ -814,6 +816,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 actions: {
                   emailSubject: "{{hostName}} - I'm interested in {{vehicle}}",
+                  emailBody: 'Link to the vehicle: {{url}}',
                   openform: 'Open form',
                   buyOnline: 'Buy the car online',
                   showEmail: 'Show email address',

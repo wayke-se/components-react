@@ -99,6 +99,10 @@ export interface EventMailVisible extends EventBase<CallbackItem> {
   eventName: 'MailVisible';
 }
 
+export interface EventMailClick extends EventBase<CallbackItem> {
+  eventName: 'MailClick';
+}
+
 export interface EventInsuranceOpen extends EventBase<CallbackItem> {
   eventName: 'InsuranceOpen';
 }
@@ -162,6 +166,7 @@ export type EventType =
   | EventPhonenumberVisible
   | EventPhonenumberCall
   | EventMailVisible
+  | EventMailClick
   | EventInsuranceOpen
   | EventInsuranceClose
   | EventInsuranceInterest
