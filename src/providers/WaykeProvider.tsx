@@ -48,6 +48,7 @@ const WaykeProvider = ({
 }: WaykeProviderProps) => (
   <PathProvider>
     <SettingsProvider
+      apiUrl={url}
       googleMapsApiKey={googleMapsApiKey}
       googleMapsMarker={googleMapsMarker}
       ecomSettings={ecomSettings}
