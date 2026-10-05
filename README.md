@@ -295,7 +295,7 @@ Every option accepts:
 * `name` - Custom button label. Defaults to the translated label for the type.
 * `primary` - `true` renders a primary button, `false` a secondary one.
 
-`leadMessage` and `leadCallMe` open a form and post the lead to Wayke, where it ends up in Wayke Dealer for the branch that owns the vehicle. The lead is tagged with the hostname of the page it was sent from (`source`) and the button used (`sourceMechanism`: `cta.email` or `cta.callme`).
+`leadMessage` and `leadCallMe` open a form and post the lead to Wayke, where it ends up in Wayke Dealer for the branch that owns the vehicle. The lead is tagged with the hostname of the page it was sent from (`source`), the button used (`sourceMechanism`: `cta.email` or `cta.callme`) and this package (`client`: `components-react`, `clientVersion`).
 
 `email` opens the visitor's mail client with a pre-populated subject and body so the dealer can tell where the request came from:
 > `<hostname> – I'm interested in <reg no>, <make> <model>`
