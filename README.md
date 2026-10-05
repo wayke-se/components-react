@@ -506,6 +506,14 @@ WaykePubSub.unsubscribe(event);
 | branchName    | string \| undefined   |
 | branchId      | string \| undefined   |
 
+#### CallbackLeadData
+| Property      | Type                 |
+|---------------|----------------------|
+| id            | string               |
+| branchName    | string               |
+| branchId      | string               |
+| communication | "email" \| "callme" |
+
 #### CallbackEcomData
 | Property      | Type                  |
 |---------------|-----------------------|
