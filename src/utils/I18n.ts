@@ -1,8 +1,9 @@
-import i18n from 'i18next';
+import i18n, { i18n as I18nInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { MarketCode } from '../@types/market';
 
-export const i18nScoped = i18n.createInstance();
+// Explicit type: an inferred type would reference node_modules/i18next in the emitted .d.ts (TS2883).
+export const i18nScoped: I18nInstance = i18n.createInstance();
 
 const getLanguage = (marketCode?: MarketCode) => {
   switch (marketCode) {

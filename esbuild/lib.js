@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { existsSync } from 'node:fs';
 import * as esbuild from 'esbuild';
 import { copy } from 'esbuild-plugin-copy';
 import npmDts from 'npm-dts';
@@ -57,10 +58,18 @@ const generator = new npmDts.Generator({
   logLevel: 'debug',
 });
 
+// Fail the build if types are missing: 5.0.0–5.0.3 were published without index.d.ts
+// because this step swallowed the error and the package.json "types" entry pointed at nothing.
 try {
   await generator.generate();
 } catch (e) {
-  console.log('Error occured while generating types');
+  console.error('Error occurred while generating types', e);
+  process.exit(1);
 } finally {
   console.timeEnd(timetaken);
+}
+
+if (!existsSync('dist/index.d.ts')) {
+  console.error('Type generation produced no dist/index.d.ts, aborting build');
+  process.exit(1);
 }
