@@ -1,3 +1,8 @@
+import type {
+  ConversionOption,
+  ConversionOptionType,
+  ConversionOptionVehicle,
+} from './@types/conversion';
 import type { SearchFilterNameTypes, SearchFilterTypes } from './@types/filter';
 import SearchBar from './components/SearchBar';
 import WaykeSearch, { WaykeSearchProps } from './layouts/search';
@@ -41,6 +46,9 @@ export {
   CallbackEcom,
   CallbackEmpty,
   CallbackHashRouteChange,
+  ConversionOption,
+  ConversionOptionType,
+  ConversionOptionVehicle,
   EventAll,
   EventEcom,
   EventFilterApply,

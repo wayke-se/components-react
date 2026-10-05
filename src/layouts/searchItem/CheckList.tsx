@@ -10,24 +10,25 @@ import {
   PackageOption,
   VehicleData,
 } from '../../@types/codegen/types';
+import { ConversionOption } from '../../@types/conversion';
 import { MarketCode } from '../../@types/market';
 import ActionList from '../../components/ActionList';
-import { ButtonContent, ButtonInline, ButtonPrimary } from '../../components/Button';
+import { ButtonInline } from '../../components/Button';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import { Column, Columns } from '../../components/Columns';
 import Content from '../../components/Content';
-import LeadForm, { LeadCommunication } from '../../components/LeadForm';
 import { Repeat, RepeatTiny } from '../../components/Repeat';
 import { StateIndicator } from '../../components/StateIndicator';
 import SwitchBar from '../../components/SwitchBar';
 import { UtilityFontSizeSmall } from '../../components/Utility';
-import PubSub from '../../utils/pubsub/pubsub';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 
 interface CheckList {
   id: string;
+  title?: string | null;
   vehicleData?: VehicleData | null;
+  conversionOptions?: ConversionOption[];
   marketCode?: MarketCode;
   manufacturer?: Manufacturer | null;
   packageOptions: PackageOption[];
@@ -41,7 +42,9 @@ interface CheckList {
 
 const CheckList = ({
   id,
+  title,
   vehicleData,
+  conversionOptions,
   marketCode,
   manufacturer,
   packageOptions,
@@ -58,20 +61,6 @@ const CheckList = ({
   const closeModalBranch = useCallback(() => setModalBranch(false), []);
 
   const [modal, setModal] = useState<PackageOptionModalData>();
-  const [leadCommunication, setLeadCommunication] = useState<LeadCommunication>();
-  const openLeadForm = useCallback(
-    (communication: LeadCommunication) => {
-      setLeadCommunication(communication);
-      PubSub.publish('LeadOpen', {
-        id,
-        branchId: branch?.id,
-        branchName: branch?.name,
-        communication,
-      });
-    },
-    [id, branch]
-  );
-  const closeLeadForm = useCallback(() => setLeadCommunication(undefined), []);
   const onOpen = useCallback((nextModal: PackageOptionModalData) => setModal(nextModal), []);
   const onClose = useCallback(() => setModal(undefined), []);
 
@@ -93,23 +82,18 @@ const CheckList = ({
         />
       )}
       {modal && <PackageOptionModal packageOption={modal} onClose={onClose} />}
-      {leadCommunication && (
-        <LeadForm
-          id={id}
-          branch={branch}
-          marketCode={marketCode}
-          communication={leadCommunication}
-          onClose={closeLeadForm}
-        />
-      )}
       <Repeat>
-        {ecommerce && ecommerce.enabled && (
-          <RepeatTiny>
-            <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
-              <ButtonContent>{t('item.actions.buyOnline')}</ButtonContent>
-            </ButtonPrimary>
-          </RepeatTiny>
-        )}
+        <ActionList
+          id={id}
+          title={title}
+          vehicleData={vehicleData}
+          branch={branch}
+          contact={contact}
+          ecommerce={ecommerce}
+          marketCode={marketCode}
+          conversionOptions={conversionOptions}
+          toggleEcomModal={toggleEcomModal}
+        />
         {ecommerce?.reserved && (
           <RepeatTiny>
             <SwitchBar
@@ -122,21 +106,6 @@ const CheckList = ({
             </SwitchBar>
           </RepeatTiny>
         )}
-        {branch?.id && (
-          <>
-            <RepeatTiny>
-              <ButtonPrimary fullWidth onClick={() => openLeadForm('email')}>
-                <ButtonContent>{t('lead.messageFormTitle')}</ButtonContent>
-              </ButtonPrimary>
-            </RepeatTiny>
-            <RepeatTiny>
-              <ButtonPrimary fullWidth onClick={() => openLeadForm('callme')}>
-                <ButtonContent>{t('lead.callFormTitle')}</ButtonContent>
-              </ButtonPrimary>
-            </RepeatTiny>
-          </>
-        )}
-        <ActionList id={id} vehicleData={vehicleData} branch={branch} contact={contact} />
       </Repeat>
       <Repeat>
         {availableFrom && new Date(availableFrom).valueOf() > new Date().valueOf() && (

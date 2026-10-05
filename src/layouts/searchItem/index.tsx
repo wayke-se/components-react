@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ConversionOption } from '../../@types/conversion';
 import { MarketCode } from '../../@types/market';
 import Blockquote from '../../components/Blockquote';
 import { ButtonContent, ButtonInlineLight, ButtonPrimary } from '../../components/Button';
@@ -54,6 +55,7 @@ export interface WaykeSearchItemProps {
   placeholderImage?: string;
   modifyDocumentTitleItem?: boolean;
   displayBranchName?: boolean;
+  conversionOptions?: ConversionOption[];
   onClickSearchItem?: (id: string) => void;
 }
 
@@ -66,6 +68,7 @@ const WaykeSearchItem = ({
   placeholderImage,
   modifyDocumentTitleItem,
   displayBranchName,
+  conversionOptions,
   onClickSearchItem,
 }: WaykeSearchItemProps) => {
   const initialized = useInitializeTranslation(marketCode);
@@ -242,7 +245,9 @@ const WaykeSearchItem = ({
                 <ProductPageAsideSection mobileOrder={5}>
                   <CheckList
                     id={id}
+                    title={title}
                     vehicleData={vehicle.data}
+                    conversionOptions={conversionOptions}
                     marketCode={marketCode}
                     manufacturer={manufacturer}
                     packageOptions={packageOptions}
