@@ -18,6 +18,13 @@ const Home = () => (
       modifyDocumentTitleItem: true,
       modifyDocumentTitleSearch: 'Wayke',
       displayBranchName: true,
+      conversionOptions: [
+        { type: 'leadMessage' },
+        { type: 'leadCallMe' },
+        { type: 'ecom' },
+        { type: 'email' },
+        { type: 'phone' },
+      ],
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,

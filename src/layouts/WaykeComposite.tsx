@@ -20,6 +20,7 @@ const WaykeComposite = ({
   modifyDocumentTitleItem,
   modifyDocumentTitleSearch,
   displayBranchName,
+  conversionOptions,
 }: WaykeCompositeProps) => {
   const hashId = useHashGuid();
   const { id: pathId } = usePath();
@@ -51,6 +52,7 @@ const WaykeComposite = ({
           pathRoute={pathRoute}
           modifyDocumentTitleItem={modifyDocumentTitleItem}
           displayBranchName={displayBranchName}
+          conversionOptions={conversionOptions}
         />
       ) : (
         <WaykeSearch

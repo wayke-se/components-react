@@ -167,6 +167,7 @@ const App = ({}) => {
 | onClickSearchItem        | function   | false    | (id: string) => void |
 | modifyDocumentTitleItem  | boolean    | false    |                      |
 | displayBranchName        | boolean    | false    |                      |
+| conversionOptions        | ConversionOption[] | false | See [Conversion options](#conversion-options) |
 
 * Required
   * `id` - Guid that represents a vehicle.
@@ -179,6 +180,7 @@ const App = ({}) => {
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
   * `modifyDocumentTitleItem` - Update document title with vehicle data
   * `displayBranchName` - Displays branch name on related product cards and using branch name in presentation of where the vehicle exist
+  * `conversionOptions` - Which call-to-action buttons to render on the item page, and in which order. See [Conversion options](#conversion-options).
 
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
@@ -207,6 +209,55 @@ const App = ({}) => {
   * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
   * `modifyDocumentTitleSearch` - Set custom document title
   * `displayBranchName` - Displays branch name on product cards
+
+### Conversion options
+The buttons in the item page sidebar ("Buy online", "Show email address", ...) are controlled by `conversionOptions`.
+Options are rendered in array order. An option is skipped when the vehicle lacks what it needs (no e-commerce, no email, no phone number, no branch).
+
+```javascript
+<WaykeComposite
+  composite={{
+    conversionOptions: [
+      { type: 'leadMessage' },
+      { type: 'leadCallMe' },
+      { type: 'ecom' },
+      { type: 'phone' },
+      // Omit 'email' to hide "Show email address" entirely
+    ],
+  }}
+  provider={ProviderSettings}
+/>
+```
+
+| type          | Button                   | Default style | Requires                              |
+|---------------|--------------------------|---------------|---------------------------------------|
+| `ecom`        | Buy online               | primary       | Vehicle with e-commerce enabled       |
+| `leadMessage` | Send message (form)      | primary       | Vehicle connected to a branch         |
+| `leadCallMe`  | Get a callback (form)    | primary       | Vehicle connected to a branch         |
+| `email`       | Show email address       | secondary     | Branch or contact with email          |
+| `phone`       | Show phone number        | secondary     | Branch or contact with phone number   |
+
+Default when `conversionOptions` is not set: `[{ type: 'ecom' }, { type: 'email' }, { type: 'phone' }]`.
+
+Every option accepts:
+* `name` - Custom button label. Defaults to the translated label for the type.
+* `primary` - `true` renders a primary button, `false` a secondary one.
+
+`leadMessage` and `leadCallMe` open a form and post the lead to Wayke, where it ends up in Wayke Dealer for the branch that owns the vehicle. The lead is tagged with the hostname of the page it was sent from (`source`) and the button used (`sourceMechanism`: `cta.email` or `cta.callme`).
+
+`email` opens the visitor's mail client with a pre-populated subject and body so the dealer can tell where the request came from:
+> `<hostname> – I'm interested in <reg no>, <make> <model>`
+
+Both can be customized, as a string or a function of the vehicle:
+```javascript
+{
+  type: 'email',
+  subject: (vehicle) => `Inquiry from BMW.SE – ${vehicle.registrationNumber}`,
+  body: false, // omit body
+}
+```
+
+Events published along the way: `MailVisible`, `MailClick`, `PhonenumberVisible`, `PhonenumberCall`, `LeadOpen`, `LeadSent`. See [Subscribe to events](#subscribe-to-events).
 
 ### Notes on MarketCode
 `marketCode` defines what langugage that will be used (defaults to `SE` - Swedish). Other things that `marketCode` will effect:
