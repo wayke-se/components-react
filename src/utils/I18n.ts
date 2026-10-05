@@ -211,7 +211,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   setupFee: 'Uppläggningskostnad',
                   administrationFee: 'Administrativa avgifter',
                   totalCreditCost: 'Total kreditkostnad',
-                  milagePerYear: 'mil/år',
+                  mileagePerYear: 'mil/år',
                   months: 'mån',
                   loanOptionsDisclaimer:
                     'Beräknat på {{interest}} % ränta (effektivt {{effectiveInterest}} %).',
@@ -538,7 +538,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   setupFee: 'Oppsettskostnad',
                   administrationFee: 'Administrative gebyrer',
                   totalCreditCost: 'Total kredittkostnad',
-                  milagePerYear: 'skandinaviske mil/år',
+                  mileagePerYear: 'skandinaviske mil/år',
                   months: 'mnd',
                   loanOptionsDisclaimer:
                     'Beregnet til {{interest}} % rente (effektiv {{effectiveInterest}} %).',
@@ -866,7 +866,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   setupFee: 'Setup cost',
                   administrationFee: 'Administrative fees',
                   totalCreditCost: 'Total Credit Cost',
-                  milagePerYear: 'mil/år',
+                  mileagePerYear: 'mil/år',
                   months: 'mnd',
                   loanOptionsDisclaimer:
                     'Calculated at {{interest}} % interest (effective {{effectiveInterest}} %).',
