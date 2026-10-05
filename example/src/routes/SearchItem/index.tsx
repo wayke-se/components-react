@@ -20,7 +20,7 @@ const SearchItem = () => {
       }}
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
     >
-      <WaykeSearchItem id={id} marketCode="NO" />
+      <WaykeSearchItem id={id} marketCode="SE" />
     </WaykeItemProvider>
   );
 };
