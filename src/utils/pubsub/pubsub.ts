@@ -9,6 +9,7 @@ import {
   CallbackEcom,
   CallbackHashRouteChange,
   CallbackItem,
+  CallbackView,
   EventAll,
   EventEcom,
   EventFilterApply,
@@ -35,9 +36,11 @@ import {
   EventSearchCompleted,
   EventSearchInitiated,
   EventType,
+  EventView,
 } from './Events';
 
 export type EventSubscriptions = {
+  View: EventView[];
   HashRouteChange: EventHashRouteChange[];
   ItemClicked: EventItemClicked[];
   Ecom: EventEcom[];
@@ -71,6 +74,7 @@ export type ActionSubscriptions = {
 
 class PubSub {
   private static events: EventSubscriptions = {
+    View: [],
     HashRouteChange: [],
     ItemClicked: [],
     Ecom: [],
@@ -153,6 +157,9 @@ class PubSub {
     if (PubSub.events[eventName]) {
       PubSub.events[eventName].forEach((event: EventType) => {
         switch (eventName) {
+          case 'View':
+            (event.callback as CallbackView)(args[0]);
+            break;
           case 'HashRouteChange':
             (event.callback as CallbackHashRouteChange)(args[0]);
             break;
