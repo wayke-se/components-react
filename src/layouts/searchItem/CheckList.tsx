@@ -16,10 +16,12 @@ import { ButtonContent, ButtonInline, ButtonPrimary } from '../../components/But
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import { Column, Columns } from '../../components/Columns';
 import Content from '../../components/Content';
+import LeadForm, { LeadCommunication } from '../../components/LeadForm';
 import { Repeat, RepeatTiny } from '../../components/Repeat';
 import { StateIndicator } from '../../components/StateIndicator';
 import SwitchBar from '../../components/SwitchBar';
 import { UtilityFontSizeSmall } from '../../components/Utility';
+import PubSub from '../../utils/pubsub/pubsub';
 import BranchModal from './BranchModal';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 
@@ -56,6 +58,20 @@ const CheckList = ({
   const closeModalBranch = useCallback(() => setModalBranch(false), []);
 
   const [modal, setModal] = useState<PackageOptionModalData>();
+  const [leadCommunication, setLeadCommunication] = useState<LeadCommunication>();
+  const openLeadForm = useCallback(
+    (communication: LeadCommunication) => {
+      setLeadCommunication(communication);
+      PubSub.publish('LeadOpen', {
+        id,
+        branchId: branch?.id,
+        branchName: branch?.name,
+        communication,
+      });
+    },
+    [id, branch]
+  );
+  const closeLeadForm = useCallback(() => setLeadCommunication(undefined), []);
   const onOpen = useCallback((nextModal: PackageOptionModalData) => setModal(nextModal), []);
   const onClose = useCallback(() => setModal(undefined), []);
 
@@ -77,6 +93,15 @@ const CheckList = ({
         />
       )}
       {modal && <PackageOptionModal packageOption={modal} onClose={onClose} />}
+      {leadCommunication && (
+        <LeadForm
+          id={id}
+          branch={branch}
+          marketCode={marketCode}
+          communication={leadCommunication}
+          onClose={closeLeadForm}
+        />
+      )}
       <Repeat>
         {ecommerce && ecommerce.enabled && (
           <RepeatTiny>
@@ -96,6 +121,20 @@ const CheckList = ({
               </Content>
             </SwitchBar>
           </RepeatTiny>
+        )}
+        {branch?.id && (
+          <>
+            <RepeatTiny>
+              <ButtonPrimary fullWidth onClick={() => openLeadForm('email')}>
+                <ButtonContent>{t('lead.messageFormTitle')}</ButtonContent>
+              </ButtonPrimary>
+            </RepeatTiny>
+            <RepeatTiny>
+              <ButtonPrimary fullWidth onClick={() => openLeadForm('callme')}>
+                <ButtonContent>{t('lead.callFormTitle')}</ButtonContent>
+              </ButtonPrimary>
+            </RepeatTiny>
+          </>
         )}
         <ActionList id={id} vehicleData={vehicleData} branch={branch} contact={contact} />
       </Repeat>

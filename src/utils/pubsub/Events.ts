@@ -19,6 +19,11 @@ interface CallbackItemData {
 }
 export type CallbackItem = (data: CallbackItemData) => void;
 
+export interface CallbackLeadData extends CallbackItemData {
+  communication: 'email' | 'callme';
+}
+export type CallbackLead = (data: CallbackLeadData) => void;
+
 export interface CallbackSearchData {
   query: string;
 }
@@ -103,6 +108,14 @@ export interface EventMailClick extends EventBase<CallbackItem> {
   eventName: 'MailClick';
 }
 
+export interface EventLeadOpen extends EventBase<CallbackLead> {
+  eventName: 'LeadOpen';
+}
+
+export interface EventLeadSent extends EventBase<CallbackLead> {
+  eventName: 'LeadSent';
+}
+
 export interface EventInsuranceOpen extends EventBase<CallbackItem> {
   eventName: 'InsuranceOpen';
 }
@@ -167,6 +180,8 @@ export type EventType =
   | EventPhonenumberCall
   | EventMailVisible
   | EventMailClick
+  | EventLeadOpen
+  | EventLeadSent
   | EventInsuranceOpen
   | EventInsuranceClose
   | EventInsuranceInterest

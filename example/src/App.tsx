@@ -109,6 +109,16 @@ WaykePubSub.subscribe({
 });
 
 WaykePubSub.subscribe({
+  eventName: 'LeadOpen',
+  callback: (data) => console.log('subscribed LeadOpen:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'LeadSent',
+  callback: (data) => console.log('subscribed LeadSent:', data),
+});
+
+WaykePubSub.subscribe({
   eventName: 'All',
   callback: (eventName, data) => console.log('subscribed All:', eventName, data),
 });

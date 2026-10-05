@@ -422,6 +422,8 @@ WaykePubSub.unsubscribe(event);
 | PhonenumberCall       | (data) => void            | CallbackItemData                                                                                                                |
 | MailVisible           | (data) => void            | CallbackItemData                                                                                                                |
 | MailClick             | (data) => void            | CallbackItemData                                                                                                                |
+| LeadOpen              | (data) => void            | CallbackLeadData                                                                                                                |
+| LeadSent              | (data) => void            | CallbackLeadData                                                                                                                |
 | InsuranceInterest     | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceOpen         | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceClose        | (data) => void            | CallbackItemData                                                                                                                |

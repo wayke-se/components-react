@@ -24,6 +24,8 @@ import type {
   EventInsuranceInterest,
   EventInsuranceOpen,
   EventItemClicked,
+  EventLeadOpen,
+  EventLeadSent,
   EventMailClick,
   EventMailVisible,
   EventNames,

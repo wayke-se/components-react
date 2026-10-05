@@ -2,25 +2,14 @@ import React from 'react';
 
 import { Input, Wrapper } from './wrapper';
 
-type Props = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
-> & {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
-  placeholder: string;
   label: string;
 };
 
-const InputText = ({ placeholder, label, value, id, onChange, onKeyDown }: Props) => (
+const InputText = ({ label, ...props }: Props) => (
   <Wrapper>
-    <Input
-      placeholder={placeholder}
-      value={value}
-      id={id}
-      aria-label={label}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-    />
+    <Input aria-label={label} {...props} />
   </Wrapper>
 );
 
