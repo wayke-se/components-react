@@ -444,6 +444,14 @@ WaykePubSub.unsubscribe(event);
 | branchName    | string    |
 | branchId      | string    |
 
+#### CallbackLeadData
+| Property      | Type                 |
+|---------------|----------------------|
+| id            | string               |
+| branchName    | string               |
+| branchId      | string               |
+| communication | "email" \| "callme" |
+
 #### CallbackEcomData
 | Property      | Type                  |
 |---------------|-----------------------|
