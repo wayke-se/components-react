@@ -104,6 +104,11 @@ WaykePubSub.subscribe({
 });
 
 WaykePubSub.subscribe({
+  eventName: 'MailClick',
+  callback: (data) => console.log('subscribed MailClick:', data),
+});
+
+WaykePubSub.subscribe({
   eventName: 'All',
   callback: (eventName, data) => console.log('subscribed All:', eventName, data),
 });

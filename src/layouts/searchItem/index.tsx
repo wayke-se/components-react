@@ -242,6 +242,7 @@ const WaykeSearchItem = ({
                 <ProductPageAsideSection mobileOrder={5}>
                   <CheckList
                     id={id}
+                    vehicleData={vehicle.data}
                     marketCode={marketCode}
                     manufacturer={manufacturer}
                     packageOptions={packageOptions}

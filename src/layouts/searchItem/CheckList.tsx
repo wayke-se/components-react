@@ -8,6 +8,7 @@ import {
   Ecommerce,
   Manufacturer,
   PackageOption,
+  VehicleData,
 } from '../../@types/codegen/types';
 import { MarketCode } from '../../@types/market';
 import ActionList from '../../components/ActionList';
@@ -24,6 +25,7 @@ import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal
 
 interface CheckList {
   id: string;
+  vehicleData?: VehicleData | null;
   marketCode?: MarketCode;
   manufacturer?: Manufacturer | null;
   packageOptions: PackageOption[];
@@ -37,6 +39,7 @@ interface CheckList {
 
 const CheckList = ({
   id,
+  vehicleData,
   marketCode,
   manufacturer,
   packageOptions,
@@ -94,7 +97,7 @@ const CheckList = ({
             </SwitchBar>
           </RepeatTiny>
         )}
-        <ActionList id={id} branch={branch} contact={contact} />
+        <ActionList id={id} vehicleData={vehicleData} branch={branch} contact={contact} />
       </Repeat>
       <Repeat>
         {availableFrom && new Date(availableFrom).valueOf() > new Date().valueOf() && (
