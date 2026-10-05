@@ -252,7 +252,7 @@ Both can be customized, as a string or a function of the vehicle:
 ```javascript
 {
   type: 'email',
-  subject: (vehicle) => `Inquiry from BMW.SE – ${vehicle.registrationNumber}`,
+  subject: (vehicle) => `Inquiry from example.com – ${vehicle.registrationNumber}`,
   body: false, // omit body
 }
 ```
