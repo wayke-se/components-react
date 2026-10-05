@@ -4,6 +4,11 @@ import { WaykePubSub } from '../../src';
 import Routes from './routes';
 
 WaykePubSub.subscribe({
+  eventName: 'View',
+  callback: (data) => console.log('subscribed View:', data),
+});
+
+WaykePubSub.subscribe({
   eventName: 'ItemClicked',
   callback: (data) => console.log('subscribed ItemClicked:', data),
 });

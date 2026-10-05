@@ -39,6 +39,7 @@ import type {
   EventPhonenumberVisible,
   EventSearch,
   EventType,
+  EventView,
 } from './utils/pubsub/Events';
 import WaykePubSub, { EventSubscriptions } from './utils/pubsub/pubsub';
 
@@ -69,6 +70,7 @@ export {
   EventSearch,
   EventSubscriptions,
   EventType,
+  EventView,
   SearchBar,
   SearchFilterNameTypes,
   SearchFilterTypes,
