@@ -50,7 +50,7 @@ const Leasing = ({ financialOption }: LeasingProps) => {
                   {
                     label: t('item.financialOptions.annualMileage'),
                     value: `${numberSeparator(mileage?.current || 0)} ${t(
-                      'item.financialOptions.mileagePeryear'
+                      'item.financialOptions.mileagePerYear'
                     )}`,
                   },
                 ]}
@@ -73,7 +73,7 @@ const Leasing = ({ financialOption }: LeasingProps) => {
             {mileage?.current && duration?.current && (
               <>
                 <UtilityTextPrimary>
-                  {numberSeparator(mileage?.current)} {t('item.financialOptions.mileagePeryear')}
+                  {numberSeparator(mileage?.current)} {t('item.financialOptions.mileagePerYear')}
                 </UtilityTextPrimary>{' '}
                 i{' '}
                 <UtilityTextPrimary>
