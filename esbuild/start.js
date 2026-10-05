@@ -18,5 +18,5 @@ const ctx = await esbuild.context({
 
 ctx.serve({
   servedir: 'www',
-  port: 5000,
+  port: Number(process.env.PORT) || 5000,
 });
