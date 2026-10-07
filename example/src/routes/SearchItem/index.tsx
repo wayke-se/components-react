@@ -21,7 +21,7 @@ const SearchItem = () => {
     >
       <WaykeSearchItem
         id={id}
-        marketCode="NO"
+        marketCode="SE"
         onClickSearchItem={(relatedId) => console.log('onClickSearchItem:', relatedId)}
       />
     </WaykeItemProvider>

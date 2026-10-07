@@ -19,7 +19,7 @@ const Search = () => {
       }}
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
     >
-      <WaykeSearch onClickSearchItem={onClickSearchItem} marketCode="NO" />
+      <WaykeSearch onClickSearchItem={onClickSearchItem} marketCode="SE" />
     </WaykeProvider>
   );
 };

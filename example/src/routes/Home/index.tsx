@@ -11,7 +11,7 @@ initialQueryParams.set('businessLeasingPrice.min', '1000');
 const Home = () => (
   <WaykeComposite
     composite={{
-      marketCode: 'NO',
+      marketCode: 'SE',
       //initialQueryParams,
       removeSearchBar: false,
       removeFilterOptions: false,
