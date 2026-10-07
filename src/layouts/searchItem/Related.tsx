@@ -34,12 +34,15 @@ const Related = ({
   const { t } = useTranslation();
   const { loading, response, moreLikeThisUrl } = useRelatedSearch(id, !!authorizedReseller);
 
-  const onItemClicked = useCallback((data: OnItemClick) => {
-    PubSub.publish('ItemClicked', data);
-    if (onClickSearchItem) {
-      onClickSearchItem(id);
-    }
-  }, []);
+  const onItemClicked = useCallback(
+    (data: OnItemClick) => {
+      PubSub.publish('ItemClicked', data);
+      if (onClickSearchItem) {
+        onClickSearchItem(data.id);
+      }
+    },
+    [onClickSearchItem]
+  );
 
   if (!response?.documentList.documents.length || response?.documentList.documents.length === 0) {
     return null;

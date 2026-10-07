@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
-const regexGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+// Any UUID version: vehicle ids from the new platform are UUIDv7, and the old pattern
+// only accepted versions 0-5 which made those items impossible to open via hash route.
+const regexGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const HASH_CHANGE = 'hashchange';
 
 const getGuid = () => {

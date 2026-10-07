@@ -18,11 +18,16 @@ Install peer dependencies
 npm install react react-dom styled-components
 ```
 
+Install the ecom stylesheet (optional, only if you use `ecomSettings`, see [Ecom theme](#ecom-theme))
+```bash
+npm install @wayke-se/ecom-web
+```
+
 ```javascript
 import React from 'react';
-import WaykeComposite from '@wayke-se/components-react'
+import WaykeComposite, { WaykeProviderSettings } from '@wayke-se/components-react'
 import '@wayke-se/components-react/dist/assets/default.css';
-// Optional
+// Optional, only if you use ecomSettings
 import '@wayke-se/ecom-web/dist/index.css';
 
 const ProviderSettings: WaykeProviderSettings = {
@@ -81,18 +86,20 @@ Examples given the application is located in `/search/vehicles`:
 5) pathRoute is `a/b` => `//yoursite.com/search/a/b/00000000-0000-0000-0000-000000000000`
 6) pathRoute is `https://www.wayke.se/objekt` => `https://www.wayke.se/objekt/00000000-0000-0000-0000-000000000000`
 
+The id is appended with a `/`, so `pathRoute` should not end with a slash.
+
 ```javascript
 import React from 'react';
-import { WaykeComposite } from '@wayke-se/components-react'
-import '@wayke.se/components-react/dist/assets/default.css';
-// Optional
+import WaykeComposite from '@wayke-se/components-react'
+import '@wayke-se/components-react/dist/assets/default.css';
+// Optional, only if you use ecomSettings
 import '@wayke-se/ecom-web/dist/index.css';
 
 const App = () => (
   <WaykeComposite
     composite={{
-      ...,
-      pathRoute: "your/path/to/this/component/"
+      // ...other composite props
+      pathRoute: "/your/path/to/this/component"
     }}
     provider={ProviderSettings}
   />
@@ -108,8 +115,8 @@ import React, { useCallback } from 'react';
 import { WaykeProvider, WaykeSearch } from '@wayke-se/components-react'
 
 const App = () => {
-  const onClickSearchItem = useCallback((id: string) => {
-    console.log(id);
+  const onClickSearchItem = useCallback((data) => {
+    console.log(data.id, data.branchId, data.branchName);
   }, []);
 
   return (
@@ -120,6 +127,8 @@ const App = () => {
 };
 ```
 
+If neither `hashRoute` nor `pathRoute` is set, the vehicle cards are not links. Use `onClickSearchItem` to handle navigation to the vehicle yourself.
+
 ### I only want to use the Search Item component
 
 It's recomended to place WaykeItemProvider close to app-root in order to keep the cache
@@ -127,16 +136,16 @@ It's recomended to place WaykeItemProvider close to app-root in order to keep th
 ```javascript
 import React, { useCallback } from 'react';
 import { WaykeItemProvider, WaykeSearchItem } from '@wayke-se/components-react'
-import '@wayke.se/components-react/dist/assets/default.css';
-// Optional
+import '@wayke-se/components-react/dist/assets/default.css';
+// Optional, only if you use ecomSettings
 import '@wayke-se/ecom-web/dist/index.css';
 
 const App = ({}) => {
   const id = 'd01f79a3-7552-49c4-9d4d-deb3aa581c31';
 
-  // Optional, get id when related vehicles are clicked
-  const onClickSearchItem = useCallback((data) => {
-    console.log(data.id);
+  // Optional, triggered when a related vehicle is clicked
+  const onClickSearchItem = useCallback((id: string) => {
+    console.log(id);
   }, []);
 
   return (
@@ -147,6 +156,47 @@ const App = ({}) => {
 };
 ```
 
+### I want to use the components on a site that doesn't use React
+
+The components are built with React, but they can be mounted into any element on any website. React is then bundled with your JavaScript, which adds to the loading time of the site.
+
+You need a bundler (for example webpack, esbuild, Rollup or Vite) that can bundle the JavaScript and the imported CSS files.
+
+Install the package and its peer dependencies
+```bash
+npm install @wayke-se/components-react react react-dom styled-components
+# Optional, only if you use ecomSettings
+npm install @wayke-se/ecom-web
+```
+
+Add an element where the components should be rendered
+```html
+<div id="wayke-components"></div>
+<script src="your-bundle.js"></script>
+```
+
+Mount the component into the element. `createElement` is used instead of JSX, so no JSX transform is needed.
+```javascript
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+import WaykeComposite from '@wayke-se/components-react';
+import '@wayke-se/components-react/dist/assets/default.css';
+// Optional, only if you use ecomSettings
+import '@wayke-se/ecom-web/dist/index.css';
+
+const settings = {
+  provider: ProviderSettings,
+  composite: {
+    modifyDocumentTitleItem: true,
+  },
+};
+
+const container = document.getElementById('wayke-components');
+createRoot(container).render(createElement(WaykeComposite, settings));
+```
+
+`WaykeComposite` uses hash routing by default, so it works on a single page without any server configuration. See [path-route](#waykecomposite-uses-hash-route-i-want-to-use-path-route) if you want to use path routing instead.
+
 ## Components
 
 ### WaykeComposite
@@ -155,11 +205,13 @@ const App = ({}) => {
 | provider          | WaykeProviderSettings  | true     |
 | composite         | WaykeCompositeProps    | false    |
 
+`WaykeComposite` shows `WaykeSearch` and switches to `WaykeSearchItem` when a vehicle id is found in the url. It uses hash routing unless `composite.pathRoute` is set.
+
 ### WaykeSearchItem
 | Property                 | Type       | Required | Value                |
 |--------------------------|------------|----------|----------------------|
 | id                       | string     | true     |                      |
-| marketCode               | MarketCode | false    | SE | NO              |
+| marketCode               | MarketCode | false    | SE \| NO             |
 | pathRoute                | string     | false    |                      |
 | hashRoute                | boolean    | false    |                      |
 | disableResetScrollOnInit | boolean    | false    |                      |
@@ -176,75 +228,78 @@ const App = ({}) => {
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
   * `disableResetScrollOnInit` - Loading the item page resets the scroll, here it's possible to disable it.
   * `placeholderImage` - Provide custom placeholder image when image is missing.
-  * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
-  * `modifyDocumentTitleItem` - Update document title with vehicle data
+  * `onClickSearchItem` - Function that will be triggered when a related vehicle is clicked.
+  * `modifyDocumentTitleItem` - Update document title with vehicle data (registration number, title and short description).
   * `displayBranchName` - Displays branch name on related product cards and using branch name in presentation of where the vehicle exist
 
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
 |---------------------------|---------------------------|---------------------------|
-| marketCode                | MarketCode                | SE | NO                   |
+| marketCode                | MarketCode                | SE \| NO                  |
 | pathRoute                 | string                    |                           |
 | hashRoute                 | boolean                   |                           |
 | filterList                | SearchFilterTypes[]       |                           |
-| initialQueryParams        | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, modelYear.min, modelYear.max, leasingPrice.min, leasingPrice.max, businessLeasingPrice.min, businessLeasingPrice.max |
+| initialQueryParams        | URLSearchParams or string | query, manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price.min, price.max, mileage.min, mileage.max, odometerValueAsKm.min, odometerValueAsKm.max, modelYear.min, modelYear.max, leasingPrice.min, leasingPrice.max, businessLeasingPrice.min, businessLeasingPrice.max, sort, hits |
 | removeSearchBar           | boolean                   |                           |
 | removeFilterOptions       | boolean                   |                           |
 | placeholderImage          | string                    |                           |
-| onClickSearchItem         | function                  | (data: CallbackItemData) => void      |
+| onClickSearchItem         | function                  | (data: { id: string, branchId?: string, branchName?: string }) => void |
 | modifyDocumentTitleSearch | string                    |                           |
-| displayBranchName         | string                    |                           |
+| displayBranchName         | boolean                   |                           |
 
 * Optional
   * `marketCode` - Set the language, available options are SE and NO, default to SE.
   * `pathRoute` - If set, then if a item is clicked it will use the provided url and append the guid. Supports both relative and absolute.
   * `hashRoute` - If set to true, then if a item is clicked it will append #guid to the url (is not used if `pathRoute` is set).
-  * `filterList` - Select what filters that should be visible and in whiched order, drivingWheel, price, mileage, modelYear, leasingPrice, businessLeasingPrice
-  * `initialQueryParams` - Set the default filter that should be applid upon init.
+  * `filterList` - Select which filters should be visible and in which order. See [SearchFilterTypes](#searchfiltertypes) for available filters. If not set, all filters are shown (see [Notes on MarketCode](#notes-on-marketcode)).
+  * `initialQueryParams` - Set the default filter that should be applied upon init. The parameters are passed on to the search API. `hits` defaults to `30` and `sort` to `published-desc`.
   * `removeSearchBar` - Removes search bar.
   * `removeFilterOptions` - Removes filter options.
   * `placeholderImage` - Provide custom placeholder image when image is missing.
-  * `onClickSearchItem` - Function that can be provided that will be triggered once a item is clicked.
+  * `onClickSearchItem` - Function that will be triggered when a vehicle is clicked.
   * `modifyDocumentTitleSearch` - Set custom document title
   * `displayBranchName` - Displays branch name on product cards
 
 ### Notes on MarketCode
-`marketCode` defines what langugage that will be used (defaults to `SE` - Swedish). Other things that `marketCode` will effect:
-- `SE` will exclude the filter `odometerReadingValueInKm` and instead use `mileage`, while `NO` will do the opposite. The difference between the two filters are the unit used. For `odometerReadingValueInKm` the unit is kilometer, while `mileage` is kilometer/10 (Scandinavian miles)
+`marketCode` defines what language that will be used, `SE` - Swedish (default) or `NO` - Norwegian. Other things that `marketCode` will affect:
+- If no `filterList` is set, `SE` will exclude the filter `odometerValueAsKm` and instead use `mileage`, while `NO` will do the opposite. The difference between the two filters is the unit used. For `odometerValueAsKm` the unit is kilometer, while `mileage` is kilometer/10 (Scandinavian miles).
+- The language is set once, by the first component that is rendered.
 
 
 ## Types
 
 ### WaykeCompositeProps
-WaykeSearchItem & WaykeSearch combined without `id`
+WaykeSearchItem & WaykeSearch combined without `id`. `hashRoute` and `onClickSearchItem` are deprecated and have no effect, since `WaykeComposite` handles routing itself. Subscribe to the `ItemClicked` event with [WaykePubSub](#subscribe-to-events) to know when a vehicle is clicked.
 
 ### WaykeProviderSettings
 | Property              | Type         | Required |
 |-----------------------|--------------|----------|
 | url                   | string       | true     |
-| urlMlt                | string       | true     |
+| urlMlt                | string       | false    |
 | graphQlUrl            | string       | true     |
 | apiKey                | string       | false    |
 | googleMapsApiKey      | string       | false    |
 | googleMapsMarker      | string       | false    |
 | ecomSettings          | EcomSettings | false    |
 | useQueryParamsFromUrl | boolean      | false    |
+| pathRoute             | string       | false    |
 
 * Required
   * `url` - Url to Wayke ext-api.
-  * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
   * `graphQlUrl` - Url to the GraphQl endpoint.
 * Optional
-  * `apiKey` - To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
-  * `googleMapsApiKey` - Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
-  * `googleMapsMarker` - Provide a custom marker, url.
-  * `ecomSettings` - Allow the use of ecom.
-  * `useQueryParamsFromUrl` - Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then initialQueryParams is added if the key doesnt exist in the url.
+  * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then the latest added vehicles are shown instead of related vehicles.
+  * `apiKey` - Sent as `x-api-key` to Wayke ext-api. If no api key is provided, then the origin of the request is used as api key.
+  * `googleMapsApiKey` - Provide a Google Maps Static API key. The vehicle page shows a button for the map. With a `googleMapsApiKey` the button shows a static map, otherwise it opens Google Maps in another tab.
+  * `googleMapsMarker` - Url to a custom map marker for the static map.
+  * `ecomSettings` - Enables ecom.
+  * `useQueryParamsFromUrl` - Reading/writing query strings from/to the url. If true and `initialQueryParams` also exist, then each value in `initialQueryParams` is added unless the url already contains the same key with the same value.
+  * `pathRoute` - Used with `useQueryParamsFromUrl`. When the search query is written to the url, the part of the path from `pathRoute` and onwards is removed. `WaykeComposite` does not pass `composite.pathRoute` on, so set it here as well.
 
 ### EcomSettings
 | Property           | Type         | Required |
 |--------------------|--------------|----------|
-| url                | String       | true     |
+| url                | string       | true     |
 | useBankId          | boolean      | false    |
 | displayBankIdAlert | boolean      | false    |
 | serviceLogotypeUrl | string       | false    |
@@ -253,18 +308,18 @@ WaykeSearchItem & WaykeSearch combined without `id`
 * Required
   * `url` - Wayke ecom url.
 * Optional
-  * `useBankId`: If you want to use _Swedish Bank Id_ to identify the user and fetch their personal information, set this to true _(`false` by default)_.
-  * `displayBankIdAlert`: By default, the user is identified with BankId to _Wayke_. To clarify that the purchase is to another retailer, an optional alert can be displayed in the BankId identification step _(`false` by default)_.
-  * `serviceLogotypeUrl`: Set the logo. By default the manufacturers logo will be used.
-  * `bankIdThumbprint`: Custom bank id certificate thumbprint .
+  * `useBankId`: Deprecated, not used since 3.0.0.
+  * `displayBankIdAlert`: Deprecated, not used since 3.0.0.
+  * `serviceLogotypeUrl`: Url to the logo shown in ecom. By default the manufacturers logo will be used. Use a url to an image file, a `data:` url is not supported.
+  * `bankIdThumbprint`: Custom BankID certificate thumbprint.
 
-> For more information about settings and styling regarding *@wayke-se/ecom* see https://github.com/wayke-se/wayke-ecom-react.
+> For more information about ecom see https://github.com/wayke-se/wayke-ecom-web.
 
 ### WaykeItemProviderSettings
 | Property              | Type         | Required |
 |-----------------------|--------------|----------|
 | url                   | string       | true     |
-| urlMlt                | string       | true     |
+| urlMlt                | string       | false    |
 | graphQlUrl            | string       | true     |
 | apiKey                | string       | false    |
 | googleMapsApiKey      | string       | false    |
@@ -273,13 +328,13 @@ WaykeSearchItem & WaykeSearch combined without `id`
 
 * Required
   * `url` - Url to Wayke ext-api.
-  * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then related vehicles are change to latest added.
   * `graphQlUrl` - Url to the GraphQl endpoint.
 * Optional
-  * `apiKey` - To use with wayke ext-api. If no api key is provided, then the origin of the request is used as a api key.
-  * `googleMapsApiKey` - Google Maps Static will be used if a `googleMapsApiKey` is provided, else the map will open in another tab (Google Maps). Provide a Google Maps Static API key.
-  * `googleMapsMarker` - Provide a custom marker, url.
-  * `ecomSettings` - Allow the use of ecom.
+  * `urlMlt` - Url to Wayke ext-api for related vehicles. Used when displaying related vehicles for a given vehicle. If not provided `url` will be used, but then the latest added vehicles are shown instead of related vehicles.
+  * `apiKey` - Sent as `x-api-key` to Wayke ext-api. If no api key is provided, then the origin of the request is used as api key.
+  * `googleMapsApiKey` - Provide a Google Maps Static API key. The vehicle page shows a button for the map. With a `googleMapsApiKey` the button shows a static map, otherwise it opens Google Maps in another tab.
+  * `googleMapsMarker` - Url to a custom map marker for the static map.
+  * `ecomSettings` - Enables ecom.
 
 ### SearchFilterTypes
 | Property    | Type                  | Required | Values                                                                                                                                         |
@@ -287,16 +342,20 @@ WaykeSearchItem & WaykeSearch combined without `id`
 | filterName  | SearchFilterNameTypes | true     | manufacturer, modelSeries, fuelType, gearboxType, branch, color, environmentClass, properties.segment, drivingWheel, price, mileage, odometerValueAsKm, modelYear, leasingPrice, businessLeasingPrice |
 | displayName | string                | false    |                                                                                                                                                |
 
-* `displayName` override default translation of title
+* `displayName` - Override the default translation of the filter title.
 
 ### Set initial query filter
 ```javascript
 import WaykeComposite from '@wayke-se/components-react'
 
+const initialQueryParams = new URLSearchParams();
+initialQueryParams.set('modelYear.min', '2018');
+initialQueryParams.append('modelSeries', 'A5');
+
 const App = () => (
   <WaykeComposite
     provider={ProviderSettings}
-    composite={{,
+    composite={{
       initialQueryParams,
     }}
   />
@@ -309,7 +368,7 @@ const App = () => (
 Order will have effect
 
 ```javascript
-import WaykeComposite from '@wayke-se/components-react'
+import WaykeComposite, { SearchFilterTypes } from '@wayke-se/components-react'
 
 const filterList: SearchFilterTypes[] = [
   {
@@ -324,8 +383,8 @@ const filterList: SearchFilterTypes[] = [
 const App = () => (
   <WaykeComposite
     provider={ProviderSettings}
-    composite={{,
-      filterList={filterList}
+    composite={{
+      filterList,
     }}
   />
 )
@@ -334,7 +393,7 @@ const App = () => (
 ## Subscribe to events
 
 ```javascript
-import { WaykePubSub}  from '@wayke-se/components-react';
+import { WaykePubSub } from '@wayke-se/components-react';
 
 const event = {
   eventName: 'ItemClicked',
@@ -343,16 +402,15 @@ const event = {
 
 WaykePubSub.subscribe(event);
 WaykePubSub.unsubscribe(event);
-
 ```
 
-| Method       | Arguments                      |
-|--------------|--------------------------------|
-| subscribe    | EventBase                      |
-| unsubscribe  | -                              |
-| publish      | eventName: string, ...arg: any |
+| Method       | Arguments                                                      |
+|--------------|----------------------------------------------------------------|
+| subscribe    | event: EventType                                               |
+| unsubscribe  | event: EventType (the same object that was passed to `subscribe`) |
+| publish      | eventName: EventNames, data                                    |
 
-### EventBase
+### EventType
 | eventName             | callback                  | Data                                                                                                                            |
 |-----------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | HashRouteChange       | (data) => void            | CallbackHashRouteChangeData                                                                                                     |
@@ -375,36 +433,42 @@ WaykePubSub.unsubscribe(event);
 | SearchCompleted       | (data) => void            | CallbackSearchCompletedData                                                                                                     |
 | Search                | (data) => void            | CallbackSearchData                                                                                                              |
 | FilterApply           | (data) => void            | CallbackFilterApplyData                                                                                                         |
-| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackEcomOnUserEventData \| CallbackItemData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
+| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackItemData \| CallbackEcomData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
 * `All` - Subscribes to all events.
 
+> The `Callback*Data` names below describe the payloads. They are not exported from the package.
+
 #### CallbackHashRouteChangeData
-| Property  | Type      |
-|-----------|-----------|
-| id        | string    |
+| Property  | Type                  |
+|-----------|-----------------------|
+| id        | string \| undefined   |
+
+`id` is `undefined` when the hash is removed.
 
 #### CallbackItemData
-| Property      | Type      |
-|---------------|-----------|
-| id            | string    |
-| branchName    | string    |
-| branchId      | string    |
+| Property      | Type                  |
+|---------------|-----------------------|
+| id            | string                |
+| branchName    | string \| undefined   |
+| branchId      | string \| undefined   |
 
 #### CallbackEcomData
 | Property      | Type                  |
 |---------------|-----------------------|
 | id            | string                |
-| branchName    | string                |
-| branchId      | string                |
+| branchName    | string \| undefined   |
+| branchId      | string \| undefined   |
 | view          | EcomView              |
-| event         | EcomView              |
+| event         | EcomEvent             |
 | currentStep   | EcomStep \| undefined |
 | data          | any \| undefined      |
 
+`EcomView`, `EcomEvent` and `EcomStep` are exported from `@wayke-se/ecom-web`.
+
 #### CallbackSearchClearQueryData
-| Property  | Type      |
-|-----------|-----------|
-| query     | string    |
+| Property  | Type             |
+|-----------|------------------|
+| query     | string \| null   |
 
 #### CallbackSearchClearAllFiltersQueryData
 | Property  | Type      |
@@ -433,19 +497,20 @@ WaykePubSub.unsubscribe(event);
 |-----------|-----------------------|
 | type      | "checkbox" \| "range" |
 | filter    | string                |
-| value     | string \| undefined   |
-| checked   | boolean \| "range"    |
-| min       | number \| "range"     |
-| max       | number \| "range"     |
+| value     | string \| undefined (checkbox only)  |
+| checked   | boolean \| undefined (checkbox only) |
+| min       | number \| undefined (range only)     |
+| max       | number \| undefined (range only)     |
 
 ## Theme
 It is possible to apply a custom theme using *CSS*. The things that can be styled are:
 - Primary brand color
 - Secondary brand color
+- Accent color
 - Font (regular)
 - Font (bold)
 
-To style the components, copy the following snippet into your *CSS* file and modify are your needs.
+To style the components, copy the following snippet into your *CSS* file and modify it to your needs.
 
 ```css
 /* === Color === */
@@ -550,67 +615,75 @@ To style the components, copy the following snippet into your *CSS* file and mod
 }
 ```
 
-### Ecom theme
-The default ecom css can be found and imported `node_module/@wayke-se/ecom-web/dist/index.css`.
-
 > **It is highly recommended to *NOT* add or remove any properties defined above in the color selectors**. However, since fonts usually requires more configuration we encourage you to add the necessary font styling required to match your current profile. If you add new properties to the font selectors, please be careful and ensure everything looks as intended before going into production.
 
-## Run example from repo
-This repository contains a example app that uses [@wayke-se/components-react](https://www.npmjs.com/package/@wayke-se/components-react).
+### Ecom theme
+The ecom JavaScript is bundled with this package, but its stylesheet is not. If you use `ecomSettings`, install `@wayke-se/ecom-web` and import its stylesheet:
 
-
-
-To start the example create an `.env` file in root.
+```bash
+npm install @wayke-se/ecom-web
 ```
-WAYKE_HOST=YOUR_HOST_1,YOUR_HOST_2
+
+```javascript
+import '@wayke-se/ecom-web/dist/index.css';
+```
+
+The ecom styles are scoped under `.waykeecom-root` and are built on CSS custom properties prefixed with `--waykeecom-`. To change the ecom colors, override the custom properties in a stylesheet loaded after the ecom stylesheet:
+
+```css
+.waykeecom-root {
+  --waykeecom--color-primary-main: #ff5a1c;
+  --waykeecom--color-primary-alt: #ffe6dc;
+  --waykeecom--color-link-main: #ff5a1c;
+  --waykeecom--color-action-main: #ff5a1c;
+  --waykeecom--color-action-alt: #ffe6dc;
+}
+```
+
+See `@wayke-se/ecom-web/dist/index.css` for the full list of custom properties.
+
+## Run example from repo
+This repository contains an example app in `example/` that uses the components straight from `src/`.
+
+Create an `.env` file in the repository root:
+```
 WAYKE_SEARCH_URL=https://api.wayketech.se/vehicles
 WAYKE_SEARCH_MLT_URL=https://api.wayketech.se/vehicles-mlt-ext
-WAYKE_SEARCH_X_API_KEY=YOUR_API_KEY
 WAYKE_GRAPH_QL_URL=https://gql.wayketech.se/query
 WAYKE_ECOM_URL=https://ecom.wayketech.se
 GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_STATIC_API_KEY
 ```
 
-* `WAYKE_SEARCH_MLT_URL` - An *optional* flag. Will fetch related vehicles to current vehicle. If not provided
-`WAYKE_SEARCH_URL` will be used instead, but will fetch latest vehicles.
+* `WAYKE_SEARCH_MLT_URL` - *Optional*. Fetches vehicles related to the current vehicle. If not provided, `WAYKE_SEARCH_URL` is used instead and the latest vehicles are shown.
+* `GOOGLE_MAPS_API_KEY` - *Optional*. See `googleMapsApiKey`.
 
-Then run the following:
+Then run the following from the repository root:
 ```bash
-npm install
-cd example
 npm install
 npm start
 ```
 
-`WAYKE_HOST` can be used instead of using and exposing the `WAYKE_SEARCH_X_API_KEY`. If, for example, your development host is `test.com.localhost`
-Update your local host file and add:
+The example is served on port `5000`. Set `PORT` to use another port, for example `PORT=5010 npm start`.
+
+The example does not set an `apiKey`, so the origin of the request is used as API key. To use the API key of a specific site, add a host such as `test.com.localhost` to your hosts file:
+```
 127.0.0.1   test.com.localhost
-This will change the origin, while still pointing to localhost.
-Start the example and open `test.com.localhost:5000`.
-
-To add more hosts, add all to your local host file and then update `WAYKE_HOST` (comma separated):
 ```
-WAYKE_HOST=a.com.localhost,b.com.localhost
-```
-`a.com.localhost:5000` and `b.com.localhost:5000` can now be accessed.
-
+Then open `test.com.localhost:5000`. This changes the origin while still pointing to localhost.
 
 ### Available Routes (Independent)
 
 #### WaykeComposite
 [http://localhost:5000](http://localhost:5000)
 
+#### WaykeComposite with hash route
+[http://localhost:5000/hash](http://localhost:5000/hash)
+
+#### WaykeComposite with path route
+[http://localhost:5000/a/b](http://localhost:5000/a/b)
+
 #### WaykeSearch With WaykeProvider
 [http://localhost:5000/search](http://localhost:5000/search)
 
 #### WaykeSearchItem With WaykeProvider
 [http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31](http://localhost:5000/search-item/d01f79a3-7552-49c4-9d4d-deb3aa581c31)
-
-
-## Example repositories
-
-### React and Typescript example
-[https://github.com/wayke-se/components-react-boilerplate](https://github.com/wayke-se/components-react-boilerplate)
-
-### Non-React with/without Typescript example
-[https://github.com/wayke-se/components-react-example](https://github.com/wayke-se/components-react-example)

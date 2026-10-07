@@ -10,7 +10,7 @@ const Home = () => (
     composite={{
       // initialQueryParams,
       removeSearchBar: false,
-      marketCode: 'NO',
+      marketCode: 'SE',
     }}
     provider={{
       graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
@@ -18,11 +18,9 @@ const Home = () => (
       urlMlt: process.env.WAYKE_SEARCH_MLT_URL as string,
       ecomSettings: {
         url: process.env.WAYKE_ECOM_URL as string,
-        useBankId: true,
-        serviceLogotypeUrl: 'https://cdn.wayke.se/wui/images/ecom/wayke-logo.svg',
+        serviceLogotypeUrl: '/images/wayke-logo.svg',
       },
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
-      googleMapsMarker: 'https://www.wayke.se/images/map/marker.png',
       useQueryParamsFromUrl: true,
     }}
   />
