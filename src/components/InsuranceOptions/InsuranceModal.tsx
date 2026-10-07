@@ -62,8 +62,8 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
   );
 
   const trackPayload = useMemo(
-    () => ({ branchId: branch?.id, branchName: branch?.name }),
-    [branch]
+    () => ({ id, branchId: branch?.id, branchName: branch?.name }),
+    [id, branch]
   );
 
   const onShowInsurances = useCallback(() => {
