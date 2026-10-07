@@ -12,7 +12,9 @@ import Theme from './themeProvider';
 
 export interface EcomSettings {
   url: string;
+  /** @deprecated Not used since 3.0.0. Will be removed in the next major version. */
   useBankId?: boolean;
+  /** @deprecated Not used since 3.0.0. Will be removed in the next major version. */
   displayBankIdAlert?: boolean;
   serviceLogotypeUrl?: string;
   bankIdThumbprint?: string;

@@ -5,8 +5,6 @@ export interface SettingsContextProps {
   googleMapsMarker?: string;
   ecomSettings?: {
     url: string;
-    useBankId?: boolean;
-    displayBankIdAlert?: boolean;
     serviceLogotypeUrl?: string;
     bankIdThumbprint?: string;
   };

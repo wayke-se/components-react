@@ -6,7 +6,17 @@ import PubSub from '../utils/pubsub/pubsub';
 import WaykeSearch, { WaykeSearchProps } from './search';
 import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem';
 
-export type WaykeCompositeProps = Omit<WaykeSearchProps & WaykeSearchItemProps, 'id'>;
+type WaykeCompositeBaseProps = Omit<WaykeSearchProps & WaykeSearchItemProps, 'id'>;
+
+export type WaykeCompositeProps = Omit<
+  WaykeCompositeBaseProps,
+  'hashRoute' | 'onClickSearchItem'
+> & {
+  /** @deprecated Has no effect. Hash routing is used unless `pathRoute` is set. */
+  hashRoute?: WaykeCompositeBaseProps['hashRoute'];
+  /** @deprecated Has no effect. Subscribe to the `ItemClicked` event with `WaykePubSub` instead. */
+  onClickSearchItem?: WaykeCompositeBaseProps['onClickSearchItem'];
+};
 
 const WaykeComposite = ({
   marketCode = 'SE',
