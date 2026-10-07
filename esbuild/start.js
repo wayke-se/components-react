@@ -17,6 +17,9 @@ const ctx = await esbuild.context({
 });
 
 ctx.serve({
+  // Serve index.html for client-side routes such as /search
+  fallback: 'www/index.html',
+
   servedir: 'www',
   port: Number(process.env.PORT) || 5000,
 });
