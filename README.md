@@ -295,10 +295,11 @@ Every option accepts:
 * `name` - Custom button label. Defaults to the translated label for the type.
 * `primary` - `true` renders a primary button, `false` a secondary one.
 
-`leadMessage` and `leadCallMe` open a form and post the lead to Wayke, where it ends up in Wayke Dealer for the branch that owns the vehicle. The lead is tagged with the hostname of the page it was sent from (`source`), the button used (`sourceMechanism`: `cta.email` or `cta.callme`) and this package (`client`: `components-react`, `clientVersion`).
+`leadMessage` and `leadCallMe` open a form and post the lead to Wayke (`/lead` on the same host as the provider `url`), where it ends up in Wayke Dealer for the branch that owns the vehicle. The lead is tagged with the hostname of the page it was sent from (`source`), the button used (`sourceMechanism`: `cta.email` or `cta.callme`) and this package (`client`: `components-react`, `clientVersion`).
 
-`email` opens the visitor's mail client with a pre-populated subject and body so the dealer can tell where the request came from:
-> `<hostname> – I'm interested in <reg no>, <make> <model>`
+`email` opens the visitor's mail client with a pre-populated subject and body so the dealer can tell where the request came from. The texts are translated by `marketCode`, for example with `SE`:
+* Subject: `<hostname> – Jag är intresserad av <reg no>, <make> <model>`
+* Body: `Länk till bilen: <url of the current page>`
 
 Both can be customized, as a string or a function of the vehicle:
 ```javascript
@@ -516,12 +517,12 @@ Published once when the search page or an item page is shown. Either of:
 | branchId      | string \| undefined   |
 
 #### CallbackLeadData
-| Property      | Type                 |
-|---------------|----------------------|
-| id            | string               |
-| branchName    | string               |
-| branchId      | string               |
-| communication | "email" \| "callme" |
+| Property      | Type                  |
+|---------------|-----------------------|
+| id            | string                |
+| branchName    | string \| undefined   |
+| branchId      | string \| undefined   |
+| communication | "email" \| "callme"   |
 
 #### CallbackEcomData
 | Property      | Type                  |
