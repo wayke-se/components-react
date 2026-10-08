@@ -19,7 +19,7 @@
     "generate-libphonenumber-metadata": "libphonenumber-metadata-generator src/utils/metadata.min.json --countries SE,NO --extended",
     "prepare": "husky",
     "start": "node ./esbuild/start.js",
-    "build": "npm run clean && node ./esbuild/lib.js",
+    "build": "npm run clean && node ./esbuild/lib.js && node ./esbuild/cdn.js",
     "clean": "rimraf build && rimraf dist && rimraf dist-cdn",
     "build:types": "tsc --project tsconfig.build.json"
   },
