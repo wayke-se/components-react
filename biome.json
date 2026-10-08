@@ -1,9 +1,15 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/src/**/*.ts", "**/src/**/*.tsx", "**/example/**/*.ts", "**/example/**/*.tsx"]
+    "includes": [
+      "**/src/**/*.ts",
+      "**/src/**/*.tsx",
+      "**/example/**/*.ts",
+      "**/example/**/*.tsx",
+      "!**/dist"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -20,7 +26,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
+      "preset": "none",
       "a11y": {},
       "complexity": { "useArrowFunction": "error" },
       "correctness": {
