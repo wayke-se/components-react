@@ -12,12 +12,28 @@ interface CallbackHashRouteChangeData {
 }
 export type CallbackHashRouteChange = (data: CallbackHashRouteChangeData) => void;
 
+export interface CallbackViewSearchData {
+  type: 'search';
+}
+export interface CallbackViewItemData {
+  type: 'item';
+  id: string;
+}
+/** Published once when the search page or an item page is shown. */
+export type CallbackViewData = CallbackViewSearchData | CallbackViewItemData;
+export type CallbackView = (data: CallbackViewData) => void;
+
 interface CallbackItemData {
   id: string;
   branchId: string;
   branchName: string;
 }
 export type CallbackItem = (data: CallbackItemData) => void;
+
+export interface CallbackLeadData extends CallbackItemData {
+  communication: 'email' | 'callme';
+}
+export type CallbackLead = (data: CallbackLeadData) => void;
 
 export interface CallbackSearchData {
   query: string;
@@ -67,6 +83,10 @@ export type CallbackFilterApply = (data: CallbackFilterApplyData) => void;
 
 export type CallbackEcom = (data: CallbackEcomData) => void;
 
+export interface EventView extends EventBase<CallbackView> {
+  eventName: 'View';
+}
+
 export interface EventHashRouteChange extends EventBase<CallbackHashRouteChange> {
   eventName: 'HashRouteChange';
 }
@@ -97,6 +117,18 @@ export interface EventPhonenumberCall extends EventBase<CallbackItem> {
 
 export interface EventMailVisible extends EventBase<CallbackItem> {
   eventName: 'MailVisible';
+}
+
+export interface EventMailClick extends EventBase<CallbackItem> {
+  eventName: 'MailClick';
+}
+
+export interface EventLeadOpen extends EventBase<CallbackLead> {
+  eventName: 'LeadOpen';
+}
+
+export interface EventLeadSent extends EventBase<CallbackLead> {
+  eventName: 'LeadSent';
 }
 
 export interface EventInsuranceOpen extends EventBase<CallbackItem> {
@@ -154,6 +186,7 @@ export interface EventAll extends EventBase<CallbackAll> {
 }
 
 export type EventType =
+  | EventView
   | EventHashRouteChange
   | EventItemClicked
   | EventEcom
@@ -162,6 +195,9 @@ export type EventType =
   | EventPhonenumberVisible
   | EventPhonenumberCall
   | EventMailVisible
+  | EventMailClick
+  | EventLeadOpen
+  | EventLeadSent
   | EventInsuranceOpen
   | EventInsuranceClose
   | EventInsuranceInterest

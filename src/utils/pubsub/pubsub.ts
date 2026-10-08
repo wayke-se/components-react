@@ -9,6 +9,7 @@ import {
   CallbackEcom,
   CallbackHashRouteChange,
   CallbackItem,
+  CallbackView,
   EventAll,
   EventEcom,
   EventFilterApply,
@@ -21,6 +22,9 @@ import {
   EventInsuranceInterest,
   EventInsuranceOpen,
   EventItemClicked,
+  EventLeadOpen,
+  EventLeadSent,
+  EventMailClick,
   EventMailVisible,
   EventNames,
   EventOptionsClick,
@@ -32,9 +36,11 @@ import {
   EventSearchCompleted,
   EventSearchInitiated,
   EventType,
+  EventView,
 } from './Events';
 
 export type EventSubscriptions = {
+  View: EventView[];
   HashRouteChange: EventHashRouteChange[];
   ItemClicked: EventItemClicked[];
   Ecom: EventEcom[];
@@ -43,6 +49,9 @@ export type EventSubscriptions = {
   PhonenumberVisible: EventPhonenumberVisible[];
   PhonenumberCall: EventPhonenumberCall[];
   MailVisible: EventMailVisible[];
+  MailClick: EventMailClick[];
+  LeadOpen: EventLeadOpen[];
+  LeadSent: EventLeadSent[];
   InsuranceOpen: EventInsuranceOpen[];
   InsuranceClose: EventInsuranceClose[];
   InsuranceInterest: EventInsuranceInterest[];
@@ -65,6 +74,7 @@ export type ActionSubscriptions = {
 
 class PubSub {
   private static events: EventSubscriptions = {
+    View: [],
     HashRouteChange: [],
     ItemClicked: [],
     Ecom: [],
@@ -73,6 +83,9 @@ class PubSub {
     PhonenumberVisible: [],
     PhonenumberCall: [],
     MailVisible: [],
+    MailClick: [],
+    LeadOpen: [],
+    LeadSent: [],
     InsuranceOpen: [],
     InsuranceClose: [],
     InsuranceInterest: [],
@@ -144,6 +157,9 @@ class PubSub {
     if (PubSub.events[eventName]) {
       PubSub.events[eventName].forEach((event: EventType) => {
         switch (eventName) {
+          case 'View':
+            (event.callback as CallbackView)(args[0]);
+            break;
           case 'HashRouteChange':
             (event.callback as CallbackHashRouteChange)(args[0]);
             break;
@@ -156,6 +172,9 @@ class PubSub {
           case 'PhonenumberVisible':
           case 'PhonenumberCall':
           case 'MailVisible':
+          case 'MailClick':
+          case 'LeadOpen':
+          case 'LeadSent':
           case 'InsuranceInterest':
           case 'InsuranceOpen':
           case 'InsuranceClose':

@@ -219,6 +219,7 @@ createRoot(container).render(createElement(WaykeComposite, settings));
 | onClickSearchItem        | function   | false    | (id: string) => void |
 | modifyDocumentTitleItem  | boolean    | false    |                      |
 | displayBranchName        | boolean    | false    |                      |
+| conversionOptions        | ConversionOption[] | false | See [Conversion options](#conversion-options) |
 
 * Required
   * `id` - Guid that represents a vehicle.
@@ -231,6 +232,7 @@ createRoot(container).render(createElement(WaykeComposite, settings));
   * `onClickSearchItem` - Function that will be triggered when a related vehicle is clicked.
   * `modifyDocumentTitleItem` - Update document title with vehicle data (registration number, title and short description).
   * `displayBranchName` - Displays branch name on related product cards and using branch name in presentation of where the vehicle exist
+  * `conversionOptions` - Which call-to-action buttons to render on the item page, and in which order. See [Conversion options](#conversion-options).
 
 ### WaykeSearch
 | Property                  | Type                      | Values                    |
@@ -259,6 +261,56 @@ createRoot(container).render(createElement(WaykeComposite, settings));
   * `onClickSearchItem` - Function that will be triggered when a vehicle is clicked.
   * `modifyDocumentTitleSearch` - Set custom document title
   * `displayBranchName` - Displays branch name on product cards
+
+### Conversion options
+The buttons in the item page sidebar ("Buy online", "Show email address", ...) are controlled by `conversionOptions`.
+Options are rendered in array order. An option is skipped when the vehicle lacks what it needs (no e-commerce, no email, no phone number, no branch).
+
+```javascript
+<WaykeComposite
+  composite={{
+    conversionOptions: [
+      { type: 'leadMessage' },
+      { type: 'leadCallMe' },
+      { type: 'ecom' },
+      { type: 'phone' },
+      // Omit 'email' to hide "Show email address" entirely
+    ],
+  }}
+  provider={ProviderSettings}
+/>
+```
+
+| type          | Button                   | Default style | Requires                              |
+|---------------|--------------------------|---------------|---------------------------------------|
+| `ecom`        | Buy online               | primary       | Vehicle with e-commerce enabled       |
+| `leadMessage` | Send message (form)      | primary       | Vehicle connected to a branch         |
+| `leadCallMe`  | Get a callback (form)    | primary       | Vehicle connected to a branch         |
+| `email`       | Show email address       | secondary     | Branch or contact with email          |
+| `phone`       | Show phone number        | secondary     | Branch or contact with phone number   |
+
+Default when `conversionOptions` is not set: `[{ type: 'ecom' }, { type: 'email' }, { type: 'phone' }]`.
+
+Every option accepts:
+* `name` - Custom button label. Defaults to the translated label for the type.
+* `primary` - `true` renders a primary button, `false` a secondary one.
+
+`leadMessage` and `leadCallMe` open a form and post the lead to Wayke (`/lead` on the same host as the provider `url`), where it ends up in Wayke Dealer for the branch that owns the vehicle. The lead is tagged with the hostname of the page it was sent from (`source`), the button used (`sourceMechanism`: `cta.email` or `cta.callme`) and this package (`client`: `components-react`, `clientVersion`).
+
+`email` opens the visitor's mail client with a pre-populated subject and body so the dealer can tell where the request came from. The texts are translated by `marketCode`, for example with `SE`:
+* Subject: `<hostname> – Jag är intresserad av <reg no>, <make> <model>`
+* Body: `Länk till bilen: <url of the current page>`
+
+Both can be customized, as a string or a function of the vehicle:
+```javascript
+{
+  type: 'email',
+  subject: (vehicle) => `Inquiry from example.com – ${vehicle.registrationNumber}`,
+  body: false, // omit body
+}
+```
+
+Events published along the way: `MailVisible`, `MailClick`, `PhonenumberVisible`, `PhonenumberCall`, `LeadOpen`, `LeadSent`. See [Subscribe to events](#subscribe-to-events).
 
 ### Notes on MarketCode
 `marketCode` defines what language that will be used, `SE` - Swedish (default) or `NO` - Norwegian. Other things that `marketCode` will affect:
@@ -413,6 +465,7 @@ WaykePubSub.unsubscribe(event);
 ### EventType
 | eventName             | callback                  | Data                                                                                                                            |
 |-----------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| View                  | (data) => void            | CallbackViewData                                                                                                                |
 | HashRouteChange       | (data) => void            | CallbackHashRouteChangeData                                                                                                     |
 | ItemClicked           | (data) => void            | CallbackItemData                                                                                                                |
 | Ecom                  | (data) => void            | CallbackEcomData                                                                                                                |
@@ -421,6 +474,9 @@ WaykePubSub.unsubscribe(event);
 | PhonenumberVisible    | (data) => void            | CallbackItemData                                                                                                                |
 | PhonenumberCall       | (data) => void            | CallbackItemData                                                                                                                |
 | MailVisible           | (data) => void            | CallbackItemData                                                                                                                |
+| MailClick             | (data) => void            | CallbackItemData                                                                                                                |
+| LeadOpen              | (data) => void            | CallbackLeadData                                                                                                                |
+| LeadSent              | (data) => void            | CallbackLeadData                                                                                                                |
 | InsuranceInterest     | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceOpen         | (data) => void            | CallbackItemData                                                                                                                |
 | InsuranceClose        | (data) => void            | CallbackItemData                                                                                                                |
@@ -433,10 +489,18 @@ WaykePubSub.unsubscribe(event);
 | SearchCompleted       | (data) => void            | CallbackSearchCompletedData                                                                                                     |
 | Search                | (data) => void            | CallbackSearchData                                                                                                              |
 | FilterApply           | (data) => void            | CallbackFilterApplyData                                                                                                         |
-| All                   | (eventName, data) => void | CallbackHashRouteChangeData \| CallbackItemData \| CallbackEcomData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
+| All                   | (eventName, data) => void | CallbackViewData \| CallbackHashRouteChangeData \| CallbackItemData \| CallbackLeadData \| CallbackEcomData \| CallbackSearchClearQueryData \| CallbackSearchClearAllFiltersQueryData \| CallbackSearchInitiatedData \| CallbackSearchCompletedData \| CallbackSearchData \| CallbackFilterApplyData |
 * `All` - Subscribes to all events.
 
 > The `Callback*Data` names below describe the payloads. They are not exported from the package.
+
+#### CallbackViewData
+Published once when the search page or an item page is shown. Either of:
+
+| Property  | Type                |
+|-----------|---------------------|
+| type      | "search" \| "item"  |
+| id        | string (item only)  |
 
 #### CallbackHashRouteChangeData
 | Property  | Type                  |
@@ -451,6 +515,14 @@ WaykePubSub.unsubscribe(event);
 | id            | string                |
 | branchName    | string \| undefined   |
 | branchId      | string \| undefined   |
+
+#### CallbackLeadData
+| Property      | Type                  |
+|---------------|-----------------------|
+| id            | string                |
+| branchName    | string \| undefined   |
+| branchId      | string \| undefined   |
+| communication | "email" \| "callme"   |
 
 #### CallbackEcomData
 | Property      | Type                  |

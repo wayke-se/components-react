@@ -1,8 +1,9 @@
-import i18n from 'i18next';
+import i18n, { i18n as I18nInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { MarketCode } from '../@types/market';
 
-export const i18nScoped = i18n.createInstance();
+// Explicit type: an inferred type would reference node_modules/i18next in the emitted .d.ts (TS2883).
+export const i18nScoped: I18nInstance = i18n.createInstance();
 
 const getLanguage = (marketCode?: MarketCode) => {
   switch (marketCode) {
@@ -210,7 +211,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   setupFee: 'Uppläggningskostnad',
                   administrationFee: 'Administrativa avgifter',
                   totalCreditCost: 'Total kreditkostnad',
-                  milagePerYear: 'mil/år',
+                  mileagePerYear: 'mil/år',
                   months: 'mån',
                   loanOptionsDisclaimer:
                     'Beräknat på {{interest}} % ränta (effektivt {{effectiveInterest}} %).',
@@ -219,6 +220,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 actions: {
                   emailSubject: '{{hostName}} – Jag är intresserad av {{vehicle}}',
+                  emailBody: 'Länk till bilen: {{url}}',
                   openform: 'Öppna formulär',
                   buyOnline: 'Köp bilen online',
                   showEmail: 'Visa mailadress',
@@ -300,6 +302,35 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 searchResults: 'Sökträffar',
                 showAllRsults: 'Visa alla bilar',
+              },
+              lead: {
+                messageFormTitle: 'Skicka meddelande',
+                callFormTitle: 'Bli uppringd',
+                firstName: 'Förnamn',
+                lastName: 'Efternamn',
+                email: 'E-postadress',
+                phoneNumber: 'Telefonnummer',
+                message: 'Meddelande',
+                tradeInCar: 'Inbytesbil',
+                registrationNumber: 'Registreringsnummer',
+                mileage: 'Miltal',
+                send: 'Skicka',
+                close: 'Stäng',
+                error: 'Det gick inte att skicka. Försök igen.',
+                validationMessages: {
+                  requiredFirstName: 'Förnamn krävs',
+                  requiredLastName: 'Efternamn krävs',
+                  requiredEmail: 'E-postadress krävs',
+                  invalidEmail: 'Ogiltig e-postadress',
+                  maxMessage: 'Meddelandet får inte överstiga 500 tecken',
+                  requiredRegNo: 'Registreringsnummer krävs om du har inbytesbil',
+                  invalidRegNo: 'Ogiltigt registreringsnummer, ange det som t.ex. ABC123',
+                  requiredMileage: 'Miltal krävs om du har inbytesbil',
+                  requiredPhoneNumber: 'Telefonnummer krävs',
+                },
+                confirmationTitle: 'Tack!',
+                confirmationMessage: 'Ditt meddelande har skickats. Vi kontaktar dig inom kort.',
+                confirmationClose: 'OK',
               },
               other: {
                 loading: 'Laddar...',
@@ -507,7 +538,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   setupFee: 'Oppsettskostnad',
                   administrationFee: 'Administrative gebyrer',
                   totalCreditCost: 'Total kredittkostnad',
-                  milagePerYear: 'skandinaviske mil/år',
+                  mileagePerYear: 'skandinaviske mil/år',
                   months: 'mnd',
                   loanOptionsDisclaimer:
                     'Beregnet til {{interest}} % rente (effektiv {{effectiveInterest}} %).',
@@ -516,6 +547,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 actions: {
                   emailSubject: '{{hostName}} - Jeg er interessert i {{vehicle}}',
+                  emailBody: 'Lenke til bilen: {{url}}',
                   openform: 'Åpent skjema',
                   buyOnline: 'Kjøp bilen på nett',
                   showEmail: 'Vis e-postadresse',
@@ -597,6 +629,35 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 searchResults: 'Søkeresultater',
                 showAllRsults: 'Vis alle biler',
+              },
+              lead: {
+                messageFormTitle: 'Send melding',
+                callFormTitle: 'Bli oppringt',
+                firstName: 'Fornavn',
+                lastName: 'Etternavn',
+                email: 'E-postadresse',
+                phoneNumber: 'Telefonnummer',
+                message: 'Melding',
+                tradeInCar: 'Innbyttebil',
+                registrationNumber: 'Registreringsnummer',
+                mileage: 'Kilometerstand',
+                send: 'Send',
+                close: 'Lukk',
+                error: 'Kunne ikke sende. Prøv igjen.',
+                validationMessages: {
+                  requiredFirstName: 'Fornavn er påkrevd',
+                  requiredLastName: 'Etternavn er påkrevd',
+                  requiredEmail: 'E-postadresse er påkrevd',
+                  invalidEmail: 'Ugyldig e-postadresse',
+                  maxMessage: 'Meldingen kan ikke overskride 500 tegn',
+                  requiredRegNo: 'Registreringsnummer er påkrevd hvis du har innbyttebil',
+                  invalidRegNo: 'Ugyldig registreringsnummer, oppgi det som f.eks. AB12345',
+                  requiredMileage: 'Kilometerstand er påkrevd hvis du har innbyttebil',
+                  requiredPhoneNumber: 'Telefonnummer er påkrevd',
+                },
+                confirmationTitle: 'Takk!',
+                confirmationMessage: 'Meldingen din er sendt. Vi kontakter deg snart.',
+                confirmationClose: 'OK',
               },
               other: {
                 loading: 'Laster...',
@@ -805,7 +866,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   setupFee: 'Setup cost',
                   administrationFee: 'Administrative fees',
                   totalCreditCost: 'Total Credit Cost',
-                  milagePerYear: 'mil/år',
+                  mileagePerYear: 'mil/år',
                   months: 'mnd',
                   loanOptionsDisclaimer:
                     'Calculated at {{interest}} % interest (effective {{effectiveInterest}} %).',
@@ -814,6 +875,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 actions: {
                   emailSubject: "{{hostName}} - I'm interested in {{vehicle}}",
+                  emailBody: 'Link to the vehicle: {{url}}',
                   openform: 'Open form',
                   buyOnline: 'Buy the car online',
                   showEmail: 'Show email address',
@@ -895,6 +957,36 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 },
                 searchResults: 'Search Results',
                 showAllRsults: 'Show all cars',
+              },
+              lead: {
+                messageFormTitle: 'Send message',
+                callFormTitle: 'Get a callback',
+                firstName: 'First name',
+                lastName: 'Last name',
+                email: 'Email address',
+                phoneNumber: 'Phone number',
+                message: 'Message',
+                tradeInCar: 'Trade-in car',
+                registrationNumber: 'Registration number',
+                mileage: 'Mileage',
+                send: 'Send',
+                close: 'Close',
+                error: 'Could not send. Please try again.',
+                validationMessages: {
+                  requiredFirstName: 'First name is required',
+                  requiredLastName: 'Last name is required',
+                  requiredEmail: 'Email address is required',
+                  invalidEmail: 'Invalid email address',
+                  maxMessage: 'Message cannot exceed 500 characters',
+                  requiredRegNo: 'Registration number is required if you have a trade-in car',
+                  invalidRegNo: 'Invalid registration number',
+                  requiredMileage: 'Mileage is required if you have a trade-in car',
+                  requiredPhoneNumber: 'Phone number is required',
+                },
+                confirmationTitle: 'Thank you!',
+                confirmationMessage:
+                  'Your message has been sent successfully. We will contact you soon.',
+                confirmationClose: 'OK',
               },
               other: {
                 loading: 'Loading...',

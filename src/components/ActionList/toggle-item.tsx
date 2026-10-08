@@ -1,17 +1,28 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ButtonContent, ButtonSecondary } from '../Button';
+import { ButtonContent, ButtonPrimary, ButtonSecondary } from '../Button';
 import { RepeatTiny } from '../Repeat';
 
 interface ToggleItemProps {
   title: string;
   value: string;
   type: 'tel' | 'mailto';
+  /** Overrides the href target (without the `mailto:`/`tel:` scheme). Defaults to `value`. */
+  href?: string;
+  primary?: boolean;
   onClickVisible?: () => void;
   onClickValue?: () => void;
 }
 
-const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: ToggleItemProps) => {
+const ToggleItem = ({
+  title,
+  value,
+  type,
+  href,
+  primary,
+  onClickVisible,
+  onClickValue,
+}: ToggleItemProps) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
@@ -19,7 +30,7 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
     if (onClickValue) {
       onClickValue();
     }
-  }, []);
+  }, [onClickValue]);
 
   const onClick = useCallback(() => {
     if (!visible) {
@@ -28,7 +39,7 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
         onClickVisible();
       }
     }
-  }, [visible]);
+  }, [visible, onClickVisible]);
 
   const visibleTitle =
     type === 'tel'
@@ -37,22 +48,24 @@ const ToggleItem = ({ title, value, type, onClickVisible, onClickValue }: Toggle
         ? t('item.actions.sendEmailTo')
         : '';
 
+  const Button = primary ? ButtonPrimary : ButtonSecondary;
+
   return (
     <RepeatTiny>
       {visible ? (
-        <ButtonSecondary
+        <Button
           onClick={_onClickValue}
           as="a"
-          href={`${type}:${value}`}
+          href={`${type}:${href || value}`}
           title={`${visibleTitle} ${value}`}
           fullWidth
         >
           <ButtonContent>{value}</ButtonContent>
-        </ButtonSecondary>
+        </Button>
       ) : (
-        <ButtonSecondary onClick={onClick} title={title} fullWidth>
+        <Button onClick={onClick} title={title} fullWidth>
           <ButtonContent>{title}</ButtonContent>
-        </ButtonSecondary>
+        </Button>
       )}
     </RepeatTiny>
   );

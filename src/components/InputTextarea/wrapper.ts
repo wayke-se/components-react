@@ -1,4 +1,3 @@
-import type React from 'react';
 import styled from 'styled-components';
 
 import { size } from '../../layout/helpers';
@@ -11,20 +10,22 @@ export const Wrapper = styled.div`
   border-radius: 3px;
 `;
 
-export const Input = styled.input.attrs<React.InputHTMLAttributes<HTMLInputElement>>((props) => ({
-  type: props.type || 'text',
+export const Textarea = styled.textarea.attrs(() => ({
   className: 'wayke__theme wayke__font--regular',
 }))`
   flex: 1 1 auto;
   display: block;
   width: 100%;
-  height: ${(props) => props.theme.distances.inputHeight};
-  padding: 0 ${size(2)};
+  min-height: calc(${(props) => props.theme.distances.inputHeight} * 2.5);
+  padding: ${size(1.5)} ${size(2)};
   background-color: transparent;
+  font-family: inherit;
   font-size: 16px;
+  line-height: 1.4;
   border: none;
   border-radius: 0;
   box-shadow: none;
+  resize: vertical;
   -moz-appearance: none;
   -webkit-appearance: none;
 
@@ -32,25 +33,7 @@ export const Input = styled.input.attrs<React.InputHTMLAttributes<HTMLInputEleme
     outline: none;
   }
 
-  &::-webkit-input-placeholder {
-    font-family: inherit;
-    color: ${(props) => props.theme.color.textDarkLighten};
-    font-size: 1em;
-  }
-
-  &:-moz-placeholder {
-    font-family: inherit;
-    color: ${(props) => props.theme.color.textDarkLighten};
-    font-size: 1em;
-  }
-
-  &::-moz-placeholder {
-    font-family: inherit;
-    color: ${(props) => props.theme.color.textDarkLighten};
-    font-size: 1em;
-  }
-
-  &:-ms-input-placeholder {
+  &::placeholder {
     font-family: inherit;
     color: ${(props) => props.theme.color.textDarkLighten};
     font-size: 1em;

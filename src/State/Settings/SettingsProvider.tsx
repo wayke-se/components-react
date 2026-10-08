@@ -3,6 +3,7 @@ import { EcomSettings } from '../../providers/WaykeProvider';
 import { SettingsContext } from './SettingsContext';
 
 interface SettingsProps {
+  apiUrl?: string;
   ecomSettings?: EcomSettings;
   googleMapsApiKey?: string;
   googleMapsMarker?: string;
@@ -10,12 +11,13 @@ interface SettingsProps {
 }
 
 const SettingsProvider = ({
+  apiUrl,
   googleMapsApiKey,
   googleMapsMarker,
   ecomSettings,
   children,
 }: SettingsProps) => (
-  <SettingsContext.Provider value={{ ecomSettings, googleMapsApiKey, googleMapsMarker }}>
+  <SettingsContext.Provider value={{ apiUrl, ecomSettings, googleMapsApiKey, googleMapsMarker }}>
     {children}
   </SettingsContext.Provider>
 );

@@ -116,6 +116,7 @@ const WaykeSearch = ({
         ? new URLSearchParams(initialQueryParams)
         : initialQueryParams
     );
+    PubSub.publish('View', { type: 'search' });
   }, []);
 
   useEffect(() => {

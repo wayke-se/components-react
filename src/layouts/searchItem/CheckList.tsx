@@ -8,10 +8,12 @@ import {
   Ecommerce,
   Manufacturer,
   PackageOption,
+  VehicleData,
 } from '../../@types/codegen/types';
+import { ConversionOption } from '../../@types/conversion';
 import { MarketCode } from '../../@types/market';
 import ActionList from '../../components/ActionList';
-import { ButtonContent, ButtonInline, ButtonPrimary } from '../../components/Button';
+import { ButtonInline } from '../../components/Button';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
 import { Column, Columns } from '../../components/Columns';
 import Content from '../../components/Content';
@@ -24,6 +26,9 @@ import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal
 
 interface CheckList {
   id: string;
+  title?: string | null;
+  vehicleData?: VehicleData | null;
+  conversionOptions?: ConversionOption[];
   marketCode?: MarketCode;
   manufacturer?: Manufacturer | null;
   packageOptions: PackageOption[];
@@ -37,6 +42,9 @@ interface CheckList {
 
 const CheckList = ({
   id,
+  title,
+  vehicleData,
+  conversionOptions,
   marketCode,
   manufacturer,
   packageOptions,
@@ -75,13 +83,17 @@ const CheckList = ({
       )}
       {modal && <PackageOptionModal packageOption={modal} onClose={onClose} />}
       <Repeat>
-        {ecommerce && ecommerce.enabled && (
-          <RepeatTiny>
-            <ButtonPrimary disabled={!!ecommerce.reserved} fullWidth onClick={toggleEcomModal}>
-              <ButtonContent>{t('item.actions.buyOnline')}</ButtonContent>
-            </ButtonPrimary>
-          </RepeatTiny>
-        )}
+        <ActionList
+          id={id}
+          title={title}
+          vehicleData={vehicleData}
+          branch={branch}
+          contact={contact}
+          ecommerce={ecommerce}
+          marketCode={marketCode}
+          conversionOptions={conversionOptions}
+          toggleEcomModal={toggleEcomModal}
+        />
         {ecommerce?.reserved && (
           <RepeatTiny>
             <SwitchBar
@@ -94,7 +106,6 @@ const CheckList = ({
             </SwitchBar>
           </RepeatTiny>
         )}
-        <ActionList id={id} branch={branch} contact={contact} />
       </Repeat>
       <Repeat>
         {availableFrom && new Date(availableFrom).valueOf() > new Date().valueOf() && (

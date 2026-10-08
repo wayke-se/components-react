@@ -1,3 +1,8 @@
+import type {
+  ConversionOption,
+  ConversionOptionType,
+  ConversionOptionVehicle,
+} from './@types/conversion';
 import type { SearchFilterNameTypes, SearchFilterTypes } from './@types/filter';
 import SearchBar from './components/SearchBar';
 import WaykeSearch, { WaykeSearchProps } from './layouts/search';
@@ -24,6 +29,9 @@ import type {
   EventInsuranceInterest,
   EventInsuranceOpen,
   EventItemClicked,
+  EventLeadOpen,
+  EventLeadSent,
+  EventMailClick,
   EventMailVisible,
   EventNames,
   EventOptionsClick,
@@ -31,6 +39,7 @@ import type {
   EventPhonenumberVisible,
   EventSearch,
   EventType,
+  EventView,
 } from './utils/pubsub/Events';
 import WaykePubSub, { EventSubscriptions } from './utils/pubsub/pubsub';
 
@@ -38,6 +47,9 @@ export {
   CallbackEcom,
   CallbackEmpty,
   CallbackHashRouteChange,
+  ConversionOption,
+  ConversionOptionType,
+  ConversionOptionVehicle,
   EventAll,
   EventEcom,
   EventFilterApply,
@@ -58,6 +70,7 @@ export {
   EventSearch,
   EventSubscriptions,
   EventType,
+  EventView,
   SearchBar,
   SearchFilterNameTypes,
   SearchFilterTypes,

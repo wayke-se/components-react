@@ -4,6 +4,11 @@ import { WaykePubSub } from '../../src';
 import Routes from './routes';
 
 WaykePubSub.subscribe({
+  eventName: 'View',
+  callback: (data) => console.log('subscribed View:', data),
+});
+
+WaykePubSub.subscribe({
   eventName: 'ItemClicked',
   callback: (data) => console.log('subscribed ItemClicked:', data),
 });
@@ -101,6 +106,21 @@ WaykePubSub.subscribe({
 WaykePubSub.subscribe({
   eventName: 'MailVisible',
   callback: (data) => console.log('subscribed MailVisible:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'MailClick',
+  callback: (data) => console.log('subscribed MailClick:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'LeadOpen',
+  callback: (data) => console.log('subscribed LeadOpen:', data),
+});
+
+WaykePubSub.subscribe({
+  eventName: 'LeadSent',
+  callback: (data) => console.log('subscribed LeadSent:', data),
 });
 
 WaykePubSub.subscribe({
