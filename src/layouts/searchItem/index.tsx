@@ -1,6 +1,6 @@
 import { marked } from 'marked';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ConversionOption } from '../../@types/conversion';
+import { ConversionOption, defaultConversionOptions } from '../../@types/conversion';
 import { MarketCode } from '../../@types/market';
 import Blockquote from '../../components/Blockquote';
 import { ButtonContent, ButtonInlineLight, ButtonPrimary } from '../../components/Button';
@@ -81,6 +81,10 @@ const WaykeSearchItem = ({
   const contact = centralStorageVehicle?.contact;
   const branch = centralStorageVehicle?.branch;
   const ecomContext = useEcom(id, ecomSettings, branch);
+  // The buy button below the gallery follows the same conversion options as the sidebar.
+  const ecomOption = (conversionOptions ?? defaultConversionOptions).find(
+    (option) => option.type === 'ecom'
+  );
 
   const [demoCarModal, setDemoCarModal] = useState(false);
   const onToggleDemoCarModal = useCallback(() => setDemoCarModal(!demoCarModal), [demoCarModal]);
@@ -257,7 +261,7 @@ const WaykeSearchItem = ({
                     contact={centralStorageVehicle?.contact}
                     loadingCentralStorageVehicle={loadingCentralStorageVehicle}
                     availableFrom={availableFrom}
-                    toggleEcomModal={() => ecomContext.current?.start()}
+                    toggleEcomModal={ecomSettings ? () => ecomContext.current?.start() : undefined}
                   />
                 </ProductPageAsideSection>
               </ProductPageAside>
@@ -333,14 +337,14 @@ const WaykeSearchItem = ({
                     displayBranchName={displayBranchName}
                     loading={loadingCentralStorageVehicle}
                   />
-                  {ecommerce && ecommerce.enabled && (
+                  {ecomSettings && ecomOption && ecommerce?.enabled && (
                     <Repeat>
                       <ButtonPrimary
                         disabled={!!ecommerce.reserved}
-                        title="Köp bilen online"
+                        title={ecomOption.name || i18nScoped.t('item.actions.buyOnline')}
                         onClick={() => ecomContext.current?.start()}
                       >
-                        Köp bilen online
+                        {ecomOption.name || i18nScoped.t('item.actions.buyOnline')}
                       </ButtonPrimary>
                     </Repeat>
                   )}

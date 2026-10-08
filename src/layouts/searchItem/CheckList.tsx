@@ -37,7 +37,8 @@ interface CheckList {
   contact?: ContactOptions | null;
   loadingCentralStorageVehicle: boolean;
   availableFrom?: Date | null;
-  toggleEcomModal: () => void;
+  // Undefined when the site has no ecomSettings, which hides the buy button.
+  toggleEcomModal?: () => void;
 }
 
 const CheckList = ({
