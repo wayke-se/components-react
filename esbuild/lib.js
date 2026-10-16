@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import { existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { existsSync, writeFileSync } from 'node:fs';
 import * as esbuild from 'esbuild';
 import { copy } from 'esbuild-plugin-copy';
-import npmDts from 'npm-dts';
 import packageJson from '../package.json' with { type: 'json' };
 
 const Shared = {
@@ -51,17 +51,16 @@ await ctxEsm;
 
 const timetaken = '⚡ Generating types done in';
 console.time(timetaken);
-const generator = new npmDts.Generator({
-  entry: 'src/index.ts',
-  output: 'dist/index.d.ts',
-  help: true,
-  logLevel: 'debug',
-});
 
-// Fail the build if types are missing: 5.0.0–5.0.3 were published without index.d.ts
-// because this step swallowed the error and the package.json "types" entry pointed at nothing.
+// tsc emits one .d.ts per source file to dist/types. dist/index.d.ts re-exports the entry
+// point, so the "types" path in package.json stays the same as when npm-dts bundled them.
+// Fail the build if types are missing: 5.0.0–5.0.3 were published without index.d.ts.
 try {
-  await generator.generate();
+  execSync('npx tsc --project tsconfig.build.json', { stdio: 'inherit' });
+  writeFileSync(
+    'dist/index.d.ts',
+    "export * from './types/src/index';\nexport { default } from './types/src/index';\n"
+  );
 } catch (e) {
   console.error('Error occurred while generating types', e);
   process.exit(1);
@@ -69,7 +68,7 @@ try {
   console.timeEnd(timetaken);
 }
 
-if (!existsSync('dist/index.d.ts')) {
-  console.error('Type generation produced no dist/index.d.ts, aborting build');
+if (!existsSync('dist/types/src/index.d.ts')) {
+  console.error('Type generation produced no dist/types/src/index.d.ts, aborting build');
   process.exit(1);
 }

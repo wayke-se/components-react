@@ -10,16 +10,11 @@ const getGuid = () => {
   return regexGuid.test(guid) || !guid ? guid : undefined;
 };
 
+// A hash that is not a vehicle id (e.g. #content from a skip link on the host site) is
+// ignored, so the search stays visible instead of the components crashing.
 const useHashGuid = () => {
   const [id, setId] = useState<string | undefined>(() => getGuid());
-  const onHashChange = () => {
-    const guid = window.location.hash.substr(1, window.location.hash.length);
-    if (regexGuid.test(guid) || !guid) {
-      setId(window.location.hash.substr(1, window.location.hash.length));
-    } else {
-      throw 'Invalid Guid';
-    }
-  };
+  const onHashChange = () => setId(getGuid());
 
   useEffect(() => {
     onHashChange();

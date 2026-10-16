@@ -29,12 +29,54 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
 
+      - name: Check that the version is unpublished
+        # The CDN folder is named after the version and must never be overwritten once released.
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@wayke-se/components-react@$VERSION" version > /dev/null 2>&1; then
+            echo "::error::Version $VERSION is already published, bump the version in package.json"
+            exit 1
+          fi
+
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
 
       - name: Build Javascript
         run: npm run build
+
+      - name: Use Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install Python packages
+        run: pip install azure-storage-blob
+
+      - name: Upload CDN build
+        # Before npm publish, so a failed upload can be retried by re-running the job.
+        run: python3 deploy/deploy.py
+        env:
+          BLOB_STORAGE_CONNECTION_STRING: ${{ secrets.BLOB_STORAGE_CONNECTION_STRING }}
+          UPLOAD_MAP_FILES: ${{ github.ref_name == 'master' && 'false' || 'true' }}
+
+      - name: Verify CDN build is served
+        # Proves the connection string points at the storage behind cdn.wayke.se, before npm publish.
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          BASE="https://cdn.wayke.se/public-assets/wayke-components-react/$VERSION"
+          for FILE in index.js index.css; do
+            for ATTEMPT in 1 2 3 4 5 6; do
+              STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$BASE/$FILE")
+              [ "$STATUS" = "200" ] && break
+              sleep 10
+            done
+            echo "$BASE/$FILE -> $STATUS"
+            if [ "$STATUS" != "200" ]; then
+              echo "::error::$BASE/$FILE is not served (HTTP $STATUS). Check BLOB_STORAGE_CONNECTION_STRING for this environment."
+              exit 1
+            fi
+          done
 
       - name: Publish package to npm
         run: npm publish --access public --provenance --tag ${{ github.ref_name == 'master' && 'latest' || 'next' }}
