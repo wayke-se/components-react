@@ -25,7 +25,7 @@ import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal
 interface CheckListProps {
   title: string;
   conversionOptions?: ConversionOption[];
-  // Undefined when the site has no ecomSettings, which hides the buy button.
+  // Undefined when the site turns buy online off, which hides the buy button.
   toggleEcomModal?: () => void;
 }
 

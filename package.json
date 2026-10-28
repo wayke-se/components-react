@@ -2,10 +2,21 @@
   "name": "@wayke-se/components-react",
   "version": "6.0.0",
   "description": "",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "files": [
     "dist"
   ],
@@ -39,10 +50,8 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/react-slick": "^0.23.13",
-    "@wayke-se/ecom-web": "^2.1.1",
     "dotenv": "^18.0.9",
     "esbuild": "^0.28.2",
-    "esbuild-plugin-copy": "^2.1.1",
     "husky": "^9.1.7",
     "libphonenumber-metadata-generator": "^2.0.6",
     "lint-staged": "^17.6.0",
@@ -56,6 +65,7 @@
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",
     "@photo-sphere-viewer/core": "^5.15.1",
+    "@wayke-se/ecom-web": "^2.1.1",
     "date-fns": "^4.4.0",
     "i18next": "^26.5.11",
     "libphonenumber-js": "^1.13.15",

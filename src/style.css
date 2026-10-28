@@ -1,0 +1,3 @@
+/* The package's one stylesheet, published as @wayke-se/components-react/style.css. */
+@import '../assets/default.css';
+@import '@wayke-se/ecom-web/dist/index.css';
