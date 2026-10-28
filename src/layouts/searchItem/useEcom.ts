@@ -13,7 +13,7 @@ interface EcomWeb {
  * Buy online. ecom-web is keyed on the legacy waykeId: the commerce order flow
  * answers 404 on ad.id for ads from before ads-service.
  */
-function useEcom(ad: Ad, ecom: Settings['ecom']) {
+function useEcom(ad: Ad, ecom: Settings['ecom'], marketCode: Settings['marketCode']) {
   const ecomContext = useRef<EcomWeb | undefined>(undefined);
   const id = waykeId(ad);
 
@@ -33,6 +33,8 @@ function useEcom(ad: Ad, ecom: Settings['ecom']) {
           },
           logo: ecom.serviceLogotypeUrl,
           logoX2: ecom.serviceLogotypeUrl,
+          // Language, and Drive's look in Norway
+          marketCode,
           onEvent: (view, event, currentStep?, data?) => {
             PubSub.publish('Ecom', { ...adEvent(ad), view, event, currentStep, data });
           },

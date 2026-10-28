@@ -17,6 +17,24 @@ Add this where the vehicles should be shown, for example in an HTML block in you
 </script>
 ```
 
+<details>
+<summary>The same snippet for Wayke's test environment</summary>
+
+For a staging site or `localhost`, registered in Wayke's test environment. It shows test vehicles, and leads and orders go to test. See [Environments](#environments).
+
+```html
+<div id="wayke"></div>
+<script type="module">
+  import { mount } from 'https://cdn.wayke.se/public-assets/wayke-components-react/6.0.0/index.js';
+
+  mount('#wayke', {
+    provider: { environment: 'test' },
+  });
+</script>
+```
+
+</details>
+
 Two things to know:
 
 * **Your domain has to be registered with Wayke.** Wayke shows the vehicles that belong to your site, and recognizes the site by its domain. Until the domain is registered, the search loads but shows no vehicles. Ask your contact at Wayke to register it, and see [Environments](#environments) for development.
@@ -607,7 +625,7 @@ All settings are optional.
 |--------------------|---------|-------------|
 | enabled            | boolean | `false` hides buy online on your site, for example when you sell online in another way. Default `true`. |
 | url                | string  | Replaces the ecom API of `environment`. |
-| serviceLogotypeUrl | string  | Url to the logo shown in buy online, as an image file (not a `data:` url). The logo of the make is used by default. |
+| serviceLogotypeUrl | string  | Url to the logo at the top of buy online, as an image file (not a `data:` url). Wayke's logo by default. |
 | bankIdThumbprint   | string  | A custom BankID certificate thumbprint. |
 
 See [wayke-ecom-web](https://github.com/wayke-se/wayke-ecom-web) for more about buy online.
