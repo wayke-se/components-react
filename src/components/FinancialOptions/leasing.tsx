@@ -31,7 +31,7 @@ const Leasing = ({ offer }: LeasingProps) => {
       {modal && (
         <Modal title={title} onClose={toggleModal}>
           {image && <Image src={image} alt={title} />}
-          {description && <Content dangerouslySetInnerHTML={{ __html: description }} />}
+          {description && <Content html={description} />}
           <ModalFoldout>
             <ModalFoldoutBody>
               <DataList

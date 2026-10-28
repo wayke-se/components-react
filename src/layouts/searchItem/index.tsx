@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ConversionOption, defaultConversionOptions } from '../../@types/conversion';
 import Blockquote from '../../components/Blockquote';
@@ -44,6 +43,7 @@ import useRouter from '../../State/Router/useRouter';
 import useSettings from '../../State/Settings/useSettings';
 import { dateTimeFormat, numberSeparator } from '../../utils/formats';
 import { i18nScoped } from '../../utils/I18n';
+import { markdownToHtml } from '../../utils/markdown';
 import PubSub from '../../utils/pubsub/pubsub';
 import AccessoriesSection from './Accessories';
 import Branch from './Branch';
@@ -240,7 +240,7 @@ const ItemView = ({
                       }
                       avatar={contact?.avatar}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: marked(description) }} />
+                      <div dangerouslySetInnerHTML={{ __html: markdownToHtml(description) }} />
                     </Blockquote>
                   </ProductPageMainSection>
                 )}
