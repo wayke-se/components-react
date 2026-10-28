@@ -52,7 +52,7 @@ export const Wrapper = styled(
       ${Label} {
         color: ${(props) => props.theme.color.ui.negative};
 
-        :before {
+        &::before {
           background-color: ${(props) => props.theme.color.ui.negativeLight};
         }
       }
@@ -83,7 +83,7 @@ export const Input = styled((props: React.InputHTMLAttributes<HTMLInputElement>)
   &:checked,
   &.checked {
     & + ${Label} {
-      :before {
+      &::before {
         content: '✓';
       }
     }

@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { InsuranceProvider } from '../../Gql/ad/types';
@@ -19,11 +18,7 @@ const InsuranceFreeModal = ({ onClose, provider }: InsuranceFreeModalProps) => {
     <Modal title={provider.insuranceHeader ?? t('item.insurance')} onClose={onClose}>
       {provider.longDescription && (
         <Repeat>
-          <Content
-            dangerouslySetInnerHTML={{
-              __html: marked(provider.longDescription),
-            }}
-          ></Content>
+          <Content markdown={provider.longDescription} />
         </Repeat>
       )}
       {provider.url && (

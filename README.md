@@ -109,7 +109,7 @@ To load the stylesheet yourself, add a `<link>` to it with the same URL. The scr
 <link rel="stylesheet" href="https://cdn.wayke.se/public-assets/wayke-components-react/6.0.0/index.css">
 ```
 
-To not load the stylesheet at all, add `disablecssinjection` to the script tag in option B. The image carousel, the 360 viewer and buy online are then unstyled.
+To not load the stylesheet at all, add `disablecssinjection` to the script tag in option B. The 360 viewer and buy online are then unstyled.
 
 ```html
 <script type="module" src="https://cdn.wayke.se/public-assets/wayke-components-react/6.0.0/index.js" disablecssinjection></script>
@@ -726,6 +726,7 @@ The event names and data are the same. What changes:
 ### 6. Removed
 
 * Central storage (switching to another branch on the vehicle page).
+* The image gallery no longer uses react-slick, so CSS aimed at `.slick-*` classes has no effect.
 * The campaign filter. Dealer packages are still shown on the vehicle page.
 * Related vehicles are now the latest vehicles of the same make.
 * A vehicle without a cash price, such as a leasing-only car, shows no price instead of 0 kr.

@@ -1,7 +1,6 @@
 import { Viewer } from '@photo-sphere-viewer/core';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import '@photo-sphere-viewer/core/index.css';
 
 import MediaButton from '../Gallery/MediaButton';
 import Loader from '../Loader';

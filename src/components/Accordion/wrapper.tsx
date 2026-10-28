@@ -71,7 +71,7 @@ export const Icon = styled.div`
   }
 
   ${Header}:hover & {
-    :before {
+    &::before {
       opacity: 1;
     }
   }

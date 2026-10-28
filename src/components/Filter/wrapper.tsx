@@ -42,7 +42,7 @@ export const Action = styled(ButtonReset)`
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }

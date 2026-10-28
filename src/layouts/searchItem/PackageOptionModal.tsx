@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonInline } from '../../components/Button';
@@ -35,7 +34,7 @@ const PackageOptionModal = ({ packageOption, onClose }: PackageOptionsModalProps
       )}
       {packageOption.description && (
         <Repeat>
-          <Content dangerouslySetInnerHTML={{ __html: marked(packageOption.description) }} />
+          <Content markdown={packageOption.description} />
         </Repeat>
       )}
       {packageOption.link?.url && (

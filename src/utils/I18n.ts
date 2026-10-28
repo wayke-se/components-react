@@ -294,6 +294,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 min: 'Min',
                 max: 'Max',
               },
+              rangeSlider: {
+                min: 'lägsta',
+                max: 'högsta',
+              },
               searchBar: {
                 title: 'Sök',
                 placeholder: 'Sök din bil',
@@ -334,6 +338,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 confirmationClose: 'OK',
               },
               other: {
+                gallery: 'Bilder',
                 loading: 'Laddar...',
                 error404: '404',
                 showingNumberOfResults_one: 'Visar {{current}} av {{count}} resultat',
@@ -453,7 +458,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 anErrorHasOccured: 'Det har oppstått en feil',
                 opensInNewTab: 'Åpnes i ny fane',
                 open: 'Åpne',
-                imageIndex: 'Bilde {{indeks}}',
+                imageIndex: 'Bilde {{index}}',
               },
               item: {
                 relatedVehicles: 'Relaterte kjøretøy',
@@ -622,6 +627,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 min: 'Min',
                 max: 'Max',
               },
+              rangeSlider: {
+                min: 'laveste',
+                max: 'høyeste',
+              },
               searchBar: {
                 title: 'Søk',
                 placeholder: 'Søk i bilen din',
@@ -662,6 +671,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 confirmationClose: 'OK',
               },
               other: {
+                gallery: 'Bilder',
                 loading: 'Laster...',
                 error404: '404',
                 showingNumberOfResults_one: 'Viser {{current}} av {{count}} resultater',
@@ -672,7 +682,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 openDocument: 'Åpne {{dokument}}',
                 previousImage: 'Forrige bilde',
                 nextImage: 'Neste bilde',
-                goToImageIndex: 'Gå til bilde {{indeks}}',
+                goToImageIndex: 'Gå til bilde {{index}}',
                 phoneNumber: 'Telefonnummer',
                 showPhoneNumber: 'Vis telefonnummer',
                 callPhoneNumber: 'Ring {{phoneNumber}}',
@@ -951,6 +961,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 min: 'Min',
                 max: 'Max',
               },
+              rangeSlider: {
+                min: 'minimum',
+                max: 'maximum',
+              },
               searchBar: {
                 title: 'Search',
                 placeholder: 'Search your car',
@@ -992,6 +1006,7 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 confirmationClose: 'OK',
               },
               other: {
+                gallery: 'Images',
                 loading: 'Loading...',
                 error404: '404',
                 showingNumberOfResults_one: 'Showing {{current}} of {{count}} results',

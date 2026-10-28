@@ -60,7 +60,7 @@ export const Clear = styled(ButtonReset)`
   }
 
   &:hover {
-    :after {
+    &::after {
       opacity: 1;
     }
   }

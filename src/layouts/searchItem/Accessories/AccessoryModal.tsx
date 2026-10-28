@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Content from '../../../components/Content';
@@ -67,7 +66,7 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
       </Repeat>
 
       <Repeat>
-        <Content dangerouslySetInnerHTML={{ __html: marked(accessory.longDescription || '') }} />
+        <Content markdown={accessory.longDescription || ''} />
       </Repeat>
       {accessory.articleNumber && (
         <Repeat>

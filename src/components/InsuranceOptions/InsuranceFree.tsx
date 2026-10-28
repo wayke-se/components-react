@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InsuranceProvider } from '../../Gql/ad/types';
@@ -38,13 +37,7 @@ const InsuranceFree = ({ provider }: InsuranceFreeProps) => {
             logo={provider.logo || undefined}
             logoAlt={provider.title || t('common.logotype')}
           >
-            {provider.description && (
-              <Content
-                dangerouslySetInnerHTML={{
-                  __html: marked(provider.description),
-                }}
-              />
-            )}
+            {provider.description && <Content markdown={provider.description} />}
             <OptionBoxContent>
               <p>
                 <ButtonInline onClick={toggleModal}>{t('common.moreInformation')}</ButtonInline>

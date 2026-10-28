@@ -64,7 +64,7 @@ const FilterPanel = ({ filters, open, onClose }: Props) => {
         {filters.map((f) => (
           <AccordionItem key={f.id} heading={f.displayName} isActive={f.id === open}>
             <Repeat>
-              <FacetSelector id={f.id} />
+              <FacetSelector id={f.id} label={f.displayName} />
             </Repeat>
           </AccordionItem>
         ))}

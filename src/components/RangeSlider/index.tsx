@@ -1,35 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Handles, Rail, Slider, Tracks } from 'react-compound-slider';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { numberSeparator } from '../../utils/formats';
-import { Handle } from './handle';
-import { Track } from './track';
-import {
-  Bar,
-  Handle as OwnHandle,
-  Slider as OwnSlider,
-  Track as OwnTrack,
-  RangeSpan,
-  RangeSpanItem,
-} from './wrapper';
+import { Range, RangeSpan, RangeSpanItem, Root, Thumb, Track } from './wrapper';
 
-const getSteps = (steps: number[]) => {
-  let current = Number.MAX_SAFE_INTEGER;
-  steps.forEach((step, index) => {
-    if (index !== 0) {
-      const c = step - steps[index - 1];
-      if (c < current) {
-        current = c;
-      }
-    }
-  });
-  return current;
-};
+/** The smallest gap between two steps, so every bucket edge can be reached. */
+const smallestStep = (steps: number[]) =>
+  steps.reduce(
+    (smallest, step, index) =>
+      index === 0 ? smallest : Math.min(smallest, step - steps[index - 1]),
+    Number.MAX_SAFE_INTEGER
+  );
 
 interface RangeSliderProps {
   loading: boolean;
   domain: number[];
   values: number[];
   steps: number[];
+  /** The filter's name, read out with each handle. */
+  label?: string;
   unit?: string;
   formatValues?: boolean;
   maxPrefix?: string;
@@ -41,88 +29,74 @@ const RangeSlider = ({
   values,
   domain,
   steps,
+  label,
   unit,
   formatValues,
   maxPrefix,
   onChange,
 }: RangeSliderProps) => {
+  const { t } = useTranslation();
+  // Follows the handles while they move; the search only changes when they are let go.
   const [current, setCurrent] = useState<number[]>(values);
-  const onUpdate = useCallback(
-    (nextValues: readonly number[]) => {
-      if (!isNaN(nextValues[0]) && !isNaN(nextValues[1])) {
-        setCurrent(nextValues.slice());
-      }
-    },
-    [values]
-  );
-
-  const step = getSteps(steps);
-
-  const currentMin = formatValues ? numberSeparator(current[0]) : current[0];
-  const currentMax = formatValues ? numberSeparator(current[1]) : current[1];
-  const equal = domain[0] === domain[1];
-  const _maxPrefix = maxPrefix && domain[1] === current[1] ? maxPrefix : undefined;
+  // The last value moved to, also before React has rendered it.
+  const latest = useRef(values);
+  const move = (next: number[]) => {
+    latest.current = next;
+    setCurrent(next);
+  };
 
   useEffect(() => {
-    if (values[0] !== current[0] || values[1] !== current[1]) {
-      setCurrent(values);
-    }
-  }, [values]);
+    move(values);
+  }, [values[0], values[1]]);
+
+  // Radix 1.6.1 compares a drag's end with stale values and never calls onValueCommit
+  // for it; web-ui-v2's RangeSlider works around it the same way.
+  const commitDrag = () => {
+    const next = latest.current;
+    if (next[0] !== values[0] || next[1] !== values[1]) onChange(next);
+  };
+
+  const format = (value: number) => (formatValues ? numberSeparator(value) : value);
+  const suffix = unit ? ` ${unit}` : '';
+  const equal = domain[0] === domain[1];
+  const thumbLabel = (bound: 'min' | 'max') =>
+    [label, t(`rangeSlider.${bound}`)].filter(Boolean).join(', ');
 
   return (
     <>
       {equal ? (
-        <OwnSlider>
-          <Bar>
-            <OwnTrack style={{ left: '0', width: '100%' }} />
-            <OwnHandle role="slider" aria-disabled style={{ left: '0' }} />
-            <OwnHandle role="slider" aria-disabled style={{ left: '100%' }} />
-          </Bar>
-        </OwnSlider>
+        // One value to pick: both handles at the ends, nothing to move.
+        <Root min={0} max={1} value={[0, 1]} disabled>
+          <Track>
+            <Range />
+          </Track>
+          <Thumb aria-label={thumbLabel('min')} />
+          <Thumb aria-label={thumbLabel('max')} />
+        </Root>
       ) : (
-        <OwnSlider>
-          <Slider
-            disabled={loading}
-            mode={1}
-            step={step}
-            domain={domain}
-            onChange={onChange}
-            onUpdate={onUpdate}
-            values={values}
-            rootStyle={{ position: 'relative' }}
-          >
-            <Rail>{({ getRailProps }) => <Bar {...getRailProps()} />}</Rail>
-            <Handles>
-              {({ handles, getHandleProps }) => (
-                <div className="slider-handles">
-                  {handles.map((handle) => (
-                    <Handle
-                      key={handle.id}
-                      handle={handle}
-                      domain={domain}
-                      getHandleProps={getHandleProps}
-                    />
-                  ))}
-                </div>
-              )}
-            </Handles>
-            <Tracks left={false} right={false}>
-              {({ tracks, getTrackProps }) => (
-                <div className="slider-tracks">
-                  {tracks.map(({ id, source, target }) => (
-                    <Track key={id} source={source} target={target} getTrackProps={getTrackProps} />
-                  ))}
-                </div>
-              )}
-            </Tracks>
-          </Slider>
-        </OwnSlider>
+        <Root
+          min={domain[0]}
+          max={domain[1]}
+          step={smallestStep(steps)}
+          value={current}
+          disabled={loading}
+          onValueChange={move}
+          // Keys commit here; a drag commits on pointerup, see commitDrag.
+          onValueCommit={onChange}
+          onPointerUp={commitDrag}
+        >
+          <Track>
+            <Range />
+          </Track>
+          <Thumb aria-label={thumbLabel('min')} />
+          <Thumb aria-label={thumbLabel('max')} />
+        </Root>
       )}
       <RangeSpan>
-        <RangeSpanItem>{`${currentMin}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
-        <RangeSpanItem>{`${currentMax}${_maxPrefix ? _maxPrefix : ''}${
-          unit ? ` ${unit}` : ''
-        }`}</RangeSpanItem>
+        <RangeSpanItem>{`${format(current[0])}${suffix}`}</RangeSpanItem>
+        <RangeSpanItem>{`${format(current[1])}${
+          maxPrefix && current[1] === domain[1] ? maxPrefix : ''
+        }${suffix}`}</RangeSpanItem>
       </RangeSpan>
     </>
   );
