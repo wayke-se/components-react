@@ -31,26 +31,6 @@ export const Main = styled.div`
   position: relative;
   height: 0;
   padding-bottom: 66.66666667%;
-
-  ${(props) => props.theme.breakpoint.Md} {
-    //background-color: ${(props) => props.theme.color.accent};
-  }
-
-  .slick-slider,
-  .slick-list,
-  .slick-track,
-  .slick-slide,
-  .slick-slide > * {
-    height: 100%;
-  }
-
-  .slick-slide > * {
-    font-size: 0;
-
-    > * {
-      font-size: 1rem;
-    }
-  }
 `;
 
 export const Alt = styled.div`
@@ -77,60 +57,45 @@ export const Alt = styled.div`
   }
 `;
 
-export const Item = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  &:focus {
-    outline: none;
-  }
-
-  ${(props) => props.theme.breakpoint.LtMd} {
-    //background-color: ${(props) => props.theme.color.textDark};
-    transition: border-radius 150ms ease;
-  }
-`;
-
-export const SliderWrapper = styled.div`
+/** The slides side by side; swiping and the arrows scroll it, each slide snaps in place. */
+export const Track = styled.ul<{ $locked: boolean }>`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: ${({ $locked }) => ($locked ? 'hidden' : 'auto')};
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 
-  .slick-slider {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  &::-webkit-scrollbar {
+    display: none;
   }
 
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+`;
+
+export const Item = styled.li`
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  // On small screens the next slide peeks in, as a hint that there are more.
   ${(props) => props.theme.breakpoint.LtMd} {
-    overflow: hidden;
-
-    .slick-list {
-      overflow: visible;
-      width: 95%;
-    }
-
-    .slick-slide {
-      border-right: ${size(1)} solid ${(props) => props.theme.color.bg};
-      //transform: scale(0.95);
-      transform-origin: 0 50%;
-      transition: transform 150ms ease;
-    }
-
-    .slick-slide.slick-active {
-      transform: none;
-
-      ${Item} {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
+    flex-basis: 95%;
+    border-right: ${size(1)} solid ${(props) => props.theme.color.bg};
   }
 `;
 
@@ -194,7 +159,7 @@ type QuickNavItemProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLLIElement>,
   HTMLLIElement
 > & {
-  active?: boolean;
+  $active?: boolean;
 };
 
 export const QuickNavItem = styled.li.attrs(() => ({
@@ -206,10 +171,10 @@ export const QuickNavItem = styled.li.attrs(() => ({
     margin-top: ${size(1)};
   }
 
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     css`
-      :before {
+      &::before {
         content: '';
         position: absolute;
         top: 0;
@@ -245,7 +210,7 @@ export const QuickNavBtn = styled(ButtonReset)`
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }
