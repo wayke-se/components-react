@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { resolveFilterList, SearchFilterTypes } from '../../@types/filter';
-import { isRangeFilter, listOptions, rangeValues, selectedCount } from '../../Gql/facets';
+import { isRangeFilter, listOptions, rangeSteps, selectedCount } from '../../Gql/facets';
 import useSearch from '../../State/Search/useSearch';
 import useSettings from '../../State/Settings/useSettings';
 import FilterPanel, { PanelFilter } from '../FilterPanel';
@@ -24,7 +24,7 @@ const Filter = ({ filterList }: FilterProps) => {
       resolveFilterList(filterList)
         .filter((f) =>
           isRangeFilter(f.filterName)
-            ? rangeValues(f.filterName, unfiltered, marketCode).length > 1
+            ? rangeSteps(f.filterName, unfiltered, marketCode).length > 1
             : listOptions(f.filterName, params, result?.facets).length > 0
         )
         .map((f) => ({

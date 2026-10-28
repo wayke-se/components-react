@@ -63,6 +63,7 @@ query Ad($id: ID!) {
         ... on Branch { id displayName }
         ... on AdDefaultContactOptions { displayName telephone email title }
         ... on AssignedUser { displayName telephone email title }
+        ... on Editorial { displayName phone email title }
       }
       branch {
         id displayName description street zip city latitude longitude homePage logo market
@@ -85,6 +86,7 @@ query Ad($id: ID!) {
             manufacturer { stringValue }
             modelSeries { stringValue }
             modelName { stringValue }
+            modelVariant { stringValue }
             modelYear { intValue }
             manufactureYear { intValue }
             salesName { stringValue }
@@ -92,11 +94,20 @@ query Ad($id: ID!) {
             attributes {
               transmission { formattedValue }
               enginePower { intValue formattedValue }
+              exteriorColor { formattedValue }
+              doorsCount { formattedValue }
+              chassisType { formattedValue }
+              vehicleClassification { formattedValue }
               byCategory {
                 categoryId displayName
                 values { __typename key label formattedValue }
                 categories { categoryId displayName values { __typename key label formattedValue } }
               }
+            }
+            authority {
+              segment { stringValue }
+              chassis { stringValue }
+              annualTax { intValue formattedValue }
             }
           }
         }

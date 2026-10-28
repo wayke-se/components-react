@@ -168,10 +168,12 @@ export interface Ad {
   offerings: { warranties: AdWarranty[] };
   exchangePolicy: { enabled: boolean };
   contactOption: {
-    __typename: 'Branch' | 'AdDefaultContactOptions' | 'AssignedUser' | string;
+    __typename: 'Branch' | 'AdDefaultContactOptions' | 'AssignedUser' | 'Editorial' | string;
     id?: string;
     displayName?: string | null;
     telephone?: string | null;
+    /** Editorial has phone instead of telephone. */
+    phone?: string | null;
     email?: string | null;
     title?: string | null;
   };
@@ -221,6 +223,8 @@ export interface Ad {
       manufacturer?: { stringValue: string } | null;
       modelSeries?: { stringValue: string } | null;
       modelName?: { stringValue: string } | null;
+      /** The 5.x "Version", such as "D4 AWD"; modelName is often the model series again. */
+      modelVariant?: { stringValue: string } | null;
       modelYear?: { intValue: number } | null;
       manufactureYear?: { intValue: number } | null;
       salesName?: { stringValue: string } | null;
@@ -228,7 +232,16 @@ export interface Ad {
       attributes?: {
         transmission: { formattedValue: string } | null;
         enginePower: { intValue: number; formattedValue: string } | null;
+        exteriorColor: { formattedValue: string } | null;
+        doorsCount: { formattedValue: string } | null;
+        chassisType: { formattedValue: string } | null;
+        vehicleClassification: { formattedValue: string } | null;
         byCategory: AttributeCategory[];
+      } | null;
+      authority?: {
+        segment: { stringValue: string } | null;
+        chassis: { stringValue: string } | null;
+        annualTax: { intValue: number; formattedValue: string } | null;
       } | null;
     } | null;
     logistics: {

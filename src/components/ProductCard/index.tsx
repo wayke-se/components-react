@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import useIsInViewport from '../../hooks/useIsInViewport';
 import useRouter from '../../State/Router/useRouter';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
-import { imageUrl } from '../../utils/image';
 import PubSub from '../../utils/pubsub/pubsub';
+import ResponsiveImage from '../ResponsiveImage';
 import UspList, { ItemProps } from '../UspList';
 import {
   Content,
@@ -22,10 +22,13 @@ import {
   PreHeading,
   Price,
   PriceCell,
-  Source,
   Usp,
   Wrapper,
 } from './wrapper';
+
+// One column on phones, two on tablets, three from desktop (at most about 400 px).
+const CARD_WIDTHS = [375, 450, 600, 750, 840];
+const CARD_SIZES = '(min-width: 1024px) 400px, (min-width: 600px) 50vw, 100vw';
 
 interface Props {
   id: string;
@@ -78,21 +81,18 @@ const ProductCard = ({
     [href, onLinkClick]
   );
 
-  const size = { width: 770, height: 514 };
-  const url = image ? imageUrl(image, size) : undefined;
-  const webp = image ? imageUrl(image, { ...size, webp: true }) : undefined;
-
   return (
     <Wrapper onClick={onClick}>
       {href && <Link onClick={onHrefClick} href={href} title={title} aria-label={title} />}
       <Image ref={containerRef}>
-        {isVisible && url ? (
-          <>
-            <Picture>
-              {webp && <Source type="image/webp" srcSet={webp} />}
-              <Img alt={title} src={url} />
-            </Picture>
-          </>
+        {isVisible && image ? (
+          <ResponsiveImage
+            img={Img}
+            src={image}
+            widths={CARD_WIDTHS}
+            sizes={CARD_SIZES}
+            alt={title}
+          />
         ) : (
           <Picture>
             <Img src={placeholderImage || DEFAULT_PLACEHOLDER_IMAGE} />

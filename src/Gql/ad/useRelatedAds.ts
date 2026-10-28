@@ -6,8 +6,9 @@ import { RELATED_ADS_QUERY } from './queries';
 
 /**
  * "Fler bilar" on the ad page: the latest cars of the same make, the current
- * ad excluded. There is no more-like-this in the public API; this is what
- * web-ui-v2 does too.
+ * ad excluded, filled up with the latest of other makes when the make has too
+ * few, so a site with one car of a make still shows related cars as 5.x did.
+ * There is no more-like-this in the public API.
  */
 const useRelatedAds = (
   settings: PublicApiSettings,
@@ -20,17 +21,24 @@ const useRelatedAds = (
 
   useEffect(() => {
     let active = true;
+    const latest = (make: string | undefined, perPage: number) =>
+      gqlQuery<SearchData>(settings.api, RELATED_ADS_QUERY, {
+        market: [settings.market],
+        branchGroupId: settings.branchGroupId,
+        manufacturer: make ? [make] : undefined,
+        perPage,
+      }).then((data) => (data.search?.ads?.hits || []).filter((h) => h.ad.id !== adId));
+
     setLoading(true);
-    gqlQuery<SearchData>(settings.api, RELATED_ADS_QUERY, {
-      market: [settings.market],
-      branchGroupId: settings.branchGroupId,
-      manufacturer: manufacturer ? [manufacturer] : undefined,
-      perPage: limit + 1,
-    })
-      .then((data) => {
-        const ads = data.search?.ads;
-        if (active && ads) setHits(ads.hits.filter((h) => h.ad.id !== adId).slice(0, limit));
+    latest(manufacturer, limit + 1)
+      .then(async (sameMake) => {
+        if (sameMake.length >= limit || !manufacturer) return sameMake;
+        const taken = new Set(sameMake.map((h) => h.ad.id));
+        // Enough to skip the current ad and the ones already taken.
+        const others = (await latest(undefined, limit * 2 + 1)).filter((h) => !taken.has(h.ad.id));
+        return [...sameMake, ...others];
       })
+      .then((related) => active && setHits(related.slice(0, limit)))
       .catch(() => undefined)
       .finally(() => active && setLoading(false));
     return () => {

@@ -9,6 +9,7 @@ import { ButtonContent, ButtonSecondary } from '../Button';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import Lightbox from '../Lightbox';
 import { NavButton } from '../NavButton';
+import ResponsiveImage from '../ResponsiveImage';
 import Sphere from '../Sphere/Sphere';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import EmbededVideo from '../Video/EmbededVideo';
@@ -28,6 +29,12 @@ import {
   Track,
   Wrapper,
 } from './wrapper';
+
+// The gallery is at most about 800 px wide, the full width less the thumbnails
+// on tablets and 95% of the screen on phones; the browser picks by pixel density.
+const GALLERY_WIDTHS = [375, 600, 750, 1000, 1200];
+const GALLERY_SIZES = '(min-width: 1200px) 800px, (min-width: 768px) calc(100vw - 180px), 95vw';
+const THUMBNAIL_WIDTHS = [96, 128, 225];
 
 interface GalleryProps {
   media: GalleryMedia[];
@@ -132,8 +139,11 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                   aria-current={i === index || undefined}
                 >
                   {m.type === 'image' && (
-                    <Image
-                      src={imageUrl(m.urls[0], { width: 1170, height: 780 })}
+                    <ResponsiveImage
+                      img={Image}
+                      src={m.urls[0]}
+                      widths={GALLERY_WIDTHS}
+                      sizes={GALLERY_SIZES}
                       alt={t('common.imageIndex', { index: i + 1 }) || ''}
                       // The first image is in view at once; the rest load as they come near.
                       loading={i === 0 ? 'eager' : 'lazy'}
@@ -198,8 +208,11 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                       {m.type === 'embedded' ? (
                         <QuickNavEmbeded src={src} index={i} />
                       ) : (
-                        <QuickNavImg
-                          src={src}
+                        <ResponsiveImage
+                          img={QuickNavImg}
+                          src={m.urls[0]}
+                          widths={THUMBNAIL_WIDTHS}
+                          sizes="75px"
                           alt={t('common.imageIndex', { index: i + 1 }) || ''}
                           loading="lazy"
                         />

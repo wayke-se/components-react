@@ -43,9 +43,16 @@ const propertyTree = (ad: Ad, t: TFunction): Tree => {
       });
     }
   };
+  const attributes = item?.attributes;
+  const modelSeries = item?.modelSeries?.stringValue;
+  // As web-ui-v2: the version is modelVariant; modelName only when it says more than the model.
+  const modelName = item?.modelName?.stringValue;
+  const version =
+    item?.modelVariant?.stringValue || (modelName !== modelSeries ? modelName : undefined);
+
   add('manufacturer', item?.manufacturer?.stringValue);
-  add('modelSeries', item?.modelSeries?.stringValue);
-  add('modelName', item?.modelName?.stringValue, undefined, true);
+  add('modelSeries', modelSeries);
+  add('modelName', version, undefined, true);
   add('modelYear', item?.modelYear?.intValue, undefined, true);
   add('manufactureYear', item?.manufactureYear?.intValue, undefined, true);
   if (odometer) {
@@ -55,10 +62,18 @@ const propertyTree = (ad: Ad, t: TFunction): Tree => {
       t(`odometer.${odometer.unit === 'KILOMETER' ? 'Kilometer' : 'ScandinavianMile'}`)
     );
   }
-  add('gearboxType', item?.attributes?.transmission?.formattedValue);
+  add('gearboxType', attributes?.transmission?.formattedValue);
+  add('color', attributes?.exteriorColor?.formattedValue);
   add('registrationNumber', item?.registrationNumber?.stringValue);
+  add('chassis', item?.authority?.chassis?.stringValue || attributes?.chassisType?.formattedValue);
+  add(
+    'segment',
+    item?.authority?.segment?.stringValue || attributes?.vehicleClassification?.formattedValue
+  );
+  add('annualTax', item?.authority?.annualTax?.formattedValue);
+  add('numberOfDoors', attributes?.doorsCount?.formattedValue);
   add('fuelType', item?.driveline?.fuelTypesString?.stringValue, undefined, true);
-  add('enginePower', item?.attributes?.enginePower?.formattedValue);
+  add('enginePower', attributes?.enginePower?.formattedValue);
 
   const categories = (item?.attributes?.byCategory || [])
     .map((c, i) => toCategory(c, i + 1))
