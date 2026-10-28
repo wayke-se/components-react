@@ -8,6 +8,8 @@ import RangeSlider from '../RangeSlider';
 
 interface RangeFacetProps {
   id: RangeFilter;
+  /** The filter's name, read out with the handles. */
+  label?: string;
   unit?: string;
   formatValues?: boolean;
 }
@@ -30,7 +32,7 @@ const toInt = (value: string | null) => {
   return Number.isFinite(n) ? n : undefined;
 };
 
-const RangeFacet = ({ id, unit, formatValues }: RangeFacetProps) => {
+const RangeFacet = ({ id, label, unit, formatValues }: RangeFacetProps) => {
   const { params, unfiltered, loading, update } = useSearch();
   const { marketCode } = useSettings();
 
@@ -65,6 +67,7 @@ const RangeFacet = ({ id, unit, formatValues }: RangeFacetProps) => {
       domain={domain}
       values={values}
       maxPrefix={id === 'modelYear' ? undefined : '+'}
+      label={label}
       steps={steps}
       unit={unit}
       onChange={onChange}

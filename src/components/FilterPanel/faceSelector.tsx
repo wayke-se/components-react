@@ -8,9 +8,11 @@ import RangeFacet from './rangeFacet';
 
 interface FacetSelectorProps {
   id: string;
+  /** The filter's title. */
+  label?: string;
 }
 
-const FacetSelector = ({ id }: FacetSelectorProps) => {
+const FacetSelector = ({ id, label }: FacetSelectorProps) => {
   const { t } = useTranslation();
   const { marketCode } = useSettings();
 
@@ -19,20 +21,21 @@ const FacetSelector = ({ id }: FacetSelectorProps) => {
 
   switch (id) {
     case 'price':
-      return <RangeFacet id={id} unit={t('currency.default')} formatValues />;
+      return <RangeFacet id={id} label={label} unit={t('currency.default')} formatValues />;
     case 'privateLease':
     case 'businessLease':
-      return <RangeFacet id={id} unit={t('currency.monthly')} formatValues />;
+      return <RangeFacet id={id} label={label} unit={t('currency.monthly')} formatValues />;
     case 'odometer':
       return (
         <RangeFacet
           id={id}
+          label={label}
           unit={t(`odometer.${marketCode === 'NO' ? 'Kilometer' : 'ScandinavianMile'}`)}
           formatValues
         />
       );
     case 'modelYear':
-      return <RangeFacet id={id} unit="år" />;
+      return <RangeFacet id={id} label={label} unit="år" />;
     default:
       return null;
   }

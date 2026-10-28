@@ -1,3 +1,4 @@
+import * as SliderPrimitive from '@radix-ui/react-slider';
 import styled from 'styled-components';
 
 import { size } from '../../layout/helpers';
@@ -22,72 +23,58 @@ export const RangeSpanItem = styled.div`
   }
 `;
 
-export const Slider = styled.div`
-  padding: 10px 12px;
-`;
-
-export const Bar = styled.div`
+export const Root = styled(SliderPrimitive.Root)`
   position: relative;
-  height: 4px;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin: 10px 0;
+  touch-action: none;
+  user-select: none;
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -12px;
-    right: -12px;
-    background-color: ${(props) => props.theme.color.accentDark};
+  &[data-disabled] {
+    opacity: 0.6;
   }
 `;
 
-export const Track = styled.div.attrs(() => ({
-  className: 'wayke__theme wayke__color--primary-bg',
-}))`
-  position: absolute;
-  top: 0;
+export const Track = styled(SliderPrimitive.Track)`
+  position: relative;
+  flex-grow: 1;
   height: 4px;
-  margin-left: -12px;
-  margin-right: -12px;
+  background-color: ${(props) => props.theme.color.accentDark};
 `;
 
-export const Handle = styled.div.attrs(() => ({
-  role: 'slider',
+export const Range = styled(SliderPrimitive.Range).attrs(() => ({
   className: 'wayke__theme wayke__color--primary-bg',
 }))`
   position: absolute;
-  top: 50%;
-  transform-origin: 50% 50%;
+  height: 100%;
+`;
+
+export const Thumb = styled(SliderPrimitive.Thumb).attrs(() => ({
+  className: 'wayke__theme wayke__color--primary-bg',
+}))`
   display: block;
   width: 24px;
   height: 24px;
-  margin-top: -12px;
-  margin-left: -12px;
   border-radius: 50%;
-  cursor: move;
-  cursor: ew-resize;
-  cursor: -webkit-grab;
   cursor: grab;
-  transition: transform 150ms ease;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transition: opacity 150ms ease;
-  }
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
 
   &:active {
+    cursor: grabbing;
     transform: scale(1.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 
-    :before {
-      opacity: 1;
-    }
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  [data-disabled] > & {
+    cursor: default;
   }
 `;

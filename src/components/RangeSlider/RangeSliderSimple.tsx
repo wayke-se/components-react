@@ -1,88 +1,62 @@
-import React from 'react';
-import { Handles, Rail, Slider, Tracks } from 'react-compound-slider';
-import { numberSeparator } from '../../utils/formats';
-import { Handle } from './handle';
-import { Track } from './track';
-import { Bar, Slider as OwnSlider, RangeSpan, RangeSpanItem } from './wrapper';
+import React, { useEffect, useRef, useState } from 'react';
+import { Range, Root, Thumb, Track } from './wrapper';
 
 interface RangeSliderProps {
   loading: boolean;
   domain: number[];
   values: number[];
   steps: number[];
-  unit?: string;
-  formatValues?: boolean;
+  /** Read out with the handle. */
+  label: string;
   onChange: (values: readonly number[]) => void;
   onUpdate?: (values: readonly number[]) => void;
 }
 
+/** One handle, for a single value such as the down payment. */
 const RangeSliderSimple = ({
   loading,
   values,
   domain,
   steps,
-  unit,
-  formatValues,
+  label,
   onChange,
   onUpdate,
 }: RangeSliderProps) => {
-  const first = steps[0];
-  const second = steps[1];
-  const step = second - first;
+  const [current, setCurrent] = useState<number[]>(values);
+  const latest = useRef(values);
 
-  const currentMin = formatValues ? numberSeparator(domain[0]) : domain[0];
-  const currentMax = formatValues ? numberSeparator(domain[1]) : domain[1];
+  useEffect(() => {
+    latest.current = values;
+    setCurrent(values);
+  }, [values[0]]);
 
   if (steps.length < 2) {
     return null;
   }
 
   return (
-    <>
-      <OwnSlider>
-        <Slider
-          disabled={loading}
-          mode={1}
-          step={step}
-          domain={domain}
-          onChange={onChange}
-          onUpdate={onUpdate}
-          values={values}
-          rootStyle={{ position: 'relative' }}
-        >
-          <Rail>{({ getRailProps }) => <Bar {...getRailProps()} />}</Rail>
-          <Handles>
-            {({ handles, getHandleProps }) => (
-              <div className="slider-handles">
-                {handles.map((handle) => (
-                  <Handle
-                    key={handle.id}
-                    handle={handle}
-                    domain={domain}
-                    getHandleProps={getHandleProps}
-                  />
-                ))}
-              </div>
-            )}
-          </Handles>
-          <Tracks right={false}>
-            {({ tracks, getTrackProps }) => (
-              <div className="slider-tracks">
-                {tracks.map(({ id, source, target }) => (
-                  <Track key={id} source={source} target={target} getTrackProps={getTrackProps} />
-                ))}
-              </div>
-            )}
-          </Tracks>
-        </Slider>
-      </OwnSlider>
-      {false && (
-        <RangeSpan>
-          <RangeSpanItem>{`${currentMin}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
-          <RangeSpanItem>{`${currentMax}${unit ? ` ${unit}` : ''}`}</RangeSpanItem>
-        </RangeSpan>
-      )}
-    </>
+    <Root
+      min={domain[0]}
+      max={domain[1]}
+      step={steps[1] - steps[0]}
+      value={current}
+      disabled={loading}
+      onValueChange={(next) => {
+        latest.current = next;
+        setCurrent(next);
+        onUpdate?.(next);
+      }}
+      onValueCommit={onChange}
+      // A drag commits here, see RangeSlider's commitDrag.
+      onPointerUp={() => {
+        if (latest.current[0] !== values[0]) onChange(latest.current);
+      }}
+    >
+      <Track>
+        <Range />
+      </Track>
+      <Thumb aria-label={label} />
+    </Root>
   );
 };
 

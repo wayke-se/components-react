@@ -157,7 +157,6 @@ const LoanModal = ({ loan: option, onClose }: LoanModalProps) => {
             domain={[downPaymentMin, downPaymentMax]}
             steps={downPaymentSteps}
             unit={t('currency.default')}
-            formatValues
             loading={loading}
             onChange={onDownPaymentChange}
           />

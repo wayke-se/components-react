@@ -11,7 +11,6 @@ interface SliderWithLabelProps {
   steps: number[];
   loading: boolean;
   unit: string;
-  formatValues?: boolean;
   onChange: (values: readonly number[]) => void;
 }
 
@@ -22,10 +21,9 @@ const SliderWithLabel = ({
   steps,
   loading,
   unit,
-  formatValues,
   onChange,
 }: SliderWithLabelProps) => {
-  const [local, setLocal] = useState<number[] | undefined>(steps);
+  const [local, setLocal] = useState<number[] | undefined>(undefined);
 
   const onUpdate = useCallback((nextValues: readonly number[]) => {
     setLocal([...nextValues]);
@@ -51,8 +49,7 @@ const SliderWithLabel = ({
           steps={steps}
           onChange={onChange}
           onUpdate={onUpdate}
-          unit={unit}
-          formatValues={formatValues}
+          label={label}
         />
       </RepeatTiny>
     </>

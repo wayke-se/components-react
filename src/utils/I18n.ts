@@ -294,6 +294,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 min: 'Min',
                 max: 'Max',
               },
+              rangeSlider: {
+                min: 'lägsta',
+                max: 'högsta',
+              },
               searchBar: {
                 title: 'Sök',
                 placeholder: 'Sök din bil',
@@ -621,6 +625,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 to: 'Til',
                 min: 'Min',
                 max: 'Max',
+              },
+              rangeSlider: {
+                min: 'laveste',
+                max: 'høyeste',
               },
               searchBar: {
                 title: 'Søk',
@@ -950,6 +958,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                 to: 'To',
                 min: 'Min',
                 max: 'Max',
+              },
+              rangeSlider: {
+                min: 'minimum',
+                max: 'maximum',
               },
               searchBar: {
                 title: 'Search',
