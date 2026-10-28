@@ -158,7 +158,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                       navigationDisabled={navigationDisabled}
                     />
                   )}
-                  {m.type === 'embedded' && <EmbededVideo src={m.urls[0]} index={i + 1} />}
+                  {m.type === 'embedded' && <EmbededVideo src={m.urls[0]} index={i} />}
                   {m.type === 'sphere' && <Sphere url={m.urls[0]} />}
                 </Item>
               ))
