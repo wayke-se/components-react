@@ -1,7 +1,9 @@
 import { marked } from 'marked';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, InsuranceOption, Maybe } from '../../@types/codegen/types';
+import { InsuranceProvider } from '../../Gql/ad/types';
+import { adEvent } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ButtonInline } from '../Button';
 import Content from '../Content';
@@ -11,64 +13,48 @@ import { OptionBoxContent } from '../OptionBox/wrapper';
 import { Repeat, RepeatTiny } from '../Repeat';
 import InsuranceFreeModal from './InsuranceFreeModal';
 
-interface InsuranceOptions {
-  id: string;
-  branch?: Maybe<Branch>;
-  insuranceOptions: InsuranceOption[];
+interface InsuranceFreeProps {
+  provider: InsuranceProvider;
 }
 
-const Insurance = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
+const InsuranceFree = ({ provider }: InsuranceFreeProps) => {
   const { t } = useTranslation();
+  const ad = useAdContext();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => {
     setModal(!modal);
-    PubSub.publish(modal ? 'InsuranceClose' : 'InsuranceOpen', {
-      id,
-      branchId: branch?.id,
-      branchName: branch?.name,
-    });
-  }, [modal, branch]);
-
-  if (!insuranceOptions.length) {
-    return null;
-  }
+    PubSub.publish(modal ? 'InsuranceClose' : 'InsuranceOpen', adEvent(ad));
+  }, [modal, ad]);
 
   return (
     <>
-      {modal && <InsuranceFreeModal onClose={toggleModal} insuranceOptions={insuranceOptions[0]} />}
+      {modal && <InsuranceFreeModal onClose={toggleModal} provider={provider} />}
       <Repeat>
         <RepeatTiny>
-          <VisualHeading>
-            {insuranceOptions[0]?.insuranceHeader ?? t('item.insurance')}
-          </VisualHeading>
+          <VisualHeading>{provider.insuranceHeader ?? t('item.insurance')}</VisualHeading>
         </RepeatTiny>
         <RepeatTiny>
-          <>
-            {insuranceOptions.map((insuranceOption, index) => (
-              <OptionBox
-                key={`${insuranceOption.url}-${index}`}
-                logo={insuranceOption.logotype || undefined}
-                logoAlt={insuranceOption.name || t('common.logotype')}
-              >
-                {insuranceOption.description && (
-                  <Content
-                    dangerouslySetInnerHTML={{
-                      __html: marked(insuranceOption.description),
-                    }}
-                  />
-                )}
-                <OptionBoxContent>
-                  <p>
-                    <ButtonInline onClick={toggleModal}>{t('common.moreInformation')}</ButtonInline>
-                  </p>
-                </OptionBoxContent>
-              </OptionBox>
-            ))}
-          </>
+          <OptionBox
+            logo={provider.logo || undefined}
+            logoAlt={provider.title || t('common.logotype')}
+          >
+            {provider.description && (
+              <Content
+                dangerouslySetInnerHTML={{
+                  __html: marked(provider.description),
+                }}
+              />
+            )}
+            <OptionBoxContent>
+              <p>
+                <ButtonInline onClick={toggleModal}>{t('common.moreInformation')}</ButtonInline>
+              </p>
+            </OptionBoxContent>
+          </OptionBox>
         </RepeatTiny>
       </Repeat>
     </>
   );
 };
 
-export default Insurance;
+export default InsuranceFree;

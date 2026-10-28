@@ -1,17 +1,8 @@
 import { format } from 'date-fns';
 import { nb, sv } from 'date-fns/locale';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Branch,
-  ContactOptions,
-  Ecommerce,
-  Manufacturer,
-  PackageOption,
-  VehicleData,
-} from '../../@types/codegen/types';
 import { ConversionOption } from '../../@types/conversion';
-import { MarketCode } from '../../@types/market';
 import ActionList from '../../components/ActionList';
 import { ButtonInline } from '../../components/Button';
 import CheckMarkList, { CheckMarkListItem } from '../../components/CheckMarkList';
@@ -21,81 +12,46 @@ import { Repeat, RepeatTiny } from '../../components/Repeat';
 import { StateIndicator } from '../../components/StateIndicator';
 import SwitchBar from '../../components/SwitchBar';
 import { UtilityFontSizeSmall } from '../../components/Utility';
-import BranchModal from './BranchModal';
+import {
+  availableFrom as adAvailableFrom,
+  ecom,
+  manufacturerPackage,
+  packageOffers,
+} from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
+import useSettings from '../../State/Settings/useSettings';
 import PackageOptionModal, { PackageOptionModalData } from './PackageOptionModal';
 
-interface CheckList {
-  id: string;
-  title?: string | null;
-  vehicleData?: VehicleData | null;
+interface CheckListProps {
+  title: string;
   conversionOptions?: ConversionOption[];
-  marketCode?: MarketCode;
-  manufacturer?: Manufacturer | null;
-  packageOptions: PackageOption[];
-  ecommerce?: Ecommerce | null;
-  branch?: Branch | null;
-  contact?: ContactOptions | null;
-  loadingCentralStorageVehicle: boolean;
-  availableFrom?: Date | null;
   // Undefined when the site has no ecomSettings, which hides the buy button.
   toggleEcomModal?: () => void;
 }
 
-const CheckList = ({
-  id,
-  title,
-  vehicleData,
-  conversionOptions,
-  marketCode,
-  manufacturer,
-  packageOptions,
-  ecommerce,
-  branch,
-  contact,
-  availableFrom,
-  toggleEcomModal,
-  loadingCentralStorageVehicle,
-}: CheckList) => {
+const CheckList = ({ title, conversionOptions, toggleEcomModal }: CheckListProps) => {
   const { t } = useTranslation();
-  const [modalBranch, setModalBranch] = useState(false);
-  const openModalBranch = useCallback(() => setModalBranch(true), []);
-  const closeModalBranch = useCallback(() => setModalBranch(false), []);
+  const ad = useAdContext();
+  const { marketCode } = useSettings();
+  const ecommerce = ecom(ad);
+  const availableFrom = adAvailableFrom(ad);
+  const packageOption = manufacturerPackage(ad);
+  const packageOptions = packageOffers(ad);
 
   const [modal, setModal] = useState<PackageOptionModalData>();
   const onOpen = useCallback((nextModal: PackageOptionModalData) => setModal(nextModal), []);
   const onClose = useCallback(() => setModal(undefined), []);
 
-  useEffect(() => {
-    if ((branch || contact) && modalBranch) {
-      setModalBranch(false);
-    }
-  }, [branch, contact]);
-
-  const packageOption = manufacturer?.packageOption;
-
   return (
     <>
-      {modalBranch && (
-        <BranchModal
-          loading={loadingCentralStorageVehicle}
-          connections={branch?.connections}
-          onClose={closeModalBranch}
-        />
-      )}
       {modal && <PackageOptionModal packageOption={modal} onClose={onClose} />}
       <Repeat>
         <ActionList
-          id={id}
           title={title}
-          vehicleData={vehicleData}
-          branch={branch}
-          contact={contact}
-          ecommerce={ecommerce}
-          marketCode={marketCode}
           conversionOptions={conversionOptions}
           toggleEcomModal={toggleEcomModal}
         />
-        {ecommerce?.reserved && (
+        {ecommerce.enabled && ecommerce.reserved && (
           <RepeatTiny>
             <SwitchBar
               title={t('item.carIsReserved')}
@@ -133,16 +89,7 @@ const CheckList = ({
               <CheckMarkListItem>
                 <>
                   {t('item.includingShort')}{' '}
-                  <ButtonInline
-                    onClick={() =>
-                      onOpen({
-                        title: packageOption?.title,
-                        image: packageOption?.image,
-                        description: packageOption?.description,
-                        link: packageOption?.link,
-                      })
-                    }
-                  >
+                  <ButtonInline onClick={() => onOpen(packageOption)}>
                     {packageOption.title}
                   </ButtonInline>{' '}
                   {t('item.usedWarrany').toLowerCase()}
@@ -153,40 +100,18 @@ const CheckList = ({
               <CheckMarkListItem key={packageOption.title || index}>
                 <>
                   {t('item.includingShort')}{' '}
-                  <ButtonInline
-                    onClick={() =>
-                      onOpen({
-                        title: packageOption?.title,
-                        image: packageOption?.image,
-                        description: packageOption?.description,
-                        link: packageOption?.link,
-                      })
-                    }
-                  >
+                  <ButtonInline onClick={() => onOpen(packageOption)}>
                     {packageOption.title}
                   </ButtonInline>
                 </>
               </CheckMarkListItem>
             ))}
-            {ecommerce?.withHomeDelivery && (
+            {ecommerce.enabled && ad.iteration?.commerce.homeDelivery && (
               <CheckMarkListItem>{t('item.homeDelivery')}</CheckMarkListItem>
             )}
           </CheckMarkList>
         </RepeatTiny>
       </Repeat>
-      {(branch?.connections.length || 0) > 1 && (
-        <Repeat>
-          <SwitchBar
-            title={t('item.centralWarehouseCar')}
-            actionTitle={t('item.switchBranch') || ''}
-            onClick={openModalBranch}
-          >
-            <Content>
-              <p>{t('item.centralWarehouseCarDescription')}</p>
-            </Content>
-          </SwitchBar>
-        </Repeat>
-      )}
     </>
   );
 };

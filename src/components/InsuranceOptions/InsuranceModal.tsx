@@ -1,7 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, DrivingDistance, InsuranceOption } from '../../@types/codegen/types';
-import useInsuranceCalculation from '../../hooks/useInsurance';
+import { InsuranceProvider } from '../../Gql/ad/types';
+import useInsuranceInquiry, { DrivingDistance } from '../../Gql/ad/useInsuranceInquiry';
+import { adEvent, str } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
+import useSettings from '../../State/Settings/useSettings';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ssnIsValid } from '../../utils/ssn';
@@ -12,7 +15,6 @@ import { ContentLogo, ContentLogoMedia, ContentLogoText } from '../ContentLogo';
 import DetailBox from '../DetailBox';
 import ExtendInfo from '../ExtendInfo';
 import { H4 } from '../Heading';
-import InputCheckbox from '../InputCheckbox';
 import { InputGroup, InputGroupColumn } from '../InputGroup';
 import InputLabel from '../InputLabel';
 import InputSelect, { OptionProps } from '../InputSelect';
@@ -29,23 +31,23 @@ interface FormData {
   drivingDistance: DrivingDistance;
 }
 
-interface InsuranceModal {
-  id: string;
-  branch?: Branch | null;
+interface InsuranceModalProps {
   onClose: () => void;
-  insuranceOptions: InsuranceOption;
+  provider: InsuranceProvider;
 }
 
-const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModal) => {
+const InsuranceModal = ({ onClose, provider }: InsuranceModalProps) => {
   const { t } = useTranslation();
+  const ad = useAdContext();
+  const { publicApi } = useSettings();
   const [form, setForm] = useState<FormData>({
     ssn: '',
-    drivingDistance: DrivingDistance.Between0And1000,
+    drivingDistance: 'BETWEEN_0_AND_1000',
   });
   const [payload, setPayload] = useState<FormData>();
-  const { loading, data, error } = useInsuranceCalculation(
-    id,
-    branch?.id ? branch?.id : undefined,
+  const { loading, insurances, error } = useInsuranceInquiry(
+    publicApi,
+    ad.id,
     ssnIsValid(payload?.ssn) ? payload?.ssn : undefined,
     payload?.drivingDistance
   );
@@ -61,10 +63,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
     [form]
   );
 
-  const trackPayload = useMemo(
-    () => ({ id, branchId: branch?.id, branchName: branch?.name }),
-    [id, branch]
-  );
+  const trackPayload = useMemo(() => adEvent(ad), [ad]);
 
   const onShowInsurances = useCallback(() => {
     PubSub.publish('InsuranceInterest', trackPayload);
@@ -81,42 +80,34 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
   );
 
   const options: OptionProps[] = [
-    { value: DrivingDistance.Between0And1000, displayName: '0 - 1000' },
-    { value: DrivingDistance.Between1000And1500, displayName: '1000 - 1500' },
-    { value: DrivingDistance.Between1500And2000, displayName: '1500 - 2000' },
-    { value: DrivingDistance.Between2000And2500, displayName: '2000 - 2500' },
-    { value: DrivingDistance.Over2500, displayName: '2500+' },
+    { value: 'BETWEEN_0_AND_1000', displayName: '0 - 1000' },
+    { value: 'BETWEEN_1000_AND_1500', displayName: '1000 - 1500' },
+    { value: 'BETWEEN_1500_AND_2000', displayName: '1500 - 2000' },
+    { value: 'BETWEEN_2000_AND_2500', displayName: '2000 - 2500' },
+    { value: 'OVER_2500', displayName: '2500+' },
   ];
 
   return (
     <Modal title={t('item.insurance')} onClose={onClose}>
-      {(insuranceOptions?.description || insuranceOptions?.logotype) && (
+      {(provider.description || provider.logo) && (
         <Repeat>
-          {insuranceOptions.description ? (
+          {provider.description ? (
             <ContentLogo>
               <ContentLogoText>
                 <Content>
-                  <p>{insuranceOptions.description}</p>
+                  <p>{provider.description}</p>
                 </Content>
               </ContentLogoText>
-              {insuranceOptions.logotype && (
+              {provider.logo && (
                 <ContentLogoMedia>
-                  <LogoBox
-                    logo={insuranceOptions.logotype}
-                    alt={insuranceOptions.name || t('common.logotype')}
-                    wide
-                  />
+                  <LogoBox logo={provider.logo} alt={provider.title || t('common.logotype')} wide />
                 </ContentLogoMedia>
               )}
             </ContentLogo>
           ) : (
             <>
-              {insuranceOptions.logotype && (
-                <LogoBox
-                  logo={insuranceOptions.logotype}
-                  alt={insuranceOptions.name || t('common.logotype')}
-                  wide
-                />
+              {provider.logo && (
+                <LogoBox logo={provider.logo} alt={provider.title || t('common.logotype')} wide />
               )}
             </>
           )}
@@ -164,13 +155,6 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
             </ButtonPrimary>
           </RepeatTiny>
         </RepeatSmall>
-        {false && (
-          <RepeatSmall>
-            <InputCheckbox id="input-insurance-save-personalnumber">
-              {t('item.savePersonalNumberOnThisDevice')}
-            </InputCheckbox>
-          </RepeatSmall>
-        )}
         <RepeatSmall>
           <Content small>
             <p>{t('item.savePersonalNumberOnThisDeviceHelp')}</p>
@@ -193,9 +177,9 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
       )}
 
       <>
-        {data?.insurances && (
+        {insurances && (
           <Repeat>
-            {data?.insurances.map((insurance) => (
+            {insurances.map((insurance) => (
               <Repeat key={insurance.name}>
                 <DetailBox
                   heading={`${numberSeparator(insurance.price)} ${insurance.unit}`}
@@ -212,11 +196,11 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                       )}
                     </>
                     <>
-                      {insurance.url && (
+                      {str(insurance.details?.terms) && (
                         <RepeatTiny>
                           <ButtonInline
                             as="a"
-                            href={insurance.url || ''}
+                            href={insurance.details.terms || ''}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
                             title={t('item.openPrePurchaseInformationInNewTab') || ''}
@@ -227,10 +211,10 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                       )}
                     </>
                   </Repeat>
-                  {insurance.items && insurance.items.length > 0 && (
+                  {insurance.insuranceItems.length > 0 && (
                     <Repeat>
                       <H4>{t('item.insuranceIncludes')}</H4>
-                      {insurance.items.map((item) => (
+                      {insurance.insuranceItems.map((item) => (
                         <RepeatSmall key={item.name || ''}>
                           <ExtendInfo title={item.name || ''}>{item.description}</ExtendInfo>
                         </RepeatSmall>
@@ -248,7 +232,7 @@ const InsuranceModal = ({ id, branch, onClose, insuranceOptions }: InsuranceModa
                             </ColumnRowItem>
                             <ColumnRowItem>
                               <UtilityTextBold>
-                                +{addon.price} {addon.unit}
+                                +{addon.price} {insurance.unit}
                               </UtilityTextBold>
                             </ColumnRowItem>
                           </ColumnRow>

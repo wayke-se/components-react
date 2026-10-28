@@ -1,78 +1,41 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import packageJson from '../../package.json';
 import Root from '../components/Root';
-import CentralStorageProvider from '../State/CentralStorage/CentralStorageProvider';
-import PathProvider from '../State/Path/PathProvider';
-import RelatedSearchProvider from '../State/RelatedSearch/RelatedSearchProvider';
+import useInitializeTranslation from '../hooks/useInitializeTranslation';
+import RouterProvider from '../State/Router/RouterProvider';
 import SearchProvider from '../State/Search/SearchProvider';
-import SettingsProvider from '../State/Settings/SettingsProvider';
-import GraphqlProvider from './graphqlProvider';
+import { SettingsContext } from '../State/Settings/SettingsContext';
+import { resolveSettings, WaykeProviderSettings } from '../State/Settings/settings';
 import Theme from './themeProvider';
 
-export interface EcomSettings {
-  url: string;
-  /** @deprecated Not used since 3.0.0. Will be removed in the next major version. */
-  useBankId?: boolean;
-  /** @deprecated Not used since 3.0.0. Will be removed in the next major version. */
-  displayBankIdAlert?: boolean;
-  serviceLogotypeUrl?: string;
-  bankIdThumbprint?: string;
-}
-
-export interface WaykeProviderSettings {
-  url: string;
-  urlMlt?: string;
-  apiKey?: string;
-  graphQlUrl: string;
-  ecomSettings?: EcomSettings;
-  googleMapsApiKey?: string;
-  googleMapsMarker?: string;
-  useQueryParamsFromUrl?: boolean;
-  pathRoute?: string;
-}
+export type { EcomSettings, WaykeProviderSettings } from '../State/Settings/settings';
 
 export type WaykeProviderProps = WaykeProviderSettings & {
   children?: React.ReactNode;
 };
 
-const WaykeProvider = ({
-  url,
-  urlMlt,
-  apiKey,
-  ecomSettings,
-  graphQlUrl,
-  googleMapsApiKey,
-  googleMapsMarker,
-  useQueryParamsFromUrl,
-  pathRoute,
-  children,
-}: WaykeProviderProps) => (
-  <PathProvider>
-    <SettingsProvider
-      apiUrl={url}
-      googleMapsApiKey={googleMapsApiKey}
-      googleMapsMarker={googleMapsMarker}
-      ecomSettings={ecomSettings}
-    >
-      <CentralStorageProvider>
-        <GraphqlProvider uri={graphQlUrl}>
-          <SearchProvider
-            url={url}
-            apiKey={apiKey}
-            useQueryParamsFromUrl={useQueryParamsFromUrl}
-            pathRoute={pathRoute}
-          >
-            <RelatedSearchProvider url={url} urlMlt={urlMlt} apiKey={apiKey}>
-              <Theme>
-                <Root data-version={packageJson.version}>{children}</Root>
-              </Theme>
-            </RelatedSearchProvider>
-          </SearchProvider>
-        </GraphqlProvider>
-      </CentralStorageProvider>
-    </SettingsProvider>
-  </PathProvider>
-);
+/**
+ * Settings, routing, the search state and the theme for every Wayke component
+ * under it. Place it close to the root of the app, so its cache is kept.
+ */
+const WaykeProvider = ({ children, ...settings }: WaykeProviderProps) => {
+  // Settings arrive as a new object on every render of the parent; only their content matters.
+  const key = JSON.stringify(settings);
+  const resolved = useMemo(() => resolveSettings(settings), [key]);
+  const initialized = useInitializeTranslation(resolved.marketCode);
+
+  return (
+    <SettingsContext.Provider value={resolved}>
+      <RouterProvider>
+        <SearchProvider>
+          <Theme>
+            <Root data-version={packageJson.version}>{initialized ? children : null}</Root>
+          </Theme>
+        </SearchProvider>
+      </RouterProvider>
+    </SettingsContext.Provider>
+  );
+};
 
 export default WaykeProvider;

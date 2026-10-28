@@ -1,9 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, File } from '../../@types/search';
 import useIsInViewport from '../../hooks/useIsInViewport';
-import usePath from '../../State/Path/usePath';
+import useRouter from '../../State/Router/useRouter';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
+import { imageUrl } from '../../utils/image';
+import PubSub from '../../utils/pubsub/pubsub';
 import UspList, { ItemProps } from '../UspList';
 import {
   Content,
@@ -26,36 +27,27 @@ import {
   Wrapper,
 } from './wrapper';
 
-export interface OnItemClick {
-  id: string;
-  branchId?: string;
-  branchName?: string;
-}
-
 interface Props {
   id: string;
   title: string;
-  href?: string;
-  imageFile?: File;
-  pathRoute?: string;
-  branch?: Branch;
+  /** The ad's first image (a cfit url) */
+  image?: string;
+  branch?: { id: string; name?: string };
   placeholderImage?: string;
   description?: string;
   uspList?: ItemProps[];
-  price: string;
+  /** Left out when the ad has no cash price (0), as on wayke.se */
+  price?: string;
   leasingPrice?: string;
   oldPrice?: string;
   branchName?: string;
   businessLeasingPrice?: string;
-  onClick?: (data: OnItemClick) => void;
 }
 
 const ProductCard = ({
   id,
   title,
-  href,
-  imageFile,
-  pathRoute,
+  image,
   placeholderImage,
   branch,
   branchName,
@@ -65,50 +57,33 @@ const ProductCard = ({
   oldPrice,
   leasingPrice,
   businessLeasingPrice,
-  onClick,
 }: Props) => {
   const { t } = useTranslation();
+  const { itemHref, onLinkClick } = useRouter();
+  const href = itemHref(id);
 
   const [containerRef, isVisible] = useIsInViewport<HTMLDivElement>({
     persistVisibility: true,
   });
 
-  const { pushState } = usePath();
-  const _onClick = useMemo(
-    () =>
-      onClick ? () => onClick({ id, branchId: branch?.id, branchName: branch?.name }) : undefined,
-    [id, branch]
+  const onClick = useCallback(
+    () => PubSub.publish('ItemClicked', { id, branchId: branch?.id, branchName: branch?.name }),
+    [id, branch?.id, branch?.name]
   );
 
   const onHrefClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      if (pathRoute && href) {
-        const reg = new RegExp('^((http|https)://)|//');
-        if (!pathRoute.match(reg) && !pathRoute.startsWith(location.origin)) {
-          e.preventDefault();
-          pushState(href);
-        }
-      }
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (href) onLinkClick(e, href);
     },
-    [id, pathRoute, href]
+    [href, onLinkClick]
   );
 
-  const { webp, url } = useMemo(() => {
-    const format = imageFile?.formats.find((x) => x.format === '770x514');
-    if (format) {
-      return {
-        webp: format.webp,
-        url: format.url,
-      };
-    }
-
-    return {
-      url: imageFile?.url,
-    };
-  }, [imageFile]);
+  const size = { width: 770, height: 514 };
+  const url = image ? imageUrl(image, size) : undefined;
+  const webp = image ? imageUrl(image, { ...size, webp: true }) : undefined;
 
   return (
-    <Wrapper onClick={_onClick}>
+    <Wrapper onClick={onClick}>
       {href && <Link onClick={onHrefClick} href={href} title={title} aria-label={title} />}
       <Image ref={containerRef}>
         {isVisible && url ? (
@@ -116,21 +91,6 @@ const ProductCard = ({
             <Picture>
               {webp && <Source type="image/webp" srcSet={webp} />}
               <Img alt={title} src={url} />
-              {/*
-                <>
-                  <Source
-                    type="image/webp"
-                    srcSet={`${image}?spec=822x548&format=webp 822w, ${image}?spec=750x500&format=webp 750w, ${image}?spec=411 411w`}
-                    sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                  />
-                  <Img
-                    srcSet={`${image}?spec=822x548 822w, ${image}?spec=750x500 750w, ${image}?spec=411x274 411w`}
-                    sizes="(min-width: 600px) calc(((100vw - 48px) / 2) - 8px), (min-width: 900px) calc(((100vw - 48px) / 3) - 10.666px), (min-width: 1312px) 410px, calc(100vw - 32px)"
-                    src={`${image}?spec=411x274`}
-                    alt={title}
-                  />
-                </>
-        )*/}
             </Picture>
           </>
         ) : (
@@ -152,10 +112,16 @@ const ProductCard = ({
         </ContentBody>
         <ContentFooter>
           <Price>
-            <PriceCell>
-              {oldPrice ? <OldPrice>{oldPrice}</OldPrice> : <Label>{t('productCard.price')}</Label>}
-              <CurrentPrice>{price}</CurrentPrice>
-            </PriceCell>
+            {price && (
+              <PriceCell>
+                {oldPrice ? (
+                  <OldPrice>{oldPrice}</OldPrice>
+                ) : (
+                  <Label>{t('productCard.price')}</Label>
+                )}
+                <CurrentPrice>{price}</CurrentPrice>
+              </PriceCell>
+            )}
             {leasingPrice && (
               <PriceCell>
                 <Label>{t('productCard.privateLeasing')}</Label>

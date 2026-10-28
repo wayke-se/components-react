@@ -1,52 +1,38 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
-import { Facet, FacetFilter } from '../../@types/search';
+import { listOptions } from '../../Gql/facets';
+import { toggleListValue } from '../../Gql/searchParams';
 import useSearch from '../../State/Search/useSearch';
 import { getHexColorFromDisplayName } from '../../utils/converters';
 import PubSub from '../../utils/pubsub/pubsub';
 import ColorSelect from '../ColorSelect';
 
 interface ColorSelectFacetProps {
-  facet: Facet;
+  id: string;
 }
 
-const ColorSelectFacet = ({ facet }: ColorSelectFacetProps) => {
-  const { loading, error, onFilterUpdate } = useSearch();
-  const [selected, setSelected] = useState<{ [key: string]: boolean }>();
-
-  useEffect(() => {
-    setSelected(undefined);
-  }, [facet, error]);
+const ColorSelectFacet = ({ id }: ColorSelectFacetProps) => {
+  const { params, result, loading, error, update } = useSearch();
+  const [pending, setPending] = useState<{ [value: string]: boolean }>({});
+  useEffect(() => setPending({}), [result, error]);
 
   const onClick = useCallback(
-    (f: FacetFilter) => {
-      if (!loading) {
-        setSelected({
-          ...selected,
-          [f.displayName]: !f.selected,
-        });
-        PubSub.publish('FilterApply', {
-          type: 'checkbox',
-          filter: facet.id,
-          value: f.displayName,
-          checked: !f.selected,
-        });
-        onFilterUpdate(f.query);
-      }
+    (value: string, checked: boolean) => {
+      if (loading) return;
+      setPending((current) => ({ ...current, [value]: checked }));
+      PubSub.publish('FilterApply', { type: 'checkbox', filter: id, value, checked });
+      update(toggleListValue(params, id, value));
     },
-    [loading]
+    [loading, params, id, update]
   );
 
   return (
     <ColorSelect
-      items={facet.filters
-        .sort((a, b) => a.displayName.localeCompare(b.displayName))
-        .map((f) => ({
-          label: f.displayName,
-          onClick: () => onClick(f),
-          active: selected?.[f.displayName] !== undefined ? selected[f.displayName] : f.selected,
-          hex: [getHexColorFromDisplayName(f.displayName)],
-        }))}
+      items={listOptions(id, params, result?.facets).map((option) => ({
+        label: option.value,
+        onClick: () => onClick(option.value, !option.selected),
+        active: pending[option.value] ?? option.selected,
+        hex: [getHexColorFromDisplayName(option.value)],
+      }))}
     />
   );
 };

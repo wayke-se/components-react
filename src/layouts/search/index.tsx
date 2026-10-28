@@ -1,117 +1,51 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SearchFilterTypes } from '../../@types/filter';
-import { MarketCode } from '../../@types/market';
 import Container from '../../components/Container';
 import Filter from '../../components/Filter';
 import Grid from '../../components/Grid';
 import { Page, PageSection } from '../../components/Page';
 import { PortalElement, PortalNamespace } from '../../components/Portal';
-import { OnItemClick } from '../../components/ProductCard';
 import Result from '../../components/Result';
 import SearchFilter from '../../components/SearchFilter';
 import SearchTerm from '../../components/SearchTerm';
 import Snackbar from '../../components/Snackbar';
-import useInitializeTranslation from '../../hooks/useInitializeTranslation';
+import { FREE_TEXT } from '../../Gql/searchParams';
 import useSearch from '../../State/Search/useSearch';
 import { i18nScoped } from '../../utils/I18n';
 import PubSub from '../../utils/pubsub/pubsub';
 
-const DefaultFilterList: SearchFilterTypes[] = [
-  {
-    filterName: 'manufacturer',
-  },
-  {
-    filterName: 'modelSeries',
-  },
-  {
-    filterName: 'fuelType',
-  },
-  {
-    filterName: 'gearboxType',
-  },
-  {
-    filterName: 'branch',
-  },
-  {
-    filterName: 'color',
-  },
-  {
-    filterName: 'environmentClass',
-  },
-  {
-    filterName: 'properties.segment',
-  },
-  {
-    filterName: 'drivingWheel',
-  },
-  {
-    filterName: 'price',
-  },
-  {
-    filterName: 'leasingPrice',
-  },
-  {
-    filterName: 'businessLeasingPrice',
-  },
-  {
-    filterName: 'mileage',
-  },
-  {
-    filterName: 'odometerValueAsKm',
-  },
-  {
-    filterName: 'modelYear',
-  },
-];
-
 export interface WaykeSearchProps {
-  marketCode?: MarketCode;
+  /** The filters to show, in this order. By default all filters. */
   filterList?: SearchFilterTypes[];
+  /** Filters applied when the search loads. */
   initialQueryParams?: URLSearchParams | string;
   removeSearchBar?: boolean;
   removeFilterOptions?: boolean;
+  /** Url to an image for vehicles without images. */
   placeholderImage?: string;
-  hashRoute?: boolean;
-  pathRoute?: string;
+  /** Sets the page title. */
   modifyDocumentTitleSearch?: string;
+  /** Shows the branch name on the vehicles. */
   displayBranchName?: boolean;
-  onClickSearchItem?: (data: OnItemClick) => void;
 }
 
 const WaykeSearch = ({
-  marketCode = 'SE',
-  filterList: _filterList,
+  filterList,
   initialQueryParams,
-  hashRoute,
-  pathRoute,
   removeSearchBar,
   placeholderImage,
   removeFilterOptions,
   modifyDocumentTitleSearch,
   displayBranchName,
-  onClickSearchItem,
 }: WaykeSearchProps) => {
-  const { error, documents, response, queryFilter, onFilterUpdate, onInitialize } = useSearch();
-  const initialized = useInitializeTranslation(marketCode);
-
-  const filterList = useMemo(() => {
-    if (_filterList) return _filterList;
-
-    const f = [...DefaultFilterList];
-    if (!marketCode || marketCode === 'SE') {
-      return f.filter((x) => x.filterName !== 'odometerValueAsKm');
-    }
-    if (marketCode === 'NO') {
-      return f.filter((x) => x.filterName !== 'mileage');
-    }
-    return f;
-  }, [_filterList, marketCode]);
+  const { error, result, params, update, initialize } = useSearch();
+  const query = params.toString();
 
   useEffect(() => {
     if (modifyDocumentTitleSearch) {
       document.title = modifyDocumentTitleSearch;
     }
-    onInitialize(
+    initialize(
       typeof initialQueryParams === 'string'
         ? new URLSearchParams(initialQueryParams)
         : initialQueryParams
@@ -120,43 +54,27 @@ const WaykeSearch = ({
   }, []);
 
   useEffect(() => {
-    const nextQuery = new URLSearchParams(queryFilter.searchParams);
-    PubSub.publish('SearchInitiated', {
-      query: nextQuery.toString(),
-    });
-  }, [queryFilter]);
+    PubSub.publish('SearchInitiated', { query });
+  }, [query]);
 
   useEffect(() => {
-    if (documents) {
-      const nextQuery = new URLSearchParams(queryFilter.searchParams);
+    if (result) {
       PubSub.publish('SearchCompleted', {
-        query: nextQuery.toString(),
-        hits: documents.length,
-        totalHits: response?.stats.totalHits || documents.length,
+        query,
+        hits: result.hits.length,
+        totalHits: result.found,
       });
     }
-  }, [documents]);
-
-  const onItemClicked = useCallback((data: OnItemClick) => {
-    PubSub.publish('ItemClicked', data);
-    if (onClickSearchItem) {
-      onClickSearchItem(data);
-    }
-  }, []);
+  }, [result]);
 
   const onClearQuery = useCallback(() => {
-    const nextQuery = new URLSearchParams(queryFilter.searchParams);
-    const query = nextQuery.get('query');
-    nextQuery.delete('query');
-    PubSub.publish('SearchClearQuery', {
-      query,
-    });
-    onFilterUpdate(nextQuery.toString());
-  }, [queryFilter.searchParams]);
+    const next = new URLSearchParams(params);
+    PubSub.publish('SearchClearQuery', { query: next.get(FREE_TEXT) });
+    next.delete(FREE_TEXT);
+    update(next);
+  }, [params, update]);
 
-  const searchQuery = useMemo(() => queryFilter.searchParams.get('query'), [documents]);
-
-  if (!initialized) return null;
+  const searchQuery = params.get(FREE_TEXT);
 
   return (
     <>
@@ -178,7 +96,7 @@ const WaykeSearch = ({
         {!removeFilterOptions && (
           <PageSection>
             <Container>
-              <Filter filterList={filterList} marketCode={marketCode} />
+              <Filter filterList={filterList} />
             </Container>
           </PageSection>
         )}
@@ -191,17 +109,14 @@ const WaykeSearch = ({
                     Vänligen försök igen.
                   </Snackbar>
                 )}
-                {!error && documents && documents.length > 0 && (
+                {!error && result && result.hits.length > 0 && (
                   <Grid
-                    hashRoute={hashRoute}
-                    pathRoute={pathRoute}
-                    onClickItem={onItemClicked}
-                    documents={documents}
+                    hits={result.hits}
                     placeholderImage={placeholderImage}
                     displayBranchName={displayBranchName}
                   />
                 )}
-                {!error && documents && documents.length === 0 && (
+                {!error && result && result.hits.length === 0 && (
                   <Snackbar
                     severity="warning"
                     icon

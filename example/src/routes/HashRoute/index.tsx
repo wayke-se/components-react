@@ -1,29 +1,11 @@
 import React from 'react';
 
 import WaykeComposite from '../../../../src';
+import { providerSettings } from '../../settings';
 
-const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('modelYear.min', '2018');
-
-const Home = () => (
-  <WaykeComposite
-    composite={{
-      // initialQueryParams,
-      removeSearchBar: false,
-      marketCode: 'SE',
-    }}
-    provider={{
-      graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
-      url: process.env.WAYKE_SEARCH_URL as string,
-      urlMlt: process.env.WAYKE_SEARCH_MLT_URL as string,
-      ecomSettings: {
-        url: process.env.WAYKE_ECOM_URL as string,
-        serviceLogotypeUrl: '/images/wayke-logo.svg',
-      },
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
-      useQueryParamsFromUrl: true,
-    }}
-  />
+/** Hash routing with the filters in the url. */
+const HashRoute = () => (
+  <WaykeComposite provider={{ ...providerSettings, routing: { syncUrl: true } }} />
 );
 
-export default Home;
+export default HashRoute;

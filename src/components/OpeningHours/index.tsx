@@ -1,14 +1,13 @@
 import { TFunction } from 'i18next';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Maybe, OpeningHours } from '../../@types/codegen/types';
+import { DayKey, WeekOpeningHours } from '../../Gql/ad/view';
 import Badge from '../Badge';
 import { RepeatSmall } from '../Repeat';
 import { TableColumn, TableColumnCell, TableColumnRow } from '../TableColumn';
 import { UtilityTextBold } from '../Utility';
 
-type Days = Omit<OpeningHours, '__typename'>;
-type KeyType = keyof Days;
+type KeyType = DayKey;
 const KeyOrder: KeyType[] = [
   'monday',
   'tuesday',
@@ -47,7 +46,7 @@ interface OpeningHoursSample {
 
 const arr: OpeningHoursSample[] = [];
 
-const GetOpeningHours = (t: TFunction<'translation', undefined>, o: OpeningHours) =>
+const GetOpeningHours = (t: TFunction<'translation', undefined>, o: WeekOpeningHours) =>
   KeyOrder.reduce((prev, current) => {
     const title = TranslateWeekDays(t, current);
     const item = o[current];
@@ -65,7 +64,7 @@ const GetOpeningHours = (t: TFunction<'translation', undefined>, o: OpeningHours
     return prev;
   }, arr.slice());
 
-const GetOpeningHoursToday = (t: TFunction<'translation', undefined>, o: OpeningHours) => {
+const GetOpeningHoursToday = (t: TFunction<'translation', undefined>, o: WeekOpeningHours) => {
   const dayNumber = new Date().getDay();
   const day = KeyOrder[dayNumber === 0 ? 6 : dayNumber - 1] as KeyType;
   const current = o[day];
@@ -82,7 +81,7 @@ const valuOfDateString = (s: string) => {
 };
 
 interface OpeningHoursProps {
-  openingHours?: Maybe<OpeningHours>;
+  openingHours?: WeekOpeningHours;
 }
 
 const OpeningHours = ({ openingHours }: OpeningHoursProps) => {

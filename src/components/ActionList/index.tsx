@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, ContactOptions, Ecommerce, Maybe, VehicleData } from '../../@types/codegen/types';
 import {
   ConversionOption,
   ConversionOptionEmail,
@@ -8,7 +7,8 @@ import {
   ConversionOptionVehicle,
   defaultConversionOptions,
 } from '../../@types/conversion';
-import { MarketCode } from '../../@types/market';
+import { adEvent, contactPerson, ecom } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
 import { formatPhonenumber } from '../../utils/phonenumbers';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ButtonContent, ButtonPrimary, ButtonSecondary } from '../Button';
@@ -17,14 +17,9 @@ import { RepeatTiny } from '../Repeat';
 import ToggleItem from './toggle-item';
 
 interface ActionListProps {
-  id: string;
-  title?: string | null;
-  vehicleData?: Maybe<VehicleData>;
-  branch?: Maybe<Branch>;
-  contact?: Maybe<ContactOptions>;
-  ecommerce?: Maybe<Ecommerce>;
-  marketCode?: MarketCode;
+  title: string;
   conversionOptions?: ConversionOption[];
+  /** Undefined when the site has no ecomSettings, which hides the buy button. */
   toggleEcomModal?: () => void;
 }
 
@@ -32,30 +27,27 @@ const resolveText = (text: ConversionOptionText, vehicle: ConversionOptionVehicl
   typeof text === 'function' ? text(vehicle) : text;
 
 const ActionList = ({
-  id,
   title,
-  vehicleData,
-  contact,
-  branch,
-  ecommerce,
-  marketCode,
   conversionOptions = defaultConversionOptions,
   toggleEcomModal,
 }: ActionListProps) => {
   const { t } = useTranslation();
-  const email = contact?.email || branch?.contact?.email;
-  const phonenumber = contact?.phonenumber || branch?.contact?.phonenumber;
+  const ad = useAdContext();
+  const contact = contactPerson(ad);
+  const email = contact?.email || ad.branch.contactInformation?.email;
+  const phonenumber = contact?.phone || ad.branch.contactInformation?.telephone;
+  const ecommerce = ecom(ad);
 
-  const vehicle = useMemo<ConversionOptionVehicle>(
-    () => ({
-      id,
+  const vehicle = useMemo<ConversionOptionVehicle>(() => {
+    const item = ad.iteration?.item;
+    return {
+      id: ad.id,
       title,
-      registrationNumber: vehicleData?.registrationNumber,
-      manufacturer: vehicleData?.manufacturer,
-      modelSeries: vehicleData?.modelSeries,
-    }),
-    [id, title, vehicleData]
-  );
+      registrationNumber: item?.registrationNumber?.stringValue,
+      manufacturer: item?.manufacturer?.stringValue,
+      modelSeries: item?.modelSeries?.stringValue,
+    };
+  }, [ad, title]);
 
   // Pre-populated subject/body gives the dealer a way to tell these leads apart from
   // other inbound mail, and tells them which site and vehicle the request concerns.
@@ -89,10 +81,7 @@ const ActionList = ({
     [email, vehicle, t]
   );
 
-  const trackPayload = useMemo(
-    () => ({ id, branchId: branch?.id, branchName: branch?.name }),
-    [branch, id]
-  );
+  const trackPayload = useMemo(() => adEvent(ad), [ad]);
   const onClickMailVisible = useCallback(
     () => PubSub.publish('MailVisible', trackPayload),
     [trackPayload]
@@ -141,7 +130,7 @@ const ActionList = ({
     const key = `${option.type}-${index}`;
     switch (option.type) {
       case 'ecom':
-        if (!ecommerce?.enabled || !toggleEcomModal) return null;
+        if (!ecommerce.enabled || !toggleEcomModal) return null;
         return renderButton(
           key,
           option.name || t('item.actions.buyOnline'),
@@ -150,7 +139,6 @@ const ActionList = ({
           !!ecommerce.reserved
         );
       case 'leadMessage':
-        if (!branch?.id) return null;
         return renderButton(
           key,
           option.name || t('lead.messageFormTitle'),
@@ -158,7 +146,6 @@ const ActionList = ({
           () => openLeadForm('email')
         );
       case 'leadCallMe':
-        if (!branch?.id) return null;
         return renderButton(
           key,
           option.name || t('lead.callFormTitle'),
@@ -199,15 +186,7 @@ const ActionList = ({
 
   return (
     <>
-      {leadCommunication && (
-        <LeadForm
-          id={id}
-          branch={branch}
-          marketCode={marketCode}
-          communication={leadCommunication}
-          onClose={closeLeadForm}
-        />
-      )}
+      {leadCommunication && <LeadForm communication={leadCommunication} onClose={closeLeadForm} />}
       {buttons}
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FinancialOption } from '../../@types/codegen/types';
+import { LeasingOffer } from '../../Gql/ad/view';
 import { numberSeparator } from '../../utils/formats';
 import { ButtonInline } from '../Button';
 import Content from '../Content';
@@ -12,22 +12,19 @@ import { OptionBoxContent, OptionBoxHeading } from '../OptionBox/wrapper';
 import { UtilityTextPrimary } from '../Utility';
 
 interface LeasingProps {
-  financialOption: FinancialOption;
+  offer: LeasingOffer;
 }
 
-const Leasing = ({ financialOption }: LeasingProps) => {
+const Leasing = ({ offer }: LeasingProps) => {
   const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => setModal(!modal), [modal]);
 
-  const { image, description, monthlyCost, duration, mileage, type, name } = financialOption;
+  const { image, description, monthlyCost, months, mileagePerYear, business, name } = offer;
 
-  const title =
-    type === 'leasing'
-      ? t('item.financialOptions.privateLease')
-      : type === 'business-leasing'
-        ? t('item.financialOptions.businessLease')
-        : type;
+  const title = business
+    ? t('item.financialOptions.businessLease')
+    : t('item.financialOptions.privateLease');
 
   return (
     <>
@@ -45,11 +42,11 @@ const Leasing = ({ financialOption }: LeasingProps) => {
                   },
                   {
                     label: t('item.financialOptions.bindingTime'),
-                    value: `${duration?.current} månader`,
+                    value: `${months} månader`,
                   },
                   {
                     label: t('item.financialOptions.annualMileage'),
-                    value: `${numberSeparator(mileage?.current || 0)} ${t(
+                    value: `${numberSeparator(mileagePerYear || 0)} ${t(
                       'item.financialOptions.mileagePerYear'
                     )}`,
                   },
@@ -61,23 +58,21 @@ const Leasing = ({ financialOption }: LeasingProps) => {
       )}
       <OptionBox>
         <>
-          {monthlyCost !== null && monthlyCost !== undefined && (
-            <OptionBoxHeading>{`ca ${numberSeparator(monthlyCost)} ${t(
-              'currency.monthly'
-            )}`}</OptionBoxHeading>
-          )}
+          <OptionBoxHeading>{`ca ${numberSeparator(monthlyCost)} ${t(
+            'currency.monthly'
+          )}`}</OptionBoxHeading>
         </>
         <OptionBoxContent>
           <p>
             {title}{' '}
-            {mileage?.current && duration?.current && (
+            {mileagePerYear && months && (
               <>
                 <UtilityTextPrimary>
-                  {numberSeparator(mileage?.current)} {t('item.financialOptions.mileagePerYear')}
+                  {numberSeparator(mileagePerYear)} {t('item.financialOptions.mileagePerYear')}
                 </UtilityTextPrimary>{' '}
                 i{' '}
                 <UtilityTextPrimary>
-                  {duration?.current} {t('item.financialOptions.months')}
+                  {months} {t('item.financialOptions.months')}
                 </UtilityTextPrimary>
                 .{' '}
               </>

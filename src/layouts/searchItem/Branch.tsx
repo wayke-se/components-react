@@ -1,100 +1,61 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, Maybe } from '../../@types/codegen/types';
-import { ButtonContent, ButtonInline, ButtonInlineBold } from '../../components/Button';
-import Content from '../../components/Content';
+import { ButtonContent, ButtonInlineBold } from '../../components/Button';
 import { H2 } from '../../components/Heading';
 import Map from '../../components/Map';
-
 import OpeningHours from '../../components/OpeningHours';
 import PhoneNumber from '../../components/PhoneNumber';
 import { ProductPageContentLimit } from '../../components/ProductPage';
 import { Repeat } from '../../components/Repeat';
 import { TableColumn, TableColumnCell, TableColumnRow } from '../../components/TableColumn';
+import { Ad } from '../../Gql/ad/types';
+import { openingHours, position } from '../../Gql/ad/view';
 import { formatPhonenumber } from '../../utils/phonenumbers';
-import BranchModal from './BranchModal';
 
 interface BranchProps {
-  branch?: Maybe<Branch>;
-  loading: boolean;
+  branch: Ad['branch'];
   displayBranchName?: boolean;
 }
 
-const Branch = ({ branch, loading, displayBranchName }: BranchProps) => {
+const Branch = ({ branch, displayBranchName }: BranchProps) => {
   const { t } = useTranslation();
-  const [modal, setModal] = useState(false);
-
-  const openModal = useCallback(() => setModal(true), []);
-  const closeModal = useCallback(() => setModal(false), []);
-
-  useEffect(() => {
-    if (branch && modal) {
-      setModal(false);
-    }
-  }, [branch]);
-
-  if (!branch) {
-    return null;
-  }
+  const hours = openingHours(branch);
+  const phone = branch.contactInformation?.telephone;
 
   return (
     <>
-      {modal && (
-        <BranchModal loading={loading} connections={branch?.connections} onClose={closeModal} />
-      )}
       <Repeat>
         <H2 noMargin>
           {displayBranchName
-            ? `${t('item.thisCarsIsLocatedAt')} ${branch.name}`
-            : branch?.location?.city
-              ? t('item.thisCarIsAvailableAtOurBranch', { location: branch?.location?.city })
+            ? `${t('item.thisCarsIsLocatedAt')} ${branch.displayName}`
+            : branch.city
+              ? t('item.thisCarIsAvailableAtOurBranch', { location: branch.city })
               : t('item.contact')}
         </H2>
       </Repeat>
       <Repeat>
-        <Map position={branch?.location?.position} />
+        <Map position={position(branch)} />
       </Repeat>
-      {(branch?.connections?.length || 0) > 1 && (
-        <Repeat>
-          <Content>
-            <p>
-              {t('item.centralWarehouseCarDescriptionShort')}{' '}
-              <ButtonInline
-                as="span"
-                role="button"
-                onClick={openModal}
-                inline
-                title={t('item.clickHereToShowContactToAnotherBranch') || ''}
-              >
-                {t('item.clickHereToShowContactToAnotherBranch')}
-              </ButtonInline>
-              .
-            </p>
-          </Content>
-        </Repeat>
-      )}
       <Repeat>
         <ProductPageContentLimit>
           <Repeat>
             <TableColumn>
-              {branch?.location?.streetAddress && branch?.location?.city && (
+              {branch.street && branch.city && (
                 <TableColumnRow>
                   <TableColumnCell>{t('common.address')}</TableColumnCell>
                   <TableColumnCell>
                     <ButtonInlineBold>
-                      <ButtonContent>{`${branch?.location?.streetAddress}, ${branch?.location?.city}`}</ButtonContent>
+                      <ButtonContent>{`${branch.street}, ${branch.city}`}</ButtonContent>
                     </ButtonInlineBold>
                   </TableColumnCell>
                 </TableColumnRow>
               )}
-              {branch?.contact?.phonenumber && (
-                <PhoneNumber phoneNumber={formatPhonenumber(branch.contact.phonenumber)} />
-              )}
+              {phone && <PhoneNumber phoneNumber={formatPhonenumber(phone)} />}
             </TableColumn>
           </Repeat>
-          {branch?.openingHours && (
+          {hours && (
             <Repeat>
-              <OpeningHours openingHours={branch.openingHours} />
+              <OpeningHours openingHours={hours} />
             </Repeat>
           )}
         </ProductPageContentLimit>

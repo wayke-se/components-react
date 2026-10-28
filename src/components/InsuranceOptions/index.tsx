@@ -1,27 +1,18 @@
 import React from 'react';
-import { Branch, InsuranceOption } from '../../@types/codegen/types';
+import { InsuranceProvider } from '../../Gql/ad/types';
 import Insurance from './Insurance';
 import InsuranceFree from './InsuranceFree';
 
-interface InsuranceOptions {
-  id: string;
-  branch?: Branch | null;
-  insuranceOptions: InsuranceOption[];
+interface InsuranceOptionsProps {
+  provider: InsuranceProvider;
 }
 
-const InsuranceOptions = ({ id, branch, insuranceOptions }: InsuranceOptions) => {
-  if (!insuranceOptions.length) {
-    return null;
-  }
-
-  if (insuranceOptions.length > 0) {
-    if (insuranceOptions[0].requiresDistance && insuranceOptions[0].requiresPersonalNumber)
-      return <Insurance id={id} branch={branch} insuranceOptions={insuranceOptions} />;
-
-    return <InsuranceFree id={id} branch={branch} insuranceOptions={insuranceOptions} />;
-  }
-
-  return null;
-};
+/** A quote needs a personal number and a distance; without them the offer is just described. */
+const InsuranceOptions = ({ provider }: InsuranceOptionsProps) =>
+  provider.requiresDistance && provider.requiresPersonalNumber ? (
+    <Insurance provider={provider} />
+  ) : (
+    <InsuranceFree provider={provider} />
+  );
 
 export default InsuranceOptions;
