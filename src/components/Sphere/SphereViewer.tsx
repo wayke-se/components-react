@@ -1,10 +1,9 @@
 import { Viewer } from '@photo-sphere-viewer/core';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import MediaButton from '../Gallery/MediaButton';
 import Loader from '../Loader';
 import { Wrapper } from '../Sphere/wrapper';
+import { Badge } from '../ThreeSixty/wrapper';
 
 type PropsType = {
   id: string;
@@ -19,8 +18,6 @@ const isWebgl2Supported = (): boolean => {
     return false;
   }
 };
-
-const noop = () => undefined;
 
 const SphereViewer = ({ id, src, interactive }: PropsType) => {
   const { t } = useTranslation();
@@ -77,7 +74,8 @@ const SphereViewer = ({ id, src, interactive }: PropsType) => {
         style={{ ...fillStyle, pointerEvents: interactive ? 'auto' : 'none' }}
       />
       {loading && <Loader />}
-      {!loading && !interactive && <MediaButton text={t('item.start360Interior')} onClick={noop} />}
+      {/* In the gallery: marked as 360; a click opens it in the lightbox, ready to turn. */}
+      {!loading && !interactive && <Badge>{t('item.threeSixty.sphereBadge')}</Badge>}
     </Wrapper>
   );
 };

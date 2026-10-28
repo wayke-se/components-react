@@ -58,7 +58,7 @@ export const Alt = styled.div`
 `;
 
 /** The slides side by side; swiping and the arrows scroll it, each slide snaps in place. */
-export const Track = styled.ul<{ $locked: boolean }>`
+export const Track = styled.ul`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -68,7 +68,7 @@ export const Track = styled.ul<{ $locked: boolean }>`
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow-x: ${({ $locked }) => ($locked ? 'hidden' : 'auto')};
+  overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
@@ -242,11 +242,3 @@ export const MediaButtonWrapper = styled.div`
 `;
 
 // Sphere Close Button
-
-export const EnableNavigationButton = styled.div`
-  position: absolute;
-  bottom: ${size(2)};
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-`;

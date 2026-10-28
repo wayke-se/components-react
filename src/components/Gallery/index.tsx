@@ -5,7 +5,6 @@ import useAdContext from '../../State/Ad/AdContext';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
 import { imageUrl } from '../../utils/image';
 import PubSub from '../../utils/pubsub/pubsub';
-import { ButtonContent, ButtonSecondary } from '../Button';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import Lightbox from '../Lightbox';
 import { NavButton } from '../NavButton';
@@ -18,7 +17,6 @@ import {
   Alt,
   ArrowLeft,
   ArrowRight,
-  EnableNavigationButton,
   Image,
   Item,
   Main,
@@ -60,8 +58,6 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   const quickNavRef = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
-  // While a 360 image is turned, swiping would move the gallery instead.
-  const [navigationDisabled, setNavigationDisabled] = useState(false);
 
   const mediaLength = media?.length || 0;
   const placeholder = useMemo(
@@ -97,24 +93,19 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLUListElement>) => {
-      if (navigationDisabled) return;
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
         goTo(index + (e.key === 'ArrowLeft' ? -1 : 1));
       }
     },
-    [goTo, index, navigationDisabled]
+    [goTo, index]
   );
 
   const onClick = useCallback(() => {
     PubSub.publish('ImagesClick', adEvent(ad));
-    if (!navigationDisabled && mediaLength) setLightbox(true);
-  }, [ad, navigationDisabled, mediaLength]);
-
-  const onEnableNavigation = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    setNavigationDisabled(false);
-  };
+    // 360 and sphere images are turned in the lightbox, already started, as on wayke.se.
+    if (mediaLength) setLightbox(true);
+  }, [ad, mediaLength]);
 
   const onToggleLightbox = useCallback(() => setLightbox(!lightbox), [lightbox]);
 
@@ -124,7 +115,6 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
         <Main>
           <Track
             ref={trackRef}
-            $locked={navigationDisabled}
             onScroll={onScroll}
             onKeyDown={onKeyDown}
             onClick={onClick}
@@ -150,14 +140,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
                       draggable={false}
                     />
                   )}
-                  {m.type === 'threesixty' && (
-                    <ThreeSixty
-                      urls={m.urls}
-                      visible={i === index}
-                      onDisableNavigation={() => setNavigationDisabled(true)}
-                      navigationDisabled={navigationDisabled}
-                    />
-                  )}
+                  {m.type === 'threesixty' && <ThreeSixty urls={m.urls} />}
                   {m.type === 'embedded' && <EmbededVideo src={m.urls[0]} index={i} />}
                   {m.type === 'sphere' && <Sphere url={m.urls[0]} />}
                 </Item>
@@ -168,14 +151,7 @@ const Gallery = ({ media, placeholderImage }: GalleryProps) => {
               </Item>
             )}
           </Track>
-          {navigationDisabled && mediaLength > 1 && (
-            <EnableNavigationButton>
-              <ButtonSecondary onClick={onEnableNavigation} title={t('common.close') || ''}>
-                <ButtonContent>{t('common.close')}</ButtonContent>
-              </ButtonSecondary>
-            </EnableNavigationButton>
-          )}
-          {!navigationDisabled && mediaLength > 1 && (
+          {mediaLength > 1 && (
             <>
               <ArrowLeft>
                 <NavButton onClick={() => goTo(index - 1)} title={t('other.previousImage') || ''}>
