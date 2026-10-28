@@ -7,9 +7,10 @@ const Slider: typeof SliderComponent = (
 ).default;
 
 import { useTranslation } from 'react-i18next';
-import { Branch, Maybe, Media } from '../../@types/codegen/types';
+import { adEvent, GalleryMedia } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
-import { notEmpty } from '../../utils/formats';
+import { imageUrl } from '../../utils/image';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ButtonContent, ButtonSecondary } from '../Button';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
@@ -36,9 +37,7 @@ import {
 } from './wrapper';
 
 interface GalleryProps {
-  id: string;
-  branch?: Maybe<Branch>;
-  media?: Media[];
+  media: GalleryMedia[];
   placeholderImage?: string;
 }
 
@@ -51,8 +50,9 @@ const sliderSettings = {
   slidesToScroll: 1,
 };
 
-const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
+const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   const { t } = useTranslation();
+  const ad = useAdContext();
   const slider = useRef<SliderComponent>(null);
   const quickNavRef = useRef<HTMLUListElement>(null);
   const isDragging = useRef(false);
@@ -80,11 +80,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
   }, []);
 
   const onClick = useCallback(() => {
-    PubSub.publish('ImagesClick', {
-      id,
-      branchId: branch?.id,
-      branchName: branch?.name,
-    });
+    PubSub.publish('ImagesClick', adEvent(ad));
     if (!isDragging.current && !lightbox && !!media?.length) {
       setLightbox(true);
     }
@@ -146,25 +142,23 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
             >
               {media?.length ? (
                 media.map((m, i) => (
-                  <Item key={m.files[0].url || i}>
+                  <Item key={m.urls[0] || i}>
                     {m.type === 'image' && (
                       <Image
-                        src={
-                          m.files[0].formats.filter(notEmpty).find((x) => x.format === '1170x')?.url
-                        }
+                        src={imageUrl(m.urls[0], { width: 1170, height: 780 })}
                         alt={t('common.imageIndex', { index: i + 1 }) || ''}
                       />
                     )}
                     {m.type === 'threesixty' && (
                       <ThreeSixty
-                        urls={m.files.map((x) => x.url)}
+                        urls={m.urls}
                         visible={i === index}
                         onDisableNavigation={onDisableNavigation}
                         navigationDisabled={navigationDisabled}
                       />
                     )}
-                    {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
-                    {m.type === 'sphere' && <Sphere url={m.files[0].url} />}
+                    {m.type === 'embedded' && <EmbededVideo src={m.urls[0]} index={i + 1} />}
+                    {m.type === 'sphere' && <Sphere url={m.urls[0]} />}
                   </Item>
                 ))
               ) : (
@@ -201,8 +195,9 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
             {media?.length ? (
               media.map((m, i) => {
                 const src =
-                  m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||
-                  m.files[0].url;
+                  m.type === 'embedded'
+                    ? m.urls[0]
+                    : imageUrl(m.urls[0], { width: 225, height: 150 });
                 return (
                   <QuickNavItem key={src || i} active={index === i}>
                     <QuickNavBtn
@@ -224,7 +219,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
                       {m.type === 'embedded' && <QuickNavEmbeded src={src} index={i} />}
                       {m.type === 'sphere' && (
                         <QuickNavImg
-                          src={m.files[0].url}
+                          src={src}
                           alt={t('common.imageIndex', { index: i + 1 }) || ''}
                         />
                       )}

@@ -8,7 +8,6 @@ import WaykeSearchItem, { WaykeSearchItemProps } from './layouts/searchItem';
 import WaykeComposite, {
   WaykeCompositeWithProviderProps,
 } from './layouts/WaykeCompositeWithProvider';
-import WaykeItemProvider, { WaykeItemProviderSettings } from './providers/WaykeItemProvidet';
 import WaykeProvider, { WaykeProviderSettings } from './providers/WaykeProvider';
 import WaykePubSub from './utils/pubsub/pubsub';
 
@@ -18,12 +17,12 @@ import WaykePubSub from './utils/pubsub/pubsub';
  */
 
 export interface WaykeSearchMountSettings {
-  provider: WaykeProviderSettings;
+  provider?: WaykeProviderSettings;
   search?: WaykeSearchProps;
 }
 
 export interface WaykeItemMountSettings {
-  provider: WaykeItemProviderSettings;
+  provider?: WaykeProviderSettings;
   item: WaykeSearchItemProps;
 }
 
@@ -92,7 +91,7 @@ const render = (target: string | Element, node: React.ReactNode): WaykeInstance 
   };
 };
 
-export const mount = (target: string | Element, settings: WaykeCompositeWithProviderProps) =>
+export const mount = (target: string | Element, settings: WaykeCompositeWithProviderProps = {}) =>
   render(target, <WaykeComposite {...settings} />);
 
 export const mountSearch = (
@@ -109,9 +108,9 @@ export const mountSearch = (
 export const mountItem = (target: string | Element, { provider, item }: WaykeItemMountSettings) =>
   render(
     target,
-    <WaykeItemProvider {...provider}>
+    <WaykeProvider {...provider}>
       <WaykeSearchItem {...item} />
-    </WaykeItemProvider>
+    </WaykeProvider>
   );
 
 export { WaykePubSub };

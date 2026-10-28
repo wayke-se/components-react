@@ -16,7 +16,7 @@ type Props = InputProps & {
 };
 
 const InputSearch = React.forwardRef<HTMLDivElement, Props>(
-  ({ placeholder, label, value, id, onSearch, onChange, onKeyDown }, ref) => (
+  ({ placeholder, label, value, id, onSearch, onChange, onKeyDown, children, ...aria }, ref) => (
     <Wrapper ref={ref}>
       <Label htmlFor={id}>{label}</Label>
       <Search>
@@ -27,7 +27,10 @@ const InputSearch = React.forwardRef<HTMLDivElement, Props>(
           id={id}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          autoComplete="off"
+          {...aria}
         />
+        {children}
       </Search>
       <Action>
         <ActionBtn onClick={onSearch} title={`Genomför ${label}`} aria-label={`Genomför ${label}`}>

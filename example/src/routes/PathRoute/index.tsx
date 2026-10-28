@@ -1,33 +1,13 @@
 import React from 'react';
 
 import WaykeComposite from '../../../../src';
+import { providerSettings } from '../../settings';
 
-const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('modelYear.min', '2018');
-
+/** Path routing: the vehicle at /a/b/<id>, the filters in the url. */
 const PathRoute = () => (
   <WaykeComposite
-    composite={{
-      // initialQueryParams,
-      removeSearchBar: false,
-      pathRoute: 'https://www.wayke.se/objekt',
-      modifyDocumentTitleItem: true,
-      modifyDocumentTitleSearch: 'Wayke',
-      //initialQueryParams: 'modelSeries=A5&modelSeries=A3',
-      marketCode: 'SE',
-    }}
-    provider={{
-      graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
-      url: process.env.WAYKE_SEARCH_URL as string,
-      urlMlt: process.env.WAYKE_SEARCH_MLT_URL as string,
-      ecomSettings: {
-        url: process.env.WAYKE_ECOM_URL as string,
-        serviceLogotypeUrl: '/images/wayke-logo.svg',
-      },
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
-      useQueryParamsFromUrl: true,
-      //pathRoute: '/begagnade-bilar/saljes',
-    }}
+    composite={{ modifyDocumentTitleItem: true, modifyDocumentTitleSearch: 'Wayke' }}
+    provider={{ ...providerSettings, routing: { mode: 'path', basePath: '/a/b', syncUrl: true } }}
   />
 );
 

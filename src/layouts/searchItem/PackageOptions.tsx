@@ -1,24 +1,20 @@
 import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { PackageOption } from '../../@types/codegen/types';
 import { ButtonInline } from '../../components/Button';
 import Content from '../../components/Content';
 import { H2 } from '../../components/Heading';
 import LogoBox from '../../components/LogoBox';
 import { ProductPageMainSection } from '../../components/ProductPage';
 import { Repeat } from '../../components/Repeat';
+import { PackageOffer } from '../../Gql/ad/view';
 
 interface PackageOptionsProps {
-  packageOptions?: PackageOption[] | null;
+  packageOptions: PackageOffer[];
 }
 
 const PackageOptions = ({ packageOptions }: PackageOptionsProps) => {
   const { t } = useTranslation();
-  if (!packageOptions) {
-    return null;
-  }
-
   return (
     <>
       {packageOptions.map((packageOption, index) => (

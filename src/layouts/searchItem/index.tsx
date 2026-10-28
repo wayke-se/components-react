@@ -1,7 +1,6 @@
 import { marked } from 'marked';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ConversionOption, defaultConversionOptions } from '../../@types/conversion';
-import { MarketCode } from '../../@types/market';
 import Blockquote from '../../components/Blockquote';
 import { ButtonContent, ButtonInlineLight, ButtonPrimary } from '../../components/Button';
 import Container from '../../components/Container';
@@ -26,11 +25,24 @@ import {
 import { Repeat, RepeatSmall } from '../../components/Repeat';
 import UspList, { ItemProps } from '../../components/UspList';
 import { UtilityFontSizeSmall } from '../../components/Utility';
-import useInitializeTranslation from '../../hooks/useInitializeTranslation';
-import useSearchItem from '../../hooks/useSearchItem';
-import useCentralStorage from '../../State/CentralStorage/useCentralStorage';
+import { Ad } from '../../Gql/ad/types';
+import useAd from '../../Gql/ad/useAd';
+import {
+  adEvent,
+  contactPerson,
+  discount,
+  ecom,
+  galleryMedia,
+  leasingOffers,
+  manufacturerPackage,
+  packageOffers,
+  price,
+  publishedAt,
+} from '../../Gql/ad/view';
+import { AdContext } from '../../State/Ad/AdContext';
+import useRouter from '../../State/Router/useRouter';
 import useSettings from '../../State/Settings/useSettings';
-import { dateTimeFormat, notEmpty, numberSeparator } from '../../utils/formats';
+import { dateTimeFormat, numberSeparator } from '../../utils/formats';
 import { i18nScoped } from '../../utils/I18n';
 import PubSub from '../../utils/pubsub/pubsub';
 import AccessoriesSection from './Accessories';
@@ -47,152 +59,101 @@ import Related from './Related';
 import useEcom from './useEcom';
 
 export interface WaykeSearchItemProps {
-  marketCode?: MarketCode;
+  /** The id of the vehicle. Older ids are resolved, and the url is updated to the new one. */
   id: string;
-  hashRoute?: boolean;
-  pathRoute?: string;
+  /** Keeps the scroll position when the vehicle page opens. By default it scrolls to the top. */
   disableResetScrollOnInit?: boolean;
+  /** Url to an image for vehicles without images. */
   placeholderImage?: string;
+  /** Sets the page title to the vehicle. */
   modifyDocumentTitleItem?: boolean;
+  /** Shows the branch name on related vehicles and where the vehicle is located. */
   displayBranchName?: boolean;
+  /** The buttons on the vehicle page. */
   conversionOptions?: ConversionOption[];
-  onClickSearchItem?: (id: string) => void;
 }
 
-const WaykeSearchItem = ({
-  marketCode = 'SE',
-  id,
-  hashRoute,
-  pathRoute,
-  disableResetScrollOnInit,
+type ItemViewProps = Omit<WaykeSearchItemProps, 'id' | 'disableResetScrollOnInit'> & { ad: Ad };
+
+const ItemView = ({
+  ad,
   placeholderImage,
   modifyDocumentTitleItem,
   displayBranchName,
   conversionOptions,
-  onClickSearchItem,
-}: WaykeSearchItemProps) => {
-  const initialized = useInitializeTranslation(marketCode);
-  const { ecomSettings } = useSettings();
-
-  const { loading, data: result } = useSearchItem(id);
-  const { vehicle: centralStorageVehicle, loading: loadingCentralStorageVehicle } =
-    useCentralStorage(result?.vehicle);
-
-  const contact = centralStorageVehicle?.contact;
-  const branch = centralStorageVehicle?.branch;
-  const ecomContext = useEcom(id, ecomSettings, branch);
+}: ItemViewProps) => {
+  const { ecom: ecomSettings, marketCode } = useSettings();
+  const { searchHref } = useRouter();
+  const ecomContext = useEcom(ad, ecomSettings);
   // The buy button below the gallery follows the same conversion options as the sidebar.
   const ecomOption = (conversionOptions ?? defaultConversionOptions).find(
     (option) => option.type === 'ecom'
   );
+  const ecommerce = ecom(ad);
 
   const [demoCarModal, setDemoCarModal] = useState(false);
   const onToggleDemoCarModal = useCallback(() => setDemoCarModal(!demoCarModal), [demoCarModal]);
 
-  useEffect(() => {
-    if (!disableResetScrollOnInit) {
-      window.scrollTo(0, 0);
-    }
-    PubSub.publish('View', { type: 'item', id });
-  }, []);
+  const item = ad.iteration?.item;
+  const title = item?.displayName || ad.iteration?.displayName || ad.salesDescription?.title || '';
+  const shortDescription = ad.salesDescription?.title;
+  const description = ad.salesDescription?.enriched;
+  const odometer = ad.iteration?.logistics?.odometerReading;
+  const fuelType = item?.driveline?.fuelTypesString?.stringValue;
+  const gearboxType = item?.attributes?.transmission?.formattedValue;
+  const loans = ad.iteration?.commerce.paymentDetailsList || [];
+  const leasing = leasingOffers(ad);
+  const insuranceProvider = ad.iteration?.commerce.insuranceProvider;
+  const manufacturerOffer = manufacturerPackage(ad);
+  const contact = contactPerson(ad);
+  const published = publishedAt(ad);
+  const media = useMemo(() => galleryMedia(ad.media.items), [ad]);
 
   useEffect(() => {
-    if (result?.vehicle?.data && modifyDocumentTitleItem) {
-      const { vehicle } = result;
-      const { registrationNumber } = vehicle.data;
-      document.title = `${registrationNumber} | ${vehicle.title} | ${vehicle.shortDescription}`;
+    if (modifyDocumentTitleItem) {
+      document.title = [item?.registrationNumber?.stringValue, title, shortDescription]
+        .filter(Boolean)
+        .join(' | ');
     }
-  }, [result]);
+  }, [ad]);
 
-  const options = useMemo(
-    () => result?.vehicle?.data?.options?.filter(notEmpty).map((opt) => ({ title: opt })),
-    [result?.vehicle?.data?.options]
-  );
+  const options = useMemo(() => (ad.equipment?.items || []).map((e) => ({ title: e.name })), [ad]);
 
   const onShowMoreOptionsClick = useCallback(
-    () =>
-      PubSub.publish('OptionsClick', {
-        id,
-        branchId: branch?.id,
-        branchName: branch?.name,
-      }),
-    [branch]
+    () => PubSub.publish('OptionsClick', adEvent(ad)),
+    [ad]
   );
+  const startEcom = useCallback(() => ecomContext.current?.start(), []);
 
-  if (!initialized) return null;
-
-  if (loading) {
-    return <PageLoading />;
+  const uspList: ItemProps[] = [];
+  if (item?.modelYear?.intValue) uspList.push({ title: item.modelYear.intValue });
+  if (ad.packaging.isDemoVersion) {
+    uspList.push({ title: i18nScoped.t('item.demoCar'), onClick: onToggleDemoCarModal });
   }
-
-  if (!result?.vehicle?.data) {
-    return <Page404 />;
-  }
-
-  const { vehicle } = result;
-  const {
-    title,
-    accessories,
-    shortDescription,
-    media,
-    description,
-    price,
-    discount,
-    financialOptions,
-    manufacturer,
-    ecommerce,
-    packageOptions,
-    publishedAt,
-    documents,
-    availableFrom,
-    flags,
-  } = vehicle;
-  const insuranceOptions = centralStorageVehicle?.insuranceOptions
-    ? centralStorageVehicle.insuranceOptions
-    : vehicle.insuranceOptions;
-  const { fuelType, mileage, gearboxType, odometerReading, modelYear, propertySet } = vehicle.data;
-
-  const uspList: ItemProps[] = [
-    {
-      title: modelYear,
-    },
-  ];
-
-  if (flags?.demoVersion) {
+  if (odometer) {
     uspList.push({
-      title: i18nScoped.t('item.demoCar'),
-      onClick: onToggleDemoCarModal,
+      title: `${numberSeparator(odometer.value)} ${i18nScoped.t(
+        `odometer.${odometer.unit === 'KILOMETER' ? 'Kilometer' : 'ScandinavianMile'}`
+      )}`,
     });
   }
-
-  uspList.push({
-    title: `${numberSeparator(odometerReading?.value || mileage)} ${i18nScoped.t(
-      `odometer.${odometerReading?.unit || 'ScandinavianMile'}`
-    )}`,
-  });
-
-  if (gearboxType) {
-    uspList.push({ title: gearboxType });
-  }
-
-  if (fuelType) {
-    uspList.push({ title: fuelType });
-  }
+  if (gearboxType) uspList.push({ title: gearboxType });
+  if (fuelType) uspList.push({ title: fuelType });
 
   return (
-    <>
+    <AdContext.Provider value={ad}>
       <Page>
         <PageSection large>
           <Container>
             <ProductPage>
               <ProductPageAside>
                 <ProductPageAsideSection mobileOrder={1}>
-                  {!pathRoute && hashRoute ? (
+                  {searchHref && (
                     <Repeat>
                       <UtilityFontSizeSmall>
                         <ButtonInlineLight
                           as="a"
-                          href="#"
+                          href={searchHref}
                           title={i18nScoped.t('navigation.backToSearch')}
                         >
                           <ButtonContent>
@@ -202,10 +163,13 @@ const WaykeSearchItem = ({
                         </ButtonInlineLight>
                       </UtilityFontSizeSmall>
                     </Repeat>
-                  ) : null}
-                  {manufacturer?.logotype && (
+                  )}
+                  {manufacturerOffer?.image && (
                     <Repeat>
-                      <LogoBox logo={manufacturer.logotype} alt={manufacturer.name} />
+                      <LogoBox
+                        logo={manufacturerOffer.image}
+                        alt={item?.manufacturer?.stringValue || manufacturerOffer.title}
+                      />
                     </Repeat>
                   )}
                   <Repeat>
@@ -223,56 +187,33 @@ const WaykeSearchItem = ({
                   </Repeat>
                 </ProductPageAsideSection>
 
-                <ProductPageAsideSection mobileOrder={2}>
-                  <PriceTable price={price} discount={discount || undefined} />
-                </ProductPageAsideSection>
+                {/* No price at all rather than "0 kr", as on wayke.se: leasing-only cars have none. */}
+                {price(ad) > 0 && (
+                  <ProductPageAsideSection mobileOrder={2}>
+                    <PriceTable price={price(ad)} discount={discount(ad)} />
+                  </ProductPageAsideSection>
+                )}
 
-                {(financialOptions.length > 0 || insuranceOptions.length > 0) && (
+                {(loans.length > 0 || leasing.length > 0 || insuranceProvider) && (
                   <ProductPageAsideSection mobileOrder={4}>
-                    {financialOptions.length > 0 && (
-                      <FinancialOptions
-                        id={id}
-                        branch={branch}
-                        financialOptions={financialOptions}
-                        marketCode={marketCode}
-                      />
+                    {(loans.length > 0 || leasing.length > 0) && (
+                      <FinancialOptions loans={loans} leasing={leasing} />
                     )}
-                    {insuranceOptions.length > 0 && (
-                      <InsuranceOptions
-                        id={id}
-                        branch={centralStorageVehicle?.branch}
-                        insuranceOptions={insuranceOptions}
-                      />
-                    )}
+                    {insuranceProvider && <InsuranceOptions provider={insuranceProvider} />}
                   </ProductPageAsideSection>
                 )}
 
                 <ProductPageAsideSection mobileOrder={5}>
                   <CheckList
-                    id={id}
                     title={title}
-                    vehicleData={vehicle.data}
                     conversionOptions={conversionOptions}
-                    marketCode={marketCode}
-                    manufacturer={manufacturer}
-                    packageOptions={packageOptions}
-                    ecommerce={ecommerce}
-                    branch={branch}
-                    contact={centralStorageVehicle?.contact}
-                    loadingCentralStorageVehicle={loadingCentralStorageVehicle}
-                    availableFrom={availableFrom}
-                    toggleEcomModal={ecomSettings ? () => ecomContext.current?.start() : undefined}
+                    toggleEcomModal={ecomSettings ? startEcom : undefined}
                   />
                 </ProductPageAsideSection>
               </ProductPageAside>
               <ProductPageMain>
                 <ProductPageAsideSection mobileOrder={3}>
-                  <Gallery
-                    id={id}
-                    branch={branch}
-                    media={media}
-                    placeholderImage={placeholderImage}
-                  />
+                  <Gallery media={media} placeholderImage={placeholderImage} />
                 </ProductPageAsideSection>
 
                 <ProductPageMainSection>
@@ -285,28 +226,26 @@ const WaykeSearchItem = ({
                     </Content>
                   </Repeat>
                   <Repeat>
-                    <Property propertySet={propertySet} vehicleData={vehicle.data} />
+                    <Property />
                   </Repeat>
                 </ProductPageMainSection>
                 {description && (
                   <ProductPageMainSection>
                     <Blockquote
-                      author={contact && contact.name ? contact.name : null}
+                      author={contact?.name || null}
                       date={
-                        publishedAt
-                          ? dateTimeFormat.format(publishedAt, dateTimeFormat.DayMonth, marketCode)
+                        published
+                          ? dateTimeFormat.format(published, dateTimeFormat.DayMonth, marketCode)
                           : undefined
                       }
-                      avatar={contact?.avatar || undefined}
+                      avatar={contact?.avatar}
                     >
-                      {!!description && (
-                        <div dangerouslySetInnerHTML={{ __html: marked(description) }} />
-                      )}
+                      <div dangerouslySetInnerHTML={{ __html: marked(description) }} />
                     </Blockquote>
                   </ProductPageMainSection>
                 )}
 
-                {(options?.length || 0) > 0 && (
+                {options.length > 0 && (
                   <ProductPageMainSection>
                     <Repeat>
                       <H2 noMargin>{i18nScoped.t('item.equipment')}</H2>
@@ -327,22 +266,18 @@ const WaykeSearchItem = ({
                   </ProductPageMainSection>
                 )}
 
-                <Documents documents={documents} />
+                <Documents documents={ad.iteration?.documents.public || []} />
 
-                <AccessoriesSection accessories={accessories} />
+                <AccessoriesSection accessories={ad.accessories} />
 
                 <ProductPageMainSection>
-                  <Branch
-                    branch={branch}
-                    displayBranchName={displayBranchName}
-                    loading={loadingCentralStorageVehicle}
-                  />
-                  {ecomSettings && ecomOption && ecommerce?.enabled && (
+                  <Branch branch={ad.branch} displayBranchName={displayBranchName} />
+                  {ecomSettings && ecomOption && ecommerce.enabled && (
                     <Repeat>
                       <ButtonPrimary
-                        disabled={!!ecommerce.reserved}
+                        disabled={ecommerce.reserved}
                         title={ecomOption.name || i18nScoped.t('item.actions.buyOnline')}
-                        onClick={() => ecomContext.current?.start()}
+                        onClick={startEcom}
                       >
                         {ecomOption.name || i18nScoped.t('item.actions.buyOnline')}
                       </ButtonPrimary>
@@ -350,25 +285,46 @@ const WaykeSearchItem = ({
                   )}
                 </ProductPageMainSection>
 
-                <PackageOptions packageOptions={packageOptions} />
-                <ManufacturerPackageOption packageOption={manufacturer?.packageOption} />
+                <PackageOptions packageOptions={packageOffers(ad)} />
+                <ManufacturerPackageOption packageOption={manufacturerOffer} />
               </ProductPageMain>
             </ProductPage>
           </Container>
         </PageSection>
         <Related
-          id={id}
-          hashRoute={hashRoute}
-          pathRoute={pathRoute}
-          authorizedReseller={!!branch?.flags?.authorizedReseller}
+          adId={ad.id}
+          manufacturer={item?.manufacturer?.stringValue}
+          placeholderImage={placeholderImage}
           displayBranchName={displayBranchName}
-          onClickSearchItem={onClickSearchItem}
         />
       </Page>
       <PortalElement id={PortalNamespace.DefaultPortal} />
       {demoCarModal && <DemoCarModal onClose={onToggleDemoCarModal} />}
-    </>
+    </AdContext.Provider>
   );
+};
+
+/** The vehicle page. */
+const WaykeSearchItem = ({ id, disableResetScrollOnInit, ...props }: WaykeSearchItemProps) => {
+  const { publicApi } = useSettings();
+  const { loading, ad } = useAd(id, publicApi);
+
+  useEffect(() => {
+    if (!disableResetScrollOnInit) {
+      window.scrollTo(0, 0);
+    }
+    PubSub.publish('View', { type: 'item', id });
+  }, []);
+
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (!ad) {
+    return <Page404 />;
+  }
+
+  return <ItemView ad={ad} {...props} />;
 };
 
 export default WaykeSearchItem;

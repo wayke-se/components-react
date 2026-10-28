@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DEFAULT_SORT, SORT, withSort } from '../../Gql/searchParams';
 import useSearch from '../../State/Search/useSearch';
 import { numberSeparator } from '../../utils/formats';
-import { getTranslatedSortOptionDisplayName } from '../../utils/sortOptions';
+import { sortOptions } from '../../utils/sortOptions';
 import { ButtonContent, ButtonSecondary } from '../Button';
 import Loader from '../Loader';
 import ProgressBar from '../ProgressBar';
-import SortSelect, { OptionProps } from '../SortSelect';
+import SortSelect from '../SortSelect';
 import {
   Body,
   Footer,
@@ -25,28 +26,19 @@ interface Props {
 
 const Result = ({ children }: Props) => {
   const { t } = useTranslation();
-  const { loading, response, documents, queryFilter, onLoadMore, onFilterUpdate } = useSearch();
+  const { loading, loadingMore, result, params, hasMore, loadMore, update } = useSearch();
 
   const onSortOptionChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => onFilterUpdate(e.currentTarget.value),
-    []
+    (e: React.ChangeEvent<HTMLSelectElement>) => update(withSort(params, e.currentTarget.value)),
+    [params, update]
   );
 
-  const numberOfDocuments = documents?.length || 0;
-  const numberOfHits = response?.documentList.numberOfHits || 0;
-  const useSkeletons = !!queryFilter?.concatResult;
+  const numberOfDocuments = result?.hits.length || 0;
+  const numberOfHits = result?.found || 0;
+  const options = useMemo(() => sortOptions(), []);
 
-  const selectedSortOption = response?.documentList.sortOptions.find((x) => x.selected)?.query;
-  const sortOptions = response?.documentList.sortOptions
-    .filter((x) => x.displayName !== 'relevance')
-    .map(
-      (so): OptionProps => ({
-        value: so.query,
-        displayName: getTranslatedSortOptionDisplayName(so.displayName),
-      })
-    );
-
-  if (loading && !useSkeletons) {
+  // A new search replaces the list; loading more keeps it and adds to it.
+  if (loading && !loadingMore) {
     return <Loader />;
   }
   return (
@@ -57,26 +49,24 @@ const Result = ({ children }: Props) => {
             numberOfHits === 1 ? t('search.result.plural') : t('search.result.plural')
           }`}</ResultCount>
         </HeaderCount>
-        {sortOptions && selectedSortOption && (
-          <HeaderSort>
-            <SortSelect
-              value={selectedSortOption}
-              options={sortOptions}
-              onChange={onSortOptionChange}
-            />
-          </HeaderSort>
-        )}
+        <HeaderSort>
+          <SortSelect
+            value={params.get(SORT) || DEFAULT_SORT}
+            options={options}
+            onChange={onSortOptionChange}
+          />
+        </HeaderSort>
       </Header>
       <Body>{children}</Body>
       <Footer>
         <FooterProgress>
           <ProgressBar valueCurrent={numberOfDocuments} valueMax={numberOfHits} />
         </FooterProgress>
-        {numberOfDocuments !== numberOfHits && (
+        {hasMore && (
           <FooterAction>
             <ButtonSecondary
-              disabled={loading}
-              onClick={onLoadMore}
+              disabled={loadingMore}
+              onClick={loadMore}
               title={t('search.showMore.title')}
               aria-label={t('search.showMore.text')}
             >

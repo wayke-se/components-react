@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Scalars } from '../../@types/codegen/types';
+import { AdDocument } from '../../Gql/ad/types';
 import {
   List,
   PdfColumn,
@@ -12,16 +12,16 @@ import {
 } from './wrapper';
 
 interface PdfDownloadItemProps {
-  document: Scalars['FileDocument']['input'];
+  document: AdDocument;
 }
 
-const translateContentType = (document: Scalars['FileDocument']['input']) => {
+const translateContentType = (document: AdDocument) => {
   switch (document.contentType) {
     case 'application/pdf':
       return 'PDF';
     default: {
       const formattedContentType =
-        document.url && document.url.includes('.') ? document.url.split('.').pop() : '';
+        document.uri && document.uri.includes('.') ? document.uri.split('.').pop() : '';
       return formattedContentType;
     }
   }
@@ -39,7 +39,7 @@ export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
         </PdfColumn>
         <PdfColumn>
           <PdfLink
-            href={document.url}
+            href={document.uri}
             rel="noopener noreferrer nofollow"
             target="_blank"
             title={t('other.openDocument', { document: document.name })}
@@ -53,13 +53,13 @@ export const PdfDownloadItem = ({ document }: PdfDownloadItemProps) => {
 };
 
 interface IDocumentList {
-  documents: Scalars['FileDocument']['input'][];
+  documents: AdDocument[];
 }
 
 export const DocumentList = ({ documents }: IDocumentList) => (
   <List>
     {documents.map((document, i) => (
-      <PdfDownloadItem key={`${document.url}-${i}`} document={document} />
+      <PdfDownloadItem key={`${document.uri}-${i}`} document={document} />
     ))}
   </List>
 );

@@ -1,20 +1,11 @@
 import React from 'react';
 
 import WaykeComposite from '../../../../src';
-
-const initialQueryParams = new URLSearchParams();
-initialQueryParams.set('modelYear.min', '2018');
-initialQueryParams.set('price.min', '1000');
-initialQueryParams.set('leasingPrice.min', '1000');
-initialQueryParams.set('businessLeasingPrice.min', '1000');
+import { providerSettings } from '../../settings';
 
 const Home = () => (
   <WaykeComposite
     composite={{
-      marketCode: 'SE',
-      //initialQueryParams,
-      removeSearchBar: false,
-      removeFilterOptions: false,
       modifyDocumentTitleItem: true,
       modifyDocumentTitleSearch: 'Wayke',
       displayBranchName: true,
@@ -26,17 +17,7 @@ const Home = () => (
         { type: 'phone' },
       ],
     }}
-    provider={{
-      graphQlUrl: process.env.WAYKE_GRAPH_QL_URL as string,
-      url: process.env.WAYKE_SEARCH_URL as string,
-      urlMlt: process.env.WAYKE_SEARCH_MLT_URL as string,
-      ecomSettings: {
-        url: process.env.WAYKE_ECOM_URL as string,
-        serviceLogotypeUrl: '/images/wayke-logo.svg',
-      },
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
-      useQueryParamsFromUrl: false,
-    }}
+    provider={providerSettings}
   />
 );
 

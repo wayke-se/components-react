@@ -1,74 +1,40 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-
 import Container from '../../components/Container';
 import { H2 } from '../../components/Heading';
-import Loader from '../../components/Loader';
 import OverflowGrid from '../../components/OverflowGrid';
 import { PageSection } from '../../components/Page';
-import ProductCard, { OnItemClick } from '../../components/ProductCard';
+import HitCard from '../../components/ProductCard/HitCard';
 import { Repeat } from '../../components/Repeat';
 import SectionHeader from '../../components/SectionHeader';
-import useRelatedSearch from '../../State/RelatedSearch/useRelatedSearch';
-import { numberSeparator } from '../../utils/formats';
-import PubSub from '../../utils/pubsub/pubsub';
-import { regexPathGuid } from '../../utils/regex';
+import useRelatedAds from '../../Gql/ad/useRelatedAds';
+import useSettings from '../../State/Settings/useSettings';
 
 interface RelatedProps {
-  id: string;
-  hashRoute?: boolean;
-  pathRoute?: string;
-  authorizedReseller?: boolean;
+  adId: string;
+  manufacturer?: string;
+  placeholderImage?: string;
   displayBranchName?: boolean;
-  onClickSearchItem?: (id: string) => void;
 }
 
-const Related = ({
-  id,
-  hashRoute,
-  pathRoute,
-  authorizedReseller,
-  displayBranchName,
-  onClickSearchItem,
-}: RelatedProps) => {
+/** The latest cars of the same make. */
+const Related = ({ adId, manufacturer, placeholderImage, displayBranchName }: RelatedProps) => {
   const { t } = useTranslation();
-  const { loading, response, moreLikeThisUrl } = useRelatedSearch(id, !!authorizedReseller);
+  const { publicApi } = useSettings();
+  const { hits } = useRelatedAds(publicApi, adId, manufacturer);
 
-  const onItemClicked = useCallback(
-    (data: OnItemClick) => {
-      PubSub.publish('ItemClicked', data);
-      if (onClickSearchItem) {
-        onClickSearchItem(data.id);
-      }
-    },
-    [onClickSearchItem]
-  );
-
-  if (!response?.documentList.documents.length || response?.documentList.documents.length === 0) {
+  if (!hits?.length) {
     return null;
-  }
-
-  if (loading) {
-    return <Loader />;
   }
 
   return (
     <PageSection accent large className="wayke__theme wayke__color--accent-bg">
       <Container>
-        {moreLikeThisUrl ? (
-          <Repeat>
-            <SectionHeader onClick={() => undefined}>
-              <H2 noMargin>{t('item.relatedVehicles')}</H2>
-            </SectionHeader>
-          </Repeat>
-        ) : (
-          <Repeat>
-            <SectionHeader onClick={() => undefined} actionTitle="Visa alla">
-              <H2 noMargin>{t('item.latestVehicles')}</H2>
-            </SectionHeader>
-          </Repeat>
-        )}
-
+        <Repeat>
+          <SectionHeader>
+            <H2 noMargin>{t('item.relatedVehicles')}</H2>
+          </SectionHeader>
+        </Repeat>
         <Repeat>
           <OverflowGrid
             accentBg
@@ -76,65 +42,14 @@ const Related = ({
             columnsSm={2.1}
             columnsMd={3}
             spacing={2}
-            items={response?.documentList.documents.map((document) => {
-              const prefix = pathRoute ? `/${pathRoute}` : '/';
-
-              const r = regexPathGuid();
-
-              const pathRouteUrl =
-                window.location.pathname === '/'
-                  ? `${prefix}${document._id}`
-                  : r.test(`${pathRoute}${id}`)
-                    ? window.location.pathname.replace(r, document._id)
-                    : `${window.location.pathname}${prefix}${document._id}`;
-
-              return (
-                <ProductCard
-                  key={document._id}
-                  id={document._id}
-                  onClick={onItemClicked}
-                  title={document.title}
-                  href={pathRoute ? pathRouteUrl : hashRoute ? `#${document._id}` : undefined}
-                  imageFile={document.featuredImage?.files?.[0]}
-                  description={document.shortDescription}
-                  branch={document.branches?.[0]}
-                  branchName={displayBranchName ? document.branches?.[0]?.name : undefined}
-                  uspList={[
-                    {
-                      title: document.modelYear,
-                    },
-                    {
-                      title: `${numberSeparator(
-                        document.odometerReading?.value || document.mileage
-                      )} ${t(`odometer.${document.odometerReading?.unit || 'ScandinavianMile'}`)}`,
-                    },
-                    {
-                      title: document.gearboxType,
-                    },
-                    {
-                      title: document.fuelType,
-                    },
-                  ]}
-                  price={`${numberSeparator(document.price)} ${t('currency.default')}`}
-                  oldPrice={
-                    document.oldPrice !== undefined && document.price < document.oldPrice
-                      ? `${numberSeparator(document.oldPrice)} ${t('currency.default')}`
-                      : undefined
-                  }
-                  leasingPrice={
-                    document.leasingPrice !== undefined
-                      ? `${numberSeparator(document.leasingPrice)} ${t('currency.monthly')}`
-                      : undefined
-                  }
-                  businessLeasingPrice={
-                    document.businessLeasingPrice !== undefined
-                      ? `${numberSeparator(document.businessLeasingPrice)} ${t('currency.monthly')}`
-                      : undefined
-                  }
-                  pathRoute={pathRoute}
-                />
-              );
-            })}
+            items={hits.map((hit) => (
+              <HitCard
+                key={hit.ad.id}
+                hit={hit}
+                placeholderImage={placeholderImage}
+                displayBranchName={displayBranchName}
+              />
+            ))}
           />
         </Repeat>
       </Container>

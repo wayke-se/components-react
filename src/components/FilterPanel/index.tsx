@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchFilterTypes } from '../../@types/filter';
-import { QueryFilter } from '../../@types/queryFilter';
-import { Facet } from '../../@types/search';
+import { SORT } from '../../Gql/searchParams';
+import useSearch from '../../State/Search/useSearch';
 import PubSub from '../../utils/pubsub/pubsub';
 import Accordion, { AccordionItem } from '../Accordion';
 import { ButtonContent, ButtonPrimary, ButtonSecondary } from '../Button';
@@ -11,79 +10,64 @@ import { FooterAction, FooterActionItem } from '../Panel/wrapper';
 import { Repeat } from '../Repeat';
 import FacetSelector from './faceSelector';
 
-export interface FilterProps {
-  label: string;
-  activeFilters?: number;
+export interface PanelFilter {
+  id: string;
+  displayName: string;
 }
 
-export interface Props {
-  queryFilter: QueryFilter;
-  facet?: Facet;
-  loading: boolean;
-  filteredFacets: Facet[];
-  filterList?: SearchFilterTypes[];
-  numberOfHits: number;
+interface Props {
+  filters: PanelFilter[];
+  /** The filter whose section is open */
+  open: string;
   onClose: () => void;
-  onFilterUpdate: (nextQuery: string) => void;
 }
 
-const FilterPanel = ({
-  queryFilter,
-  facet,
-  filteredFacets,
-  numberOfHits,
-  loading,
-  onFilterUpdate,
-  onClose,
-}: Props) => {
+const FilterPanel = ({ filters, open, onClose }: Props) => {
   const { t } = useTranslation();
+  const { params, result, loading, update } = useSearch();
+  const found = result?.found || 0;
+
   const onClearFilters = useCallback(() => {
-    PubSub.publish('SearchClearAllFilters', {
-      query: new URLSearchParams(queryFilter.searchParams).toString(),
-    });
-    const currentSort = queryFilter.searchParams.get('sort') || 'published-desc';
-    const nextQuery = new URLSearchParams();
-    nextQuery.set('hits', '30');
-    nextQuery.set('sort', currentSort);
-    onFilterUpdate(`?${nextQuery.toString()}`);
-  }, [queryFilter]);
+    PubSub.publish('SearchClearAllFilters', { query: params.toString() });
+    // The sort order is not a filter: it stays.
+    const next = new URLSearchParams();
+    const sort = params.get(SORT);
+    if (sort) next.set(SORT, sort);
+    update(next);
+  }, [params, update]);
 
   return (
     <Panel
       title={t('search.filter')}
       onClose={onClose}
       footer={
-        <>
-          <FooterAction>
-            <FooterActionItem>
-              <ButtonSecondary fullWidth disabled={loading} onClick={onClearFilters}>
-                <ButtonContent>{t('search.clearAllFilters.text')}</ButtonContent>
-              </ButtonSecondary>
-            </FooterActionItem>
-            <FooterActionItem>
-              <ButtonPrimary fullWidth disabled={loading} onClick={onClose}>
-                <ButtonContent>
-                  {t('search.showNumberOfCustomUnit', {
-                    count: numberOfHits || 0,
-                    unit: t(`search.result.${(numberOfHits || 0) === 1 ? 'singular' : 'plural'}`),
-                  })}
-                </ButtonContent>
-              </ButtonPrimary>
-            </FooterActionItem>
-          </FooterAction>
-        </>
+        <FooterAction>
+          <FooterActionItem>
+            <ButtonSecondary fullWidth disabled={loading} onClick={onClearFilters}>
+              <ButtonContent>{t('search.clearAllFilters.text')}</ButtonContent>
+            </ButtonSecondary>
+          </FooterActionItem>
+          <FooterActionItem>
+            <ButtonPrimary fullWidth disabled={loading} onClick={onClose}>
+              <ButtonContent>
+                {t('search.showNumberOfCustomUnit', {
+                  count: found,
+                  unit: t(`search.result.${found === 1 ? 'singular' : 'plural'}`),
+                })}
+              </ButtonContent>
+            </ButtonPrimary>
+          </FooterActionItem>
+        </FooterAction>
       }
     >
       <Accordion>
-        {filteredFacets
-          .filter((x) => x.filters.length)
-          .map((f) => (
-            <AccordionItem key={f.id} heading={f.displayName} isActive={f.id === facet?.id}>
-              <Repeat>
-                <FacetSelector facet={f} />
-              </Repeat>
-            </AccordionItem>
-          ))}
+        {filters.map((f) => (
+          <AccordionItem key={f.id} heading={f.displayName} isActive={f.id === open}>
+            <Repeat>
+              <FacetSelector id={f.id} />
+            </Repeat>
+          </AccordionItem>
+        ))}
       </Accordion>
     </Panel>
   );

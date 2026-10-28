@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Media } from '../../@types/codegen/types';
+import { GalleryMedia } from '../../Gql/ad/view';
 import { IconCancel } from '../Icon';
 import SphereLightbox from '../Sphere/SphereLightbox';
 import ThreeSixtyLightbox from '../ThreeSixty/ThreeSixtLightbox';
@@ -9,7 +9,7 @@ import { CloseBtn, Img, Item, UiBlock, Wrapper } from './wrapper';
 
 interface LightboxProps {
   index: number;
-  media: Media[];
+  media: GalleryMedia[];
   onClose: () => void;
 }
 
@@ -37,13 +37,13 @@ const Lightbox = ({ index, media, onClose }: LightboxProps) => {
           {m.type === 'image' && (
             <Img
               id={`lightbox-image-${i}`}
-              src={m.files[0].url}
+              src={m.urls[0]}
               alt={t('common.imageIndex', { index: i + 1 }) || ''}
             />
           )}
-          {m.type === 'threesixty' && <ThreeSixtyLightbox urls={m.files.map((x) => x.url)} />}
-          {m.type === 'sphere' && <SphereLightbox url={m.files[0].url} />}
-          {m.type === 'embedded' && <EmbeddedVideoLightbox url={m.files[0].url} />}
+          {m.type === 'threesixty' && <ThreeSixtyLightbox urls={m.urls} />}
+          {m.type === 'sphere' && <SphereLightbox url={m.urls[0]} />}
+          {m.type === 'embedded' && <EmbeddedVideoLightbox url={m.urls[0]} />}
         </Item>
       ))}
       <CloseBtn onClick={onClose} title={t('common.close') || ''}>

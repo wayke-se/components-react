@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { VehicleData } from '../../@types/codegen/types';
 import { Category, Property } from '../../@types/vehicle-properties';
 import { H5 } from '../../components/Heading';
 import { Repeat } from '../../components/Repeat';
 import { TableList } from '../../components/TableList';
 import Tabs from '../../components/Tabs';
-import addCustomProperties from '../../utils/vehicle-properties/custom-property-adder';
-import removeProperties from '../../utils/vehicle-properties/property-remover';
-import PropertyTreeCreator from '../../utils/vehicle-properties/property-tree-creator';
-import sortTree from '../../utils/vehicle-properties/property-tree-sorter';
+import propertyTree from '../../Gql/ad/propertyTree';
+import useAdContext from '../../State/Ad/AdContext';
 import MetadataItem from './MetadataItem';
 
 interface MetadataSubCategoryProps {
@@ -68,26 +65,11 @@ const MetadataCategory = ({ properties, subCategories }: MetadataCaregoryProps) 
   </div>
 );
 
-interface PropertySetProps {
-  propertySet: any;
-  vehicleData: VehicleData;
-}
-
-const PropertySet = ({ propertySet, vehicleData }: PropertySetProps) => {
+const PropertySet = () => {
   const { t } = useTranslation();
+  const ad = useAdContext();
   const [activeCategoryId, setActiveCategoryId] = useState(-1);
-  const mappedProperties = useMemo(() => {
-    if (!propertySet) {
-      return undefined;
-    }
-
-    const newProperties = removeProperties(propertySet);
-    const enrichedProperties = addCustomProperties(t, vehicleData, newProperties);
-
-    const tree = new PropertyTreeCreator(enrichedProperties).create();
-    sortTree(tree);
-    return tree;
-  }, [propertySet]);
+  const mappedProperties = useMemo(() => propertyTree(ad, t), [ad, t]);
 
   useEffect(() => {
     const categories =

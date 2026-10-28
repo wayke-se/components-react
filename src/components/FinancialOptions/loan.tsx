@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, FinancialOption, Maybe } from '../../@types/codegen/types';
-import { MarketCode } from '../../@types/market';
-import useLoanCalculation from '../../hooks/useLoan';
+import { PaymentResponse } from '../../Gql/ad/types';
+import useLoanCalculation from '../../Gql/ad/useLoanCalculation';
+import { adEvent, num } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
+import useSettings from '../../State/Settings/useSettings';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ButtonInline } from '../Button';
@@ -11,52 +13,37 @@ import { OptionBoxContent, OptionBoxHeading } from '../OptionBox/wrapper';
 import LoanModal from './LoanModal';
 
 interface LoanProps {
-  id: string;
-  branch?: Maybe<Branch>;
-  financialOption: FinancialOption;
-  marketCode?: MarketCode;
+  loan: PaymentResponse;
 }
 
-const Loan = ({ id, branch, financialOption, marketCode }: LoanProps) => {
+const Loan = ({ loan }: LoanProps) => {
   const { t } = useTranslation();
+  const ad = useAdContext();
+  const { publicApi } = useSettings();
   const [modal, setModal] = useState(false);
   const toggleModal = useCallback(() => {
     setModal(!modal);
-    PubSub.publish(modal ? 'FinanceClose' : 'FinanceOpen', {
-      id,
-      branchId: branch?.id,
-      branchName: branch?.name,
-    });
-  }, [modal, branch]);
+    PubSub.publish(modal ? 'FinanceClose' : 'FinanceOpen', adEvent(ad));
+  }, [modal, ad]);
 
-  const { data } = useLoanCalculation(
-    id,
-    financialOption.duration?.current,
-    financialOption.downPayment?.current,
-    financialOption.residual?.current
-  );
+  // The list gives the defaults; the calculation gives the monthly cost for them.
+  const { payment } = useLoanCalculation(publicApi, ad.id, {
+    financialOptionId: loan.financialOptionId,
+    duration: num(loan.duration?.current),
+    downPayment: num(loan.downPayment?.current),
+    residual: num(loan.residual?.current),
+  });
 
-  const interest = data?.loan?.interest;
-  const duration = data?.loan?.duration?.current;
-  const monthlyCost = data?.loan?.monthlyCost;
+  const interest = num(payment?.interest);
+  const duration = num(payment?.duration?.current);
+  const monthlyCost = num(payment?.monthlyCost);
+  const loanAmount = num(loan.loanAmount);
+  const logo = loan.imageUrl || undefined;
 
-  const logo = financialOption?.logotype || 'https://placehold.it/67x10';
-
-  // Skeleton?
-  if (
-    financialOption.loanAmount === undefined ||
-    financialOption.loanAmount === null ||
-    interest === undefined ||
-    duration === undefined ||
-    monthlyCost === undefined ||
-    interest === null ||
-    duration === null ||
-    monthlyCost === null
-  ) {
+  if (interest === undefined || duration === undefined || monthlyCost === undefined) {
     return (
       <OptionBox logo={logo} logoAlt={t('common.logotype')}>
         <OptionBoxHeading>{t('other.loading')}</OptionBoxHeading>
-
         <OptionBoxContent>
           <p>{t('other.loading')}</p>
         </OptionBoxContent>
@@ -66,15 +53,7 @@ const Loan = ({ id, branch, financialOption, marketCode }: LoanProps) => {
 
   return (
     <>
-      {modal && (
-        <LoanModal
-          id={id}
-          branch={branch}
-          financialOption={financialOption}
-          marketCode={marketCode}
-          onClose={toggleModal}
-        />
-      )}
+      {modal && <LoanModal loan={loan} onClose={toggleModal} />}
       <OptionBox logo={logo} logoAlt={t('common.logotype')}>
         <>
           <OptionBoxHeading>{`${numberSeparator(monthlyCost)} ${t(
@@ -83,9 +62,9 @@ const Loan = ({ id, branch, financialOption, marketCode }: LoanProps) => {
 
           <OptionBoxContent>
             <p>
-              {financialOption.loanAmount && duration
+              {loanAmount && duration
                 ? t('item.financialOptions.payInInstallmentsDetailed', {
-                    amount: `${numberSeparator(financialOption.loanAmount)} kr`,
+                    amount: `${numberSeparator(loanAmount)} kr`,
                     duration,
                   })
                 : t('item.financialOptions.payInInstallments')}
