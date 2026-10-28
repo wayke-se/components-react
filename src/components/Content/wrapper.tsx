@@ -22,11 +22,11 @@ export const Wrapper = styled.div<WrapperProps>`
     margin-top: ${size(4)};
     margin-bottom: ${size(1)};
 
-    :first-child {
+    &:first-child {
       margin-top: 0;
     }
 
-    :last-child {
+    &:last-child {
       margin-bottom: 0;
     }
 
@@ -39,11 +39,11 @@ export const Wrapper = styled.div<WrapperProps>`
   p {
     margin: ${size(2)} 0;
 
-    :first-child {
+    &:first-child {
       margin-top: 0;
     }
 
-    :last-child {
+    &:last-child {
       margin-bottom: 0;
     }
   }

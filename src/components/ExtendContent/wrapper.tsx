@@ -28,7 +28,7 @@ export const Extend = styled.div<ExtendProps>`
     css`
       max-height: none;
 
-      :after {
+      &::after {
         content: none;
       }
     `}

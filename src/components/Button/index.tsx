@@ -70,7 +70,7 @@ const ButtonBase = styled(ButtonReset)<ButtonResetProps>`
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }
@@ -153,7 +153,7 @@ export const ButtonClear = styled(ButtonReset).attrs(() => ({
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }

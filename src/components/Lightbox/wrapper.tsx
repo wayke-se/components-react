@@ -83,7 +83,7 @@ export const CloseBtn = styled(ButtonReset)`
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }

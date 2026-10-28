@@ -63,7 +63,7 @@ export const InfoBtn = styled(ButtonReset).attrs(() => ({
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }

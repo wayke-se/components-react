@@ -38,7 +38,7 @@ export const Image = styled.div`
   }
 
   ${Wrapper}:hover & {
-    :before {
+    &::before {
       opacity: 1;
     }
   }
