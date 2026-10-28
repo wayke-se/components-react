@@ -17,6 +17,24 @@ Add this where the vehicles should be shown, for example in an HTML block in you
 </script>
 ```
 
+<details>
+<summary>The same snippet for Wayke's test environment</summary>
+
+For a staging site or `localhost`, registered in Wayke's test environment. It shows test vehicles, and leads and orders go to test. See [Environments](#environments).
+
+```html
+<div id="wayke"></div>
+<script type="module">
+  import { mount } from 'https://cdn.wayke.se/public-assets/wayke-components-react/6.0.0/index.js';
+
+  mount('#wayke', {
+    provider: { environment: 'test' },
+  });
+</script>
+```
+
+</details>
+
 Two things to know:
 
 * **Your domain has to be registered with Wayke.** Wayke shows the vehicles that belong to your site, and recognizes the site by its domain. Until the domain is registered, the search loads but shows no vehicles. Ask your contact at Wayke to register it, and see [Environments](#environments) for development.
@@ -63,9 +81,7 @@ There are two ways to load the script. They show the same thing and take the sam
 <script type="module" src="https://cdn.wayke.se/public-assets/wayke-components-react/6.0.0/index.js"></script>
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    WaykeComponents.mount('#wayke', {
-      provider: { ecomSettings: {} },
-    });
+    WaykeComponents.mount('#wayke');
   });
 </script>
 ```
@@ -101,29 +117,26 @@ To not load the stylesheet at all, add `disablecssinjection` to the script tag i
 
 ### React
 
-Install the package and its peer dependencies. Install `@wayke-se/ecom-web` too if you use buy online (`ecomSettings`), since the package does not include its stylesheet.
+Install the package and its peer dependencies, and import its stylesheet once. The stylesheet covers everything, buy online included, and the code for buy online is only loaded when a buyer opens it. No bundler setup is needed.
 
 ```bash
 npm install @wayke-se/components-react react react-dom styled-components
-npm install @wayke-se/ecom-web
 ```
 
 ```tsx
 import React from 'react';
 import WaykeComposite, { type WaykeProviderSettings } from '@wayke-se/components-react';
-import '@wayke-se/components-react/dist/assets/default.css';
-import '@wayke-se/ecom-web/dist/index.css'; // Only with ecomSettings
+import '@wayke-se/components-react/style.css';
 
-const ProviderSettings: WaykeProviderSettings = {
-  ecomSettings: {},
-};
+// All settings are optional, see WaykeProviderSettings.
+const ProviderSettings: WaykeProviderSettings = {};
 
 const App = () => <WaykeComposite provider={ProviderSettings} />;
 ```
 
 The React examples further down use this `ProviderSettings`.
 
-With `ecomSettings`, your bundler has to replace `process.env`, since the bundled buy online code reads `process.env.WAYKE_ECOM_API_ADDRESS`. With esbuild: `--define:process.env='{"NODE_ENV":"production"}'`. With Vite: `define: { 'process.env': {} }`.
+The package is ESM only, with `@wayke-se/components-react` and `@wayke-se/components-react/style.css` as its entry points.
 
 ### Without React
 
@@ -131,7 +144,6 @@ The components can be added to any element on any website. React is then bundled
 
 ```bash
 npm install @wayke-se/components-react react react-dom styled-components
-npm install @wayke-se/ecom-web # Only with ecomSettings
 ```
 
 ```html
@@ -143,17 +155,12 @@ npm install @wayke-se/ecom-web # Only with ecomSettings
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import WaykeComposite from '@wayke-se/components-react';
-import '@wayke-se/components-react/dist/assets/default.css';
-import '@wayke-se/ecom-web/dist/index.css'; // Only with ecomSettings
+import '@wayke-se/components-react/style.css';
 
-createRoot(document.getElementById('wayke')).render(
-  createElement(WaykeComposite, {
-    provider: { ecomSettings: {} },
-  })
-);
+createRoot(document.getElementById('wayke')).render(createElement(WaykeComposite));
 ```
 
-`createElement` is used instead of JSX, so no JSX setup is needed. With `ecomSettings`, set up `process.env` in your bundler as described under [React](#react).
+`createElement` is used instead of JSX, so no JSX setup is needed.
 
 ## Environments
 
@@ -233,7 +240,7 @@ Only change the values in the color rules. Adding or removing properties there c
 
 ### Buy online colors
 
-Buy online (ecom) has its own styles, scoped under `.waykeecom-root` and built on CSS custom properties. To change its colors, override them in a stylesheet that is loaded after the ecom stylesheet. On the CDN, that is any stylesheet on your page.
+Buy online (ecom) has its own styles, scoped under `.waykeecom-root` and built on CSS custom properties. To change its colors, override them in a stylesheet that is loaded after `@wayke-se/components-react/style.css`. On the CDN, that is any stylesheet on your page.
 
 ```css
 .waykeecom-root {
@@ -265,7 +272,7 @@ composite: {
 
 | type          | Button                | Default style | Shown when                                         |
 |---------------|-----------------------|---------------|----------------------------------------------------|
-| `ecom`        | Buy online            | primary       | `ecomSettings` is set and the dealer sells the vehicle online |
+| `ecom`        | Buy online            | primary       | The dealer sells the vehicle online, unless `ecom.enabled` is `false` |
 | `leadMessage` | Send message (form)   | primary       | Always                                             |
 | `leadCallMe`  | Get a callback (form) | primary       | Always                                             |
 | `email`       | Show email address    | secondary     | The branch or contact has an email address         |
@@ -522,7 +529,7 @@ The data types below describe the payloads. In TypeScript they are exported with
 | currentStep | EcomStep \| undefined |
 | data        | any \| undefined      |
 
-`EcomView`, `EcomEvent` and `EcomStep` are exported from `@wayke-se/ecom-web`.
+`EcomView`, `EcomEvent` and `EcomStep` are string enums from `@wayke-se/ecom-web`, which is installed with the package. Compare with their values, such as `data.view === 'SUMMARY'`, so buy online is not loaded with your own code.
 
 #### SearchData
 | Property | Type   |
@@ -596,7 +603,7 @@ All settings are optional.
 | environment      | `'production' \| 'test'`              | Which Wayke environment to use, see [Environments](#environments). Default `'production'`. |
 | marketCode       | `'SE' \| 'NO'`                        | Language and market, see [Language](#language). Default `'SE'`. |
 | routing          | [RoutingSettings](#routingsettings)   | How vehicles are opened, see [Routing](#routing). |
-| ecomSettings     | [EcomSettings](#ecomsettings)         | Turns on buy online. `{}` is enough. |
+| ecom             | [EcomSettings](#ecomsettings)         | Buy online. On by default for the vehicles the dealer sells online. |
 | apiKey           | string                                | Identifies the site instead of its domain. Sent as `x-api-key`. |
 | branchGroupId    | string                                | Limits the vehicles to a group of branches. By default the domain or `apiKey` decides which vehicles are shown. |
 | googleMapsApiKey | string                                | A Google Maps Static API key. With it, the map button on the vehicle page shows a map. Without it, the button opens Google Maps. |
@@ -616,8 +623,9 @@ All settings are optional.
 
 | Property           | Type    | Description |
 |--------------------|---------|-------------|
+| enabled            | boolean | `false` hides buy online on your site, for example when you sell online in another way. Default `true`. |
 | url                | string  | Replaces the ecom API of `environment`. |
-| serviceLogotypeUrl | string  | Url to the logo shown in buy online, as an image file (not a `data:` url). The logo of the make is used by default. |
+| serviceLogotypeUrl | string  | Url to the logo at the top of buy online, as an image file (not a `data:` url). Wayke's logo by default. |
 | bankIdThumbprint   | string  | A custom BankID certificate thumbprint. |
 
 See [wayke-ecom-web](https://github.com/wayke-se/wayke-ecom-web) for more about buy online.
@@ -633,13 +641,13 @@ By default the list is `manufacturer`, `modelSeries`, `fuelType`, `gearboxType`,
 
 ## Migrating from 5.x to 6.0
 
-6.0 gets the vehicles from Wayke's public API (`public-api.wayke.com`) instead of `api.wayke.se` and `gql.wayke.se`, and has fewer settings: most sites only set what is different from the defaults. Leads and buy online work as before.
+6.0 gets the vehicles from Wayke's public API (`public-api.wayke.com`) instead of `api.wayke.se` and `gql.wayke.se`, and has fewer settings: most sites only set what is different from the defaults. Leads and buy online work as before, but buy online is now on by default.
 
-The old filter names, url parameters and vehicle ids keep working, with a warning in the console, so a site that only changes its settings keeps its links and saved searches.
+The old filter names, url parameters and vehicle ids keep working, with a warning in the console, so a site that only changes its settings keeps its links and saved searches. A removed setting also gives a warning, naming what replaces it.
 
 ### 1. Provider settings
 
-Remove the API urls. Production is the default; set `environment: 'test'` for test.
+Remove the API urls and `ecomSettings`. Production is the default; set `environment: 'test'` for test.
 
 ```javascript
 // 5.x
@@ -650,16 +658,16 @@ provider: {
   ecomSettings: { url: 'https://ecom.wayke.se' },
 },
 
-// 6.0
-provider: {
-  ecomSettings: {},
-},
+// 6.0: nothing to set
 ```
 
 | 5.x | 6.0 |
 |-----|-----|
 | `url`, `graphQlUrl`, `urlMlt` | Removed. Use `environment` (`publicApiUrl` and `leadUrl` replace single urls if you need to) |
-| `ecomSettings.url` | Optional, follows `environment` |
+| `ecomSettings` set: buy online on | `ecom` (optional): buy online is on by default for the vehicles the dealer sells online |
+| No `ecomSettings`: buy online off | `ecom: { enabled: false }` |
+| `ecomSettings.url` | `ecom.url`, optional, follows `environment` |
+| `ecomSettings.serviceLogotypeUrl`, `ecomSettings.bankIdThumbprint` | `ecom.serviceLogotypeUrl`, `ecom.bankIdThumbprint` |
 | `ecomSettings.useBankId`, `ecomSettings.displayBankIdAlert` | Removed, no effect since 3.0.0 |
 | `useQueryParamsFromUrl` | `routing.syncUrl` |
 | `pathRoute` (provider and composite) | `routing: { mode: 'path', basePath }` |
@@ -667,7 +675,19 @@ provider: {
 | `apiKey` | Unchanged; now also identifies the site to the vehicle API |
 | `WaykeItemProvider`, `WaykeItemProviderSettings` | `WaykeProvider`, `WaykeProviderSettings` |
 
-### 2. Routing and clicks
+### 2. Install and stylesheet (React and bundlers)
+
+The CDN needs no change other than the version in the url.
+
+| 5.x | 6.0 |
+|-----|-----|
+| `import '@wayke-se/components-react/dist/assets/default.css'` | `import '@wayke-se/components-react/style.css'`, which also covers buy online |
+| `import '@wayke-se/ecom-web/dist/index.css'` | Remove; it is in `style.css` |
+| `npm install @wayke-se/ecom-web` | Not needed; `npm uninstall @wayke-se/ecom-web` unless you use it yourself |
+| `define` for `process.env` in the bundler, for buy online | Not needed |
+| Imports from `@wayke-se/components-react/dist/...` | Only `@wayke-se/components-react` and `@wayke-se/components-react/style.css` can be imported; the package is ESM only |
+
+### 3. Routing and clicks
 
 | 5.x | 6.0 |
 |-----|-----|
@@ -676,7 +696,7 @@ provider: {
 | `WaykeSearch` alone without `hashRoute` or `pathRoute`: plain cards | Set `routing: { mode: 'none' }`; the default is now hash links |
 | `onClickSearchItem` (search and item) | Removed; subscribe to the `ItemClicked` event |
 
-### 3. Filters and parameters
+### 4. Filters and parameters
 
 `filterList`, `initialQueryParams`, the `onFilterUpdate` action and the url take the names in [Search parameters](#search-parameters). The old names are translated:
 
@@ -695,7 +715,7 @@ provider: {
 
 The search field now suggests makes and models. A free text that is exactly a make or model, such as "audi", filters on it.
 
-### 4. Events
+### 5. Events
 
 The event names and data are the same. What changes:
 
@@ -703,7 +723,7 @@ The event names and data are the same. What changes:
 * `filter` in `FilterApply` is the new filter name, for example `colorName` instead of `color`.
 * `id` is the vehicle's id in the public API. New vehicles have new ids; older ones mostly keep theirs.
 
-### 5. Removed
+### 6. Removed
 
 * Central storage (switching to another branch on the vehicle page).
 * The campaign filter. Dealer packages are still shown on the vehicle page.

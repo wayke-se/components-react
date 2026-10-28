@@ -84,7 +84,7 @@ const ItemView = ({
 }: ItemViewProps) => {
   const { ecom: ecomSettings, marketCode } = useSettings();
   const { searchHref } = useRouter();
-  const ecomContext = useEcom(ad, ecomSettings);
+  const ecomContext = useEcom(ad, ecomSettings, marketCode);
   // The buy button below the gallery follows the same conversion options as the sidebar.
   const ecomOption = (conversionOptions ?? defaultConversionOptions).find(
     (option) => option.type === 'ecom'

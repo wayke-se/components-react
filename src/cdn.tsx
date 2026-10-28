@@ -1,7 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import '../assets/default.css';
-import '@wayke-se/ecom-web/dist/index.css';
+import './style.css';
 
 import WaykeSearch, { WaykeSearchProps } from './layouts/search';
 import WaykeSearchItem, { WaykeSearchItemProps } from './layouts/searchItem';

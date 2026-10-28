@@ -2,52 +2,41 @@
 import { execSync } from 'node:child_process';
 import { existsSync, writeFileSync } from 'node:fs';
 import * as esbuild from 'esbuild';
-import { copy } from 'esbuild-plugin-copy';
 import packageJson from '../package.json' with { type: 'json' };
+import Common from './common.js';
 
-const Shared = {
-  entryPoints: ['src/index.ts'],
-  bundle: true,
+// ESM build for bundlers. The dependencies stay external, except buy online: ecom-web and
+// its SDK are bundled into a chunk of their own, loaded when a buyer starts it, so a site
+// needs no setup for them.
+await esbuild.build({
+  ...Common,
+  entryPoints: { index: 'src/index.ts' },
+  outdir: 'dist',
+  chunkNames: 'chunks/[name]-[hash]',
+  format: 'esm',
+  splitting: true,
   minify: true,
   sourcemap: true,
   logLevel: 'info',
-  external: Object.keys(packageJson.dependencies || {}).concat(
-    Object.keys(packageJson.peerDependencies || {})
-  ),
-  loader: {
-    '.js': 'jsx',
-    '.woff': 'file',
-    '.woff2': 'file',
-    '.gif': 'file',
-    '.svg': 'dataurl',
-    '.png': 'dataurl',
+  external: Object.keys(packageJson.dependencies || {})
+    .concat(Object.keys(packageJson.peerDependencies || {}))
+    .filter((name) => name !== '@wayke-se/ecom-web'),
+  define: {
+    // Read by the bundled ecom SDK and postcss (via sanitize-html); a browser has no `process`.
+    'process.env.WAYKE_ECOM_API_ADDRESS': 'undefined',
+    'process.env.LANG': 'undefined',
   },
-};
-
-const ctx = esbuild.build({
-  ...Shared,
-  outfile: 'dist/index.js',
-  plugins: [
-    copy({
-      resolveFrom: 'cwd',
-      assets: {
-        from: ['./assets/**/*'],
-        to: ['./dist/assets'],
-      },
-      watch: true,
-    }),
-  ],
 });
 
-await ctx;
-
-const ctxEsm = esbuild.build({
-  ...Shared,
-  outfile: 'dist/index.mjs',
-  format: 'esm',
+// The one stylesheet: the components and buy online, with their fonts.
+await esbuild.build({
+  ...Common,
+  entryPoints: { style: 'src/style.css' },
+  outdir: 'dist',
+  assetNames: 'assets/[name]-[hash]',
+  minify: true,
+  logLevel: 'info',
 });
-
-await ctxEsm;
 
 const timetaken = '⚡ Generating types done in';
 console.time(timetaken);
