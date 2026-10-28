@@ -1,135 +1,112 @@
-import React, { Children, cloneElement, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Range, Root, Thumb, Track } from '../RangeSlider/wrapper';
+import ResponsiveImage from '../ResponsiveImage';
+import { Badge, Figure, SliderBar, SliderValue, VisuallyHidden } from './wrapper';
 
-const calculateCurrentFrame = (startFrame: number, delta: number, length: number): number => {
-  const frame = (startFrame + delta) % length;
-  if (frame < 0) {
-    return frame + length;
-  }
+type ImgProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
-  return frame;
-};
+interface RotationProps {
+  urls: string[];
+  /** The styled <img> of the surrounding gallery or lightbox. */
+  img: React.ElementType<ImgProps>;
+  widths: number[];
+  sizes: string;
+}
 
-type PropsType = {
-  children: React.ReactNode;
-};
+const wrap = (value: number, length: number) => ((value % length) + length) % length;
 
-type RotationEvent = any;
+/**
+ * A 360 image: drag, the arrow keys or the slider turn the car, as web-ui-v2's
+ * 360 viewer does. The slider spans two turns and starts in the middle, so it
+ * can be pulled either way; a drag across the whole image is one turn. Every
+ * frame loads at once, so turning never waits for an image.
+ */
+const Rotation = ({ urls, img, widths, sizes }: RotationProps) => {
+  const { t } = useTranslation();
+  const count = urls.length;
+  const [position, setPosition] = useState(count);
+  const frame = position % count;
+  const drag = useRef<{ x: number; position: number; width: number } | undefined>(undefined);
+  const label = (i: number) => t('item.threeSixty.frame', { frame: i + 1, total: count });
 
-const Rotation = ({ children }: PropsType) => {
-  const startFrame = useRef(0);
-  const pointerPosition = useRef<number | undefined>(undefined);
-  const max = useRef(0);
+  const onPointerDown = (e: React.PointerEvent<HTMLElement>) => {
+    if ((e.target as HTMLElement).closest('[data-rotate-slider]')) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    drag.current = { x: e.clientX, position, width: e.currentTarget.offsetWidth || 1 };
+  };
 
-  const [state, setState] = useState({
-    current: 0,
-    outsideMouseMove: false,
-  });
+  const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    const start = drag.current;
+    if (!start) return;
+    const delta = Math.round(((e.clientX - start.x) / start.width) * count);
+    setPosition(wrap(start.position + delta, count * 2));
+  };
 
-  useEffect(() => {
-    document.addEventListener('mouseup', touchEnd);
+  // The release can come at a new position without a move before it.
+  const onPointerUp = (e: React.PointerEvent<HTMLElement>) => {
+    onPointerMove(e);
+    drag.current = undefined;
+  };
 
-    return () => {
-      window.document.removeEventListener('mouseup', touchEnd);
-      window.document.body.removeEventListener('mousemove', mouseMove);
-      window.document.body.removeEventListener('mouseup', mouseUp);
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    const next: Record<string, number> = {
+      ArrowLeft: position - 1,
+      ArrowRight: position + 1,
+      Home: 0,
+      End: count * 2 - 1,
     };
-  }, []);
-
-  const touchMove = (event: RotationEvent) => {
-    const notTouched = typeof pointerPosition.current !== 'number';
-    event.preventDefault();
-    if (notTouched) {
-      return;
+    if (e.key in next) {
+      e.preventDefault();
+      setPosition(wrap(next[e.key], count * 2));
     }
-
-    const childCount = Children.count(children);
-
-    const { offsetWidth } = event.currentTarget;
-    const pointer = calculatePointerPosition(event);
-    const max = offsetWidth;
-    const offset = pointer - (pointerPosition.current || 0);
-    const delta = Math.floor((offset / max) * childCount);
-    setCurrentFrame(calculateCurrentFrame(startFrame.current, delta, childCount));
-  };
-
-  const mouseMove = (event: RotationEvent) => {
-    const notTouched = typeof pointerPosition.current !== 'number';
-    event.preventDefault();
-    if (notTouched || !state.outsideMouseMove) return;
-
-    const childCount = Children.count(children);
-
-    const pointer = calculatePointerPosition(event);
-    const offset = pointer - (pointerPosition.current || 0);
-    const delta = Math.floor((offset / max.current) * childCount);
-    setCurrentFrame(calculateCurrentFrame(startFrame.current, delta, childCount));
-  };
-
-  const mouseUp = () => {
-    window.document.body.removeEventListener('mousemove', mouseMove);
-    window.document.body.removeEventListener('mouseup', mouseUp);
-
-    pointerPosition.current = undefined;
-    startFrame.current = 0;
-  };
-
-  const touchStart = (event: RotationEvent) => {
-    event.preventDefault();
-    pointerPosition.current = calculatePointerPosition(event);
-    startFrame.current = state.current;
-
-    const { offsetWidth } = event.currentTarget;
-    max.current = offsetWidth;
-
-    window.document.body.addEventListener('mousemove', mouseMove);
-    window.document.body.addEventListener('mouseup', mouseUp);
-  };
-
-  const touchEnd = (event: RotationEvent) => {
-    event.preventDefault();
-    pointerPosition.current = undefined;
-    startFrame.current = 0;
-  };
-
-  const onMouseEnter = () => {
-    if (state.outsideMouseMove) setState({ ...state, outsideMouseMove: false });
-  };
-
-  const onMouseLeave = () => {
-    if (!state.outsideMouseMove) setState({ ...state, outsideMouseMove: true });
-  };
-
-  const setCurrentFrame = (current: number) => {
-    if (current !== state.current) {
-      setState({ ...state, current });
-    }
-  };
-
-  const calculatePointerPosition = (event: RotationEvent): number => {
-    const { clientX } = event.type.indexOf('touch') === 0 ? event.changedTouches[0] : event;
-    const { offsetLeft } = event.currentTarget;
-    return clientX - offsetLeft;
   };
 
   return (
-    <div
-      onTouchStart={touchStart}
-      onTouchMove={touchMove}
-      onTouchEnd={touchEnd}
-      onMouseDown={touchStart}
-      onMouseMove={touchMove}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+    <Figure
+      tabIndex={0}
+      aria-label={t('item.threeSixty.viewer')}
+      aria-roledescription="360"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => {
+        drag.current = undefined;
+      }}
+      onKeyDown={onKeyDown}
+      onClick={(e) => e.stopPropagation()}
     >
-      {Children.map(children, (child, i) =>
-        cloneElement(child as React.ReactElement<{ style?: React.CSSProperties }>, {
-          style: {
-            width: '100%',
-            display: state.current === i ? 'block' : 'none',
-          },
-        })
-      )}
-    </div>
+      <VisuallyHidden>{t('item.threeSixty.description')}</VisuallyHidden>
+      <VisuallyHidden aria-live="polite">{label(frame)}</VisuallyHidden>
+      <Badge aria-hidden>{t('item.threeSixty.badge')}</Badge>
+      {urls.map((url, i) => (
+        <ResponsiveImage
+          key={url}
+          img={img}
+          src={url}
+          widths={widths}
+          sizes={sizes}
+          alt={label(i)}
+          draggable={false}
+          style={{ display: i === frame ? 'block' : 'none' }}
+        />
+      ))}
+      <SliderBar data-rotate-slider>
+        <Root
+          min={0}
+          max={count * 2 - 1}
+          step={1}
+          value={[position]}
+          onValueChange={([next]) => setPosition(next)}
+        >
+          <Track>
+            <Range />
+          </Track>
+          <Thumb aria-label={t('item.threeSixty.rotate')} aria-valuetext={label(frame)} />
+        </Root>
+        <SliderValue aria-hidden>{label(frame)}</SliderValue>
+      </SliderBar>
+    </Figure>
   );
 };
 

@@ -11,9 +11,8 @@ export const Wrapper = styled.div<{ $started?: boolean }>`
   ${(p) =>
     p.$started
       ? `
-        width: 100%;
-        max-width: 1200px;
-        max-height: calc(100vh - ${size(6)});
+        // As large as the lightbox's images: the full width, or 3:2 of the screen's height.
+        width: min(100%, calc((100vh - ${size(6)}) * 1.5));
         margin: 0 auto;
       `
       : `

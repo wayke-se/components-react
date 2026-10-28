@@ -1,35 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import MediaButton from '../Gallery/MediaButton';
-import { Img, Item } from '../Lightbox/wrapper';
+import React from 'react';
+import { Img } from '../Lightbox/wrapper';
 import Rotation from './Rotation';
+
+// As the lightbox's own images.
+const WIDTHS = [750, 1080, 1200, 1920];
+const SIZES = '(min-aspect-ratio: 3/2) 150vh, 100vw';
 
 type PropsType = {
   urls: string[];
 };
 
-const ThreeSixtyLightbox = ({ urls }: PropsType) => {
-  const { t } = useTranslation();
-  const [started, setStarted] = useState(false);
-
-  const onStart = useCallback(() => setStarted(true), []);
-
-  if (!started) {
-    return (
-      <Item>
-        <Img src={urls[0]} alt="alt" />
-        <MediaButton text={t('item.start360Exterior')} onClick={onStart} />
-      </Item>
-    );
-  }
-
-  return (
-    <Rotation>
-      {urls.map((image, i) => (
-        <Img key={image} src={image} alt={t('common.imageIndex', { index: i + 1 }) || ''} />
-      ))}
-    </Rotation>
-  );
-};
+/** A 360 image in the lightbox, ready to turn. */
+const ThreeSixtyLightbox = ({ urls }: PropsType) => (
+  <Rotation urls={urls} img={Img} widths={WIDTHS} sizes={SIZES} />
+);
 
 export default ThreeSixtyLightbox;

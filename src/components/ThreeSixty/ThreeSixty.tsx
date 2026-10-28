@@ -1,54 +1,38 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import MediaButton from '../Gallery/MediaButton';
 import { Image } from '../Gallery/wrapper';
-import Rotation from './Rotation';
+import ResponsiveImage from '../ResponsiveImage';
+import { Badge } from './wrapper';
 
-const onMediaClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, func: () => void) => {
-  e.stopPropagation();
-  e.preventDefault();
-  func();
-};
+// As the gallery's own images.
+const WIDTHS = [375, 600, 750, 1000, 1200];
+const SIZES = '(min-width: 1200px) 800px, (min-width: 768px) calc(100vw - 180px), 95vw';
 
 type PropsType = {
   urls: string[];
-  navigationDisabled: boolean;
-  visible: boolean;
-  onDisableNavigation: () => void;
 };
 
-const ThreeSixty = ({ urls, visible, onDisableNavigation, navigationDisabled }: PropsType) => {
+/**
+ * A 360 image in the gallery: its first frame, marked as 360. A click opens the
+ * lightbox, where it turns at once, as on wayke.se; turning it here would take
+ * the swipe away from the gallery.
+ */
+const ThreeSixty = ({ urls }: PropsType) => {
   const { t } = useTranslation();
-  if (!visible || (!navigationDisabled && visible)) {
-    return (
-      <>
-        <Image src={urls[0]} alt="alt" />
-        <MediaButton
-          text={t('item.start360Exterior')}
-          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void =>
-            onMediaClick(e, onDisableNavigation)
-          }
-        />
-      </>
-    );
-  }
-  if (navigationDisabled && visible) {
-    return (
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
-      >
-        <Rotation>
-          {urls.map((image, i) => (
-            <Image key={image} src={image} alt={t('common.imageIndex', { index: i + 1 }) || ''} />
-          ))}
-        </Rotation>
-      </div>
-    );
-  }
-  return null;
+  return (
+    <>
+      <Badge>{t('item.threeSixty.badge')}</Badge>
+      <ResponsiveImage
+        img={Image}
+        src={urls[0]}
+        widths={WIDTHS}
+        sizes={SIZES}
+        alt={t('item.threeSixty.badge')}
+        loading="lazy"
+        draggable={false}
+      />
+    </>
+  );
 };
 
 export default ThreeSixty;
