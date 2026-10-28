@@ -82,3 +82,30 @@ export const selectedCount = (key: string, params: URLSearchParams) =>
       ? 1
       : 0
     : params.getAll(key).length;
+
+const averageDelta = (values: number[]) =>
+  values.length > 1 ? (values[values.length - 1] - values[0]) / (values.length - 1) : 0;
+
+/**
+ * Even steps of 1000 or 500 for wide ranges, else the bucket values themselves.
+ * A single bucket, such as one car with business leasing, gets a range from 0
+ * so the filter still shows, as in 5.x; a single model year has nothing to pick.
+ */
+const toSteps = (values: number[], fromZero: boolean) => {
+  if (values.length === 1 && fromZero && values[0] > 0) {
+    return toSteps([0, values[0]], false);
+  }
+  const delta = averageDelta(values);
+  const max = values[values.length - 1];
+  // Math.ceil: uneven buckets would otherwise give a fractional array length.
+  if (delta > 1000) return new Array(Math.ceil(max / 1000) + 1).fill(0).map((_, i) => i * 1000);
+  if (delta >= 500) return new Array(Math.ceil(max / 500) + 1).fill(0).map((_, i) => i * 500);
+  return values;
+};
+
+/** The steps of a range filter's slider; fewer than two means there is nothing to pick. */
+export const rangeSteps = (
+  key: RangeFilter,
+  unfiltered: AdsResult | undefined,
+  market: MarketCode
+): number[] => toSteps(rangeValues(key, unfiltered, market), key !== 'modelYear');

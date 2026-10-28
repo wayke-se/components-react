@@ -97,6 +97,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   hint: 'Vad bilen ska tankas med och drivs av.',
                 },
                 enginePower: { displayName: 'Effekt', unit: 'hk' },
+                color: { displayName: 'Färg' },
+                chassis: { displayName: 'Kaross' },
+                segment: { displayName: 'Segment' },
+                annualTax: { displayName: 'Årlig fordonsskatt' },
                 numberOfDoors: { displayName: 'Dörrar' },
               },
               odometer: {
@@ -429,6 +433,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   hint: 'Hva bilen skal tankes med og drives av.',
                 },
                 enginePower: { displayName: 'Effekt', unit: 'hk' },
+                color: { displayName: 'Farge' },
+                chassis: { displayName: 'Karosseri' },
+                segment: { displayName: 'Segment' },
+                annualTax: { displayName: 'Årsavgift' },
                 numberOfDoors: { displayName: 'Dører' },
               },
               odometer: {
@@ -762,6 +770,10 @@ export const initializeI18n = (marketCode: MarketCode = 'SE') => {
                   hint: 'What the car should be fueled with and powered by.',
                 },
                 enginePower: { displayName: 'Power', unit: 'hp' },
+                color: { displayName: 'Color' },
+                chassis: { displayName: 'Body style' },
+                segment: { displayName: 'Segment' },
+                annualTax: { displayName: 'Annual tax' },
                 numberOfDoors: { displayName: 'Doors' },
               },
               odometer: {

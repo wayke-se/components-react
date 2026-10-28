@@ -17,7 +17,7 @@ interface RelatedProps {
   displayBranchName?: boolean;
 }
 
-/** The latest cars of the same make. */
+/** The latest cars of the same make, then of other makes. */
 const Related = ({ adId, manufacturer, placeholderImage, displayBranchName }: RelatedProps) => {
   const { t } = useTranslation();
   const { publicApi } = useSettings();

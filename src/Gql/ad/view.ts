@@ -66,11 +66,17 @@ export interface ContactPerson {
   avatar?: string;
 }
 
-/** The person to contact about the ad: the assigned salesperson, else the branch's default. */
+/**
+ * The person to contact about the ad: the assigned salesperson or the ad's own
+ * contact (Editorial), else the branch's default.
+ */
 export const contactPerson = (ad: Ad): ContactPerson | undefined => {
   const c = ad.contactOption;
   if (c.__typename === 'AssignedUser' || c.__typename === 'AdDefaultContactOptions') {
     return { name: str(c.displayName), email: str(c.email), phone: str(c.telephone) };
+  }
+  if (c.__typename === 'Editorial') {
+    return { name: str(c.displayName), email: str(c.email), phone: str(c.phone) };
   }
   const d = ad.branch.adDefaultContactOptions;
   if (d && (d.email || d.telephone)) {

@@ -1,0 +1,28 @@
+/*
+ * Defaults for the theme classes, so that buttons, slider handles and selected
+ * states are visible on a site that has not set its colors and fonts yet.
+ * :where() gives them no specificity: a site's own .wayke__theme rules always
+ * win, wherever its stylesheet is loaded.
+ */
+:where(.wayke__theme.wayke__color--primary-bg) {
+  background-color: #222;
+  color: #fff;
+}
+
+:where(.wayke__theme.wayke__color--primary-text) {
+  color: #222;
+}
+
+:where(.wayke__theme.wayke__color--secondary-bg) {
+  background-color: #ebebeb;
+  color: #222;
+}
+
+:where(.wayke__theme.wayke__color--accent-bg) {
+  background-color: #f8f8f8;
+  color: #000;
+}
+
+:where(.wayke__theme.wayke__font--bold) {
+  font-weight: 700;
+}

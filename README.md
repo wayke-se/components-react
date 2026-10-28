@@ -197,7 +197,7 @@ All settings are listed in the [Reference](#reference).
 
 ### Colors and fonts
 
-The components have no font of their own and inherit the font of your page. Copy this CSS to your site and change the values:
+The components have no font of their own and inherit the font of your page. Until you set colors, they use dark gray buttons and highlights, so that everything is visible. Copy this CSS to your site and change the values:
 
 ```css
 /* Primary color, on buttons and other highlighted elements. Set a text color that is readable on it. */
@@ -229,14 +229,14 @@ The components have no font of their own and inherit the font of your page. Copy
   font-weight: 300;
 }
 
-/* Headings and other bold text. Without a font-weight here, headings are not bold. */
+/* Headings and other bold text. Bold (700) by default. */
 .wayke__theme.wayke__font--bold {
   font-family: sans-serif;
   font-weight: 700;
 }
 ```
 
-Only change the values in the color rules. Adding or removing properties there can break the layout. The font rules can take more properties, such as `letter-spacing`, but check the result before you go live.
+Your rules win over the defaults wherever your stylesheet is loaded. Only change the values in the color rules. Adding or removing properties there can break the layout. The font rules can take more properties, such as `letter-spacing`, but check the result before you go live.
 
 ### Buy online colors
 
