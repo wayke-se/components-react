@@ -3,6 +3,15 @@
 // Identical queries are deduplicated and cached for the page's lifetime, so going
 // back and forth between the list and an ad does not cost another request.
 
+import packageJson from '../../package.json';
+
+/**
+ * Tells the API which client and version a request comes from. Kong sets
+ * x-graphql-client-name to the site's key (its domain), but passes this header on,
+ * so Hive and the gateway's traces show which sites run which version.
+ */
+const CLIENT_VERSION = `components-react@${packageJson.version}`;
+
 export interface PublicApiConfig {
   url: string;
   apiKey?: string;
@@ -38,6 +47,7 @@ const request = async <T>(
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': resolveApiKey(config),
+        'x-graphql-client-version': CLIENT_VERSION,
       },
       body: JSON.stringify({ query, variables }),
     });
