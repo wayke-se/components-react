@@ -4,7 +4,7 @@ import WaykeProvider, { WaykeProviderProps } from '../providers/WaykeProvider';
 import WaykeComposite, { WaykeCompositeProps } from './WaykeComposite';
 
 export interface WaykeCompositeWithProviderProps {
-  provider: WaykeProviderProps;
+  provider?: WaykeProviderProps;
   composite?: WaykeCompositeProps;
 }
 

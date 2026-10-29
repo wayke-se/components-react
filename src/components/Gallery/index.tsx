@@ -1,20 +1,14 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import SliderComponent from 'react-slick';
-import scrollIntoView from 'scroll-into-view-if-needed';
-
-const Slider: typeof SliderComponent = (
-  SliderComponent as unknown as { default: typeof SliderComponent }
-).default;
-
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, Maybe, Media } from '../../@types/codegen/types';
+import { adEvent, GalleryMedia } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
 import { DEFAULT_PLACEHOLDER_IMAGE } from '../../utils/constants';
-import { notEmpty } from '../../utils/formats';
+import { imageUrl } from '../../utils/image';
 import PubSub from '../../utils/pubsub/pubsub';
-import { ButtonContent, ButtonSecondary } from '../Button';
 import { IconChevronLeft, IconChevronRight } from '../Icon';
 import Lightbox from '../Lightbox';
 import { NavButton } from '../NavButton';
+import ResponsiveImage from '../ResponsiveImage';
 import Sphere from '../Sphere/Sphere';
 import ThreeSixty from '../ThreeSixty/ThreeSixty';
 import EmbededVideo from '../Video/EmbededVideo';
@@ -23,7 +17,6 @@ import {
   Alt,
   ArrowLeft,
   ArrowRight,
-  EnableNavigationButton,
   Image,
   Item,
   Main,
@@ -31,99 +24,40 @@ import {
   QuickNavBtn,
   QuickNavImg,
   QuickNavItem,
-  SliderWrapper,
+  Track,
   Wrapper,
 } from './wrapper';
 
+// The gallery is at most about 800 px wide, the full width less the thumbnails
+// on tablets and 95% of the screen on phones; the browser picks by pixel density.
+const GALLERY_WIDTHS = [375, 600, 750, 1000, 1200];
+const GALLERY_SIZES = '(min-width: 1200px) 800px, (min-width: 768px) calc(100vw - 180px), 95vw';
+const THUMBNAIL_WIDTHS = [96, 128, 225];
+
 interface GalleryProps {
-  id: string;
-  branch?: Maybe<Branch>;
-  media?: Media[];
+  media: GalleryMedia[];
   placeholderImage?: string;
 }
 
-const sliderSettings = {
-  dots: false,
-  arrows: false,
-  infinite: true,
-  speed: 300,
-  slidesToShow: 1,
-  slidesToScroll: 1,
+const scrollBehavior = (): ScrollBehavior =>
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+/** Scrolls the thumbnail list, and only it, so that the item is visible. */
+const revealInList = (list: HTMLElement, item: HTMLElement) => {
+  if (item.offsetTop < list.scrollTop) {
+    list.scrollTop = item.offsetTop;
+  } else if (item.offsetTop + item.offsetHeight > list.scrollTop + list.clientHeight) {
+    list.scrollTop = item.offsetTop + item.offsetHeight - list.clientHeight;
+  }
 };
 
-const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
+const Gallery = ({ media, placeholderImage }: GalleryProps) => {
   const { t } = useTranslation();
-  const slider = useRef<SliderComponent>(null);
+  const ad = useAdContext();
+  const trackRef = useRef<HTMLUListElement>(null);
   const quickNavRef = useRef<HTMLUListElement>(null);
-  const isDragging = useRef(false);
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
-  const [navigationDisabled, setNavigationDisabled] = useState(false);
-
-  const beforeChange = useCallback((_: number, newIndex: number) => {
-    const element = quickNavRef.current?.querySelectorAll('li')?.[newIndex];
-    if (element) {
-      scrollIntoView(element, { scrollMode: 'if-needed', block: 'nearest', inline: 'nearest' });
-    }
-    setIndex(newIndex);
-  }, []);
-
-  const onMouseDown = useCallback(() => {
-    if (isDragging.current) {
-      isDragging.current = false;
-    }
-  }, []);
-  const onMouseMove = useCallback(() => {
-    if (!isDragging.current) {
-      isDragging.current = true;
-    }
-  }, []);
-
-  const onClick = useCallback(() => {
-    PubSub.publish('ImagesClick', {
-      id,
-      branchId: branch?.id,
-      branchName: branch?.name,
-    });
-    if (!isDragging.current && !lightbox && !!media?.length) {
-      setLightbox(true);
-    }
-  }, [lightbox, media]);
-
-  const nextImage = useCallback((): void => {
-    if (!slider || !slider.current) {
-      return;
-    }
-    slider.current.slickNext();
-  }, [slider]);
-
-  const prevImage = useCallback((): void => {
-    if (!slider || !slider.current) {
-      return;
-    }
-    slider.current.slickPrev();
-  }, [slider]);
-
-  const goTo = (target: number) => {
-    if (!slider || !slider.current) {
-      return;
-    }
-    if (slider.current) {
-      setIndex(target);
-      slider.current.slickGoTo(target);
-    }
-  };
-
-  const onDisableNavigation = () => {
-    if (!isDragging.current) setNavigationDisabled(true);
-  };
-  const onEnableNavigation = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    isDragging.current = false;
-    setNavigationDisabled(false);
-  };
-
-  const onToggleLightbox = useCallback(() => setLightbox(!lightbox), [lightbox]);
 
   const mediaLength = media?.length || 0;
   const placeholder = useMemo(
@@ -131,65 +65,101 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
     [placeholderImage]
   );
 
+  const goTo = useCallback(
+    (target: number) => {
+      const track = trackRef.current;
+      if (!track || mediaLength === 0) return;
+      // The arrows wrap around, from the last slide to the first and back.
+      const next = (target + mediaLength) % mediaLength;
+      const slide = track.children[next] as HTMLElement | undefined;
+      if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: scrollBehavior() });
+    },
+    [mediaLength]
+  );
+
+  // The slide in view decides the index, however the track was scrolled.
+  const onScroll = useCallback(() => {
+    const track = trackRef.current;
+    const first = track?.children[0] as HTMLElement | undefined;
+    if (!track || !first?.offsetWidth) return;
+    setIndex(Math.min(mediaLength - 1, Math.round(track.scrollLeft / first.offsetWidth)));
+  }, [mediaLength]);
+
+  useEffect(() => {
+    const list = quickNavRef.current;
+    const item = list?.children[index] as HTMLElement | undefined;
+    if (list && item) revealInList(list, item);
+  }, [index]);
+
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLUListElement>) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        goTo(index + (e.key === 'ArrowLeft' ? -1 : 1));
+      }
+    },
+    [goTo, index]
+  );
+
+  const onClick = useCallback(() => {
+    PubSub.publish('ImagesClick', adEvent(ad));
+    // 360 and sphere images are turned in the lightbox, already started, as on wayke.se.
+    if (mediaLength) setLightbox(true);
+  }, [ad, mediaLength]);
+
+  const onToggleLightbox = useCallback(() => setLightbox(!lightbox), [lightbox]);
+
   return (
     <>
       <Wrapper>
         <Main>
-          <SliderWrapper onMouseDown={onMouseDown} onMouseMove={onMouseMove} onClick={onClick}>
-            <Slider
-              {...sliderSettings}
-              swipe={!navigationDisabled}
-              touchMove={!navigationDisabled}
-              swipeToSlide={!navigationDisabled}
-              ref={slider}
-              beforeChange={beforeChange}
-            >
-              {media?.length ? (
-                media.map((m, i) => (
-                  <Item key={m.files[0].url || i}>
-                    {m.type === 'image' && (
-                      <Image
-                        src={
-                          m.files[0].formats.filter(notEmpty).find((x) => x.format === '1170x')?.url
-                        }
-                        alt={t('common.imageIndex', { index: i + 1 }) || ''}
-                      />
-                    )}
-                    {m.type === 'threesixty' && (
-                      <ThreeSixty
-                        urls={m.files.map((x) => x.url)}
-                        visible={i === index}
-                        onDisableNavigation={onDisableNavigation}
-                        navigationDisabled={navigationDisabled}
-                      />
-                    )}
-                    {m.type === 'embedded' && <EmbededVideo src={m.files[0].url} index={i + 1} />}
-                    {m.type === 'sphere' && <Sphere url={m.files[0].url} />}
-                  </Item>
-                ))
-              ) : (
-                <Item key={placeholder}>
-                  <Image src={placeholder} alt={t('common.imageIndex', { index: 1 }) || ''} />
+          <Track
+            ref={trackRef}
+            onScroll={onScroll}
+            onKeyDown={onKeyDown}
+            onClick={onClick}
+            tabIndex={0}
+            aria-label={t('other.gallery')}
+          >
+            {mediaLength ? (
+              media.map((m, i) => (
+                <Item
+                  key={m.urls[0] || i}
+                  aria-label={t('common.imageIndex', { index: i + 1 })}
+                  aria-current={i === index || undefined}
+                >
+                  {m.type === 'image' && (
+                    <ResponsiveImage
+                      img={Image}
+                      src={m.urls[0]}
+                      widths={GALLERY_WIDTHS}
+                      sizes={GALLERY_SIZES}
+                      alt={t('common.imageIndex', { index: i + 1 }) || ''}
+                      // The first image is in view at once; the rest load as they come near.
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      draggable={false}
+                    />
+                  )}
+                  {m.type === 'threesixty' && <ThreeSixty urls={m.urls} />}
+                  {m.type === 'embedded' && <EmbededVideo src={m.urls[0]} index={i} />}
+                  {m.type === 'sphere' && <Sphere url={m.urls[0]} />}
                 </Item>
-              )}
-            </Slider>
-            {navigationDisabled && mediaLength > 1 && (
-              <EnableNavigationButton>
-                <ButtonSecondary onClick={onEnableNavigation} title={t('common.close') || ''}>
-                  <ButtonContent>{t('common.close')}</ButtonContent>
-                </ButtonSecondary>
-              </EnableNavigationButton>
+              ))
+            ) : (
+              <Item key={placeholder}>
+                <Image src={placeholder} alt={t('common.imageIndex', { index: 1 }) || ''} />
+              </Item>
             )}
-          </SliderWrapper>
-          {!navigationDisabled && mediaLength > 1 && (
+          </Track>
+          {mediaLength > 1 && (
             <>
               <ArrowLeft>
-                <NavButton onClick={prevImage} title={t('other.previousImage') || ''}>
+                <NavButton onClick={() => goTo(index - 1)} title={t('other.previousImage') || ''}>
                   <IconChevronLeft block />
                 </NavButton>
               </ArrowLeft>
               <ArrowRight>
-                <NavButton onClick={nextImage} title={t('other.nextImage') || ''}>
+                <NavButton onClick={() => goTo(index + 1)} title={t('other.nextImage') || ''}>
                   <IconChevronRight block />
                 </NavButton>
               </ArrowRight>
@@ -198,34 +168,29 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
         </Main>
         <Alt>
           <QuickNav ref={quickNavRef}>
-            {media?.length ? (
+            {mediaLength ? (
               media.map((m, i) => {
                 const src =
-                  m.files[0].formats.filter(notEmpty).find((x) => x.format === '225x150')?.url ||
-                  m.files[0].url;
+                  m.type === 'embedded'
+                    ? m.urls[0]
+                    : imageUrl(m.urls[0], { width: 225, height: 150 });
                 return (
-                  <QuickNavItem key={src || i} active={index === i}>
+                  <QuickNavItem key={src || i} $active={index === i}>
                     <QuickNavBtn
                       onClick={() => goTo(i)}
                       title={t('other.goToImageIndex', { index: i + 1 }) || ''}
+                      aria-current={index === i || undefined}
                     >
-                      {m.type === 'image' && (
-                        <QuickNavImg
-                          src={src}
+                      {m.type === 'embedded' ? (
+                        <QuickNavEmbeded src={src} index={i} />
+                      ) : (
+                        <ResponsiveImage
+                          img={QuickNavImg}
+                          src={m.urls[0]}
+                          widths={THUMBNAIL_WIDTHS}
+                          sizes="75px"
                           alt={t('common.imageIndex', { index: i + 1 }) || ''}
-                        />
-                      )}
-                      {m.type === 'threesixty' && (
-                        <QuickNavImg
-                          src={src}
-                          alt={t('common.imageIndex', { index: i + 1 }) || ''}
-                        />
-                      )}
-                      {m.type === 'embedded' && <QuickNavEmbeded src={src} index={i} />}
-                      {m.type === 'sphere' && (
-                        <QuickNavImg
-                          src={m.files[0].url}
-                          alt={t('common.imageIndex', { index: i + 1 }) || ''}
+                          loading="lazy"
                         />
                       )}
                     </QuickNavBtn>
@@ -233,7 +198,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
                 );
               })
             ) : (
-              <QuickNavItem key={placeholder} active>
+              <QuickNavItem key={placeholder} $active>
                 <QuickNavBtn
                   onClick={() => goTo(0)}
                   title={t('other.goToImageIndex', { index: 1 }) || ''}
@@ -245,7 +210,7 @@ const Gallery = ({ id, branch, media, placeholderImage }: GalleryProps) => {
           </QuickNav>
         </Alt>
       </Wrapper>
-      {lightbox && !!media?.length && (
+      {lightbox && !!mediaLength && (
         <Lightbox media={media} index={index} onClose={onToggleLightbox} />
       )}
     </>

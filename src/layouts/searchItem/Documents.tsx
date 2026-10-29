@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Scalars } from '../../@types/codegen/types';
 import DocumentList from '../../components/DocumentList';
 import ExtendContent from '../../components/ExtendContent';
 import { H2, H3 } from '../../components/Heading';
 import { ProductPageMainSection } from '../../components/ProductPage';
 import { Repeat } from '../../components/Repeat';
+import { AdDocument } from '../../Gql/ad/types';
 
 const SortOrder = {
   'tyre-label': 2,
@@ -18,11 +18,11 @@ type CategoryType = keyof typeof SortOrder;
 interface DocumentCategory {
   category: string;
   sortOrder: number;
-  documents: Scalars['FileDocument']['input'][];
+  documents: AdDocument[];
 }
 
 interface DocumentsProps {
-  documents: Scalars['FileDocument']['input'][];
+  documents: AdDocument[];
 }
 
 const Documents = ({ documents }: DocumentsProps) => {

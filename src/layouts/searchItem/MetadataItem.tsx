@@ -75,7 +75,7 @@ const MetadataItem = ({ name, hint, value, unit }: MetadataItemProps) => {
       </TableListValue>
       {hint && foldout && (
         <Modal title={name} onClose={onToggleFoldout}>
-          <Content dangerouslySetInnerHTML={{ __html: hint }} />
+          <Content html={hint} />
         </Modal>
       )}
     </TableListItem>

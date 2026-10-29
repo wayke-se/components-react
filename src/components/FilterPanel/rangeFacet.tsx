@@ -1,134 +1,65 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Facet } from '../../@types/search';
+import React, { useCallback, useMemo } from 'react';
+import { rangeSteps } from '../../Gql/facets';
+import { canonicalParams, RangeFilter } from '../../Gql/searchParams';
 import useSearch from '../../State/Search/useSearch';
+import useSettings from '../../State/Settings/useSettings';
 import PubSub from '../../utils/pubsub/pubsub';
 import RangeSlider from '../RangeSlider';
 
 interface RangeFacetProps {
-  facet: Facet;
+  id: RangeFilter;
+  /** The filter's name, read out with the handles. */
+  label?: string;
   unit?: string;
   formatValues?: boolean;
 }
 
-const getInitialValues = (domain: number[], facet: Facet, searchParams: URLSearchParams) => {
-  const facetMin = domain[0]; //parseInt(facet.filters[0].displayName, 10);
-  const _queryMin = searchParams?.get(`${facet.id}.min`) || null;
-  const facetMax = domain[domain.length - 1]; //parseInt(facet.filters[facet.filters.length - 1].displayName, 10);
-  const _queryMax = searchParams?.get(`${facet.id}.max`) || null;
-
-  const queryMin = parseInt(_queryMin === null ? `${facetMin}` : _queryMin, 10);
-  const min = facetMin > queryMin ? facetMin : queryMin;
-  const queryMax = parseInt(_queryMax === null ? `${facetMax}` : _queryMax, 10);
-  const max = queryMax > facetMax ? facetMin : queryMax;
-
-  return min || max ? [min ? min : domain[0], max ? max : domain[1]] : domain;
+const toInt = (value: string | null) => {
+  const n = value === null ? Number.NaN : Number.parseInt(value, 10);
+  return Number.isFinite(n) ? n : undefined;
 };
 
-const averageDelta = ([x, ...xs]: number[]) => {
-  if (x === undefined) return NaN;
+const RangeFacet = ({ id, label, unit, formatValues }: RangeFacetProps) => {
+  const { params, unfiltered, loading, update } = useSearch();
+  const { marketCode } = useSettings();
 
-  return xs.reduce(([acc, last], x) => [acc + (x - last), x], [0, x])[0] / xs.length;
-};
-
-const getSteps = (initialAllValues: number[]) => {
-  const delta = averageDelta(initialAllValues);
-  const max = Math.floor(initialAllValues[initialAllValues.length - 1] * 1000) / 1000;
-  if (delta > 1000) return new Array(max / 1000 + 1).fill('').map((x, i) => i * 1000);
-  if (delta <= 1000 && delta >= 500)
-    return new Array(max / 500 + 1).fill('').map((x, i) => i * 500);
-  return initialAllValues;
-};
-
-const RangeFacet = ({ facet, unit, formatValues }: RangeFacetProps) => {
-  const { loading, queryFilter, initialFacets, onFilterUpdate } = useSearch();
-  const initialFacet = initialFacets?.find((x) => x.id === facet.id);
-  const maxPrefix =
-    initialFacet?.filters[initialFacet?.filters.length - 1]?.displayName?.includes('+');
-  const [state, setValues] = useState<
-    { id: string | undefined; steps: number[]; domain: number[]; values: number[] } | undefined
-  >(undefined);
-
-  useEffect(() => {
-    const _initialAllValues = initialFacet?.filters.map((f) =>
-      parseInt(f.displayName.replace(/[<>+-]+/g, ''), 10)
-    ) || [1, 2];
-
-    const _steps = getSteps(_initialAllValues);
-    const domain = [_steps[0], _steps[_steps.length - 1]];
-
-    setValues({
-      id: initialFacet?.id,
-      steps: _steps,
-      domain: [_steps[0], _steps[_steps.length - 1]],
-      values: initialFacet?.filters.length
-        ? getInitialValues(domain, initialFacet, queryFilter.searchParams)
-        : [0, 0],
-    });
-  }, [initialFacet?.id]);
-
-  useEffect(() => {
-    if (state?.id) {
-      const init = initialFacet?.filters.length
-        ? getInitialValues(state.domain, initialFacet, queryFilter.searchParams)
-        : [0, 0];
-      const minStr = queryFilter.searchParams?.get(`${facet.id}.min`);
-      const maxStr = queryFilter.searchParams?.get(`${facet.id}.max`);
-
-      const min = minStr ? parseFloat(minStr) : init[0];
-      const max = maxStr ? parseFloat(maxStr) : init[1];
-      if (min !== state.values[0] || max !== state.values[1]) {
-        onChange([min, max]);
-      }
-    }
-  }, [queryFilter.searchParams?.toString()]);
+  const steps = useMemo(() => rangeSteps(id, unfiltered, marketCode), [unfiltered, id]);
+  const domain = [steps[0], steps[steps.length - 1]];
+  const clamp = (n: number) => Math.min(Math.max(n, domain[0]), domain[1]);
+  const values = [
+    clamp(toInt(params.get(`${id}.min`)) ?? domain[0]),
+    clamp(toInt(params.get(`${id}.max`)) ?? domain[1]),
+  ];
 
   const onChange = useCallback(
-    (nextValues: readonly number[]) => {
-      if (state?.id) {
-        if (state.values[0] !== nextValues[0] || state.values[1] !== nextValues[1]) {
-          setValues({ ...state, values: nextValues.slice() });
-          const query = new URLSearchParams(queryFilter.searchParams);
-          query.set('hits', '30');
-          query.delete(`${facet.id}.min`);
-          query.delete(`${facet.id}.max`);
-
-          if (nextValues[0] !== state.domain[0]) {
-            query.set(`${facet.id}.min`, `${nextValues[0]}`);
-          }
-
-          if (nextValues[1] !== state.domain[1]) {
-            query.set(`${facet.id}.max`, `${nextValues[1]}`);
-          }
-
-          query.sort();
-          onFilterUpdate(query.toString());
-          PubSub.publish('FilterApply', {
-            type: 'range',
-            filter: facet.id,
-            min: nextValues[0],
-            max: nextValues[1],
-          });
-        }
-      }
+    (next: readonly number[]) => {
+      if (next[0] === values[0] && next[1] === values[1]) return;
+      const query = new URLSearchParams(params);
+      query.delete(`${id}.min`);
+      query.delete(`${id}.max`);
+      // At the edges the range is open: the top bucket means "and above".
+      if (next[0] !== domain[0]) query.set(`${id}.min`, `${next[0]}`);
+      if (next[1] !== domain[1]) query.set(`${id}.max`, `${next[1]}`);
+      update(canonicalParams(query));
+      PubSub.publish('FilterApply', { type: 'range', filter: id, min: next[0], max: next[1] });
     },
-    [queryFilter.searchParams, state]
+    [params, id, values[0], values[1], domain[0], domain[1], update]
   );
 
+  if (steps.length < 2) return null;
+
   return (
-    <>
-      {state && (
-        <RangeSlider
-          loading={loading}
-          domain={state.domain}
-          values={state.values}
-          maxPrefix={maxPrefix ? '+' : undefined}
-          steps={state.steps}
-          unit={unit}
-          onChange={onChange}
-          formatValues={formatValues}
-        />
-      )}
-    </>
+    <RangeSlider
+      loading={loading}
+      domain={domain}
+      values={values}
+      maxPrefix={id === 'modelYear' ? undefined : '+'}
+      label={label}
+      steps={steps}
+      unit={unit}
+      onChange={onChange}
+      formatValues={formatValues}
+    />
   );
 };
 

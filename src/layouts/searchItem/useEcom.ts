@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { Branch, Maybe } from '../../@types/codegen/types';
-import { SettingsContextProps } from '../../State/Settings/SettingsContext';
+import { Ad } from '../../Gql/ad/types';
+import { adEvent, waykeId } from '../../Gql/ad/view';
+import { Settings } from '../../State/Settings/settings';
 import PubSub from '../../utils/pubsub/pubsub';
 
 interface EcomWeb {
@@ -8,56 +9,44 @@ interface EcomWeb {
   destroy: () => void;
 }
 
-function useEcom(
-  id: string,
-  ecomSettings: SettingsContextProps['ecomSettings'],
-  branch?: Maybe<Branch>
-) {
+/**
+ * Buy online. ecom-web is keyed on the legacy waykeId: the commerce order flow
+ * answers 404 on ad.id for ads from before ads-service.
+ */
+function useEcom(ad: Ad, ecom: Settings['ecom'], marketCode: Settings['marketCode']) {
   const ecomContext = useRef<EcomWeb | undefined>(undefined);
-  const branchRef = useRef(branch);
-  branchRef.current = branch;
+  const id = waykeId(ad);
 
-  const load = async () => {
-    if (!ecomSettings) return;
-    try {
-      const module = await import('@wayke-se/ecom-web');
-      if (module) {
+  useEffect(() => {
+    if (!ecom) return;
+    let destroyed = false;
+    import('@wayke-se/ecom-web')
+      .then((module) => {
+        if (destroyed) return;
         ecomContext.current = new module.default({
           id,
           ecomSdkConfig: {
             api: {
-              address: ecomSettings.url,
+              address: ecom.url,
             },
-            bankIdThumbprint: ecomSettings?.bankIdThumbprint,
+            bankIdThumbprint: ecom.bankIdThumbprint,
           },
-          logo: ecomSettings.serviceLogotypeUrl,
-          logoX2: ecomSettings.serviceLogotypeUrl,
+          logo: ecom.serviceLogotypeUrl,
+          logoX2: ecom.serviceLogotypeUrl,
+          // Language, and Drive's look in Norway
+          marketCode,
           onEvent: (view, event, currentStep?, data?) => {
-            PubSub.publish('Ecom', {
-              id,
-              branchId: branchRef.current?.id,
-              branchName: branchRef.current?.name,
-              view,
-              event,
-              currentStep,
-              data,
-            });
+            PubSub.publish('Ecom', { ...adEvent(ad), view, event, currentStep, data });
           },
         });
-      }
-    } catch {
-      //
-    }
-  };
-
-  useEffect(() => {
-    load();
+      })
+      .catch(() => undefined);
     return () => {
-      if (ecomContext.current) {
-        ecomContext.current.destroy();
-      }
+      destroyed = true;
+      ecomContext.current?.destroy();
+      ecomContext.current = undefined;
     };
-  }, []);
+  }, [id]);
 
   return ecomContext;
 }

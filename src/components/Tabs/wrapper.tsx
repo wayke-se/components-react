@@ -74,7 +74,7 @@ export const Action = styled(ButtonReset).attrs(() => ({
     css`
       color: ${(props) => props.theme.color.textDark};
 
-      :after {
+      &::after {
         transform: scaleY(1);
       }
     `}

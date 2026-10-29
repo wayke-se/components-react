@@ -51,7 +51,7 @@ export const ProductPageAsideSection = styled.div<ProductPageAsideSectionProps>`
       margin-top: ${size(2)};
     }
 
-    :last-child {
+    &:last-child {
       margin-bottom: ${size(4)};
     }
 

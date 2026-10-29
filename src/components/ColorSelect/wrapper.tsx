@@ -56,7 +56,7 @@ export const Color = styled.div<ColorProps>`
   }
 
   ${Action}:not([disabled]):hover & {
-    :before {
+    &::before {
       display: block;
     }
   }
@@ -64,7 +64,7 @@ export const Color = styled.div<ColorProps>`
   ${({ active }) =>
     active &&
     css`
-      :before {
+      &::before {
         display: block;
       }
     `}

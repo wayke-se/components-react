@@ -1,8 +1,9 @@
 import React, { useCallback, useId, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, Maybe } from '../../@types/codegen/types';
 import { MarketCode } from '../../@types/market';
+import { adEvent } from '../../Gql/ad/view';
 import useSubmitLead, { LeadCommunication } from '../../hooks/useSubmitLead';
+import useAdContext from '../../State/Ad/AdContext';
 import useSettings from '../../State/Settings/useSettings';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ButtonContent, ButtonPrimary, ButtonSecondary } from '../Button';
@@ -19,9 +20,6 @@ import { Field } from './wrapper';
 export type { LeadCommunication };
 
 interface LeadFormProps {
-  id: string;
-  branch?: Maybe<Branch>;
-  marketCode?: MarketCode;
   communication: LeadCommunication;
   onClose: () => void;
 }
@@ -68,10 +66,11 @@ const isValidRegistrationNumber = (value: string, marketCode: MarketCode) => {
   return !pattern || pattern.test(normalizeRegistrationNumber(value));
 };
 
-const LeadForm = ({ id, branch, marketCode = 'SE', communication, onClose }: LeadFormProps) => {
+const LeadForm = ({ communication, onClose }: LeadFormProps) => {
   const { t } = useTranslation();
-  const { apiUrl } = useSettings();
-  const { submitLead, isLoading } = useSubmitLead(apiUrl, marketCode);
+  const ad = useAdContext();
+  const { leadUrl, marketCode } = useSettings();
+  const { submitLead, isLoading } = useSubmitLead(leadUrl, marketCode);
   const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitError, setSubmitError] = useState(false);
@@ -83,10 +82,7 @@ const LeadForm = ({ id, branch, marketCode = 'SE', communication, onClose }: Lea
 
   const title = communication === 'email' ? t('lead.messageFormTitle') : t('lead.callFormTitle');
 
-  const trackPayload = useMemo(
-    () => ({ id, branchId: branch?.id, branchName: branch?.name, communication }),
-    [id, branch, communication]
-  );
+  const trackPayload = useMemo(() => ({ ...adEvent(ad), communication }), [ad, communication]);
 
   const setValue = useCallback(<K extends keyof FormValues>(name: K, value: FormValues[K]) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -127,8 +123,7 @@ const LeadForm = ({ id, branch, marketCode = 'SE', communication, onClose }: Lea
   const onSubmit = useCallback(
     async (e?: React.FormEvent) => {
       e?.preventDefault();
-      const branchId = branch?.id;
-      if (!branchId || isLoading) return;
+      if (isLoading) return;
 
       const nextErrors = validate(values);
       setErrors(nextErrors);
@@ -137,8 +132,8 @@ const LeadForm = ({ id, branch, marketCode = 'SE', communication, onClose }: Lea
       setSubmitError(false);
       try {
         await submitLead({
-          itemId: id,
-          branchId,
+          itemId: ad.id,
+          branchId: ad.branchId,
           communication,
           firstName: values.firstName.trim(),
           lastName: values.lastName.trim(),
@@ -156,7 +151,7 @@ const LeadForm = ({ id, branch, marketCode = 'SE', communication, onClose }: Lea
         setSubmitError(true);
       }
     },
-    [branch, id, communication, values, validate, submitLead, isLoading, trackPayload]
+    [ad, communication, values, validate, submitLead, isLoading, trackPayload]
   );
 
   if (sent) {

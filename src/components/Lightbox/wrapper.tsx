@@ -41,8 +41,11 @@ export const Item = styled.div`
 export const Img = styled.img`
   position: relative;
   display: block;
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: calc(100vh - ${size(6)});
+  object-fit: contain;
   margin: 0 auto;
   z-index: 1;
 
@@ -83,7 +86,7 @@ export const CloseBtn = styled(ButtonReset)`
   }
 
   &:hover {
-    :before {
+    &::before {
       opacity: 1;
     }
   }

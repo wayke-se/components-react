@@ -1,84 +1,54 @@
 import React, { useEffect } from 'react';
-import useHashGuid from '../hooks/useHashGuid';
-import useInitializeTranslation from '../hooks/useInitializeTranslation';
-import usePath from '../State/Path/usePath';
+import useRouter from '../State/Router/useRouter';
+import useSettings from '../State/Settings/useSettings';
 import PubSub from '../utils/pubsub/pubsub';
 import WaykeSearch, { WaykeSearchProps } from './search';
 import WaykeSearchItem, { WaykeSearchItemProps } from './searchItem';
 
-type WaykeCompositeBaseProps = Omit<WaykeSearchProps & WaykeSearchItemProps, 'id'>;
+export type WaykeCompositeProps = WaykeSearchProps & Omit<WaykeSearchItemProps, 'id'>;
 
-export type WaykeCompositeProps = Omit<
-  WaykeCompositeBaseProps,
-  'hashRoute' | 'onClickSearchItem'
-> & {
-  /** @deprecated Has no effect. Hash routing is used unless `pathRoute` is set. */
-  hashRoute?: WaykeCompositeBaseProps['hashRoute'];
-  /** @deprecated Has no effect. Subscribe to the `ItemClicked` event with `WaykePubSub` instead. */
-  onClickSearchItem?: WaykeCompositeBaseProps['onClickSearchItem'];
-};
-
+/** The search, switching to the vehicle page when a vehicle is opened. */
 const WaykeComposite = ({
-  marketCode = 'SE',
   filterList,
   initialQueryParams,
   removeSearchBar,
   removeFilterOptions,
   disableResetScrollOnInit,
   placeholderImage,
-  pathRoute,
   modifyDocumentTitleItem,
   modifyDocumentTitleSearch,
   displayBranchName,
   conversionOptions,
 }: WaykeCompositeProps) => {
-  const hashId = useHashGuid();
-  const { id: pathId } = usePath();
-  const initialized = useInitializeTranslation(marketCode);
+  const { id } = useRouter();
+  const { routing } = useSettings();
 
   useEffect(() => {
-    if (!pathRoute) {
-      if (hashId) {
-        PubSub.publish('HashRouteChange', { id: hashId });
-      } else {
-        PubSub.publish('HashRouteChange', { id: undefined });
-      }
+    if (routing.mode === 'hash') {
+      PubSub.publish('HashRouteChange', { id });
     }
-  }, [hashId]);
+  }, [id]);
 
-  const id = pathId || hashId;
-
-  if (!initialized) return null;
-
-  return (
-    <>
-      {id ? (
-        <WaykeSearchItem
-          marketCode={marketCode}
-          id={id}
-          hashRoute={!pathRoute}
-          disableResetScrollOnInit={disableResetScrollOnInit}
-          placeholderImage={placeholderImage}
-          pathRoute={pathRoute}
-          modifyDocumentTitleItem={modifyDocumentTitleItem}
-          displayBranchName={displayBranchName}
-          conversionOptions={conversionOptions}
-        />
-      ) : (
-        <WaykeSearch
-          marketCode={marketCode}
-          filterList={filterList}
-          initialQueryParams={initialQueryParams}
-          removeSearchBar={removeSearchBar}
-          hashRoute={!pathRoute}
-          placeholderImage={placeholderImage}
-          pathRoute={pathRoute}
-          removeFilterOptions={removeFilterOptions}
-          modifyDocumentTitleSearch={modifyDocumentTitleSearch}
-          displayBranchName={displayBranchName}
-        />
-      )}
-    </>
+  return id ? (
+    <WaykeSearchItem
+      key={id}
+      id={id}
+      disableResetScrollOnInit={disableResetScrollOnInit}
+      placeholderImage={placeholderImage}
+      modifyDocumentTitleItem={modifyDocumentTitleItem}
+      displayBranchName={displayBranchName}
+      conversionOptions={conversionOptions}
+    />
+  ) : (
+    <WaykeSearch
+      filterList={filterList}
+      initialQueryParams={initialQueryParams}
+      removeSearchBar={removeSearchBar}
+      placeholderImage={placeholderImage}
+      removeFilterOptions={removeFilterOptions}
+      modifyDocumentTitleSearch={modifyDocumentTitleSearch}
+      displayBranchName={displayBranchName}
+    />
   );
 };
 

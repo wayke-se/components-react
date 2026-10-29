@@ -1,7 +1,5 @@
-import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Accessory } from '../../../@types/codegen/types';
 import Content from '../../../components/Content';
 import { Image } from '../../../components/Image';
 import { Link } from '../../../components/Link';
@@ -10,19 +8,22 @@ import Modal from '../../../components/Modal';
 import PriceBox from '../../../components/PriceBox';
 import { Repeat } from '../../../components/Repeat';
 import { UtilityTextBold } from '../../../components/Utility';
+import { AdAccessory } from '../../../Gql/ad/types';
+import { accessoryImages } from '../../../Gql/ad/view';
 import { numberSeparator } from '../../../utils/formats';
 
 interface AccesoryModalProps {
-  accessory: Accessory;
+  accessory: AdAccessory;
   onClose: () => void;
 }
 
 const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
   const { t } = useTranslation();
+  const image = accessoryImages(accessory)[0];
   const priceList = [
     {
       label: t('item.accessories.price'),
-      price: `${numberSeparator(accessory.price)} ${t('currency.default')}`,
+      price: `${numberSeparator(accessory.price ?? 0)} ${t('currency.default')}`,
       oldPrice: false,
     },
   ];
@@ -45,16 +46,16 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
 
   return (
     <Modal title={accessory.name} onClose={onClose}>
-      {accessory.images?.[0] && (
+      {image && (
         <Repeat>
-          <Image src={`${accessory.images[0]}?w=632`} alt={`${accessory.name}`} />
+          <Image src={`${image}?w=632`} alt={`${accessory.name}`} />
         </Repeat>
       )}
-      {accessory.logotype && (
+      {accessory.logoUrl && (
         <Repeat>
           <LogoBox
-            logo={`${accessory.logotype}?w=160`}
-            logo2x={`${accessory.logotype}?w=320`}
+            logo={`${accessory.logoUrl}?w=160`}
+            logo2x={`${accessory.logoUrl}?w=320`}
             alt={accessory.manufacturer || t('common.logotype') || ''}
             wide
           />
@@ -65,7 +66,7 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
       </Repeat>
 
       <Repeat>
-        <Content dangerouslySetInnerHTML={{ __html: marked(accessory.description) }} />
+        <Content markdown={accessory.longDescription || ''} />
       </Repeat>
       {accessory.articleNumber && (
         <Repeat>
@@ -73,10 +74,10 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
           <div>{accessory.articleNumber}</div>
         </Repeat>
       )}
-      {accessory.productPage && accessory.productPage.url && (
+      {accessory.productPageLink && (
         <Repeat>
           <Link
-            href={accessory.productPage.url}
+            href={accessory.productPageLink}
             title={
               t('item.accessories.moreInformationAboutAccessory', {
                 accessory: accessory.name,
@@ -85,7 +86,7 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
             target="_blank"
             rel="noopener noreferrer nofollow"
           >
-            {accessory.productPage.title || t('common.readMore')} ({t('common.opensInNewTab')})
+            {accessory.productPageLinkText || t('common.readMore')} ({t('common.opensInNewTab')})
           </Link>
         </Repeat>
       )}

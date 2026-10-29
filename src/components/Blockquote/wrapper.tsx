@@ -15,11 +15,11 @@ export const Wrapper = styled.blockquote`
 
 export const Quote = styled.div`
   > * {
-    :first-child {
+    &:first-child {
       margin-top: 0;
     }
 
-    :last-child {
+    &:last-child {
       margin-bottom: 0;
     }
   }

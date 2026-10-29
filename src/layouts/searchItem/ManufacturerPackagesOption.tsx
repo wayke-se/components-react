@@ -1,16 +1,15 @@
-import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Maybe, PackageOption } from '../../@types/codegen/types';
 import { ButtonInline } from '../../components/Button';
 import Content from '../../components/Content';
 import { H2 } from '../../components/Heading';
 import LogoBox from '../../components/LogoBox';
 import { ProductPageMainSection } from '../../components/ProductPage';
 import { Repeat } from '../../components/Repeat';
+import { PackageOffer } from '../../Gql/ad/view';
 
 interface ManufacturerPackageOption {
-  packageOption?: Maybe<PackageOption>;
+  packageOption?: PackageOffer;
 }
 
 const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption) => {
@@ -26,7 +25,7 @@ const ManufacturerPackageOption = ({ packageOption }: ManufacturerPackageOption)
       </Repeat>
       {packageOption.description && (
         <Repeat>
-          <Content dangerouslySetInnerHTML={{ __html: marked(packageOption.description) }} />
+          <Content markdown={packageOption.description} />
         </Repeat>
       )}
       {packageOption.link?.url && (

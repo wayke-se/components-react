@@ -1,0 +1,6 @@
+/* The package's one stylesheet, published as @wayke-se/components-react/style.css:
+   default theme colors, the 360 viewer and buy online. The components themselves
+   are styled in JavaScript. */
+@import './theme.css';
+@import '@photo-sphere-viewer/core/index.css';
+@import '@wayke-se/ecom-web/dist/index.css';

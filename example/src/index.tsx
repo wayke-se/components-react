@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import '../../src/style.css';
 import './assets/style/theme.css';
 import './assets/style/ecom.css';
-import '../../assets/default.css';
 
 import App from './App';
 

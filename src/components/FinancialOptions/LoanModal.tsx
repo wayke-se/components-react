@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Branch, FinancialOption, Maybe, Query } from '../../@types/codegen/types';
-import { MarketCode } from '../../@types/market';
-import useLoanCalculation from '../../hooks/useLoan';
+import { PaymentResponse } from '../../Gql/ad/types';
+import useLoanCalculation from '../../Gql/ad/useLoanCalculation';
+import { adEvent, num, range } from '../../Gql/ad/view';
+import useAdContext from '../../State/Ad/AdContext';
+import useSettings from '../../State/Settings/useSettings';
 import { numberSeparator } from '../../utils/formats';
 import PubSub from '../../utils/pubsub/pubsub';
 import { ButtonClear, ButtonContent } from '../Button';
@@ -34,26 +36,17 @@ const stepGenerator = (
 };
 
 interface LoanModalProps {
-  id: string;
-  branch?: Maybe<Branch>;
-  financialOption: FinancialOption;
-  marketCode?: MarketCode;
+  loan: PaymentResponse;
   onClose: () => void;
 }
 
-const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanModalProps) => {
+const LoanModal = ({ loan: option, onClose }: LoanModalProps) => {
   const { t } = useTranslation();
-  const [tmp, setTmp] = useState<Query>();
+  const ad = useAdContext();
+  const { publicApi, marketCode } = useSettings();
   const [extend, setExtend] = React.useState(false);
 
-  const trackPayload = useMemo(
-    () => ({
-      id,
-      branchId: branch?.id,
-      branchName: branch?.name,
-    }),
-    [id, branch]
-  );
+  const trackPayload = useMemo(() => adEvent(ad), [ad]);
 
   const onToggleExtend = React.useCallback(() => {
     if (!extend) {
@@ -63,31 +56,33 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
   }, [extend]);
 
   const [variables, setVariables] = useState({
-    duration: financialOption.duration?.current,
-    downPayment: financialOption.downPayment?.current,
-    residual: financialOption.residual?.current,
+    duration: num(option.duration?.current),
+    downPayment: num(option.downPayment?.current),
+    residual: num(option.residual?.current),
   });
 
-  const { duration, downPayment, residual } = variables;
-  const { loading, data } = useLoanCalculation(id, duration, downPayment, residual);
+  const { loading, payment } = useLoanCalculation(publicApi, ad.id, {
+    financialOptionId: option.financialOptionId,
+    ...variables,
+  });
+
+  // The API snaps the values to its steps; the sliders follow what it settled on.
   useEffect(() => {
-    if (data) {
-      setTmp(data);
+    if (payment) {
       setVariables({
-        duration: data?.loan?.duration?.current || 0,
-        downPayment: data?.loan?.downPayment?.current || 0,
-        residual: data?.loan?.residual?.current || 0,
+        duration: num(payment.duration?.current) || 0,
+        downPayment: num(payment.downPayment?.current) || 0,
+        residual: num(payment.residual?.current) || 0,
       });
     }
-  }, [data]);
+  }, [payment]);
 
-  const loan = data?.loan || tmp?.loan;
-
-  const downPaymentCurrent = loan?.downPayment?.current || 0;
-  const downPaymentMin = loan?.downPayment?.min || 0;
-  const downPaymentMax = loan?.downPayment?.max || 0;
-  const downPaymentStep = loan?.downPayment?.step || 0;
-  const downPaymentSteps = stepGenerator(downPaymentStep, downPaymentMax);
+  const { residual } = variables;
+  const downPayment = range(payment?.downPayment);
+  const downPaymentCurrent = downPayment?.current || 0;
+  const downPaymentMin = downPayment?.min || 0;
+  const downPaymentMax = downPayment?.max || 0;
+  const downPaymentSteps = stepGenerator(downPayment?.step || 0, downPaymentMax);
   const onDownPaymentChange = useCallback(
     (values: readonly number[]) => {
       PubSub.publish('FinanceInterest', trackPayload);
@@ -96,11 +91,11 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
     [variables, trackPayload]
   );
 
-  const durationCurrent = loan?.duration?.current || 0;
-  const durationMin = loan?.duration?.min || 0;
-  const durationMax = loan?.duration?.max || 0;
-  const durationStep = loan?.duration?.step || 0;
-  const durationSteps = stepGenerator(durationStep, durationMax);
+  const duration = range(payment?.duration);
+  const durationCurrent = duration?.current || 0;
+  const durationMin = duration?.min || 0;
+  const durationMax = duration?.max || 0;
+  const durationSteps = stepGenerator(duration?.step || 0, durationMax);
   const onDurationChange = useCallback(
     (values: readonly number[]) => {
       PubSub.publish('FinanceInterest', trackPayload);
@@ -109,11 +104,11 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
     [variables, trackPayload]
   );
 
-  const residualCurrent = (loan?.residual?.current || 0) * 100 || 0;
-  const residualMin = (loan?.residual?.min || 0) * 100 || 0;
-  const residualMax = (loan?.residual?.max || 0) * 100 || 0;
-  const residualStep = (loan?.residual?.step || 0) * 100 || 0;
-  const residualSteps = stepGenerator(residualStep, residualMax);
+  const residualRange = range(payment?.residual);
+  const residualCurrent = (residualRange?.current || 0) * 100;
+  const residualMin = (residualRange?.min || 0) * 100;
+  const residualMax = (residualRange?.max || 0) * 100;
+  const residualSteps = stepGenerator((residualRange?.step || 0) * 100, residualMax);
   const onResidualChange = useCallback(
     (values: readonly number[]) => {
       PubSub.publish('FinanceInterest', trackPayload);
@@ -122,40 +117,34 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
     [variables, trackPayload]
   );
 
-  const interestText = ((loan?.interest || 0) * 100).toFixed(2);
-  const effectiveInterestText = ((loan?.effectiveInterest || 0) * 100).toFixed(2);
-  const monthlyCost = loan?.monthlyCost;
+  const interestText = ((num(payment?.interest) || 0) * 100).toFixed(2);
+  const effectiveInterestText = ((num(payment?.effectiveInterest) || 0) * 100).toFixed(2);
+  const monthlyCost = num(payment?.monthlyCost);
+  const image = option.imageUrl || undefined;
+  const name = option.name || option.financialInstitution;
 
   return (
     <Modal title={t('item.financialOptions.loanOptions')} onClose={onClose}>
-      {financialOption?.description ? (
+      {option.description ? (
         <Repeat>
           <ContentLogo>
             <ContentLogoText>
               <Content>
-                <p>{financialOption.description}</p>
+                <p>{option.description}</p>
               </Content>
             </ContentLogoText>
-            {financialOption?.image && (
+            {image && (
               <ContentLogoMedia>
-                <LogoBox
-                  logo={financialOption.image}
-                  alt={financialOption.name || t('common.logotype')}
-                  wide
-                />
+                <LogoBox logo={image} alt={name || t('common.logotype')} wide />
               </ContentLogoMedia>
             )}
           </ContentLogo>
         </Repeat>
       ) : (
         <>
-          {financialOption?.image && (
+          {image && (
             <Repeat>
-              <LogoBox
-                logo={financialOption.image}
-                alt={financialOption.name || t('common.logotype')}
-                wide
-              />
+              <LogoBox logo={image} alt={name || t('common.logotype')} wide />
             </Repeat>
           )}
         </>
@@ -168,7 +157,6 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
             domain={[downPaymentMin, downPaymentMax]}
             steps={downPaymentSteps}
             unit={t('currency.default')}
-            formatValues
             loading={loading}
             onChange={onDownPaymentChange}
           />
@@ -205,16 +193,10 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
             <Content small>
               <p>
                 *
-                {loan?.mileage !== null
-                  ? t('item.financialOptions.loanOptionsDisclaimerMileage', {
-                      interest: interestText,
-                      effectiveInterest: effectiveInterestText,
-                      mileage: loan?.mileage,
-                    })
-                  : t('item.financialOptions.loanOptionsDisclaimer', {
-                      interest: interestText,
-                      effectiveInterest: effectiveInterestText,
-                    })}
+                {t('item.financialOptions.loanOptionsDisclaimer', {
+                  interest: interestText,
+                  effectiveInterest: effectiveInterestText,
+                })}
               </p>
             </Content>
           </RepeatTiny>
@@ -248,19 +230,19 @@ const LoanModal = ({ id, branch, financialOption, marketCode, onClose }: LoanMod
                     },
                     {
                       label: t('item.financialOptions.setupFee'),
-                      value: `${numberSeparator(financialOption?.setupFee || 0)} ${t(
+                      value: `${numberSeparator(num(option.setupFee) || 0)} ${t(
                         'currency.default'
                       )}`,
                     },
                     {
                       label: t('item.financialOptions.administrationFee'),
-                      value: `${numberSeparator(financialOption?.administrationFee || 0)} ${t(
+                      value: `${numberSeparator(num(option.administrationFee) || 0)} ${t(
                         'currency.monthly'
                       )}`,
                     },
                     {
                       label: t('item.financialOptions.totalCreditCost'),
-                      value: `${numberSeparator(loan?.totalCreditCost || 0)} ${t(
+                      value: `${numberSeparator(num(payment?.totalCreditCost) || 0)} ${t(
                         'currency.default'
                       )}`,
                     },

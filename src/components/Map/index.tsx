@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Maybe, Position } from '../../@types/codegen/types';
 import useSettings from '../../State/Settings/useSettings';
 import { ButtonContent, ButtonSecondary } from '../Button';
 import { Image, Placeholder, PlaceholderAction, Wrapper } from './wrapper';
 
 interface StaticMapProps {
-  position?: Maybe<Position>;
+  position?: { latitude: number; longitude: number };
 }
 
 const StaticMap = ({ position }: StaticMapProps) => {
@@ -30,7 +29,7 @@ const StaticMap = ({ position }: StaticMapProps) => {
   if (visible && googleMapsApiKey) {
     return (
       <Wrapper
-        href={`http://maps.google.com/maps?q=${latitude},${longitude}`}
+        href={`https://maps.google.com/maps?q=${latitude},${longitude}`}
         title={t('item.showOnGoogleMaps')}
         target="_blank"
         rel="nofollow noopener noreferrer"
@@ -46,7 +45,7 @@ const StaticMap = ({ position }: StaticMapProps) => {
   }
   return (
     <Placeholder
-      href={`http://maps.google.com/maps?q=${latitude},${longitude}`}
+      href={`https://maps.google.com/maps?q=${latitude},${longitude}`}
       target="_blank"
       rel="noopener noreferrer nofollow"
       onClick={onShowMap}

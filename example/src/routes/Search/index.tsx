@@ -1,27 +1,13 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { WaykeProvider, WaykeSearch } from '../../../../src';
-import { OnItemClick } from '../../../../src/components/ProductCard';
+import { providerSettings } from '../../settings';
 
-const Search = () => {
-  const onClickSearchItem = useCallback((data: OnItemClick) => {
-    console.log(data);
-  }, []);
-
-  return (
-    <WaykeProvider
-      graphQlUrl={process.env.WAYKE_GRAPH_QL_URL as string}
-      url={process.env.WAYKE_SEARCH_URL as string}
-      urlMlt={process.env.WAYKE_SEARCH_MLT_URL as string}
-      ecomSettings={{
-        url: process.env.WAYKE_ECOM_URL as string,
-        serviceLogotypeUrl: '/images/wayke-logo.svg',
-      }}
-      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY as string}
-    >
-      <WaykeSearch onClickSearchItem={onClickSearchItem} marketCode="SE" />
-    </WaykeProvider>
-  );
-};
+/** The search alone: vehicles are not links, a click only publishes ItemClicked. */
+const Search = () => (
+  <WaykeProvider {...providerSettings} routing={{ mode: 'none' }}>
+    <WaykeSearch />
+  </WaykeProvider>
+);
 
 export default Search;

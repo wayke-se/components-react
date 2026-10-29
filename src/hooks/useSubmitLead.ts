@@ -42,7 +42,7 @@ export interface SubmitLeadProps {
  * website-components-react so leads from any Wayke-powered site look the same in Dealer.
  * `source` (hostname) + `sourceMechanism` is what gives the dealer traceability.
  */
-const useSubmitLead = (apiUrl: string | undefined, marketCode: MarketCode = 'SE') => {
+const useSubmitLead = (leadUrl: string, marketCode: MarketCode = 'SE') => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -59,9 +59,6 @@ const useSubmitLead = (apiUrl: string | undefined, marketCode: MarketCode = 'SE'
       tradeInCarRegNo,
       tradeInCarMileage,
     }: SubmitLeadProps): Promise<LeadResponse> => {
-      if (!apiUrl) {
-        throw new Error('Missing apiUrl, cannot submit lead');
-      }
       setIsLoading(true);
       setError(null);
 
@@ -95,7 +92,6 @@ const useSubmitLead = (apiUrl: string | undefined, marketCode: MarketCode = 'SE'
       };
 
       try {
-        const leadUrl = `${new URL(apiUrl).origin}/lead`;
         const response = await fetch(leadUrl, {
           method: 'POST',
           body: JSON.stringify(payload),
@@ -116,7 +112,7 @@ const useSubmitLead = (apiUrl: string | undefined, marketCode: MarketCode = 'SE'
         setIsLoading(false);
       }
     },
-    [apiUrl, marketCode]
+    [leadUrl, marketCode]
   );
 
   return { isLoading, error, submitLead };

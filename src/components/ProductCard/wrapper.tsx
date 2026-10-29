@@ -38,15 +38,13 @@ export const Image = styled.div`
   }
 
   ${Wrapper}:hover & {
-    :before {
+    &::before {
       opacity: 1;
     }
   }
 `;
 
 export const Picture = styled.picture``;
-
-export const Source = styled('source')<{ type?: string; srcSet?: string; media?: string }>``;
 
 export const Img = styled.img`
   position: absolute;

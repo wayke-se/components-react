@@ -1,36 +1,31 @@
-import { marked } from 'marked';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { InsuranceOption } from '../../@types/codegen/types';
+import { InsuranceProvider } from '../../Gql/ad/types';
 import { ButtonInline } from '../Button';
 import Content from '../Content';
 import LogoBox from '../LogoBox';
 import Modal from '../Modal';
 import { Repeat } from '../Repeat';
 
-interface InsuranceFreeModal {
+interface InsuranceFreeModalProps {
   onClose: () => void;
-  insuranceOptions: InsuranceOption;
+  provider: InsuranceProvider;
 }
 
-const InsuranceFreeModal = ({ onClose, insuranceOptions }: InsuranceFreeModal) => {
+const InsuranceFreeModal = ({ onClose, provider }: InsuranceFreeModalProps) => {
   const { t } = useTranslation();
   return (
-    <Modal title={insuranceOptions?.insuranceHeader ?? t('item.insurance')} onClose={onClose}>
-      {insuranceOptions?.longDescription && (
+    <Modal title={provider.insuranceHeader ?? t('item.insurance')} onClose={onClose}>
+      {provider.longDescription && (
         <Repeat>
-          <Content
-            dangerouslySetInnerHTML={{
-              __html: marked(insuranceOptions.longDescription),
-            }}
-          ></Content>
+          <Content markdown={provider.longDescription} />
         </Repeat>
       )}
-      {insuranceOptions?.url && (
+      {provider.url && (
         <Repeat>
           <ButtonInline
             as="a"
-            href={insuranceOptions.url}
+            href={provider.url}
             title={t('item.readMoreAboutInsuranceInNewTab') || ''}
             target="_blank"
             rel="noopener noreferrer"
@@ -39,13 +34,9 @@ const InsuranceFreeModal = ({ onClose, insuranceOptions }: InsuranceFreeModal) =
           </ButtonInline>
         </Repeat>
       )}
-      {insuranceOptions?.logotype && (
+      {provider.logo && (
         <Repeat>
-          <LogoBox
-            logo={insuranceOptions.logotype}
-            alt={insuranceOptions.name || t('common.logotype')}
-            wide
-          />
+          <LogoBox logo={provider.logo} alt={provider.title || t('common.logotype')} wide />
         </Repeat>
       )}
     </Modal>
