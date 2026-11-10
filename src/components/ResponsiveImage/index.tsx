@@ -1,5 +1,5 @@
 import React from 'react';
-import { cfitSources, imageUrl, isCfit } from '../../utils/image';
+import { cfitSources, imageUrl, isCfit, waykeImage } from '../../utils/image';
 
 type ImgProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
@@ -15,16 +15,18 @@ interface ResponsiveImageProps extends Omit<ImgProps, 'src' | 'srcSet' | 'sizes'
 
 /**
  * An ad image in the size and format the browser needs (AVIF, WebP, else JPEG),
- * decoded off the main thread. Images from other hosts get the largest width.
+ * decoded off the main thread. A Wayke media image (`/media`, blob storage) goes
+ * through cfit/v3 like the rest; images from other hosts get the largest width.
  */
 const ResponsiveImage = ({
-  src,
+  src: original,
   widths,
   sizes,
   img: Img = 'img',
   ...rest
 }: ResponsiveImageProps) => {
   const largest = Math.max(...widths);
+  const src = waykeImage(original);
   if (!isCfit(src)) {
     return (
       <Img src={imageUrl(src, { width: largest, height: Math.round(largest / 1.5) })} {...rest} />

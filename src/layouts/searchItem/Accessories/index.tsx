@@ -9,6 +9,7 @@ import { Repeat } from '../../../components/Repeat';
 import { AdAccessory } from '../../../Gql/ad/types';
 import { accessoryImages } from '../../../Gql/ad/view';
 import { numberSeparator } from '../../../utils/formats';
+import { imageWithWidth } from '../../../utils/image';
 import AccesoryModal from './AccessoryModal';
 
 interface AccessoriesSectionProps {
@@ -49,7 +50,7 @@ const AccessoriesSection = ({ accessories }: AccessoriesSectionProps) => {
                 image={
                   accessoryImages(accessory)[0]
                     ? {
-                        src: `${accessoryImages(accessory)[0]}?w=539&h=303`,
+                        src: imageWithWidth(accessoryImages(accessory)[0], 539, 303),
                         alt: accessory.name,
                       }
                     : undefined

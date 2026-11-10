@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LeasingOffer } from '../../Gql/ad/view';
 import { numberSeparator } from '../../utils/formats';
+import { waykeImage } from '../../utils/image';
 import { ButtonInline } from '../Button';
 import Content from '../Content';
 import DataList from '../DataList';
@@ -30,7 +31,7 @@ const Leasing = ({ offer }: LeasingProps) => {
     <>
       {modal && (
         <Modal title={title} onClose={toggleModal}>
-          {image && <Image src={image} alt={title} />}
+          {image && <Image src={waykeImage(image)} alt={title} />}
           {description && <Content html={description} />}
           <ModalFoldout>
             <ModalFoldoutBody>
