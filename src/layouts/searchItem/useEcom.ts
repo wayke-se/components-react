@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Ad } from '../../Gql/ad/types';
 import { adEvent, waykeId } from '../../Gql/ad/view';
 import { Settings } from '../../State/Settings/settings';
+import { presizedLogoUrl } from '../../utils/image';
 import PubSub from '../../utils/pubsub/pubsub';
 
 interface EcomWeb {
@@ -31,8 +32,8 @@ function useEcom(ad: Ad, ecom: Settings['ecom'], marketCode: Settings['marketCod
             },
             bankIdThumbprint: ecom.bankIdThumbprint,
           },
-          logo: ecom.serviceLogotypeUrl,
-          logoX2: ecom.serviceLogotypeUrl,
+          logo: presizedLogoUrl(ecom.serviceLogotypeUrl),
+          logoX2: presizedLogoUrl(ecom.serviceLogotypeUrl),
           // Language, and Drive's look in Norway
           marketCode,
           onEvent: (view, event, currentStep?, data?) => {

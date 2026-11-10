@@ -11,6 +11,7 @@ import { UtilityTextBold } from '../../../components/Utility';
 import { AdAccessory } from '../../../Gql/ad/types';
 import { accessoryImages } from '../../../Gql/ad/view';
 import { numberSeparator } from '../../../utils/formats';
+import { imageWithWidth, logoWithWidth } from '../../../utils/image';
 
 interface AccesoryModalProps {
   accessory: AdAccessory;
@@ -48,14 +49,14 @@ const AccesoryModal = ({ accessory, onClose }: AccesoryModalProps) => {
     <Modal title={accessory.name} onClose={onClose}>
       {image && (
         <Repeat>
-          <Image src={`${image}?w=632`} alt={`${accessory.name}`} />
+          <Image src={imageWithWidth(image, 632)} alt={`${accessory.name}`} />
         </Repeat>
       )}
       {accessory.logoUrl && (
         <Repeat>
           <LogoBox
-            logo={`${accessory.logoUrl}?w=160`}
-            logo2x={`${accessory.logoUrl}?w=320`}
+            logo={logoWithWidth(accessory.logoUrl, 160)}
+            logo2x={logoWithWidth(accessory.logoUrl, 320)}
             alt={accessory.manufacturer || t('common.logotype') || ''}
             wide
           />
